@@ -257,15 +257,22 @@ def skip_balanced_brackets(text: str, pos: int) -> int:
 
 def read_control_seq(text: str, pos: int) -> tuple[int, str]:
     """Starting at pos pointing at '\\', return (new_pos, name).
-    For \\foo style: name is 'foo'. For \\<non-letter> (e.g. \\@): name is that char."""
+
+    Treats '@' as a letter for control-sequence-name purposes, which matches
+    LaTeX behaviour inside \\makeatletter…\\makeatother — the convention
+    in .sty / .cls files and in the macro files several papers ship
+    (\\@sgnarg, \\@copyrightLine, rep@theorem, …). If '@' is treated as
+    non-letter, those names get parsed as '\\@' + literal letters dropped
+    into parameter text, which collapses many distinct macros into one.
+    """
     n = len(text)
     assert pos < n and text[pos] == "\\"
     j = pos + 1
     if j >= n:
         return j, ""
-    if text[j].isalpha():
+    if text[j].isalpha() or text[j] == "@":
         start = j
-        while j < n and text[j].isalpha():
+        while j < n and (text[j].isalpha() or text[j] == "@"):
             j += 1
         return j, text[start:j]
     # Single non-letter token
@@ -277,37 +284,43 @@ def read_control_seq(text: str, pos: int) -> tuple[int, str]:
 # ---------------------------------------------------------------------------
 
 def consume_pattern(text: str, pos: int, pattern: str) -> tuple[int, str | None]:
-    """Walk arg pattern. Returns (new_pos, first_required_arg_name_or_None).
+    """Walk arg pattern. Returns (end_after_last_consumed_arg, first_required_arg_name).
 
-    The 'first required arg name' is the content of the first {...} group with
-    a leading backslash stripped (yielding e.g. 'vec' for \\renewcommand{\\vec}{...}).
-    For non-control-sequence first args (e.g. \\newcounter{foo}), the bare text
-    is returned ('foo').
+    The returned position is the index just past the last argument actually
+    consumed. Optional slots that don't fire do NOT advance the returned
+    position past the whitespace+comments scanned while probing for them —
+    otherwise a trailing optional like the [date] slot on
+    \\usepackage{foo}[date]? would pull the following provenance comment into
+    the captured verbatim when re-scanning our own sidecars.
     """
     name: str | None = None
+    end_after_consumed = pos
     for part in pattern.split():
-        pos = skip_ws_and_comments(text, pos)
-        if pos >= len(text):
-            return pos, name
+        probe = skip_ws_and_comments(text, pos)
+        if probe >= len(text):
+            return end_after_consumed, name
         if part == "s":
-            if text[pos] == "*":
-                pos += 1
+            if text[probe] == "*":
+                pos = probe + 1
+                end_after_consumed = pos
         elif part == "o":
-            if text[pos] == "[":
-                pos = skip_balanced_brackets(text, pos)
+            if text[probe] == "[":
+                pos = skip_balanced_brackets(text, probe)
+                end_after_consumed = pos
         elif part == "r":
-            if text[pos] == "{":
-                start = pos
-                pos = skip_balanced_braces(text, pos)
+            if text[probe] == "{":
+                start = probe
+                pos = skip_balanced_braces(text, probe)
+                end_after_consumed = pos
                 if name is None:
                     inner = text[start + 1 : pos - 1].strip()
                     name = _name_from_inner(inner)
             else:
-                # Required arg missing — bail out, don't advance.
-                return pos, name
+                # Required arg missing — bail out without advancing.
+                return end_after_consumed, name
         else:
             raise ValueError(f"unknown pattern element {part!r}")
-    return pos, name
+    return end_after_consumed, name
 
 
 def _name_from_inner(inner: str) -> str:
@@ -753,19 +766,25 @@ STANDARD_THEOREM_ENVS = {
 SIDECAR_NAME_RE = re.compile(r"^arXiv-(\d{4})-macros\.tex$")
 
 
-def scan_sidecar_macros(arxiv_dir: Path, sidecar: Path) -> dict[str, str]:
-    """Re-scan an already-written arXiv-YYMM-macros.tex.
+def scan_sidecar_full(arxiv_dir: Path, sidecar: Path) -> ScanResult:
+    """Re-scan an already-written arXiv-YYMM-{packages,macros}.tex sidecar.
 
-    Returns a dict {name: kind} of the macros defined in that file. The scanner
-    is the same one used for paper preambles — sidecars have no \\input and no
-    \\begin{document}, so DFS recursion never triggers.
+    Returns the full ScanResult (packages + macros, each Definition retains
+    its verbatim text, source filename, source line, and kind). The scanner
+    is the same one used for paper preambles — sidecars have no \\input and
+    no \\begin{document}, so DFS recursion never triggers.
     """
     src = make_source(arxiv_dir, sidecar)
     result = ScanResult()
     seen: set[str] = set()
     counter = [0]
     _scan_source(src, arxiv_dir, seen, result, counter, warn=lambda *a, **kw: None)
-    return {d.name: d.kind for d in result.macros if d.name}
+    return result
+
+
+def scan_sidecar_macros(arxiv_dir: Path, sidecar: Path) -> dict[str, str]:
+    """Backwards-compatible wrapper: name -> kind for an arXiv-YYMM-macros.tex."""
+    return {d.name: d.kind for d in scan_sidecar_full(arxiv_dir, sidecar).macros if d.name}
 
 
 def print_cross_paper_collisions(
