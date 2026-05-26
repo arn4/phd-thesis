@@ -32,6 +32,7 @@ General expectations when assembling the thesis:
 - **Macro / command collisions are likely** across papers. Plan to consolidate into a single thesis-wide macros file rather than `\input`-ing per-paper macros blindly.
 - **Bibliographies must be merged and deduplicated** from the per-paper sidecars into a thesis-wide `.bib`. Use `scripts/check_bib_coverage.py` to verify that every cite key in each paper's `.bbl` is present in its sidecar `.bib` before merging.
 - **Treat `arxiv-papers/` as read-only source.** Tarballs and unpacked directories must remain byte-identical to what arXiv shipped; the sidecar `.bib` files are managed by Luca, not Claude. Edit copies in the thesis tree, never the originals — re-deriving the unpacked source from the tarballs should always be possible. In particular, after running `latexmk` inside any unpacked paper directory, clean up with `latexmk -C` so no aux files are left behind.
+- **Tarballs and unpacked papers are git-ignored** (only the sidecar `.bib` files are tracked). To re-create them on a fresh checkout, run `uv run scripts/fetch_arxiv_sources.py` — it pulls each version-pinned tarball from `https://arxiv.org/src/<id>v<n>` and extracts it.
 
 ## Build toolchain (planned)
 
