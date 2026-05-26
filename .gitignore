@@ -5,3 +5,21 @@ arxiv-papers/*/
 __pycache__/
 uv.lock
 build/
+
+# LaTeX aux artifacts (latexmk, biber, hyperref, etc.)
+*.aux
+*.bcf
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+*.lof
+*.lot
+*.nav
+*.snm
+*.vrb
