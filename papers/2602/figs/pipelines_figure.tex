@@ -1,0 +1,64 @@
+\definecolor{mlmcolor}{HTML}{4A4A4A}
+\definecolor{densecolor}{HTML}{5B9BD5}
+\definecolor{colbertcolor}{HTML}{ED7D31}
+\definecolor{arrowgray}{HTML}{666666}
+\begin{tikzpicture}[
+    node distance=1.8cm and 2.2cm,
+    box/.style={
+        rectangle,
+        rounded corners=3pt,
+        minimum width=2.4cm,
+        minimum height=0.9cm,
+        align=center,
+        font=\small,
+        draw=#1,
+        line width=0.8pt,
+        fill=#1!12
+    },
+    dense/.style={box=densecolor},
+    colbert/.style={box=colbertcolor},
+    mlm/.style={box=mlmcolor},
+    arr/.style={-{Stealth[length=2.5mm]}, line width=0.7pt, arrowgray},
+    pipelabel/.style={font=\small\bfseries, anchor=west},
+    costlabel/.style={font=\small\itshape, anchor=west, text=arrowgray},
+]
+% === Starting point ===
+\node[mlm] (mlm) {MLM\\Pre-training};
+% === Pipeline A: KD only (top) ===
+\node[dense, right=of mlm, yshift=2.2cm] (a1) {Unsupervised};
+\node[dense, right=of a1] (a2) {Supervised};
+\node[colbert, right=of a2] (a3) {KD};
+% === Pipeline B: Sup + KD (middle) ===
+\node[dense, right=of mlm] (b1) {Unsupervised};
+\node[colbert, right=of b1] (b2) {Supervised};
+\node[colbert, right=of b2] (b3) {KD};
+% === Pipeline C: Full ColBERT (bottom) ===
+\node[colbert, right=of mlm, yshift=-2.2cm] (c1) {Unsupervised};
+\node[colbert, right=of c1] (c2) {Supervised};
+\node[colbert, right=of c2] (c3) {KD};
+% === Arrows from MLM ===
+\draw[arr] (mlm.east) -- ++(0.4,0) |- (a1.west);
+\draw[arr] (mlm.east) -- (b1.west);
+\draw[arr] (mlm.east) -- ++(0.4,0) |- (c1.west);
+% === Pipeline A arrows ===
+\draw[arr] (a1) -- (a2);
+\draw[arr] (a2) -- (a3);
+% === Pipeline B arrows ===
+\draw[arr] (b1) -- (b2);
+\draw[arr] (b2) -- (b3);
+% === Pipeline C arrows ===
+\draw[arr] (c1) -- (c2);
+\draw[arr] (c2) -- (c3);
+% === Pipeline labels + compute costs (right side) ===
+\node[pipelabel] at ($(a3.east)+(0.3,0.12)$) {(a) KD only};
+\node[costlabel] at ($(a3.east)+(0.3,-0.22)$) {{\raise.17ex\hbox{$\scriptstyle\sim$}}8 GH200-hours};
+\node[pipelabel] at ($(b3.east)+(0.3,0.12)$) {(b) Supervised + KD};
+\node[costlabel] at ($(b3.east)+(0.3,-0.22)$) {{\raise.17ex\hbox{$\scriptstyle\sim$}}40 GH200-hours};
+\node[pipelabel] at ($(c3.east)+(0.3,0.12)$) {(c) ColBERT-Zero};
+\node[costlabel] at ($(c3.east)+(0.3,-0.22)$) {{\raise.17ex\hbox{$\scriptstyle\sim$}}408 GH200-hours};
+% === Legend ===
+\node[dense, minimum width=1.4cm, minimum height=0.55cm] (leg1) at ($(c1.south)!0.5!(c2.south)+(0,-1.0)$) {};
+\node[anchor=west, font=\small] at (leg1.east) {~Dense};
+\node[colbert, minimum width=1.4cm, minimum height=0.55cm] (leg2) at ($(leg1.east)+(2.4,0)$) {};
+\node[anchor=west, font=\small] at (leg2.east) {~ColBERT};
+\end{tikzpicture}

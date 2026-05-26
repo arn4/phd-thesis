@@ -43,7 +43,7 @@
     "remark": "remark",
     "rep@theorem": "rep@theorem",
     "sign": "sign",
-    "theassump": "theassump",
+    "theassump": null,
     "theorem": "theorem",
     "vec": "vec",
     "w": "w"

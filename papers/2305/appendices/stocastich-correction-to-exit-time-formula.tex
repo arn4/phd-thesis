@@ -1,0 +1,35 @@
+\section{Stocastich correction to exit time formula}
+
+\label{app:SDE_exit_time} 
+In this section we derive a new exit time formula for the case \(p=1\), that takes into account the stochastic corrections of the dynamics.
+
+At first, we require the further assumption \(w^0\perp\w_\star^0\). Obviously, this is not realistic, since to achieve this initialization we should know \(\w_\star\) exactly. Still, this case is could arise interest, since it corresponds to \(m^0=0\), that is a fixed point of Equation~\eqref{eq:spherical-p1-ode}. Thus, there is no dynamics in the ODE description, while the SDE are able to jump out from the fixed point and reach the point of convergence of the SGD. Lastly, the following analysis can be generalized to be used with the usual initial conditions.
+
+The key observation is approximating both the noise and the drift of Equation~\eqref{eq:constrained_brownian_motion_p1} to the first non-zero order, when evaluated at \(m=0\). As we pointed out above, the drift term is null at initialization, so the leading order is the first; this corresponds to the linearization of Equation~\eqref{eq:spherical-p1-ode}, and the linear factor is
+\begin{equation}
+    \mu \coloneqq \left[4(1-6\gamma)-2\gamma\Delta\right].
+\end{equation}
+Instead, the noise term is not vanishing at \(m=0\). Of course, \(\vec{\sigma}_\Q{(\Omega)}\) does not contribute because is proportional to \(m_S\). Moreover, looking at the expression for \(\Sigma\) in Appendix~\ref{app:SDE_with_generic_width}, we can observe that the covariance matrix is diagonal since the non-diagonal term is proportional to \(m_S\) as well. All considered, the only term is contributing is the variance of \(m\): the two-dimensional Brownian motion can be reduced to one in dimension 1, with variance
+\[
+    \sigma^2 \coloneqq \frac{\gamma}{pd}(48+4\Delta).
+\]
+Summarizing, the SDE near the initialization can be described as
+\begin{equation}
+    \dif m = \mu m\dif t + \sigma \dif b_t,
+\end{equation}
+where \(b_t\) is a one-dimensional Wiener process with unit variance.
+The approximated evolution of \(m\) is a \emph{expansive Ornstein--Uhlenbeck} process, since \(\mu>0\).
+We have already shown in the main that there is a direct map between \(m\) and the population risk;
+we can deal just with \(m\) for measuring the exit time.
+Given an expansive OU-process staring at \(m=0\), the mean first exit time from the interval \((-\sqrt{T},\sqrt{T})\) is given~by~\cite{zeng2020mean}
+\begin{equation} \label{eq:exit_time_SDE}
+  t^{(SDE)}_\text{ext} = \frac{T}{\sigma^2} \prescript{}{2}F_2{
+    \left(1,1; 3/2,2; 
+  -\frac{\mu}{\sigma^2}T\right)}
+\end{equation}
+where \(\prescript{}{2}F_2\) is a generalized hypergeometric function;
+see \cite{zeng2020mean} for reference.
+The formula does not have a closed form like the one derived earlier, and it works only when \(T\) is small enough that the exit point is not too far from initial conditions, otherwise the approximation we did do not hold anymore.
+
+As reported in \cite{zeng2020mean}, the formula can be generalized also to the initial condition we used in the rest of the manuscript, where \(\M \sim \mathcal N \left(0,\sfrac{1}{\sqrt{d}}\right)\). Again, we have to average over the initial conditions: \eqref{eq:exit_time_SDE} coincides with the \emph{annealed} version, while we do not present here the \emph{quenched} one to be concise.
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

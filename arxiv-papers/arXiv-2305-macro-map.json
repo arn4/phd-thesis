@@ -1,8 +1,10 @@
 {
   "paper": "arXiv-2305",
   "mappings": {
+    "BigO": "BigO",
     "Cov": "Cov",
     "Diag": "Diag",
+    "EV": "EV",
     "Explf": "Explf",
     "M": "M",
     "P": "P",
@@ -49,7 +51,8 @@
     "rep@theorem": "rep@theorem",
     "risk": "risk",
     "sign": "sign",
-    "theassump": "theassump",
+    "smallo": "smallo",
+    "theassump": null,
     "theorem": "theorem",
     "vec": "vec",
     "w": "w"

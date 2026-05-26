@@ -1,0 +1,44 @@
+\section{Derivation of Eq. \eqref{eq:def:mf_orthogonal} and local fields covariance}
+
+\label{app:mean_field_orthogonal_derivation}
+Let's start by taking the time derivative of Eq.~\eqref{eq:def:Qorth}
+\[
+    \dod{\Q^\bot}{t} = \dod{\Q}{t} - \dod{\M}{t}\P^{-1}\M^\top - \M\P^{-1}\dod{\M^\top}{t} \coloneqq \Psi^\bot(\Omega),
+\]
+and plugging in equations~\eqref{eq:def:gf_ode}~and~\eqref{eq:def:Psi} one after the other we get
+\[\begin{split}
+\Psi^\bot_{ij}(\Omega) \!&=\! \mathbb E \Bigg[\!\left(\sigma'(\lambda_i)\lambda_{j}\!+\!\sigma'(\lambda_j)\lambda_{i}\right) \mathcal{E} \!-\!
+    \!\sum_{r=1}^k\!\sum_{t=1}^k\!\sigma'(\lambda_i)\lambda^{\star}_{r}\mathcal{E}\!\left[\!\P^{-1}\!\right]_{rt}\!\left[\!\M^\top\!\right]_{tj} -
+    \!\sum_{r=1}^k\!\sum_{t=1}^k\!\left[\M\right]_{ir}\!\left[\!\P^{-1}\!\right]_{rt}\!\lambda^{\star}_{t}\sigma'(\lambda_i)\mathcal{E}\Bigg] \\
+    &=\!\mathbb E \!\left[\!
+        \mathcal{E} \sum_{r=1}^k\!\sum_{t=1}^k \left(\!
+        \sigma'(\lambda_i)\left(\lambda_{j}\!-\!\lambda^{\star}_{r}\!\left[\P^{-1}\right]_{rt}\!\left[\M^\top\right]_{tj}\right) +
+        \sigma'(\lambda_j)\left(\lambda_{i}\!-\!\left[\M\right]_{ir}\!\left[\P^{-1}\right]_{rt}\!\lambda^{\star}_{t}\right)
+        \!\right)
+    \!\right],
+\end{split}\]
+where all the expected value are intended over $(\vec{\lambda},\vec{\lambda}^{\star})\sim\mathcal{N}(\vec{0}_{\hids+\hidt}, \Omega)$. Starting from the definition of $\vec{\lambda}^\bot$
+\[
+   \vec{\lambda}^{\bot} = W^{\bot}\vec{x} = \left(W -  M P^{-1} W^\star\right)\vec{x} = \vec{\lambda} - M P^{-1} \vec{\lambda}^{\star},
+\]
+and writing single component
+\[
+   \vec{\lambda}^{\bot}_i = \lambda_{i}- \sum_{r=1}^k\sum_{t=1}^k\left[\M\right]_{ir}\left[\P^{-1}\right]_{rt}\lambda^{\star}_{t},
+\]
+substituting in the expression above we finally get
+\begin{equation} 
+\Psi^\bot_{ij}(\Omega) = \mathbb E \left[ \left(\sigma'(\lambda_i)\lambda^{\bot}_j + \sigma'(\lambda_j)\lambda^{\bot}_i\right)\mathcal{E}\right].
+\end{equation}
+
+The explicit computation of the expected value depends on the particular activation function used. Even though, the final expression can only be function of the covariance matrix entries, since all the local fields are zero-mean Gaussian variables.
+We report the covariance matrix of local fields
+\begin{equation} \label{eq:def:new_covariance}
+\Cov\left[\vec{\lambda}, \vec{\lambda}^\bot, \vec{\lambda}^\star\right] = 
+\begin{pmatrix}
+\Q & \Q^\bot & \M \\
+\Q^\bot & \Q^\bot & 0 \\
+{\M^{\top}} & 0 & \P
+\end{pmatrix},
+\end{equation}
+where $\Q^\bot = \Q - \M\P^{-1}\M^\top$ as defined above.
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

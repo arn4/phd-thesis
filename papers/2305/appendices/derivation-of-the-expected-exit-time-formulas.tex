@@ -1,0 +1,151 @@
+\section{Derivation of the expected exit time formulas}
+
+\label{app:exit_time-derivation}
+
+\subsection{Linearization of the equations}
+The linear approximation of \(\Psi\) around $m_{j}\approx 0$ is given by
+\begin{equation}
+  \Psi_{j} = 4
+      \left(m_{j} - \frac{m_{j}}{p}\right) 
+      = 4 \left(1 - \frac{1}{p}\right) m_{j},
+\end{equation}
+while for \(\Phi\) we distinguish the cases \(j=l\) or not
+\begin{equation}\begin{split}
+  j \neq l \quad \Phi_{jl} &= 4\left[
+      2\left( - 2\frac{\Q_{jl}}{p}\right)
+  \right] +\\
+  &\quad+\frac{4 \gamma}{p} \Biggr\{
+        3 \Q_{jl} -\frac2{p}\Biggl[p \Q_{jl} + 4 \Q_{jl} \Biggl] + 
+        \frac1{p^2}\left[\left(p^2+2p\right)\Q_{jl} +
+        8p \Q_{jl} + 24\Q_{jl} \right] + \Delta \Q_{jl}\Biggr\} \\ 
+  &= -\frac{16}{p} \Q_{jl} 
+    +\frac{4 \gamma}{p} \left\{
+      3 -2 -\frac{8}{p} +1 +\frac2p +\frac8p + \frac{24}{p^2} + \Delta \right\}\Q_{jl} \\
+  &= -\frac{16}{p} \Q_{jl} 
+  +\frac{4 \gamma}{p} \left\{2 +\frac{2}{p} + \frac{24}{p^2} + \Delta \right\}\Q_{jl}
+\end{split}\end{equation}
+\begin{equation}\begin{split}
+  j = l \quad \Phi_{jj} &= 4\left[
+      2\left( -\frac{1}{p}\right)
+  \right] + \frac{4 \gamma}{p} \Biggr\{
+        3 -\frac2{p}\Biggl[p + 2 \Biggl] + 
+        \frac1{p^2}\left[\left(p^2+2p\right) +
+        4p + 8 \right] + \Delta\Biggr\} \\
+  &= -\frac{8}{p} + \frac{4 \gamma}{p} \left\{
+    3 -2 -\frac{4}{p} +1 +\frac2p +\frac4p + \frac{8}{p^2} + \Delta \right\} \\
+  &= -\frac{8}{p} +\frac{4 \gamma}{p} \left\{2 +\frac{2}{p} + \frac{8}{p^2} + \Delta \right\}
+\end{split}\end{equation}
+
+Given these linear approximations, we are ready to write down the equations valid 
+as long as the risk stays in the first plateau
+\begin{equation}\label{eq:Msphericalgenericpk1}\begin{split}
+  \dod{\left[\M{\left(t\right)}\right]_{j}}{t} &= 
+    \left[
+      4 \left(1 - \frac{1}{p}\right)
+      +\frac{4}{p}-\frac{2 \gamma}{p} \left(2 +\frac{2}{p} + \frac{8}{p^2} + \Delta \right)
+    \right] \left[\M{\left(t\right)}\right]_{j} \\
+    &= \left[
+      4 -\frac{2 \gamma}{p} \left(2 +\frac{2}{p} + \frac{8}{p^2} + \Delta \right)
+    \right] \left[\M{\left(t\right)}\right]_{j} \\
+    &= 4\left[
+      1 -\frac{\gamma}{p} \left(1 +\frac{1}{p} + \frac{4}{p^2} + \frac\Delta2 \right)
+    \right] \left[\M{\left(t\right)}\right]_{j} ,
+\end{split}\end{equation}
+\begin{equation}\label{eq:Qsphericalgenericpk1}\begin{split}
+  \dod{\left[\Q{\left(t\right)}\right]_{jl}}{t} &= 
+    \left[
+      -\frac{16}{p} +\frac{4 \gamma}{p} \left(2 +\frac{2}{p} + \frac{24}{p^2} + \Delta \right)
+      +\frac{8}{p} -\frac{4 \gamma}{p}  \left(2 +\frac{2}{p} + \frac{8}{p^2} + \Delta \right)
+    \right] \left[\Q{\left(t\right)}\right]_{jl} \\
+  &= \left[
+    -\frac{8}{p} +\frac{4 \gamma}{p} \left(\frac{16}{p^2}\right)
+  \right] \left[\Q{\left(t\right)}\right]_{jl} \\
+  &= -\frac{8}{p} \left[1-\frac{8\gamma}{p^2}\right] \left[\Q{\left(t\right)}\right]_{jl}.
+\end{split}\end{equation}
+We observe that the evolution of the sufficient statistics is uncoupled in the starting saddle.
+We can shorthand the notation by introducing \(\omega_Q\) and \(\omega_M\)
+\begin{equation}\begin{split}
+    \dod{\M_j}{t} &= \omega_M \M_j \\
+    \dod{\Q_{jl}}{t} &= -\omega_Q \Q_{jl} \quad\text{when } j\neq l.
+\end{split}\end{equation}
+These equations admit a simple solution given by
+\begin{equation}\begin{split} \label{eq:approx_suff_stat}
+    \M_j{(t)} &= \M_j{(0)}\exp[\omega_M t]  \\
+    \Q_{jl}{(t)} &= \Q_{jl}{(0)}\exp[-\omega_Q t].
+\end{split}\end{equation}
+ 
+
+\subsection{Solving the approximated risk equation}
+From Eq.~\eqref{eq:risk_square} when the weights are on the sphere, it follows that the risk is given by
+\begin{equation}
+  \risk{(\Q,\M)}-\frac\Delta2 = 1 + \frac1p + \frac{1}{p^2}\sum_{j,l=1;j\neq l}^p \Q^2_{jl} - \frac2p \sum_{j=1}^p \M^2_{j}
+\end{equation}
+Eqs.~\eqref{eq:approx_suff_stat} can be used to obtain a deterministic time evolution of the risk. The only source of randomness left is from the initial conditions, we can define two random variables as
+\begin{equation}
+    \frac{\mu_0}{d} \coloneqq \sum_{j=1}^p \left[\M_{j}(0)\right]^2 \quad\text{and}\quad
+    \frac{\tau_0}{d} \coloneqq \sum_{j,l=1;j\neq l}^p \left[\Q_{jl}(0)\right]^2,
+\end{equation}
+and get an expression for the risk in function of time
+\begin{equation}
+    \risk(t)-\frac\Delta2 = 1+\frac1p+\frac{d\tau_0}{p^2}\exp[-2\omega_Q t]-\frac{2d\mu_0}{p}\exp[2\omega_M t]
+\end{equation}
+This equation is not polished enough to be solved analytically yet. First of all we need to assume that the risk is decreasing by forcing
+\(\omega_\M > 0\). Secondly, we want the exponential proportional to \(\tau_0\) to be negligible when \(t>0\): this follow from \(\omega_\Q>0\).
+In principle, this last condition is not needed for the process to converge like the first one, but without it is not possible to find an analytical solution for the cross -threshold equation. Moreover, when \(p>6\): \(\omega_\M>0 \implies \omega_\Q>0\), so we can see that the request is not unreasonable.
+
+Wrapping all this consideration together, Eq.~\eqref{eq:exit_time_implicit_equation} is
+\begin{equation}
+    (1-T)\left(1+\frac1p+\frac{\tau_0}{dp^2}-\frac{2\mu_0}{dp}\right) = 1+\frac1p-\frac{2\mu_0}{dp}\exp[2\omega_M t_\text{ext}],
+\end{equation}
+from where we can compute the exit time
+\[
+t_\text{ext} = \frac{\log\left[\frac{Tp(p+1)d+(2\mu_0p-\tau_0)(1-T)}{2\mu_0 p}\right]}{2\omega_\M}.
+\]
+\subsection{Averaging on initial conditions}
+As of now \(t_\text{ext}\) is still  depending on the initial conditions through the random variables \(\mu_0\) and \(\tau_0\).
+Following from the choosen initial conditions, and taking into account the dependence between the two random variables
+\[
+    \mu_0,\tau_0 \sim \mathcal{P}^d_p \quad\text{where }
+    \mathcal{P}^d_p \equiv \left(d\sum_{j=1}^{p}(u_j\cdot v)^2, 2d\sum_{j=1}^{p}\sum_{l=j+1}^{p}(u_j\cdot u_l)^2\right)\text{ with } v,u_j\sim\mathbb S^{d-1}(1).
+\]
+We have now two possibility to get the expectation of \(t_\text{ext}\). The first one is known in statistical physics literature as \emph{quenched formula} leaves us with an unexpressed expected value
+\begin{equation}
+    t_\text{ext}^\text{(qnc)} = \mathbb E_{\mu_0,\tau_0 \sim \mathcal{P}^d_p} \left[
+        \frac{\log\left[\frac{Tp(p+1)d+(2\mu_0p-\tau_0)(1-T)}{2\mu_0 p}\right]}{2\omega_\M}
+    \right].
+\end{equation}
+The second one, often referred as the \emph{annealed formula}, is obtain by simply replacing the random variables with their expected values
+\begin{equation}
+    t_\text{ext}^\text{(anl)} = \frac{\log\left[\frac{T(p+1)d+(p+1)(1-T)}{2 p}\right]}{2\omega_\M}.
+\end{equation}
+
+\paragraph{Case \(p=1\)} For completeness, let's reduce these formulas to the simplest case \(p=1\).
+In this case \(\tau_0\) does not appear, and from Eq.~\eqref{eq:initial_distribution_QM} we find that \(\mu_0 \sim \chi^2(1)\), so the quenched formula reduces to
+\begin{equation}
+    t_\text{ext}^\text{(qnc)} = \mathbb E_{\mu_0 \sim \chi^2(1)} \left[
+        \frac{\log\left[\frac{Td}{\mu_0}+(1-T)\right]}{8(1-6\gamma)-4\gamma\Delta)}
+    \right].
+\end{equation}
+
+\subsection{Overparameterization Gain} \label{app:overp_gain}
+Let introduce the number of gradient step needed to escape the threshold. Remembering \(t=\sfrac{\nu\gamma}{pd}\), we define
+\begin{equation}
+    s_\text{ext}{(p,d,\gamma,\Delta,T)} \coloneqq \frac{pd}{\gamma} t_\text{ext}.
+\end{equation}
+In the domain of our interest, namely \(s_\text{ext}>0\),  \(s_\text{ext}\) is and convex function in \(\gamma\). Therefore, it exist a unique minimum that correspond to the minimum number of steps required to cross the threshold when \(p, d\) are fixed
+\[
+    0=\eval{\dpd{s_\text{ext}{(p,d,\gamma,\Delta,T)}}{\gamma}}_{\gamma = \gamma_\text{opt}{(p,d,\Delta)}}
+    \quad \implies \quad
+    \gamma_\text{opt}{(p,d,\Delta)} = \frac{p^3}{8+2p+(2+\Delta)p^2}
+\]
+Note that this learning rate correspond to an exit time whose log's prefactor is constant to \(\frac{1}{4}\), as reported in the main.
+We can also compute the optimal number of steps; we choose to stick with the \emph{annealed formula}: for large \(p\) both the estimation lead to the same result, while for small \(p\) we are underestimating the exit time of a small factor. Hence, the annealed minimum number of steps is
+\[
+    s^\text{min}_\text{ext}{(p,d,\Delta,T)}\coloneqq s^\text{anl}_\text{ext}{(p,d,\gamma_\text{opt}{(p,d,\Delta)},\Delta,T)} = \frac{d\left[8+2p+(2+\Delta)p^2\right]\log\left[\frac{T(p+1)d+(p+1)(1-T)}{2 p}\right]}{4p^2}.
+\]
+This formula can be used to estimate the overparametrization gain. Noting that \(s^\text{min}_\text{ext}\) is monotonically decrising in \(p\), we can define the gain as
+\[
+    \lim_{d\to+\infty} \frac{s^\text{min}_\text{ext}{(p=1,d,\Delta,T)}}{\lim_{p\to+\infty}s^\text{min}_\text{ext}{(p,d,\Delta,T)}} = \frac{12+\Delta}{2+\Delta}.
+\]
+%TODO: comment on this, which is not super accurate, but it captures the flavor of the truth.
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

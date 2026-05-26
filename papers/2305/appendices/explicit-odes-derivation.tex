@@ -1,0 +1,108 @@
+\section{Explicit ODEs derivation}
+
+\label{app:square_equations}
+\subsection{Derivation of the process}
+Let's start by reminding the definition of \emph{displacement} at step \(\i\)
+\begin{equation}
+\mathcal{E}^{\i} \coloneqq \frac{1}{p}\sum_{j=1}^{\hids}a_{j}(\lambda_{j}^{\nu})^2 - (\lambda_{\star}^\i)^2 + \sqrt{\noise} z^{\i},
+\end{equation}
+from which it's easy to write the loss function
+\begin{equation}
+    \ell{(y^{\nu},f_{\Theta^{\nu}}(x^{\nu}))} = \frac12 \left(\mathcal{E}^{\i}\right)^2.
+\end{equation}
+The gradient respect to the parameters is given
+\begin{equation}\begin{split}
+    \partial_{a_j} \ell{(y^{\nu},f_{\Theta^{\nu}}(x^{\nu}))} &= \frac1p \mathcal{E}^{\i} (\lambda_{j}^{\nu})^2 \\
+    \nabla_{\w_j} \ell{(y^{\nu},f_{\Theta^{\nu}}(x^{\nu}))}  &= \frac1p \mathcal{E}^{\i} 2 a^\i_j \lambda_{j}^{\nu} x^\i
+\end{split}\end{equation}
+Using \(\gamma\) as learning rate for the weights \(\w_j\) and \(\sfrac{\gamma}{p}\) for the second layer, we have the following update equations
+\begin{equation}\begin{split}
+    a^{\i+1}_j &= a^{\i}_j - \frac{\gamma}{pd} \mathcal{E}^{\i} (\lambda_{j}^{\nu})^2 \\
+    \w_j^{\i+1} &= \w_j^{\i} - \frac{\gamma}{p} \mathcal{E}^{\i} 2 a^\i_j \lambda_{j}^{\nu} x^\i
+\end{split}\end{equation}
+Applying the definition of the sufficient statistics, \(m_j = \sfrac{\w_j\w_\star}{d}\) and \(\Q_{jl} = \sfrac{\w_j\w_l}{d}\), we can recover Eqs.~\eqref{eq:def:overlap_process}.
+
+\subsection{Explicit ODE}
+To get the explicit form of our ODEs we need to compute some expected value over the preactivations \((\lambda_\star,\lambda)\).
+These are gaussian variables, whose correlation matrix is given by \(\Omega\).
+Similarly, the population risk is defined as
+\[
+    \risk = \mathbb E_{(\lf,\lf^{\star})\sim\mathcal{N}(0_{\hids+1}, \Omega)}\left[\frac12 \mathcal{E}^2\right].
+\]
+
+Let's look close to the random variable we need for this expected values, expressing them just as function of local fields.
+To be more concise, from now on with \(\mathbb E\) we always mean the expected value over \((\lf,\lf^{\star})\sim\mathcal{N}(0_{\hids+1}, \Omega)\).
+For the risk we just need
+\[\begin{split}
+  \EV{\mathcal{E}^2} =& \lambda_\star^4 + \frac{1}{p^2} \sum_{j, l =1}^p a_j a_l\EV{\lf_j^2 \lf_l^2} - \frac{2}{p} \sum_{j=1}^p a_j\EV{\lf_j^2 \lf_\star^2},
+\end{split}\]
+while for the ODE of \(\bar{a}\) 
+\[\begin{split}
+    \EV{\mathcal{E} \lf_j^2} = \frac{1}{p}\sum_{l=1}^{\hids}a_{l}\EV{\lambda_{l}^2\lf_j^2} - \EV{\lambda_{\star}^2\lf_j^2},
+\end{split}\]
+where we omitted the noise part since it averages out with the expectation.
+The equation for \(\bar{m}\) requires 
+\[\begin{split}
+    2a_j\EV{\mathcal{E} \lf_j\lf_\star} = \frac{2}{p}\sum_{l=1}^{\hids}a_j a_{l}\EV{\lambda_{l}^2\lf_j\lf_\star} - 2\EV{\lambda_{\star}^2\lf_j\lf_\star},
+\end{split}\]
+while we need two different expectations for \(\bar\Q\)
+\[\begin{split}
+    2(a_j+a_l)\EV{\mathcal{E} \lf_j\lf_\star} &= 2(a_j+a_l)\left[\frac{1}{p}\sum_{s=1}^{\hids}a_s\EV{\lambda_{s}^2\lf_j\lf_l} - \EV{\lambda_{\star}^2\lf_j\lf_l}\right] \quad\text{and} \\
+    %
+    4\frac{\gamma}{p}{\mathcal{E}}^{2} a_{j}a_{l}\lambda_{j}\lambda_{l}  = 16\frac{\gamma}{p} a_{j}a_{l} \Bigg[ %& \\
+        &  \EV{\lf_j \lf_l\lf_\star^4}  - \frac{2}{p} \sum_{s =1}^{p} a_s \EV{\lf_j \lf_l \lf_\star^2 \lf_s^2} 
+           + \frac{1}{p^2} \sum_{ s,  t =1}^{p}\left(a_sa_t\EV{\lf_j \lf_l \lf_s^2 \lf_t^2}+\Delta\EV{\lf_j \lf_l}\right) \Bigg].
+\end{split}\]
+We are left to compute some distribution moments of a multivariate Gaussian of second, fourth and sixh order.
+In the \href{https://github.com/IdePHICS/EscapingMediocrity}{GitHub repository} can be found a Mathematica script to address this task;
+alternatively Isserlis' Theorem can be applied.
+We introduce a shorthand in the notation \[\omega_{\alpha\beta} \coloneqq \left[{\Omega}\right]_{\alpha\beta},\]
+where the indices \(\alpha\) and \(\beta\) can discriminate between local fields \(\lambda\) (if \(\alpha,\beta \in [1,\dots,p]\), and \(\lambda_\star\) (if  \(\alpha,\beta = p+1\)). The final result are given by
+\begin{align*}
+  \EV{\lf_\alpha \lf_\beta} &= \omega_{\alpha\beta}\\
+  %
+  \EV{\lf_\alpha^2 \lf_\beta^2} 
+  &= \omega_{\alpha\alpha}  \omega_{\beta\beta} + 2 \omega_{\alpha\beta}^2 \\
+  %
+  \EV{\lf_\alpha \lf_\beta \lf_\gamma^2}
+  &= \omega_{\alpha\beta}\omega_{\gamma\gamma} + 2 \omega_{\alpha\gamma}\omega_{\beta\gamma}\\
+  % 
+  \EV{\lf_\alpha \lf_\beta \lf_\gamma^2 \lf_\delta^2}
+  &= \omega_{\alpha\beta}\omega_{\gamma\gamma}\omega_{\delta\delta} + 2\omega_{\alpha\beta}\omega_{\gamma\delta}^2 + 2\omega_{\alpha\gamma}\omega_{\beta\gamma}\omega_{\delta\delta} +\\
+  &\quad4\omega_{\alpha\gamma}\omega_{\beta\delta}\omega_{\gamma\delta}+4\omega_{\alpha\delta}\omega_{\beta\gamma}\omega_{\gamma\delta} + 2\omega_{\alpha\delta}\omega_{\beta\delta}\omega_{\gamma\gamma}
+\end{align*}
+By retracing all steps backward and making the necessary substitutions,
+we can arrive at an explicit form of the ODEs and population risk. 
+While the full risk expression can be found in Eq.~\eqref{eq:def:risk}, we report here just the case \(a_j=1\) for the ODEs since they have a compact matrix form
+\begin{subequations}\label{eq:full_squared_ode}\begin{align}
+    \label{eq:quadraticODE_M}
+    \dod{\M}{t} &=
+        2\left(\rho - \frac{\Tr{\Q}}p\right)\M +
+        4\left(\rho\M - \frac{\Q\M}{p}\right) \\
+    %
+    \label{eq:quadraticODE_Q}
+    \begin{split}
+        \dod{\Q}{t} &= 
+            4\left(\rho - \frac{\Tr{\Q}}p\right)\Q +
+            8\left(\frac{\M\M^\top}{k} - \frac{\Q^2}{p}\right) \\
+        &\quad+\frac{4 \gamma}{p} \Biggr\{
+            \left[3\rho^2\Q + 12\rho\M\M^\top\right] +\frac1{p^2}\left[\left(\Tr{\Q}^2+2\Tr{\Q^2}\right)\Q +
+                            4\Tr{\Q}\Q^2 + 8\Q^3
+                        \right]\\
+            &\qquad\quad\quad
+            -\frac2{p}\Biggl[\left(\rho\Tr{\Q}+2\Tr{\M\M^\top}\right)\Q +
+                            2\Tr{\Q}\M\M^\top\\
+                            &\qquad\qquad\qquad\quad+ 2\rho\Q^2+ 
+                            4\left(\M\M^\top\Q + \Q\M\M^\top\right)
+                        \Biggl] + \Delta \Q\Biggr\},
+    \end{split}
+\end{align}\end{subequations}
+where \(\rho \coloneqq \sfrac{\w_\star^2}{d}\). 
+For completeness, this is Eq.~\eqref{eq:def:risk} for the case \(a_j=1\)
+\begin{equation} \label{eq:risk_square}\begin{split}
+  \mathcal{R}(\Omega)
+     \! =\! \frac{3+\Delta}{2}
+          \!-\!\frac{\rho\Tr{\Q}+2\Tr{\M\M^\top}}{p}
+          \!+\!\frac{\Tr{\Q}^2+2\Tr{\Q^2}}{2p^2}.
+\end{split}\end{equation}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

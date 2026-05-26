@@ -18,7 +18,7 @@
 % from assembler.tex:30
 \newcommand{\otherlabel}[2]{\protected@edef\@currentlabel{#2}\label{#1}}
 % from macros.tex:5
-\newcommand
+\newcommand\tagthis{\addtocounter{equation}{1}\tag{\theequation}}
 % from macros.tex:14
 \newcommand{\bl}[1]{\textbf{\textcolor{orange}{[BL: #1]}}}
 % from macros.tex:17
@@ -610,7 +610,11 @@
 \providecommand{\inlinecomment}[3]{%
   {\color{#1}#2: #3}}
 % from macros.tex:352
-\newcommand
+\newcommand\commenter[2]%
+{%
+  \expandafter\newcommand\csname i#1\endcsname[1]{\inlinecomment{#2}{#1}{##1}}
+  \expandafter\newcommand\csname #1\endcsname[1]{\mycomment{#2}{#1}{##1}}
+}
 % from macros.tex:380
 \def\UrlBreaks{\do\/\do-}
 % from assembler.tex:69
@@ -621,7 +625,7 @@
 % from assembler.tex:72
 \renewcommand{\vec}[1]{\bm{#1}}
 % from assembler.tex:73
-\newcommand
+\newcommand\Et[1]{\mathbb{E}_t\left[#1\right]}
 
 % --- Theorems ---
 % from assembler.tex:43
@@ -642,3 +646,17 @@
 \newtheorem{remark}{Remark}
 % from assembler.tex:51
 \newtheorem{example}{Example}
+
+% --- Colors ---
+% from macros.tex:361
+\definecolor{mydarkblue}{rgb}{0,0.08,0.45}
+% from macros.tex:383
+\definecolor{allowedcolor}{RGB}{21,115,17}
+% from macros.tex:384
+\definecolor{noyhatcolor}{RGB}{254,155,30}
+% from macros.tex:385
+\definecolor{optimalcolor}{RGB}{38,254,254}
+% from macros.tex:386
+\definecolor{notallowedcolor}{RGB}{255,0,0}
+% from macros.tex:387
+\definecolor{nodynamicscolor}{RGB}{192,150,192}

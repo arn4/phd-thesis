@@ -1,0 +1,29 @@
+\section{Implementation Details} \label{sec:app:implementation}
+In this section. we provide all the implementation details needed to reproduce the Figures of the paper. The full detailed implementation can be repository linked in the main paper.
+
+Unless explicitly stated, we always run the plain version of Algorithm~\ref{algo:optimizer_main_step} with squared loss, as opposed to Assumption~\ref{assump:spherical_corr} which requires \emph{correlation loss} and spherical gradient. We use the reLU function as an activation. Finally, we always run simulations with \(W^0\bot W^\star\), which does not fall under Assumption~\ref{assump:init}. Indeed, our numerical simulations deviate from the theoretical assumptions needed for the formal proofs, but the aim here is to show that our claims are valid beyond the technical limitations of the theory and that they can allow us to understand settings closer to what is used in practice.
+
+In the plots with a single-index target we plot the \emph{absolute value} of the cosine similarity between the student weight \(\vec{w}\) and the teacher weight \(\vec{w}^\star\), averaged across \(N\) different runs (where we vary both seen samples and initial conditions). If \(q\) in the index for different runs:
+\[\text{yaxis}(t)=\frac1N\sum_{q=1}^N\left|\mathrm{CosSim}(\vec w^{(q)}_t,\vec w^{\star{(q)}})\right|,\]
+where
+\[\mathrm{CosSim}(\vec w,\vec w^{\star}) = \frac{\vec w\cdot\vec w^\star}{\norm{\vec w}_2\norm{\vec{w}^\star}_2}.\]
+In the plots with a multi-index target, we take the maximum across all the network weights
+\[\text{yaxis}(t)=\frac1N\sum_{q=1}^N\max_{j\in[p]}\left|\mathrm{CosSim}(\vec w^{(q)}_{j,t},\vec w^{\star{(q)}})\right|.\]
+\subsection{Hyperparameters of the Figures}
+Here are the hyperparameters used in the figures:
+\begin{itemize}
+    \item \textbf{Figure~\ref{fig:main:single_index_complete} (all 4)}: \(d=8192, \gamma_0=0.01, \rho_0 = 0.1, N=40\).
+    \item \textbf{Figure~\ref{fig:main:multi_index_complete} (left)}: \(p=8, d=2048, \gamma_0=0.01, \rho_0 = 0.1, N=40\), \(a^0_j\sim \mathrm{Rad}(1/2)\).
+    \item \textbf{Figure~\ref{fig:main:multi_index_complete} (center-left)}: \(p=8, d=2048, \gamma_0=0.01, \rho_0 = 0.1, N=40\), \(a^0_j\sim \mathcal{N}(0,1)\).
+    \item \textbf{Figure~\ref{fig:main:multi_index_complete} (center-right)}: \(p=8, d=2048, \gamma_0=0.1, \rho_0 = 0.1, N=40\), \(a^0_j\sim \mathcal{N}(0,1)\).
+    \item \textbf{Figure~\ref{fig:main:multi_index_complete} (right)}: \(p=8, d=2048, \gamma_0=0.1, \rho_0 = 0.1, N=20\), \(a^0_j\sim \mathcal{N}(0,1)\).
+    \item \textbf{Figure~\ref{fig:main:staircase1} (left)}: \(p=8, d=2048, \gamma_0=0.1, \rho_0 = 0.1, N=40\), \(a^0_j\sim \mathcal{N}(0,1)\).
+    \item \textbf{Figure~\ref{fig:main:staircase1} (right)}: \(p=4, d=1024, \gamma_0=0.01, \rho_0 = 0.1, N=10\), \(a^0_j\sim \mathcal{N}(0,1)\).
+     \item \textbf{Figure~\ref{fig:main:staircase2}}: \(p=4, d=1024, \gamma_0=0.01, \rho_0 = 0.1, N=10\), \(a^0_j\sim \mathcal{N}(0,1)\).
+    
+    \item \textbf{Figure~\ref{fig:app:other-algos} (left)}: SAM \(d=4096,8192, \gamma_0=0.01, \rho_0 = 0.1, N=40\).
+    \item \textbf{Figure~\ref{fig:app:other-algos} (right)}: 2-Lookahead \(d=4096,8192, \gamma_0=0.01, \rho_0 = 0.1, N=40\).
+    \item \textbf{Figure~\ref{fig:app:single-index-large-batch} (all 2)}: \(d=8192,  n_b=2d, \gamma_0=0.1, N=40\).
+    \item \textbf{Figure~\ref{fig:app:multi-index-large-batch} (upper)}: \(p=8, d=2048, n_b=2d, \gamma_0=0.1, \rho_0 = 0.1, N=40\), \(a^0_j\sim \mathcal{N}(0,1)\).
+    \item \textbf{Figure~\ref{fig:app:multi-index-large-batch} (lower)}: \(p=8, d=2048, n_b=2d, \gamma_0=0.1, \rho_0 = 0.1, N=20\), \(a^0_j\sim \mathcal{N}(0,1)\).
+\end{itemize}

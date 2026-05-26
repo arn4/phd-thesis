@@ -1,0 +1,321 @@
+\usetikzlibrary{arrows.meta,positioning,calc,fit,backgrounds,patterns,decorations.pathreplacing}
+
+
+% Colors from all three diagrams
+\definecolor{querycolor}{HTML}{6B9CD2}
+\definecolor{doccolor}{HTML}{7EBF7E}
+\definecolor{hardnegcolor}{HTML}{E8A0A0}
+\definecolor{poscolor}{HTML}{228B22}
+\definecolor{negcolor}{HTML}{8B2222}
+\definecolor{arrowgray}{HTML}{666666}
+\definecolor{losscolor}{HTML}{E67E22}
+\definecolor{highscore}{HTML}{2ECC71}
+\definecolor{lowscore}{HTML}{E74C3C}
+\definecolor{scorecolor}{HTML}{E8A0A0}
+\definecolor{teachercolor}{HTML}{F5A623}
+\definecolor{studentcolor}{HTML}{9B59B6}
+\definecolor{framegray}{HTML}{444444}
+\definecolor{midscore}{HTML}{F1C40F}
+\definecolor{klcolor}{HTML}{E91E63}
+
+% ================== ALIGNMENT KNOBS ==================
+\def\TopY{1.2cm}          % common top line for the 3 main sections
+\def\LossTopY{-11.6cm}    % common top line for the orange loss boxes (lower = longer arrows)
+\def\LossBoxH{3.5cm}      % make all loss boxes same height so their bottoms align
+
+\def\XsecA{0cm}
+\def\XsecB{12.5cm}
+\def\XsecC{24cm}
+% =====================================================
+
+\begin{tikzpicture}[
+    node distance=0.8cm and 3.5cm,
+    box/.style={rectangle,rounded corners=8pt,minimum width=3.5cm,minimum height=1.0cm,align=center,font=\small\ttfamily,draw=#1!60,line width=1pt,fill=#1!25},
+    query/.style={box=querycolor},
+    doc/.style={box=doccolor},
+    posdoc/.style={box=doccolor},
+    negdoc/.style={box=hardnegcolor},
+    posarr/.style={-{Stealth[length=3mm]}, line width=1.5pt, poscolor},
+    negarr/.style={-{Stealth[length=2.5mm]}, line width=0.8pt, negcolor, dashed},
+    score/.style={rectangle,rounded corners=3pt,minimum width=0.7cm,minimum height=0.5cm,align=center,font=\tiny\sffamily\bfseries,draw=#1!80,line width=1pt,fill=#1!40},
+    pairlabel/.style={font=\small\itshape, text=poscolor},
+    neglabel/.style={font=\small\itshape, text=negcolor},
+    frame/.style={rectangle,rounded corners=12pt,draw=arrowgray!50,line width=1.5pt,inner sep=12pt},
+    modelbox/.style={rectangle,rounded corners=8pt,minimum width=2.8cm,minimum height=3.5cm,align=center,font=\normalsize\sffamily\bfseries,draw=arrowgray!60,line width=1pt,fill=#1!25},
+    arr/.style={-{Stealth[length=3mm]}, line width=1pt, arrowgray},
+    looparr/.style={-{Stealth[length=3mm]}, line width=1.5pt, losscolor, dashed}
+]
+
+% Define common vertical position for all loss boxes
+\newcommand{\lossboxtop}{-12cm}
+
+% ============================================================
+% SECTION 1: IN-BATCH CONTRASTIVE (Unsupervised)
+% ============================================================
+\begin{scope}[shift={(\XsecA,0)}]
+\node[query, anchor=north] (q1) at (0,\TopY) {Query};
+\node[query, below=of q1] (q2) {Query};
+\node[query, below=of q2] (q3) {Query};
+\node[query, below=of q3] (q4) {Query};
+\node[doc, right=of q1] (d1) {Document};
+\node[doc, right=of q2] (d2) {Document};
+\node[doc, right=of q3] (d3) {Document};
+\node[doc, right=of q4] (d4) {Document};
+\draw[posarr] (q1.east) -- (d1.west);
+\draw[posarr] (q2.east) -- (d2.west);
+\draw[posarr] (q3.east) -- (d3.west);
+\draw[posarr] (q4.east) -- (d4.west);
+\draw[negarr] (q1.east) -- (d2.west);
+\draw[negarr] (q1.east) -- (d3.west);
+\draw[negarr] (q1.east) -- (d4.west);
+\draw[negarr] (q2.east) -- (d1.west);
+\draw[negarr] (q2.east) -- (d3.west);
+\draw[negarr] (q2.east) -- (d4.west);
+\draw[negarr] (q3.east) -- (d1.west);
+\draw[negarr] (q3.east) -- (d2.west);
+\draw[negarr] (q3.east) -- (d4.west);
+\draw[negarr] (q4.east) -- (d1.west);
+\draw[negarr] (q4.east) -- (d2.west);
+\draw[negarr] (q4.east) -- (d3.west);
+
+
+
+\begin{scope}[on background layer]
+\node[rectangle, rounded corners=12pt, draw=arrowgray!50, line width=1.5pt,fit=(q1)(q4)(d1)(d4), inner sep=15pt] (pairframe1) {};
+\end{scope}
+\node[font=\normalsize\sffamily\bfseries, arrowgray] at ($(pairframe1.north)+(0,0.4)$) {Unsupervised Contrastive Pre-Training};
+
+% Loss box at fixed vertical position
+\coordinate (lossanchor1) at ($(q1.west)!0.5!(d1.east)$);
+\node[rectangle, rounded corners=8pt, draw=losscolor!60, line width=1.5pt,
+      fill=losscolor!10, minimum width=11cm, minimum height=\LossBoxH,
+      anchor=north] (lossbox1) at (lossanchor1 |- 0,\LossTopY) {};
+\node[font=\small\sffamily\bfseries, losscolor!80!black] at ($(lossbox1.north)-(0,0.4cm)$) {InfoNCE loss with In-Batch Contrastive Pairs};
+\coordinate (simstart1) at ($(lossbox1.center) + (-3.5cm, 0.1cm)$);
+\node[font=\scriptsize\sffamily\bfseries, querycolor!80!black] at ($(simstart1)+(-0.3cm,0.15cm)$) {$q_i$};
+\node[font=\tiny\sffamily, anchor=south] at ($(simstart1)+(0.4cm,0.45cm)$) {$d_1$};
+\node[font=\tiny\sffamily, anchor=south] at ($(simstart1)+(1.2cm,0.45cm)$) {$d_2$};
+\node[font=\tiny\sffamily, anchor=south] at ($(simstart1)+(2.0cm,0.45cm)$) {$d_3$};
+\node[font=\tiny\sffamily, anchor=south] at ($(simstart1)+(2.8cm,0.45cm)$) {$d_4$};
+\node[score=highscore] at ($(simstart1)+(0.4cm,0.15cm)$) {0.9};
+\node[score=lowscore] at ($(simstart1)+(1.2cm,0.15cm)$) {0.2};
+\node[score=lowscore] at ($(simstart1)+(2.0cm,0.15cm)$) {0.1};
+\node[score=lowscore] at ($(simstart1)+(2.8cm,0.15cm)$) {0.3};
+\draw[poscolor, line width=1.5pt] ($(simstart1)+(0.1cm,-0.2cm)$) -- ++(0.6cm,0);
+\node[font=\tiny\sffamily, poscolor!80!black] at ($(simstart1)+(0.4cm,-0.45cm)$) {positive};
+\draw[-{Stealth[length=2mm]}, line width=1pt, arrowgray] ($(simstart1)+(3.4cm,0.15cm)$) -- ++(0.8cm,0) node[midway, above, font=\tiny\sffamily] {softmax};
+\coordinate (softstart1) at ($(simstart1)+(4.5cm,0cm)$);
+\node[font=\tiny\sffamily, anchor=south] at ($(softstart1)+(0.3cm,0.7cm)$) {$d_1$};
+\node[font=\tiny\sffamily, anchor=south] at ($(softstart1)+(0.9cm,0.7cm)$) {$d_2$};
+\node[font=\tiny\sffamily, anchor=south] at ($(softstart1)+(1.5cm,0.7cm)$) {$d_3$};
+\node[font=\tiny\sffamily, anchor=south] at ($(softstart1)+(2.1cm,0.7cm)$) {$d_4$};
+\fill[highscore!70] ($(softstart1)+(0.05cm,-0.3cm)$) rectangle ++(0.5cm,0.85cm);
+\fill[lowscore!50] ($(softstart1)+(0.65cm,-0.3cm)$) rectangle ++(0.5cm,0.18cm);
+\fill[lowscore!50] ($(softstart1)+(1.25cm,-0.3cm)$) rectangle ++(0.5cm,0.10cm);
+\fill[lowscore!50] ($(softstart1)+(1.85cm,-0.3cm)$) rectangle ++(0.5cm,0.22cm);
+\draw[arrowgray!60, line width=0.8pt, rounded corners=3pt] ($(softstart1)+(-0.05cm,-0.35cm)$) rectangle ++(2.5cm,1.05cm);
+\node[font=\tiny\sffamily\bfseries, highscore!80!black, align=center] at ($(softstart1)+(1.2cm,-0.7cm)$) {Negatives: random in-batch};
+\node[font=\scriptsize\sffamily\bfseries, losscolor!80!black, inner sep=3pt] at ($(lossbox1.south)+(0,0.5cm)$) {$\mathcal{L} = -\frac{1}{N}\sum_{i=1}^{N} \log \frac{\exp(s(q_i, d_i)/\tau)}{\sum_{j=1}^{N} \exp(s(q_i, d_j)/\tau)}$};
+\draw[-{Stealth[length=3mm]}, line width=1.5pt, losscolor] (pairframe1.south) -- (lossbox1.north) node[midway, right, font=\scriptsize\sffamily, losscolor!80!black] {};
+\end{scope}
+
+% ============================================================
+% SECTION 2: HARD NEGATIVE CONTRASTIVE (Supervised)
+% ============================================================
+\begin{scope}[shift={(\XsecB,0)}]
+\node[query, anchor=north] (hq1) at (0,\TopY) {Query};
+\node[posdoc, right=of hq1] (hd1) {Positive Document};
+\node[negdoc, below=of hd1] (hd1neg1) {Hard Negative Document};
+\node[negdoc, below=of hd1neg1] (hd1neg2) {Hard Negative Document};
+\node[query, below=4.4cm of hq1] (hq2) {Query};
+\node[posdoc, right=of hq2] (hd2) {Positive Document};
+\node[negdoc, below=of hd2] (hd2neg1) {Hard Negative Document};
+\node[negdoc, below=of hd2neg1] (hd2neg2) {Hard Negative Document};
+\draw[posarr] (hq1.east) -- (hd1.west);
+\draw[posarr] (hq2.east) -- (hd2.west);
+\draw[negarr] (hq1.east) -- (hd1neg1.west);
+\draw[negarr] (hq1.east) -- (hd1neg2.west);
+\draw[negarr] (hq1.east) -- (hd2.west);
+\draw[negarr] (hq1.east) -- (hd2neg1.west);
+\draw[negarr] (hq1.east) -- (hd2neg2.west);
+\draw[negarr] (hq2.east) -- (hd1.west);
+\draw[negarr] (hq2.east) -- (hd1neg1.west);
+\draw[negarr] (hq2.east) -- (hd1neg2.west);
+\draw[negarr] (hq2.east) -- (hd2neg1.west);
+\draw[negarr] (hq2.east) -- (hd2neg2.west);
+
+
+
+\begin{scope}[on background layer]
+\node[rectangle, rounded corners=12pt, draw=arrowgray!50, line width=1.5pt,fit=(hq1)(hq2)(hd1)(hd2neg2), inner sep=15pt] (pairframe2) {};
+\end{scope}
+\coordinate (sharedTitleY) at ($(pairframe2.north)+(0,0.4cm)$);
+\node[font=\normalsize\sffamily\bfseries, arrowgray] at (sharedTitleY) {Supervised Contrastive Fine-Tuning};
+
+% Loss box at fixed vertical position (same as section 1)
+\coordinate (lossanchor2) at ($(hq1.west)!0.5!(hd1.east)$);
+\node[rectangle, rounded corners=8pt, draw=losscolor!60, line width=1.5pt,
+      fill=losscolor!10, minimum width=11cm, minimum height=\LossBoxH,
+      anchor=north] (lossbox2) at (lossanchor2 |- 0,\LossTopY) {};
+\node[font=\small\sffamily\bfseries, losscolor!80!black] at ($(lossbox2.north)-(0,0.4cm)$) {InfoNCE loss with Hard Negatives Contrastive Pairs};
+\coordinate (simstart2) at ($(lossbox2.center) + (-3.7cm, -0.1cm)$);
+\node[font=\scriptsize\sffamily\bfseries, querycolor!80!black] at ($(simstart2)+(-0.3cm,0.15cm)$) {$q_i$};
+\node[font=\tiny\sffamily, anchor=south] at ($(simstart2)+(0.4cm,0.45cm)$) {$d_i^+$};
+\node[font=\tiny\sffamily, anchor=south, hardnegcolor!80!black] at ($(simstart2)+(1.1cm,0.45cm)$) {$h_1$};
+\node[font=\tiny\sffamily, anchor=south, hardnegcolor!80!black] at ($(simstart2)+(1.8cm,0.45cm)$) {$h_2$};
+\node[font=\tiny\sffamily, anchor=south] at ($(simstart2)+(2.5cm,0.45cm)$) {$d_j^+$};
+\node[font=\tiny\sffamily, anchor=south, hardnegcolor!80!black] at ($(simstart2)+(3.2cm,0.45cm)$) {$h_3$};
+\node[font=\tiny\sffamily, anchor=south, hardnegcolor!80!black] at ($(simstart2)+(3.9cm,0.45cm)$) {$h_4$};
+\node[score=highscore] at ($(simstart2)+(0.4cm,0.15cm)$) {0.9};
+\node[score=lowscore] at ($(simstart2)+(1.1cm,0.15cm)$) {0.7};
+\node[score=lowscore] at ($(simstart2)+(1.8cm,0.15cm)$) {0.6};
+\node[score=lowscore] at ($(simstart2)+(2.5cm,0.15cm)$) {0.3};
+\node[score=lowscore] at ($(simstart2)+(3.2cm,0.15cm)$) {0.5};
+\node[score=lowscore] at ($(simstart2)+(3.9cm,0.15cm)$) {0.4};
+\draw[poscolor, line width=1.5pt] ($(simstart2)+(0.1cm,-0.2cm)$) -- ++(0.6cm,0);
+\node[font=\tiny\sffamily, poscolor!80!black] at ($(simstart2)+(0.4cm,-0.45cm)$) {positive};
+\draw[hardnegcolor!80, line width=1pt, decorate, decoration={brace, amplitude=3pt, mirror}] ($(simstart2)+(0.85cm,-0.2cm)$) -- ($(simstart2)+(2.05cm,-0.2cm)$);
+\node[font=\tiny\sffamily, hardnegcolor!80!black] at ($(simstart2)+(1.45cm,-0.5cm)$) {hard neg};
+\draw[-{Stealth[length=2mm]}, line width=1pt, arrowgray] ($(simstart2)+(4.5cm,0.15cm)$) -- ++(0.8cm,0) node[midway, above, font=\tiny\sffamily] {softmax};
+\coordinate (softstart2) at ($(simstart2)+(5.6cm,0.15cm)$);
+\node[font=\tiny\sffamily, anchor=south] at ($(softstart2)+(0.25cm,0.7cm)$) {$d_i^+$};
+\node[font=\tiny\sffamily, anchor=south] at ($(softstart2)+(0.75cm,0.7cm)$) {$h_1$};
+\node[font=\tiny\sffamily, anchor=south] at ($(softstart2)+(1.25cm,0.7cm)$) {$h_2$};
+\node[font=\tiny\sffamily, anchor=south] at ($(softstart2)+(1.75cm,0.7cm)$) {...};
+\fill[highscore!70] ($(softstart2)+(0.05cm,-0.3cm)$) rectangle ++(0.4cm,0.75cm);
+\fill[hardnegcolor!70] ($(softstart2)+(0.55cm,-0.3cm)$) rectangle ++(0.4cm,0.45cm);
+\fill[hardnegcolor!70] ($(softstart2)+(1.05cm,-0.3cm)$) rectangle ++(0.4cm,0.35cm);
+\fill[lowscore!50] ($(softstart2)+(1.55cm,-0.3cm)$) rectangle ++(0.4cm,0.15cm);
+\draw[arrowgray!60, line width=0.8pt, rounded corners=3pt] ($(softstart2)+(-0.05cm,-0.35cm)$) rectangle ++(2.1cm,1.05cm);
+\node[font=\tiny\sffamily\bfseries, highscore!80!black, align=center] at ($(softstart2)+(1.0cm,-0.6cm)$) {Negatives: mined hard negatives};
+\node[font=\scriptsize\sffamily\bfseries, losscolor!80!black, inner sep=3pt] at ($(lossbox2.south)+(0,0.5cm)$) {$\mathcal{L} = -\frac{1}{N}\sum_{i=1}^{N} \log \frac{\exp(s(q_i, d_i^+)/\tau)}{\exp(s(q_i, d_i^+)/\tau) + \sum_{h \in H_i} \exp(s(q_i, h)/\tau) + \sum_{j \neq i} \exp(s(q_i, d_j)/\tau)}$};
+\draw[-{Stealth[length=3mm]}, line width=1.5pt, losscolor] (lossbox2.north |- pairframe2.south) -- (lossbox2.north) node[midway, right, font=\scriptsize\sffamily, losscolor!80!black] {};
+\end{scope}
+
+% ============================================================
+% SECTION 3: KL DIVERGENCE DISTILLATION
+% ============================================================
+\begin{scope}[shift={(\XsecC,0)}]
+
+% Redefine styles for this section with smaller sizes
+\tikzset{
+    smallbox/.style={rectangle,rounded corners=8pt,minimum width=2.4cm,minimum height=0.8cm,align=center,font=\small\sffamily,draw=#1!60,line width=1pt,fill=#1!25},
+    smallquery/.style={smallbox=querycolor},
+    smalldoc/.style={smallbox=doccolor},
+    smallscore/.style={rectangle,rounded corners=4pt,minimum width=0.8cm,minimum height=0.5cm,align=center,font=\scriptsize\sffamily\bfseries,draw=#1!80,line width=1pt,fill=#1!40},
+    smallmodelbox/.style={rectangle,rounded corners=8pt,minimum width=2.4cm,minimum height=1.2cm,align=center,font=\normalsize\sffamily\bfseries,draw=#1!60,line width=1.5pt,fill=#1!30}
+}
+
+% ==================== TOP: INPUT ====================
+\coordinate (kinputcenter) at (2.8cm,0cm);
+\node[smallquery, anchor=north] (kq) at (kinputcenter |- 0,\TopY) {Query};
+\node[smalldoc, below=0.3cm of kq] (kd1) {Document 1};
+\node[smalldoc, below=0.25cm of kd1] (kd2) {Document 2};
+\node[smalldoc, below=0.25cm of kd2] (kd3) {Document 3};
+
+\begin{scope}[on background layer]
+\node[rectangle, rounded corners=12pt, draw=arrowgray!50, line width=1.5pt, fit=(kq)(kd3), inner sep=15pt] (kinputframe) {};
+\end{scope}
+
+% Title centered above input
+\node[font=\normalsize\sffamily\bfseries, arrowgray] at (kinputframe.north |- sharedTitleY) {KL Divergence Distillation};
+
+% ==================== MIDDLE: TEACHER & STUDENT ====================
+\node[smallmodelbox=teachercolor] (kteacher) at ($(kinputframe.south)+(-2.0cm,-1.8cm)$) {Gemma\\(Teacher)};
+\node[smallmodelbox=studentcolor] (kstudent) at ($(kinputframe.south)+(2.0cm,-1.8cm)$) {ColBERT\\(Student)};
+
+% ==================== TEACHER OUTPUTS ====================
+\node[smalldoc, minimum width=2cm] (ktd1) at ($(kteacher.south)+(-0.5,-1.5cm)$) {Doc 1};
+\node[smalldoc, below=0.2cm of ktd1, minimum width=2cm] (ktd2) {Doc 2};
+\node[smalldoc, below=0.2cm of ktd2, minimum width=2cm] (ktd3) {Doc 3};
+
+\node[smallscore=highscore, right=0.2cm of ktd1] (kts1) {0.85};
+\node[smallscore=midscore, right=0.2cm of ktd2] (kts2) {0.42};
+\node[smallscore=lowscore, right=0.2cm of ktd3] (kts3) {0.12};
+
+\begin{scope}[on background layer]
+\node[rectangle, rounded corners=12pt, draw=teachercolor!50, line width=1.5pt, fit=(ktd1)(ktd3)(kts1)(kts3), inner sep=10pt] (ktoutframe) {};
+\end{scope}
+
+% ==================== STUDENT OUTPUTS ====================
+\node[smalldoc, minimum width=2cm] (ksd1) at ($(kstudent.south)+(-0.5,-1.5cm)$) {Doc 1};
+\node[smalldoc, below=0.2cm of ksd1, minimum width=2cm] (ksd2) {Doc 2};
+\node[smalldoc, below=0.2cm of ksd2, minimum width=2cm] (ksd3) {Doc 3};
+
+\node[smallscore=highscore, right=0.2cm of ksd1] (kss1) {0.71};
+\node[smallscore=midscore, right=0.2cm of ksd2] (kss2) {0.38};
+\node[smallscore=lowscore, right=0.2cm of ksd3] (kss3) {0.19};
+
+\begin{scope}[on background layer]
+\node[rectangle, rounded corners=12pt, draw=studentcolor!50, line width=1.5pt, fit=(ksd1)(ksd3)(kss1)(kss3), inner sep=10pt] (ksoutframe) {};
+\end{scope}
+
+% ==================== BOTTOM: KL LOSS (aligned with other sections) ====================
+\node[rectangle, rounded corners=10pt, draw=losscolor!60, line width=1.5pt,
+      fill=losscolor!10, minimum width=8cm, minimum height=\LossBoxH,
+      anchor=north] (klossbox) at (kinputcenter |- 0,\LossTopY) {};
+
+\node[font=\small\sffamily\bfseries, losscolor!80!black] at ($(klossbox.north)-(0,0.55cm)$) 
+     {KL Divergence Loss};
+
+% Distribution bars
+\coordinate (ktbar) at ($(klossbox.center) + (-2.2cm, -0.1cm)$);
+\node[font=\tiny\sffamily, anchor=east] at ($(ktbar)+(0,0.35cm)$) {D1};
+\node[font=\tiny\sffamily, anchor=east] at ($(ktbar)+(0,0cm)$) {D2};
+\node[font=\tiny\sffamily, anchor=east] at ($(ktbar)+(0,-0.35cm)$) {D3};
+
+\fill[highscore!70] ($(ktbar)+(0.05cm,0.2cm)$) rectangle ++(1.7cm,0.22cm);
+\fill[midscore!70] ($(ktbar)+(0.05cm,-0.12cm)$) rectangle ++(0.84cm,0.22cm);
+\fill[lowscore!70] ($(ktbar)+(0.05cm,-0.45cm)$) rectangle ++(0.24cm,0.22cm);
+\node[font=\tiny\sffamily\bfseries, teachercolor!80!black] at ($(ktbar)+(0.9cm,0.65cm)$) {Teacher $P$};
+
+\coordinate (ksbar) at ($(klossbox.center) + (0.9cm, -0.1cm)$);
+\fill[highscore!70] ($(ksbar)+(0.05cm,0.2cm)$) rectangle ++(1.42cm,0.22cm);
+\fill[midscore!70] ($(ksbar)+(0.05cm,-0.12cm)$) rectangle ++(0.76cm,0.22cm);
+\fill[lowscore!70] ($(ksbar)+(0.05cm,-0.45cm)$) rectangle ++(0.38cm,0.22cm);
+
+\draw[highscore!80!black, line width=1pt, dashed] ($(ksbar)+(0.05cm,0.2cm)$) rectangle ++(1.7cm,0.22cm);
+\draw[midscore!80!black, line width=1pt, dashed] ($(ksbar)+(0.05cm,-0.12cm)$) rectangle ++(0.84cm,0.22cm);
+\draw[lowscore!80!black, line width=1pt, dashed] ($(ksbar)+(0.05cm,-0.45cm)$) rectangle ++(0.24cm,0.22cm);
+\node[font=\tiny\sffamily\bfseries, studentcolor!80!black] at ($(ksbar)+(0.9cm,0.65cm)$) {Student $Q$};
+
+\draw[-{Stealth[length=2mm]}, line width=1pt, arrowgray] 
+    ($(ktbar)+(2cm,0cm)$) -- ($(ksbar)+(-0.1cm,0cm)$);
+
+% Loss formula
+\node[font=\scriptsize\sffamily\bfseries, losscolor!80!black] 
+    at ($(klossbox.south)+(0,0.5cm)$) {$\mathcal{L}_{KL} = \sum P(d|q) \log \frac{P(d|q)}{Q(d|q)}$};
+
+% ==================== ARROWS ====================
+% Input to models
+\draw[arr] (kinputframe.south) -- ++(0,-0.4cm) -| (kteacher.north);
+\draw[arr] (kinputframe.south) -- ++(0,-0.4cm) -| (kstudent.north);
+
+% Models to outputs with labels
+\draw[arr] (kteacher.south) -- (ktoutframe.north)
+    node[pos=0.5, left=0.1cm, font=\scriptsize\sffamily\bfseries, teachercolor!80!black] {Teacher}
+    node[pos=0.5, right=0.1cm, font=\scriptsize\sffamily\bfseries, teachercolor!80!black] {$P(d|q)$};
+
+\draw[arr] (kstudent.south) -- (ksoutframe.north)
+    node[pos=0.5, left=0.1cm, font=\scriptsize\sffamily\bfseries, studentcolor!80!black] {Student}
+    node[pos=0.5, right=0.1cm, font=\scriptsize\sffamily\bfseries, studentcolor!80!black] {$Q(d|q)$};
+
+% Outputs to loss
+\draw[arr, losscolor] (ktoutframe.south) -- (ktoutframe.south |- klossbox.north);
+\draw[arr, losscolor] (ksoutframe.south) -- (ksoutframe.south |- klossbox.north);
+
+\end{scope}
+
+% ============================================================
+% SHARED LEGEND (bottom left)
+% ============================================================
+\node[rectangle, rounded corners=5pt, draw=arrowgray!40, fill=white, inner sep=8pt, anchor=north west] (sharedlegend) at ($(lossbox1.south west)+(0,-0.5)$) {
+    \begin{tikzpicture}[scale=0.8]
+        \draw[posarr] (0,0) -- (0.8,0);
+        \node[font=\small\sffamily, anchor=west, poscolor] at (0.95,0) {Positive Pair};
+        \draw[negarr] (4.0,0) -- (4.8,0);
+        \node[font=\small\sffamily, anchor=west, negcolor] at (4.95,0) {Negative Pair};
+    \end{tikzpicture}
+};
+
+\end{tikzpicture}

@@ -81,6 +81,15 @@
 \def\@sgnargscaled#1{\sgn\rbr*{#1}}
 % auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
 
+\renewcommand\Affilfont{\fontsize{10}{10.8}\itshape}
+% auto: identical in arXiv-2402
+
+\renewcommand\Authfont{\fontsize{11}{14.4}\selectfont}
+% auto: identical in arXiv-2402
+
+\newcommand\BigO[1]{\mathcal O\left(#1\right)}
+% auto: identical in arXiv-2305
+
 \newcommand{\E}{\mathbb{E}}
 % picked from arXiv-2605 — conflicts: \providecommand{\E}{\mathbb{E}} in arXiv-2402, arXiv-2405, arXiv-2406
 
@@ -90,6 +99,9 @@
 \providecommand{\EEb}[2]{{\mathbb E}_{#1}\left[#2\right] }
 % auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
 
+\newcommand\EV[1]{\mathbb{E}\left[#1\right]}
+% auto: identical in arXiv-2305
+
 \newcommand{\Ea}[1]{\E\left[#1\right]}
 % auto: identical in arXiv-2402, arXiv-2405, arXiv-2406, arXiv-2605
 
@@ -98,6 +110,9 @@
 
 \providecommand{\Ec}[2]{{\mathbb E}_{#2}\left[#1\right] }
 % auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+
+\newcommand\Et[1]{\mathbb{E}_t\left[#1\right]}
+% auto: identical in arXiv-2405, arXiv-2406, arXiv-2605
 
 \def\Explf{\mathbb E_{(\vec{\lambda},\vec{\lambda}^{\star})\sim\mathcal{N}(\vec{0}_{\hids+\hidt}, \Omega)}}
 % auto: identical in arXiv-2302, arXiv-2305
@@ -515,6 +530,13 @@
 \newcommand{\cmark}{\ding{51}}
 % auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
 
+\newcommand\commenter[2]%
+{%
+  \expandafter\newcommand\csname i#1\endcsname[1]{\inlinecomment{#2}{#1}{##1}}
+  \expandafter\newcommand\csname #1\endcsname[1]{\mycomment{#2}{#1}{##1}}
+}
+% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+
 \newcommand{\dC}{\mathbb{C}}
 % auto: identical in arXiv-2406, arXiv-2506, arXiv-2605
 
@@ -900,14 +922,16 @@
 \def\sectionautorefname{Section}
 % auto: identical in arXiv-2605
 
-\newcommand{\set}[2][]{#1 \{ #2 #1 \} }
-% auto: identical in arXiv-2402
+% [skip:macro] set
 
 \newcommand{\sie}{\mathrm{SIE}}
 % auto: identical in arXiv-2506
 
 \def\sign{\@ifnextchar*{\@sgnargscaled}{\@ifnextchar[{\sgnargscaleas}{\@ifnextchar{\bgroup}{\@sgnarg}{\sgn} }}}
 % picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \def\sign{\text{sign}} in arXiv-2302, arXiv-2305
+
+\newcommand\smallo[1]{o\left(#1\right)}
+% auto: identical in arXiv-2305
 
 \newcommand{\spec}{\mathrm{spec}}
 % auto: identical in arXiv-2605
@@ -927,6 +951,9 @@
 \def\subsectionautorefname{Subsection}
 % auto: identical in arXiv-2605
 
+\newcommand\tagthis{\addtocounter{equation}{1}\tag{\theequation}}
+% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+
 \providecommand{\tce}{\Xi}
 % auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
 
@@ -936,8 +963,7 @@
 \providecommand{\tgg}{\tilde\gg}
 % auto: identical in arXiv-2402, arXiv-2405
 
-\renewcommand{\theassump}{A\arabic{assump}}
-% auto: identical in arXiv-2302, arXiv-2305
+% [skip:macro] theassump
 
 \renewcommand{\theenumi}{(\roman{enumi})}
 % auto: identical in arXiv-2506, arXiv-2605
@@ -969,8 +995,15 @@
 \newcommand{\vDelta}{\mathbf{\Delta}}
 % auto: identical in arXiv-2405, arXiv-2406, arXiv-2605
 
-\renewcommand{\vec}[1]{\bm{#1}}
-% picked from arXiv-2302, arXiv-2405, arXiv-2406, arXiv-2605 — conflicts: \renewcommand{\vec}[1]{\boldsymbol{#1}} in arXiv-2402, arXiv-2405, arXiv-2406, arXiv-2506; \renewcommand{\vec}{\mathbf} in arXiv-2402, arXiv-2405; \renewcommand{\vec}[1]{#1} in arXiv-2305
+\renewcommand{\vec}[1]{{\boldsymbol{#1}}}
+% Wrapped in extra braces to isolate as a single math atom. Without them,
+% \boldsymbol's amsbsy expansion (\begingroup\boldmath#1\endgroup) leaves
+% the inner math atom "open" — so \vec{v^\star}^T in 2402's body triggered
+% Double superscript (^\star inside + ^T outside both landed on v). The
+% outer {} force a math group, restoring the expected behaviour.
+% Conflicts: \bm{#1} in arXiv-2302, arXiv-2405, arXiv-2406, arXiv-2605;
+% \boldsymbol{#1} in arXiv-2402, arXiv-2405, arXiv-2406, arXiv-2506;
+% \mathbf in arXiv-2402, arXiv-2405; #1 (identity) in arXiv-2305.
 
 \providecommand{\vv}{\bm{v}}
 % picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\vv}{\mathbf{v}} in arXiv-2402, arXiv-2405, arXiv-2406
@@ -1018,11 +1051,11 @@
 
 
 % --- Theorems ---
-\newtheorem{algorithm}{Algorithm}
-% auto: identical in arXiv-2405
+\newtheorem{algotheorem}{Algorithm}
+% renamed from \algorithm; bodies from arXiv-2405
 
-\newtheorem*{algorithm*}{Algorithm}
-% auto: identical in arXiv-2405
+\newtheorem*{algotheorem*}{Algorithm}
+% renamed from \algorithm*; bodies from arXiv-2405
 
 \newtheorem{assump}{Assumption}
 % auto: identical in arXiv-2302, arXiv-2305
@@ -1065,3 +1098,70 @@
 
 \newtheorem{theorem}{Theorem}
 % picked from arXiv-2302, arXiv-2305, arXiv-2405, arXiv-2406, arXiv-2506, arXiv-2605 — conflicts: \newtheorem{theorem}{Theorem}[section] in arXiv-2402
+
+
+% --- Colors ---
+\definecolor{GlobalPositionalMinima}{RGB}{153,204,255}
+% auto: identical in arXiv-2506
+
+\definecolor{GlobalSemanticMinima}{RGB}{102,255,51}
+% auto: identical in arXiv-2506
+
+\definecolor{GlobalSemanticMinimaPositionalDynamic}{RGB}{255,80,80}
+% auto: identical in arXiv-2506
+
+\definecolor{SKIPGlobalPositionalMinimaSemanticDynamic}{RGB}{204,51,0}
+% auto: identical in arXiv-2506
+
+\definecolor{SKIPUniquePositionalMinimaMisalignedDynamic}{RGB}{255,153,102}
+% auto: identical in arXiv-2506
+
+\definecolor{UniquePositionalMinima}{RGB}{51,51,255}
+% auto: identical in arXiv-2506
+
+\definecolor{UniqueSemanticMinima}{RGB}{51,153,102}
+% auto: identical in arXiv-2506
+
+\definecolor{UniqueSemanticMinimaMisalignedDynamic}{RGB}{255,204,0}
+% auto: identical in arXiv-2506
+
+\definecolor{allowedcolor}{RGB}{21,115,17}
+% auto: identical in arXiv-2406
+
+\definecolor{mydarkblue}{rgb}{0,0.08,0.45}
+% auto: identical in arXiv-2402, arXiv-2406
+
+\definecolor{nodynamicscolor}{RGB}{192,150,192}
+% auto: identical in arXiv-2406
+
+\definecolor{notallowedcolor}{RGB}{255,0,0}
+% auto: identical in arXiv-2406
+
+\definecolor{noyhatcolor}{RGB}{254,155,30}
+% auto: identical in arXiv-2406
+
+\definecolor{optimalcolor}{RGB}{38,254,254}
+% auto: identical in arXiv-2406
+
+
+% --- Manual additions ---
+% These were defined in arXiv-2506/custom_latex.tex via a paper-specific
+% meta-macro \bilingualcommand{\name}{english}{french} that paper_parsing.py
+% doesn't recognise (it only knows the standard \newcommand/\def family).
+% Re-running merge_preambles WILL remove these lines — re-add them or
+% upstream a proper fix into paper_parsing.py.
+
+\newcommand{\where}{where}
+% manually-added: from \bilingualcommand{\where}{where}{où} in arXiv-2506
+
+\newcommand{\textif}{if}
+% manually-added: from \bilingualcommand{\textif}{if}{si} in arXiv-2506
+
+\newcommand{\textand}{and}
+% manually-added: from \bilingualcommand{\textand}{and}{et} in arXiv-2506
+
+\newcommand{\textiff}{if and only if}
+% manually-added: from \bilingualcommand{\textiff}{if and only if}{si et seulement si} in arXiv-2506
+
+\newcommand{\otherwise}{otherwise}
+% manually-added: from \bilingualcommand{\otherwise}{otherwise}{sinon} in arXiv-2506

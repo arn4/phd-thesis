@@ -1,0 +1,49 @@
+\section{Setting}
+
+\label{sec:setting}
+In this manuscript we consider a supervised learning regression task where we are given $\nsamp$ independent samples $(\vec{x}^{\i},y^{\i})_{\i\in [\nsamp]}\in\mathbb{R}^{\inp+1}$ from a probability distribution $\datadist$. We are interested in the problem of learning the training data with a (fully-connected) two-layer neural network:
+\begin{align}
+\label{eq:def:model}
+f_{\Theta}(\vec{x}) = \frac{1}{p}\sum\limits_{i=1}^{\hids}a_{i}\act(\vec{w}_{i}^{\top}\vec{x}),
+\end{align}
+\noindent where $\Theta = (\vec{a},\mat{W})\in\mathbb{R}^{\hids(\inp+1)}$ denote the trainable parameters and $\act:\mathbb{R}\to\mathbb{R}$ the activation function. Since one of our goals is to connect with this line of work, for convenience we have adopted the mean-field normalisation \citep{mei2018mean,chizat2018global,rotskoff2019trainability,sirignano2020mean}. As usual, training is performed via \emph{empirical risk minimisation}, where the statistician chooses a \emph{loss function} $\ell:(f_{\Theta}(\vec{x}), y)\in\mathbb{R}^{2}\mapsto \ell(f_{\Theta}(\vec{x}), y)\in\mathbb{R}_{+}$ penalising deviations from the true labels and optimises the training parameters $\Theta$ by minimising the loss over the training data. As it is common in regression, we use the square loss $\ell(\hat{y},y) \coloneqq \sfrac{1}{2}(\hat{y}-y)^2$, and focus on the \emph{generalisation error} or \emph{population risk}:
+\begin{align}
+\label{eq:def:poprisk}
+\mathcal{R}(\Theta) \coloneqq \mathbb{E}_{(\vec{x},y)\sim\rho}\left[\frac{1}{2}(f_{\Theta}(\vec{x})-y)^2\right]
+\end{align}
+
+\paragraph{Training algorithm:} This empirical risk minimisation problem being non-convex, different optimisation algorithms might reach different minima. Our goal is to characterise the training dynamics of two-layer networks under \emph{one-pass stochastic gradient descent}:
+\begin{align}
+\label{eq:def:sgd}
+\Theta^{\i+1} = \Theta^{\i} -\gamma\nabla_{\Theta}\ell(f_{\Theta^{\i}}(\vec{x}^{\i}),y^{\i}), && \i \leq n
+\end{align}
+Note that in one-pass SGD, a fresh sample of data is used to estimate the gradient at each step, and therefore the quantity of data seen by the algorithm coincides with the number of steps. In particular, this means that at each step $\i$ we have a random unbiased estimation of the population gradient which is uncorrelated to the previous step, defining a Markov chain. It is useful to rewrite eq.~\eqref{eq:def:sgd} by making explicit the effective noise of the process:
+
+\begin{align}
+\label{eq:sgd:noise}
+\Theta^{\i+1} = \Theta^{\i} -\gamma\nabla_{\Theta}\mathcal{R}(\Theta^{\i})+\gamma\varepsilon_{\i}, && \varepsilon_{\i} \coloneqq \nabla_{\Theta}\left[\mathcal{R}(\Theta^{\i}) -\ell(f_{\Theta^{\i}}(\vec{x}^{\i}),y^{\i})\right]
+\end{align}
+which is a zero mean random variable. Therefore, characterising the training dynamics of one-pass SGD translates into characterising this stochastic process.
+
+\paragraph{Data model: } Stochasticity in eq.~\eqref{eq:def:sgd} is induced by the draw of samples $(\vec{x}, y)\sim \rho$. In the following, we will assume that the input $\vec{x}^\i$ are Gaussian $\vec{x}^{\i}\sim\mathcal{N}\left(\vec{0}_{d}, \sfrac{1}{d}\mat{I}_{d}\right)$ while $y^\i$ is drawn from the following generative model:
+\begin{align}
+\label{eq:target}
+y^{\i} = \frac{1}{\hidt} \sum\limits_{r=1}^{k}a^{\star}_{r}\sigma^{\star}({\vec{w}_{r}^{\star}}^{\top}\vec{x}^{\i}) + \sqrt{\noise}z^{\i},  \qquad z^{\i}\sim\mathcal{N}(0,1)
+\end{align}
+In other words, the target function $f_{\Theta^{\star}}$ is itself a two-layers neural network with parameters $\Theta^{\star}=(\vec{a}^{\star}, \mat{W}^{\star})\in\mathbb{R}^{k(d+1)}$ and activation $\sigma^{\star}$. This setting, commonly refereed to as the \emph{teacher-student} scenario, provides a rich data model for studying generalisation, and has been employed both in the analysis of one-pass SGD \citep{saad1996dynamics,goldt2019dynamics,veiga2022phase} but also more broadly in high-dimensional statistics \citep{loureiro2021learning}. In particular, we will be mostly interested in the realisable scenario where $k\leq p$, and therefore the minimum of the population risk in eq.~\eqref{eq:def:poprisk} is achieved by perfectly learning the target.
+
+\paragraph{Technical assumptions:} We assume that the SGD dynamics remains in a bounded subset of $\mathbb{R}^{p \times d}$:
+\begin{assump}\label{assump:boundedness}
+    On an event with high probability, the SGD iterates are bounded in the following sense: for some $K > 0$, we have
+    \begin{equation}
+       \forall i \in [p], \quad\norm{\vec{w_i}}^2  \leq K.
+    \end{equation}
+\end{assump}
+This assumption can be easily checked on either the simulations or their deterministic approximations (see below), or otherwise enforced with a weight decay (as in \cite{wang2022uniform}). 
+\begin{assump}\label{assump:activation}
+    The student activation function $\sigma$ is twice differentiable, with $\lVert \sigma^{(i)} \rVert_\infty \leq K$ for $i = 0, 1, 2$. The teacher activation $\sigma^\star$ is also upper bounded by $K$.
+\end{assump}
+Note that in some plots, we will sometimes use the function $\sigma(x) = x^2$, which does not satisfy this assumption. However, Assumption \ref{assump:boundedness} ensures that we stay in a bounded subset of $\mathbb R^d$, hence we can replace $\sigma$ by $\sigma \wedge K$ for $K$ sufficiently large.
+
+\paragraph{Simplifying assumptions: } Since most of the interesting phenomenology happens at the hidden-layer, to lighten the discussion in the following we will focus on the case in which $a_{r}^{\star} = 1$ and $a^{\i}_{i}=1$ are fixed throughout learning and $p$ is divisible by $k$. All of the discussion that follows can be readily generalised to the case in which $\vec{a}^{\i}$ is learned and $p\geq k$ generically. We shall also assume that the teacher matrix $\mat{W}^\star$ is full rank; this can be avoided with a more careful definition of projections, but complicates the analysis. 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

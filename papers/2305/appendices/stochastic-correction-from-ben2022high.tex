@@ -1,0 +1,172 @@
+\section{Stochastic correction from \cite{arous2022high}}
+
+\label{app:match_with_GBA}
+In this Appendix we compute the diffusion correction term of the deterministic dynamic using the formalism introduced in \cite{arous2022high}; we use the notation of that paper to make the comparison easier.
+
+We are going to analyze the plain phase retrieval problem (\(k=p=1\), no spherical constraint), using a slightly different scaling as the one we introduced in the main, in accordance with the hypothesis required by \cite{arous2022high}. Our goal is to to show that our formalism contains the one presented in the paper we are analyzing here. We want to learn a predictor of the form \(f(x)=(w\cdot x)^2\), using online SGD on the data
+\[x\sim \mathcal N (0,I_d) \qquad y = (w^\star \cdot x)^2 + \sqrt{\Delta} \xi, \]
+with both \(w\) and \(w^\star\) with \(O_d(1)\) norm, in contrast to what we used in the main where the norm of the weights were \(O_d(\sqrt{d})\).
+The SGD process writes has
+\[
+w^{\nu+1} = w^{\nu} - \delta_d \nabla_w L(y,w),
+\]
+with \(\delta_d = \sfrac\gamma d\) and \(w^0\sim\mathcal N\left(0,\sfrac1 d I_d\right)\). 
+We are going to consider the high-dimensional limit, namely \({d\to+\infty}\).
+
+We omit the verification of \(\delta\)-localizability for brevity. 
+
+The loss and its expectation are
+\[\begin{split}
+L(y,w) =& \frac{1}{2} \left[(w^\star \cdot x)^2 - (w \cdot x)^2 + \sqrt{\Delta}d \xi\right]^2 \\
+       =& \frac12 (w^\star \cdot x)^4 + \frac12 (w \cdot x)^4 + \frac\Delta2 \xi^2 + \left[(w^\star \cdot x)^2 - (w \cdot x)^2\right] \sqrt{\Delta}\xi - \left((w^\star \cdot x)(w \cdot x)\right)^2, \\
+\Phi(w) \coloneqq& \mathbb E_{x,\xi} \left[L(y,w)\right] = \frac{3}{2}\norm{w^\star}^4 + \frac{3}{2}\norm{w}^4 +\frac32\Delta  - \norm{w^\star}^2\norm{w}^2 - 2(w^\star\cdot w)^2
+\end{split}\]
+We introduce our summary statistics \(u = (m,q) \coloneqq (w^\star \cdot w, \norm{w}^2)\), and we further assume \(\norm{w^\star}=\rho\):
+\[ \begin{split}
+    \Phi(w) =& \frac{3\norm{w^\star}^4+\Delta}{2} + \frac{3}{2}\norm{w}^4 - \norm{w^\star}^2\norm{w}^2 - 2(w^\star\cdot w)^2 \\
+    \Phi(m,q) =& \frac{3\rho^2+\Delta}{2} + \frac32 q^2 - \rho q - 2m^2
+\end{split}\]
+Let's compute the gradients
+\[
+    \nabla_w L = 2 (w \cdot x)^3 x  - 2(w \cdot x) \sqrt{\Delta}\xi x - 2(w^\star \cdot x)^2(w \cdot x) x
+\]
+\[
+    \nabla_w\Phi = 6qw-2\rho w-4mw^\star
+\]
+\[
+    \nabla_w m = w^\star \qquad \nabla_w q = 2w \qquad
+\]
+\[
+    \nabla^2_w m = 0 \qquad \nabla^2_w q = 2I_d \qquad
+\]
+Last ingredient we need for the dynamic equations is \(V\coloneqq \mathbb E_{x,\xi} \left[\nabla_w(L-\Phi)\otimes\nabla_w(L-\Phi)\right]\).
+% Since \(\nabla_w L\) just contains odd powers of \(x_i\) and \(\xi\), we have \(V\coloneqq \mathbb E_{x,\xi} \left[\nabla_w L\otimes\nabla_w\Phi\right]~=~0\). 
+We are left with
+\[
+    V= \mathbb E_{x,\xi} \left[\nabla_wL\otimes\nabla_wL\right]+\nabla_w\Phi\otimes\nabla_w\Phi-\mathbb E_{x,\xi} \left[\nabla_w L\otimes\nabla_w\Phi + \nabla_w\Phi\otimes\nabla_w L\right].
+\]
+Let's compute the two terms separately
+\[
+    \nabla_w\Phi\otimes\nabla_w\Phi = 4(3q-\rho)^2ww^\top - 4(6qm-2\rho m)(w^\star w^{\top}+w w^{\star\top}) + 4\cdot4m^2 w^\star w^{\star\top}
+\]
+\[\begin{split}
+    \mathbb E_{x,\xi}\left[\nabla_wL\right]\otimes\nabla_w\Phi 
+        =& (6\norm{w}^2w-4(w^\star\cdot w) w^\star - 2 \norm{w^\star}w)\otimes (6qw-2\rho w-4mw^\star)
+        =  \nabla_w\Phi\otimes\nabla_w\Phi
+\end{split}\]
+
+\[\begin{split}
+    &\mathbb E_{x,\xi} \left[\nabla_wL\otimes\nabla_wL\right] = \\
+        &\quad=\mathbb E_{x,\xi} \big[4(w\cdot x )^6 xx^\top + 4 (w\cdot x)^2\Delta \xi^2 xx^\top + 4 (w^\star\cdot x)^4 (w\cdot x)^2 xx^\top 
+                                -8(w\cdot x)^4(w^\star\cdot x)^2 xx^\top\big] \\
+        &\quad =4(90\norm{w}^4ww^\top+15\norm{w}^6I_d) + 4\Delta(\norm{w}^2I_d+2ww^\top) \\
+        &\qquad +4\big[(3\norm{w^\star}^4\norm{w}^2+12\norm{w^\star}^2(w^\star\cdot w)^2)I_d+6\norm{w^\star}^4ww^\top
+                + (12\norm{w^\star}^2\norm{w}^2+24(w^\star\cdot w)^2)w^\star (w^\star)^\top\\
+        &\quad\qquad +24\norm{w^\star}^2(w^\star\cdot w)(w^\star w+ ww^\star)\big] \\
+        &\qquad -8\big[(3\norm{w}^4\norm{w^\star}^2+12\norm{w}^2(w^\star\cdot w)^2)I_d+6\norm{w}^4w^\star(w^\star)^\top
+                + (12\norm{w}^2\norm{w^\star}^2+24(w^\star\cdot w)^2)w w^\top \\
+        &\quad\qquad +24\norm{w}^2(w^\star\cdot w)(w^\star w+ ww^\star)\big] \\
+        %
+        &\quad= 4(15q^3+\Delta q+3\rho^2q+12\rho m^2-6q^2\rho-24qm^2)I_d + 4(90q^2+2\Delta+6\rho^2-24\rho q -48m^2)ww^\top \\
+        &\qquad +4(12\rho q + 24m^2-12q^2)w^\star(w^\star)^\top
+                +4(24\rho m-48qm)(w^\star w+ ww^\star)
+\end{split}\]
+
+We finally get the expression for  the matrix \(V=\mathbb E_{x,\xi} \left[\nabla_wL\otimes\nabla_wL\right]-\nabla_w\Phi\otimes\nabla_w\Phi\)
+\begin{equation}\label{eq:matrixV}\begin{split}
+   V =& 4(15q^3+\Delta q+3\rho^2q+12\rho m^2-6q^2\rho-24qm^2)I_d + 4(90q^2+2\Delta+6\rho^2-24\rho q -48m^2-9q^2+6\rho q-\rho^2)ww^\top \\
+      & +4(12\rho q + 24m^2-12q^2-4m^2)w^\star(w^\star)^\top
+        +4(24\rho m-48qm+6qm-2\rho m)(w^\star w+ ww^\star)
+\end{split}\end{equation}
+
+We now have all the ingredients needed for computing the dynamics
+\[\begin{split}
+    f_m =& \lim_{d\to+\infty}\nabla_w \Phi \cdot \nabla_w m = 6qm-2\rho m -4\rho m = 6m(q-\rho) \\
+    f_q =& \lim_{d\to+\infty}\nabla_w \Phi \cdot \nabla_w q = 12q^2 - 4\rho q - 8m^2 \\
+    g_m =& \lim_{d\to+\infty}\frac{\delta_d}{2}\Tr{V \nabla^2_w m}= 0\\
+    g_q =& \lim_{d\to+\infty}\frac{\delta_d}{2}\Tr{V \nabla^2_w q}=
+           4(15q^3+\Delta q+3\rho^2q+12\rho m^2-6q^2\rho-24qm^2) \lim_{d\to+\infty}\frac{\gamma}{2d}\Tr{I_d 2I_d} \\
+        =& 4\gamma(15q^3+\Delta q+3\rho^2q+12\rho m^2-6q^2\rho-24qm^2)
+\end{split}\]
+In the last one we used the fact that the only term that can survive the \(\Tr{\cdot}/d\) are the ones proportional to the identity. For the same reason \(\Sigma = 0\) in this case. The full equations read as
+\begin{equation}\label{eq:phaseretrievalGBA}\begin{split}
+ \dif m &= 6m(\rho-q) \dif t \\
+ \dif q &= 4\left[2m^2+\rho q-3q^2 +\gamma(15q^3+\Delta q+3\rho^2q+12\rho m^2-6q^2\rho-24qm^2)\right] \dif t
+\end{split}\end{equation}
+Note that this equations are exactly the same as \eqref{eq:quadraticODE_M} and \eqref{eq:quadraticODE_Q}, as expected. What is not trivial is proving that the diffusion term will also be equivalent.
+
+\subsection{Diffusion at generic point}
+In principle diffusion terms are expected to appear when the sufficient statistic are zoom around a fixed point of the equations.
+Imagine now we want to find the diffusion term around a generic point \((m,q) = (\bar m, \bar q)\) that is not necessarily a fixed point of the equations. We have to zoom the sufficient statistics in the usual way 
+\[(\tilde m, \tilde q) = \left(\sqrt{d}(m-\bar m), \sqrt{d}(q-\bar q)\right)\].
+The drift terms diverge, but diffusion term will appear; this diffusion is the first stochastic correction to the deterministic dynamic of the sufficient statistics, and can be added to the equations \eqref{eq:phaseretrievalGBA}, paying attention to multiply it by \(\sfrac1{\sqrt{d}}\) to compensate the zoom factor.
+
+Let's express loss and its gradients respect to the new sufficient statistics
+\[\Phi(\tilde m, \tilde q) = \frac{3\rho^2+\Delta}{2} + \frac{3}{2} \left(\frac{\tilde q}{\sqrt{d}}+\bar q\right)^2 - \rho \left(\frac{\tilde q}{\sqrt{d}}+\bar q\right) - 2\left(\frac{\tilde m}{\sqrt{d}}+\bar m\right)^2\]
+\[
+    \nabla_w\Phi = 6 \left(\frac{\tilde q}{\sqrt{d}}+\bar q\right) w-2\rho w-4\left(\frac{\tilde m}{\sqrt{d}}+\bar m\right)w^\star
+\]
+\[
+    \nabla_w \tilde m = \sqrt{d} w^\star \qquad \nabla_w \tilde q = 2\sqrt{d}w \qquad
+\]
+\[
+    \nabla^2_w \tilde m = 0 \qquad \nabla^2_w \tilde q = 2\sqrt{d}I_d \qquad
+\]
+The expression of matrix \(V\) is the same as the one in equation \eqref{eq:matrixV} with the following substitutions
+\[\begin{split}
+    q = \frac{\tilde q}{\sqrt{d}} + \bar q \qquad
+    m = \frac{\tilde m}{\sqrt{d}} + \bar m.
+\end{split}\]
+Let's dive into the computation of the diffusion matrix
+\[\begin{split}
+ \Sigma_{\tilde m, \tilde m} =&  \lim_{d\to+\infty} \delta_d (\nabla_w{\tilde m})^\top V \nabla_w{\tilde m}  \\ 
+ %
+ =& \lim_{d\to+\infty}\Big[4(15q^3+\Delta q+3\rho^2q+12\rho m^2-6q^2\rho-24qm^2)\rho \\
+ &\qquad\quad + 4(90q^2+2\Delta+6\rho^2-24\rho q -48m^2-9q^2+6\rho q-\rho^2)m^2 \\
+ &\qquad\quad +4(12\rho q + 24m^2-12q^2-4m^2)\rho^2 \\
+ &\qquad\quad +8(24\rho m-48qm+6qm-2\rho m)\rho m \Big] \\
+ %
+ =& 60\rho \bar q^3+4\Delta \rho \bar q+12\rho^3\bar q+48\rho^2 \bar m^2-24\rho^2 \bar q^2-96\rho \bar q\bar m^2 \\
+ &324 \bar m^2 \bar q^2 + 8\Delta\bar m^2+24\rho^2\bar m^2 -96\rho \bar q \bar m^2 -192\bar m^4+24 \rho \bar q \bar m^2-4 \rho^2\bar m^2 \\
+ & +48\rho^3 \bar q + 96\rho^2\bar m^2-48\rho^2\bar q^2-16\rho^2\bar m^2 \\
+ & +176\rho^2 \bar m^2-336\rho \bar q \bar m^2 \\
+ %
+ =& 60\rho \bar q^3+4\Delta \rho \bar q+60\rho^3\bar q+324\rho^2 \bar m^2-72\rho^2 \bar q^2-504\rho \bar q\bar m^2 \\
+ & + 8\Delta\bar m^2 -192\bar m^4+324\bar m^2 \bar q^2
+\end{split}\]
+
+\[\begin{split}
+ \Sigma_{\tilde m, \tilde q} =&  \lim_{d\to+\infty} \delta_d (\nabla_w{\tilde q})^\top V \nabla_w{\tilde m}  \\ 
+ %
+ =& \lim_{d\to+\infty}\Big[(15q^3+\Delta q+3\rho^2q+12\rho m^2-6q^2\rho-24qm^2)m \\
+ &\qquad\quad + (90q^2+2\Delta+6\rho^2-24\rho q -48m^2-9q^2+6\rho q-\rho^2)qm \\
+ &\qquad\quad +(12\rho q + 24m^2-12q^2-4m^2)m\rho \\
+ &\qquad\quad +(24\rho m-48qm+6qm-2\rho m)(m^2+\rho q) \Big] \\
+ %
+ =& 120\bar m \bar q^3+8\Delta \bar m \bar q+24\rho^2\bar m \bar q+96 \rho \bar m^3-48\rho\bar m \bar q^2-192\bar m^3 \bar q \\
+  & 720\bar m \bar q^3+16\Delta \bar m \bar q + 48\rho^2 \bar m \bar q -192\rho\bar m \bar q^2 -384\bar m^3 \bar q -72 \bar m \bar q^3 + 48 \rho \bar m \bar q^2 -8 \rho^2 \bar m \bar q \\
+  & 96 \rho^2 \bar m \bar q + 192 \rho \bar m^3 -96 \rho \bar m \bar q^2 -32 \rho \bar m^3 \\
+  & 192\rho \bar m^3-384 \bar m^3\bar q + 48 \bar m^3\bar q-16\rho \bar m^3 \\
+  & 192\rho^2 \bar m \bar q-384 \rho \bar m \bar q^2 + 48 \rho \bar m \bar q^2 -16\rho^2 \bar m \bar q \\
+ %
+ =& 768\bar m \bar q^3+24\Delta \bar m \bar q+336\rho^2\bar m \bar q+432 \rho \bar m^3-624\rho\bar m \bar q^2-912\bar m^3 \bar q 
+\end{split}\]
+
+\[\begin{split}
+ \Sigma_{\tilde q, \tilde q} =&  \lim_{d\to+\infty} \delta_d (\nabla_w{\tilde q})^\top V \nabla_w{\tilde q}  \\ 
+ %
+ =& \lim_{d\to+\infty}16\Big[(15q^3+\Delta q+3\rho^2q+12\rho m^2-6q^2\rho-24qm^2)q \\
+ &\qquad\quad + (90q^2+2\Delta+6\rho^2-24\rho q -48m^2-9q^2+6\rho q-\rho^2)q^2 \\
+ &\qquad\quad +(12\rho q + 24m^2-12q^2-4m^2)m^2 \\
+ &\qquad\quad +2(24\rho m-48qm+6qm-2\rho m)qm \Big] \\
+ %
+ =& 240 \bar q^4+16\Delta \bar q^2+48\rho^2\bar q^2+192\rho \bar m^2 \bar q-96\rho \bar q^3-384\bar q^2 \bar m^2 \\
+  & 1440 \bar q^4 + 32\Delta \bar q^2 + 96\rho^2\bar q^2 - 384\rho \bar q^3 -768 \bar m ^2 \bar q^2 - 144 \bar q^4 +96\rho \bar q^3 - 16\rho^2 \bar q^2 \\
+  & 192 \rho \bar m^2 \bar q + 384 \bar m^4 - 192 \bar m^2 \bar q^2 - 64 \bar m^4 \\
+  & 768 \rho \bar m^2 \bar q - 1536 \bar m^2 \bar q^2 + 192 \bar m^2 \bar q^2 - 64 \rho \bar m^2 \bar q \\
+ %
+ =& 1536 \bar q^4+48\Delta \bar q^2 + 128\rho^2\bar q^2+1088\rho \bar m^2 \bar q-384\rho \bar q^3-2688\bar q^2 \bar m^2 +320 \bar m^4
+\end{split}\]
+The expressions we just computed match the one we obtained in Equation~\eqref{eq:generic_p_variance}, if we set \(\gamma=0\). This difference arise from the \(\delta\)-localizability condition, that essentially force us to work with a vanishing learning rate. Remark 2 in \cite{arous2022high} explains how to generalize the formula for \(\Sigma\) to match exactly our expression.
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

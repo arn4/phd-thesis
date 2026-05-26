@@ -1,0 +1,170 @@
+\section{Further analysis on the effect of sequence length} \label{app:further-sequence-length}
+The aim of this Appendix is to clarify and give further examples on Theorem~\ref{thm:sequencelength-gain}. Here we provide an intuitive explanation of the result, while the mathematical details can be found in Appendix~\ref{app:proofs}. 
+
+Let's start from the main result on the gain, that can be broken down in three parts:
+\begin{equation} \label{eq:app:gain-breakdown}
+  \mathrm{gain} \sim \left(\text{gain at costant } \gamma\right) \cdot \left(\frac{\gamma_\mathrm{tied}}{\gamma_\mathrm{untied}}\right)\cdot \left(\text{special factor for SIE}=1\right)
+\end{equation}
+
+
+\paragraph{The gain constant \(\gamma\)}
+This speedup comes from the different structure of the two networks, the tied one can built up correlation faster than the tied one because it compose \(L\) different signals. The strength of this effect is strongly dependent on the target function, the overall result is
+\begin{equation}
+    \text{gain at constant } \gamma \sim \frac{C_\mathrm{SIE} \times (\vec{1},\dots,\vec{1})}{\norm{C_\mathrm{SIE}}_\mathrm{op}}.
+\end{equation}
+
+\paragraph{The ratio of the learning rates}
+In Appendix~\ref{app:proofs}, we showed that the the learning rate can grow with the sequence length \(L\) at most as
+\begin{itemize}
+    \item for the tied network
+          \[ 
+            \gamma_\mathrm{tied} \lesssim C_\mathrm{SIE} \times (\vec{1},\dots,\vec{1}),
+          \]
+    \item for the untied network
+            \[
+                \gamma_\mathrm{untied} \lesssim \norm{C_\mathrm{SIE}}_\mathrm{op}.
+            \]
+\end{itemize}
+It is clear that saturating the bounds above leads to a factor
+\begin{equation}
+    \frac{\gamma_\mathrm{tied}}{\gamma_\mathrm{untied}}\lesssim\frac{\max \gamma_\mathrm{tied}}{\max \gamma_\mathrm{untied}} \sim \frac{C_\mathrm{SIE} \times (\vec{1},\dots,\vec{1})}{\norm{C_\mathrm{SIE}}_\mathrm{op}},
+\end{equation}
+that is exactly the same as the gain at constant \(\gamma\). Obviously the gain measure is fair only if the learning rates bounds are saturated, but our result predict the speed-up factor even in the case where the optimal learning rates are not used.
+
+\paragraph{The special factor for \(\mathrm{SIE}=1\)}
+The case \(\mathrm{SIE}=1\) is special because the dependence of the weak recovery time on the constant \(\eta\) is not negligible, differently from the cases \(\mathrm{SIE}\ge 2\). This slows down further the learning of the untied network, by a factor \(\sqrt{L}\), leading to a factor 
+\begin{equation}
+    \text{special factor for SIE}= \begin{cases}
+        1 & \mathrm{SIE} \ge 2\\
+        \sqrt{L} & \mathrm{SIE}=1
+    \end{cases}
+\end{equation}
+
+\subsection{Example at not optimal learning rate}
+In Figure~\ref{fig:sequence-length-H2} we presented the speed up in the case of a target function with \(\mathrm{SIE}=2\), and optimal learning rate for both the tied and untied network. Here we want to show that our result predicts the gain well even when the learning rate are not scaled up optimally. In particular, consider the same setting as in Figure~\ref{fig:sequence-length-H2}, but with the learning rates 
+\begin{equation}
+    \gamma_\mathrm{tied} = \gamma_\mathrm{untied} = \text{costant with } L =  \gamma_0.
+\end{equation}
+Using Equation~\eqref{eq:app:gain-breakdown} we can predict the gain as
+\begin{equation}
+    \mathrm{gain} \sim L \cdot 1 \cdot 1 = L.
+\end{equation}
+\begin{figure}
+    \centering
+    \includegraphics[height=0.27\textwidth]{figs/sequence-lenght/H2-sequence-length-icoverlapped-overlap}
+    \includegraphics[height=0.27\textwidth]{figs/sequence-lenght/H2-sequence-length-icoverlapped-crossing}
+    \includegraphics[height=0.27\textwidth]{figs/sequence-lenght/H2-sequence-length-icoverlapped-gain}
+    \caption{The gain in the case of a target function with \(\mathrm{SIE}=2\), where both cases use the same learning rate \(\gamma_0 = 0.005\). (left) The evolution of the overlap, (middle) the weak recovery time and (right) the gain. The gain is proportional to \(L\), as predicted.}
+    \label{fig:app:sequence-length-H2_costantlrate}
+\end{figure}
+In Figure~\ref{fig:app:sequence-length-H2_costantlrate} we show the result of the simulation, where we can see that the gain is indeed proportional to \(L\), as predicted.
+
+\subsection{The upper bound of learning rate scaling}
+In this subsection we want to show an example proving that not all scalings of the learning rate are allowed: if it grows too fast with the sequence length, the network will not be able to learn.
+
+Let's take as example the \(\mathrm{SIE}=1\) target function
+\begin{equation}
+    g(\vec{z}_\star) = \frac{1}{\sqrt{L}}\sum_{i=1}^L z_{\star,i},
+\end{equation}
+with the corresponding leading Hermite tensor
+\begin{equation}
+    C_1 = \begin{pmatrix}
+        \sfrac{1}{\sqrt{L}} & \dots & \sfrac{1}{\sqrt{L}}
+    \end{pmatrix} \in \mathbb{R}^{L}.
+\end{equation}
+We know that the maximum scaling for the learning rate of the untied network is
+\[\gamma_\mathrm{untied} \lesssim \norm{C_1}_\mathrm{op} = 1, \]
+thus we stick with a constant learning rate \(\gamma_0\) for both networks
+\begin{equation}
+    \gamma_\mathrm{tied} = \gamma_\mathrm{untied} = \gamma_0 \sim 1.
+\end{equation}
+We can use Equation~\eqref{eq:app:gain-breakdown} to have the theoretical prediction of the gain in this case:
+\begin{equation}
+    C_1 \times (\vec{1},\dots,\vec{1}) =  \sqrt{L}
+    \quad\implies\quad
+    \mathrm{gain} \sim \sqrt{L} \cdot 1 \cdot \sqrt{L} = L.
+\end{equation}
+\begin{figure}
+    \centering
+    \includegraphics[height=0.27\textwidth]{figs/sequence-lenght/H1-sequence-length-icoverlapped-overlap}
+    \includegraphics[height=0.27\textwidth]{figs/sequence-lenght/H1-sequence-length-icoverlapped-crossing}
+    \includegraphics[height=0.27\textwidth]{figs/sequence-lenght/H1-sequence-length-icoverlapped-gain}
+    \caption{The gain in the case of a target function with \(\mathrm{SIE}=1\), where both cases use the same learning rate \(\gamma_0 = 0.005\). (left) The evolution of the overlap, (middle) the weak recovery time. The gain is proportional to \(L\), as predicted. \(d=1000\), \(\sigma=\ReLU\)}
+    \label{fig:app:sequence-length-H1_base}
+\end{figure}
+In Figure~\ref{fig:app:sequence-length-H1_base} we show the result of the simulation, where we can see that the gain is indeed proportional to \(L\), as predicted. We can now ask what happens if we push the learning rate scaling of the untied network beyond the limit of Theorem~\ref{thm:sequencelength-gain}. If we set 
+\begin{equation}
+  \gamma_\mathrm{untied} = \gamma_\mathrm{tied} = \gamma_0 \cdot L,
+\end{equation}
+the ratio between the learning rates becomes now \(\sfrac{\gamma_\mathrm{tied}}{\gamma_\mathrm{untied}} = \sfrac{1}{L}\), and the gain 
+\begin{equation}
+  \mathrm{gain} \sim \sqrt{L} \cdot \frac{1}{L} \cdot \sqrt{L} = 1.
+\end{equation}
+Apparently, the untied network performance is matching the one of the tied network. Figure~\ref{fig:app:sequence-length-H1_maxlrate} shows the result of the simulation of such a case: the learning rate of the untied network is too high, and the network is not able for large \(L\), and thus the gain diverges with a maximum value of . This plot proves our bounds on the learning rate scaling are indeed correct.
+\begin{figure}
+  \centering
+  \includegraphics[height=.3\textwidth]{figs/sequence-lenght/H1-sequence-length-maxlr-overlap}
+  \includegraphics[height=.3\textwidth]{figs/sequence-lenght/H1-sequence-length-maxlr-crossing}
+  \includegraphics[height=.3\textwidth]{figs/sequence-lenght/H1-sequence-length-maxlr-gain}
+  \caption{The gain in the case of a target function with \(\mathrm{SIE}=1\), where both cases use the same learning rate \(\gamma_0 = 0.005\). (left) The evolution of the overlap, (middle) the weak recovery time and (right) the gain. The gain diverges, as predicted. \(d=1000\), \(\sigma=\ReLU\)}
+  \label{fig:app:sequence-length-H1_maxlrate}
+\end{figure}
+
+
+\subsection{Equivalence between Single-Layer attention and Tied network}
+\begin{figure}
+    \centering
+    \includegraphics[height=0.3\textwidth]{figs/sequence-lenght/comparison-attention-squarenetwork-overlap}
+    \includegraphics[height=0.3\textwidth]{figs/sequence-lenght/comparison-attention-squarenetwork-crossing}
+    \caption{ comparison between the learning of the tied network with squared activation (orange), namely linear attention, and the single-layer softmax attention(green) (left) The evolution of the overlap; each symbol is a different value of \(L\). (right) the weak recovery time. The two networks learn at the same rate, but with different costants. \(g(\vec{z}_\star)=\sum_{i=1}^L\mathrm{He}_2(\vec{z}_{\star,i})\), \(d=1000\), \(\sigma=\ReLU\)}
+    \label{fig:app:attention-squarenetwork}
+\end{figure}
+In the main paper we proved that the tied network model is a generalization of the single-layer attention model. In particular, if the activation function is  \(\sigma(x) = x^2\), the tied network is equivalent to the single-layer \emph{linear} attention. We also claimed that adding a non-linearity to the attention can only improve the performance of the network, although not affecting the scaling with the sequence length. In Figure~\ref{fig:app:attention-squarenetwork} we show the comparison between the learning of the tied network with squared activation (orange), namely linear attention, and the single-layer softmax attention(green). The two networks learn at the same linear rate, but with different growth constants. Softmax attention performs better than the tied network with squared activation for sufficiently large sequence lengths.
+
+
+
+
+\subsection{Pathological cases}
+Theorem~\ref{thm:sequencelength-gain} shows that there could be cases where the gain from learning is 0, meaning that the tied network cannot learn anything, while the untied one possibly can. In particular the degenerate condition happens when
+\begin{equation}
+    C_\mathrm{SIE} \times (\vec{1},\dots,\vec{1}) = 0,
+\end{equation}
+where Theorem~\ref{thm:sequencelength-gain} guarantees that the gain is 0. Examples of such pathological cases are:
+\begin{itemize}
+    \item \(\mathrm{SIE}=1\): a possible pathological target could be
+          \[
+            g(\vec{z}_\star) = z_{\star,1} - z_{\star,2}.
+          \]
+          In this case the leading term in Hermite expansion is
+          \[
+            C_1 = \begin{pmatrix}
+                1\\ 
+                -1
+            \end{pmatrix} \quad \text{and consequently } C_1 \times \vec{1} = 0.
+          \]
+    \item \(\mathrm{SIE}=2\): anlogously, a possible pathological target could be
+          \[
+            g(\vec{z}_\star) = z^2_{\star,1} - z^2_{\star,2}.
+          \]
+            In this case the leading term in Hermite expansion is
+            \[
+            C_2 = \begin{pmatrix}
+                1 & 0\\ 
+                0 & -1
+            \end{pmatrix} \quad \text{and consequently } C_2 \times \begin{pmatrix} 1& 1\\ 1& 1\end{pmatrix} = 0.
+            \]
+\end{itemize}
+In Figure~\ref{fig:app:degenerate} we show the pathological case for \(\mathrm{SIE}=1\) and \(\mathrm{SIE}=2\). The untied network is not able to learn the target function because of the symmetry: the tied network is by design symmetric, while the target is constructed to be as antisymmetric as possible in the sequence length. The untied network instead is able to learn the target function, because the weights are not constrained to be equal, thus the symmetry is broken by the initialization. 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.45\textwidth]{figs/sequence-lenght/degeneracy_nulldivergence}
+    \includegraphics[width=0.45\textwidth]{figs/sequence-lenght/degeneracy_nulldivergence-v2}
+    \caption{Pathological cases for \(\mathrm{SIE}=1\) (left) and \(\mathrm{SIE}=2\) (right). The untied network is able to learn the target function, while the tied one cannot.}
+    \label{fig:app:degenerate}
+\end{figure}
+
+The degeneracy of the tied network could be solved by weighting randomly the neurons. In that case, almost surely we have
+\begin{equation}
+    C_\mathrm{SIE} \times (\vec{1},\dots,\vec{1}) \neq 0.
+\end{equation}
+Although this is a possible solution, we leave the study of the effect of random weights fro symmetry breaking for future work.

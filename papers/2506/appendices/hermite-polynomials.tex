@@ -1,0 +1,88 @@
+\section{Mathematical preliminaries and notations}\label{app:hermite-polynomials}
+
+\subsection{Tensors}
+
+We consider tensors as multidimensional arrays: a tensor $T$ of order $k$ and dimensions $(d_1, \dots, d_k)$ is simply an element of $\dR^{d_1 \times \dots \times d_k}$. Its elements are denoted by $T_{i_1\dots i_k}$, where $i_\ell \in [d_\ell]$. The scalar product between two tensors with same dimensions is defined as
+\[ \langle T, T \rangle = \sum_{i_1, \dots, i_k} T_{i_1\dots i_k}T'_{i_1\dots i_k}.\]
+
+We say that a tensor is \emph{symmetric} if all its dimensions are equal and for any index $(i_1, \dots, i_k)$ and permutation $\sigma \in \mathfrak{S}_k$, 
+\[ T_{i_1\dots i_k} = T_{i_{\sigma(1)}\dots i_{\sigma(k)}}. \]
+
+We shall need two operations on tensors: the first is the \emph{tensor product}, that turns two tensors of order $k, \ell$ into a tensor of order $k + \ell$ defined as
+\[ (T \otimes T')_{i_1\dots i_{k+\ell}} = T_{i_1 \dots i_k} T'_{i_{k+1} \dots i_{k+\ell}}. \]
+The second is the \emph{tensor-matrix} contraction: given a tensor $T$ of order $k$, an index $\ell$ and a matrix $M$ of size $d_\ell \times d'\ell$, the tensor $T \times_\ell M$ is defined as
+\[ (T \times_\ell M)_{i_1\dots i_\ell' \dots i_k} = \sum_{i_\ell} T_{i_1\dots i_\ell \dots i_k} M_{i_\ell i'_\ell } \]
+Given $k$ matrices $M^{(1)}, \dots, M^{(k)}$, we will use the shorthand 
+\[ T \times (M^{(1)}, \dots, M^{(k)}) = T \times_1 M^{(1)} \dots \times_k M^{(k)} \]
+
+Immediate properties of those operations are gathered in the following lemma:
+\begin{lemma}
+The operation $\times$ is associative: if $T$ is a tensor and $(M^{(1)}, \dots, M^{(k)}), (N^{(1)}, \dots, N^{(k)})$ are matrices with compatible dimensions,
+    \[ \left(T \times (M^{(1)}, \dots, M^{(k)})\right) \times (N^{(1)}, \dots, N^{(k)}) = T \times (M^{(1)}N^{(1)}, \dots, M^{(k)}M^{(k)}) \]
+    Let $T \in \dR^{d_1 \times \dots \times d_k}$ and $(\vec{x}_1, \dots, \vec{x}_k) \in \dR^{d_1} \times \dots \times \dR^{d_k}$. Then
+    \[ \langle T, \vec{x}_1 \otimes \dots \otimes \vec{x}_k \rangle = T \times (\vec{x}_1, \dots, \vec{x}_k).\]
+\end{lemma}
+
+\paragraph{Odeco tensors} Since tensors of order $k \geq 3$ are sometimes hard to handle, we work with a restricted class. We say that a symmetric tensor $T$ is \emph{odeco} (short for \emph{orthogonally decomposable}, see \cite{robeva2016orthogonal}) if there exist real numbers $\lambda_1, \dots, \lambda_r$ and orthogonal vectors $\vec{v}_1, \dots, \vec{v}_r$ such that
+\[ T =\sum_{i=1}^r \lambda_i v_i^{\otimes k}.\]
+In particular, all tensors of order 1 (with $r=1$) and 2 (with $r$ equal to the rank of $T$) are odeco.
+
+\subsection{Hermite Polynomials} 
+In this section we provide our definition of Hermite polynomials, which are used in the construction of the Hermite basis, both for the one-dimensional and the multidimensional case.
+
+\paragraph{Gaussian measure and Gaussian $\ell^2$ space} We define the Gaussian density in $p$ dimensions
+\[ \omega_p(\vec{x}) = \frac{1}{(2\pi)^{d/2}} \exp\left(-\frac{\norm{\vec{x}}^2}{2}\right), \]
+and $\dd\omega_p(\vec{x}) = \omega_p(\vec{x}) \dd\vec{x}$. This measure defines a space $\ell^2(\omega_p)$ of functions $f$ satisfying
+\[ \norm{f}_{\omega} := \int f(\vec{x})^2 \dd\omega_p(\vec{x}) < \infty; \]
+it is a Hilbert space w.r.t the scalar product
+\[ \langle f, g \rangle_\omega = \int f(\vx)g(\vx) \dd\omega_p(\vx).\]
+
+\paragraph{Hermite polynomials and tensors}
+
+We follow the conventions of \cite{grad1949note}. Define the $k$-th Hermite tensor $\cH_k$ as
+\[ \cH_k = \frac{(-1)^k}{\omega_p} \nabla^k \omega_p,\]
+where $\nabla^k$ is the $k$-th order derivative. This results in a $k$-th order symmetric tensor of size $p \times \dots \times p$. The Hermite tensors are orthogonal, in the sense that
+\[ \langle (\cH_k)_{i_1\dots i_k}, (\cH_\ell)_{j_1\dots j_\ell} \rangle_\omega \neq 0 \quad \text{if and only if} \quad k=\ell \text{ and } (i_1, \dots, i_k) \text{ is a permutation of } (j_1, \dots, j_\ell) . \]
+When $p = 1$, all Hermite tensors are scalars, and we get the usual Hermite polynomials:
+\begin{align}
+    \mathrm{He}_0(x) &= 1, \\
+    \mathrm{He}_1(x) &= x, \\
+    \mathrm{He}_2(x) &= x^2 - 1, \\
+    \mathrm{He}_3(x) &= x^3 - 3x, \\
+    \mathrm{He}_4(x) &= x^4 - 6x^2 + 3.
+\end{align}
+
+\paragraph{Hermite expansion} The orthogonality properties of the Hermite tensors imply the following theorem:
+\begin{theorem}
+    Let $f \in \ell^2(\omega_p)$. There exist a unique sequence of coefficients $\left(C_k(f)\right)_{k \geq 0}$ such that $C_k(f)$ is a tensor of order $k$ and
+    \begin{equation}\label{eq:app:hermite_expansion}
+        f = \sum_{k \geq 0} \langle C_k(f), \cH_k \rangle.
+    \end{equation} 
+    Those coefficients are given by the following formula:
+    \[ C_k(f) = \frac1{k!}\int f(\vx) \cH_k(\vx) \dd\omega_p(\vx). \]
+    Further, the scalar product $\langle \cdot, \cdot \rangle_\omega$ can be written as 
+    \[ \langle f, g \rangle_\omega = \sum_{k \geq 0} \frac1{k!}\langle C_k(f), C_k(g) \rangle \]
+\end{theorem}
+The proof of this theorem can be found in \cite{grad1949note}. The identity \eqref{eq:app:hermite_expansion} is called the \emph{Hermite expansion} of $f$, and the $C_k(f)$ are its \emph{Hermite coefficients}. 
+% Whenever $f$ is differentiable and $\nabla f \in \ell^2(\vec{w}_p)$, an integration by parts implies that 
+% \[ \int \nabla f(\vx) \otimes \cH_k(\vx) \dd\omega_p(\vx) = \int f(\vx) \cH_{k+1}(\vx) \dd\omega_p(\vx) = (k+1)! C_{k+1}(f). \]
+% As a result, for any vector $\vw$, we have
+% \begin{equation}\label{eq:hermite_coeff_derivative}
+%     C_k(\langle \vw, \nabla f \rangle) = (k+1)C_{k+1}(f) \times_1 \vw.
+% \end{equation}
+
+Finally, by invariance of the Gaussian distribution through orthogonal transformation, the following holds:
+\begin{lemma}
+    Let $g: \dR^p \to \dR$, and $W \in \dR^{p \times q}$ be a matrix satisfying $WW^\top = I_p$. Let $f(\vx) = g(W\vx)$. Then
+    \[ C_k(f) = C_k(g) \times (W, \dots, W). \]
+\end{lemma}
+When $p = 1$ and $\vw$ is a single vector, we get
+\[ C_k(f) = c_k(g) \vw^{\otimes k}. \]
+This gives rise to a link between odeco tensors and separable functions:
+\begin{lemma}
+    Let $g: \dR^\ell \to \dR$ be a separable function, such that
+    \[g(\vec{z}) = \sum_{i} g_i(z_i),\]
+    $W \in \dR^{\ell \times q}$ an orthogonal matrix, and let $f(\vec{x}) = g(W\vec{x}).$ Then
+    \[ C_k(f) = \sum_{i=1}^\ell c_k(g_i) \vec{w}_i^{\otimes k}, \]
+    and in particular every Hermite coefficient of $f$ is odeco.
+\end{lemma}

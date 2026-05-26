@@ -1,0 +1,484 @@
+\section{Effective dimension and sample complexity of emergence}
+
+\label{app:effective-dimension}
+
+As discussed in the main text,  training dynamics is found in practice to often display long plateaus followed by abrupt transitions, with new directions in representation space \emph{emerging} sequentially \cite{wei2022emergent,raventos2023pretraining,arora2023theory,schaeffer2023are}. We return in this section to the emergence of learned features at each layer, and in particular, we now make the noise level \(\tau^k_\ell(n)\) in \eqref{eq:lofi-emergence-threshold} explicit.  Throughout the section our results apply conditioned on a fixed kernel $K_{\ell-1}(\bm x,\bm x')$ defined by the features $\bz_{\ell-1}$ of the previous layers.
+
+Recall the residual candidate class
+\[
+  \mathcal{S}^\ell_{k}
+  =
+  \left\{
+  \varphi\in\mathcal H_{\ell-1}:
+  \norm{\varphi}_{\mathcal H_{\ell-1}}=1,\,
+  \varphi \perp \varphi_1,\cdots, \varphi_{k-1}
+  \right\}.
+\]
+Let \(T_{\ell-1}:L^2(P_x)\to L^2(P_x)\) be the integral operator of the current kernel,
+\[
+    (T_{\ell-1}f)(\bm x)
+    =
+    \int K_{\ell-1}(\bm x,\bm x')f(\bm x')\,dP_x(\bm x'),
+\]
+and let \(\Pi^\perp_k\) denote the projection orthogonal to the selected features \(\varphi_1,\dots,\varphi_{k-1}\). The residual covariance operator is
+\[
+    T_{\ell,k}
+    :=
+    \Pi^\perp_k T_{\ell-1}\Pi^\perp_k .
+\]
+For a resolution parameter \(r>0\), define the {\it residual effective dimension}:
+\begin{definition}[Residual effective dimension]
+    \label{def:lofi-effective-dimension}
+Let  \(\{\lambda^{\ell,k}_j\}_{j\geq 1}\) denote the eigenvalues of \(T_{\ell,k}\). The \emph{effective residual dimension} at scale \(r\) is defined as
+    \begin{equation}
+    D^\ell_k(r)
+    \coloneqq
+    \operatorname{Tr}\!\left[
+        T_{\ell,k}(T_{\ell,k}+r I)^{-1}
+    \right]
+    =
+    \sum_{j\geq 1}
+    \frac{\lambda^{\ell,k}_j}{\lambda^{\ell,k}_j+r},
+    \label{eq:lofi-effective-dimension}
+\end{equation}
+\end{definition}
+The above notion of effective dimension is standard in kernel regression
+\cite{caponnetto2007optimal,rudi2017generalization}, and similar quantities
+appear in local Rademacher analyses of kernel classes
+\cite{mendelson2003performance,bartlett2005local}. \(D^\ell_k(r)\) can be
+interpreted as counting the number of residual directions whose variance is
+above the resolution \(r\).
+
+\begin{assumption}[Residual eigenfunction hypercontractivity]
+\label{ass:residual-eigenfunction-hypercontractivity}
+Let \(\mathcal E_{\ell,k}\) denote the
+\(L^2(P_x)\)-closed span of the residual eigenfunctions
+\(\{\phi_j^{\ell,k}\}_{j\ge1}\). There exists \(H_\ell<\infty\) such that every
+\(g\in\mathcal E_{\ell,k}\) satisfies
+\[
+    \norm{g}_{L^4(P_x)}
+    \le
+    H_\ell \norm{g}_{L^2(P_x)}.
+\]
+Equivalently, the same inequality holds for every \(L^2\)-convergent expansion
+\(g=\sum_j c_j\phi_j^{\ell,k}\) with \(\sum_jc_j^2<\infty\).
+
+\end{assumption}
+
+Such an assumption holds, in particular, for the polynomial eigenbases that
+appear in random-feature kernels such as Hermite polynomials and spherical harmonics (\cite{mei2022generalizationerror}).
+
+
+\begin{theorem}[Emergence sample complexity]
+\label{prop:emergence}
+Suppose that Assumption~\ref{ass:residual-eigenfunction-hypercontractivity}
+holds and the kernel \(K_{\ell-1}\) and labels \(y\) are uniformly bounded. Let
+\[
+    r_\ell^{k,\star}
+    \coloneqq
+    \argmax_{r:\, r \leq \lambda_1^{\ell,k}}
+    r\sqrt{D^\ell_k(r)} .
+\]
+Here \(\lambda_1^{\ell,k}\) is the top residual eigenvalue, hence the largest
+possible variance scale of a unit-RKHS candidate in \(\mathcal S^\ell_k\).
+Then, for any \(\delta>0\), there is a constant
+\(\widetilde C_{\ell,H}>0\) such that with probability at least \(1-\delta\),
+\begin{equation}
+    \begin{aligned}
+     \tau^k_\ell(n)
+     &\coloneqq
+     \sup_{\varphi \in  \mathcal{S}^\ell_{k}}
+    \left|
+    \widehat c_{\ell,n}(\varphi)-c_\ell(\varphi)
+    \right|
+    \le
+    \widetilde C_{\ell,H}\,
+    r_\ell^{k,\star}
+    \sqrt{\frac{D^\ell_k(r_\ell^{k,\star})}{n}} .
+    \end{aligned}
+\end{equation} This gives, up to polylogarithmic factors, the sample
+scale
+\[
+    n_k
+    \gtrsim
+    \frac{
+        (r_\ell^{(k)})^2 D^\ell_k(r_\ell^{(k)})
+    }{
+        (\rho_\ell^{(k)})^2
+    },
+\]
+for recovery of $\varphi_k$ conditional on the recovery of previous features $\varphi_1,\cdots,\varphi_{k-1}$.
+\end{theorem}
+
+\begin{remark}\label{rem:order}
+The order of maximizers of the noise scale $r\sqrt{D^\ell_k(r)}$ may not perfectly match the order of maximizers of the population correlation $\abs{\mathbb{E}[y \varphi(\bx)^2]}$. Hence, the next emergent feature after recovering $\varphi_1,\cdots,\varphi_{k-1}$ may not be $\varphi_{k}$. For simplicity, we neglect the correction in sample complexity due to such order switches.
+\end{remark}
+\begin{proof}
+
+ For \(r>0\), let
+\[
+    \mathcal S^\ell_k(r)
+    :=
+    \{\varphi\in\mathcal S^\ell_k:\E[\varphi(\bm X)^2]\le r\},
+\]
+
+We proceed by decomposing the fluctuations into contributions from $ S^\ell_k(r)$ for different variance scales $r$. Define
+\begin{equation}
+    \tau^k_\ell(r,n)
+    \coloneqq
+    \sup_{\varphi \in \mathcal S^\ell_k(r)}
+    \abs{\hat{\mathbb{E}}[y\varphi^2]-\mathbb{E}[y\varphi^2]} .
+\end{equation}
+We will show that:
+\begin{equation}
+    \tau^k_\ell(r,n)
+    \lesssim
+    \widetilde C_{\ell,H}\,
+    r\sqrt{\frac{D^\ell_k(r)}{n}}
+    \label{eq:lofi-noise-floor}
+\end{equation}
+
+The above bound follows through an extension of Theorem~2.1 in
+\cite{mendelson2003performance} which bounds the rademacher complexity of $S^\ell_k(r)$. Concretely, Theorem 2.1 in \cite{mendelson2003performance} provides that for a unit ball of an RKHS of a bounded kernel with eigenvalues \(\{\lambda_j\}_{j\ge 1}\):
+\[
+    \mathbb E R_n
+    \left\{
+        f\in\mathcal H:\norm{f}_{\mathcal H}\le 1,\,
+        \mathbb E f(\bm X)^2\le r
+    \right\}
+    \lesssim
+    \left(
+        \frac{1}{n}\sum_{j\ge 1}\min\{r,\lambda_j\}
+    \right)^{1/2}.
+\]
+Since for every \(r>0\) and every
+eigenvalue \(\lambda_j\),
+\[
+    \frac12 \min\{r,\lambda_j\}
+    \le
+    \frac{r\lambda_j}{r+\lambda_j}
+    \le
+    \min\{r,\lambda_j\},
+\]
+the same bound holds for $D^\ell_k(r)$ defined in Definition \ref{def:lofi-effective-dimension}.
+
+We now adapt the proof of Theorem~2.1 of
+\cite{mendelson2003performance} to the quadratic process. By the boundedness of the labels $y$, $\tau^k_\ell(r,n)$ can be bounded up to constants by the rademacher complexity of $\varphi^2$ over $S^\ell_k(r)$, defined as:
+
+\begin{equation}
+ \E_\epsilon[\sup_{\varphi\in\mathcal S^\ell_k(r)}
+    \left|
+        \sum_{i=1}^n\epsilon_i\varphi(\bm X_i)^2
+        \right|],
+\end{equation}
+where $\epsilon \in \{\pm 1\}$ denote standard rademacher random variables.
+
+Let
+\(\{\phi_j^{\ell,k}\}_{j\ge1}\) denote the \(L^2(P_x)\)-orthonormal eigenfunctions
+of \(T_{\ell,k}\) 
+Any $\varphi$ with $\norm{\varphi}_{\mathcal{H}}=1$ can be expressed in the basis w.r.t \(\{\phi_j^{\ell,k}\}_{j\ge1}\)  as
+\[
+    \varphi_\beta(\bm x)
+    =
+    \sum_{j\ge1}
+    \beta_j\sqrt{\lambda_j^{\ell,k}}\,
+    \phi_j^{\ell,k}(\bm x),
+    \qquad
+    \sum_j\beta_j^2\le 1.
+\]
+The constraint $\E[\varphi(\bm X)^2]\le r$ then translates to
+\(\sum_j\lambda_j^{\ell,k}\beta_j^2\le r\). Hence, the set of coefficients for $\varphi \in S^\ell_k(r)$ is given by:
+\[
+    I_r
+    :=
+    \left\{
+        \beta:
+        \sum_j\beta_j^2\le 1,\quad
+        \sum_j\lambda_j^{\ell,k}\beta_j^2\le r
+    \right\}.
+\]
+The proof of Theorem~2.1 in 
+\cite{mendelson2003performance} relates the set $I_r$ to an ellipsoid $B_r$ through the following inclusions:
+\[
+    B_r\subset I_r\subset \sqrt2\,B_r,
+    \qquad
+    B_r
+    :=
+    \left\{\beta:\sum_j\mu_j(r)\beta_j^2\le1\right\},
+    \qquad
+    \mu_j(r)=\left(\min\{1,r/\lambda_j^{\ell,k}\}\right)^{-1}.
+\]
+Thus the supremum over \(I_r\) is bounded, up to an absolute constant, by the
+supremum over \(B_r\). Setting \(\theta_j=\sqrt{\mu_j(r)}\,\beta_j\), 
+\(B_r\) is re-parameterized as the Euclidean unit ball \(\norm{\theta}_2\le1\). Next, define
+\[
+    a_j(r) \coloneqq \frac{\lambda_j^{\ell,k}}{\mu_j(r)}
+    =
+    \min\{\lambda_j^{\ell,k},r\}
+\]
+
+The decomposition $\varphi_\beta(\bm x)
+    =
+    \sum_{j\ge1}
+    \beta_j\sqrt{\lambda_j^{\ell,k}}\,
+    \phi_j^{\ell,k}(\bm x)$ can then be re-expressed as:
+    \begin{align*}
+         &\sum_{j\ge1}
+    \beta_j\sqrt{\lambda_j^{\ell,k}}\,
+    \phi_j^{\ell,k}(\bm x)\\&= \sum_j
+    \sqrt{\mu_j(r)}\,\beta_j \frac{1}{\sqrt{\mu_j(r)}}\phi_j^{\ell,k}(\bm x)\\&= \sum_j
+            \theta_j\sqrt{a_j(r)}\phi_j^{\ell,k}(\bm x)
+    \end{align*}
+
+\begin{equation}\label{eq:radbound}
+    \sup_{\beta\in I_r}
+    \left|
+        \sum_{i=1}^n
+        \epsilon_i\varphi_\beta(\bm X_i)^2
+    \right|
+    \lesssim
+    \sup_{\norm{\theta}_2\le1}
+    \left|
+        \sum_{i=1}^n
+        \epsilon_i
+        \left(
+            \sum_j
+            \theta_j\sqrt{a_j(r)}\phi_j^{\ell,k}(\bm X_i)
+        \right)^2
+    \right|.
+\end{equation}
+Define:
+\[
+    v_{\ell,k,r}(\bm x)
+    :=
+    \left(\sqrt{a_j(r)}\,\phi_j^{\ell,k}(\bm x)\right)_{j\ge1},
+\]
+then the RHS in Equation \ref{eq:radbound} can be expressed as:
+\begin{equation}\label{eq:matconc}
+    \left\|
+        \sum_{i=1}^n
+        \epsilon_i
+        v_{\ell,k,r}(\bm X_i)\otimes
+        v_{\ell,k,r}(\bm X_i)
+    \right\|_{\mathrm{op}}.
+\end{equation}
+
+Let
+\[
+    \psi_{\ell,k}(r)^2
+    :=
+    \sum_j a_j(r)
+    \asymp rD^\ell_k(r).
+\]
+
+We now bound Equation \ref{eq:matconc} through a matrix concentration argument which requires bounding the operator norm of the following fourth-moment matrix:
+\[
+    M_{\ell,k}(r)
+    :=
+        \E\!\left[
+            \norm{v_{\ell,k,r}(\bm X)}_2^2
+            v_{\ell,k,r}(\bm X)
+            \otimes
+            v_{\ell,k,r}(\bm X)
+        \right].
+\]
+We bound $\norm{M_{\ell,k}(r)}$ through Assumption \ref{ass:residual-eigenfunction-hypercontractivity}. For every \(\norm{u}_2=1\),
+write \(g_u(\bm x)=\langle u,v_{\ell,k,r}(\bm x)\rangle\). Then
+\[
+    \E[g_u(\bm X)^2]
+    =
+    \sum_j u_j^2a_j(r)
+    \le r,
+\]
+since $a_j(r) \leq r$. Subsequently by Cauchy--Schwarz and hypercontractivity (Assumption \ref{ass:residual-eigenfunction-hypercontractivity}), we obtain:
+\[
+    \begin{aligned}
+    \left\langle u,M_{\ell,k}(r)u\right\rangle
+    &=
+    \sum_j a_j(r)\,
+    \E\!\left[
+        \big(\phi_j^{\ell,k}(\bm X)\big)^2g_u(\bm X)^2
+    \right]                                                   \\
+    &\le
+    \sum_j a_j(r)\,
+    \norm{\phi_j^{\ell,k}}_{L^4(P_x)}^2
+    \norm{g_u}_{L^4(P_x)}^2                                   \\
+    &\le
+    H_\ell^4
+    \psi_{\ell,k}(r)^2
+    \E[g_u(\bm X)^2]
+    \le
+    H_\ell^4 r\,\psi_{\ell,k}(r)^2 .
+    \end{aligned}
+\]
+Therefore
+\[
+   \norm{M_{\ell,k}(r)}_2
+    \lesssim
+    H_\ell^4 r\,\psi_{\ell,k}(r)^2
+    \asymp
+    H_\ell^4 r^2D^\ell_k(r).
+\]
+Matrix Bernstein then gives, up to constants and polylogarithmic
+factors:
+\[
+    \E_\epsilon
+    \sup_{\varphi\in\mathcal S^\ell_k(r)}
+    \left|
+        \sum_{i=1}^n\epsilon_i\varphi(\bm X_i)^2
+    \right|
+    \lesssim
+    H_\ell^2\sqrt{nr}\,\psi_{\ell,k}(r)
+    \asymp
+    H_\ell^2 n r\sqrt{\frac{D^\ell_k(r)}{n}}.
+\]
+By symmetrization and the boundedness of labels, this
+yields \eqref{eq:lofi-noise-floor}. Taking the maximum over shells gives
+the stated bound with \(r_\ell^{k,\star}\).
+\end{proof}
+
+\subsection{Estimating \texorpdfstring{$\tau^k_\ell(n)$}{tau-l-k(n)} in Feature space}
+We discuss here how $\tau^k_\ell(n)$ can be estimated directly in the feature space (rather than in function space, as we did so far). 
+
+Define the true label, weighted covariance:
+\begin{equation}
+    \bm C^{(\ell)}
+    \coloneqq
+    \mathbb{E}[
+    y\,
+    \bz_{\ell-1}(\bm x)
+    {\bz}_{\ell-1}(\bm x)^\top] ,
+\end{equation}
+and the unweighted covariance:
+\begin{equation}
+    \bm \Sigma^{(\ell)}
+    \coloneqq
+    \mathbb{E}[
+    \bz_{\ell-1}(\bm x)
+    {\bz}_{\ell-1}(\bm x)^\top].
+\end{equation}
+
+To estimate the cutoff $n^k_\ell$ for the number of samples required for the recovery of $\phi_k$, we proceed as follows:
+\begin{enumerate}[leftmargin=2em]
+    \item Let $\bv_1,\dots \bv_{k-1}$ denote the top $k-1$ eigenvectors of $\bm C^{(\ell)}$. Compute the residual covariance:
+    \begin{equation}
+        \bm\Sigma^{(\ell)}_k \coloneqq (I-\bv_{k-1}\bv_{k-1}^\top) \bm\Sigma^{(\ell)}_{k-1}(I-\bv_{k-1}\bv_{k-1}^\top).
+    \end{equation}
+
+    \item Let $\{\lambda^{\ell,k}_j\}_{j=1}^\infty$ denote the eigenvalues of $\bm\Sigma^{(\ell)}_k$ . Then, for any $r \in \mathbb{R}$, define:
+    \begin{equation}
+       D^k_{\ell}(r) \coloneqq \sum_{j\geq 1} \frac{\lambda^{\ell,k}_j}{\lambda^{\ell,k}_j+r}.
+    \end{equation}
+    
+    \item Set $r^k_\ell{=}\argmax_{r \leq \lambda_1^{\ell,k}} r \sqrt{D^k_{\ell}(r)}$.
+    We predict the emergence of $\bv_{k}$ with samples $n^k_{\ell}$ satisfying:
+    \begin{equation}\label{eq:real-data-emergence-estimate}
+        n^k_{\ell} \sim  \left(\frac{r^k_\ell}{\rho^{(k)}_\ell}\right)^2 D^k_{\ell},
+    \end{equation}
+    where $\rho^{(k)}_\ell$ is the $k_{th}$ eigenvalue of $\bm C^{(\ell)}$.
+\end{enumerate}
+
+
+
+\subsection{Effective dimension in the Hermite toy model}
+\label{app:effective-dimension-hermite}
+
+The abstract quantity \(D^\ell_k(r)\) becomes concrete in the toy model Appendix~\ref{app:th_rf}. In this paragraph, \(k\) denotes the
+Hermite degree used to define the first hidden representation \(h^{(1)}\), not
+the index of the sequentially selected feature. Write the flattened degree-\(k\)
+Hermite tensor as
+\[
+    H_k(\bm x)
+    =
+    \{H_\alpha(\bm x):|\alpha|=k\}
+    \in \mathbb R^{D_k},
+    \qquad
+    D_k=\binom{d+k-1}{k}.
+\]
+For Gaussian inputs, these coordinates are orthonormal in \(L^2(P_x)\). Hence,
+for any two coefficient vectors \(a,b\in\mathbb R^{D_k}\),
+\[
+    \mathbb E\!\left[
+        \langle a,H_k(\bm X)\rangle
+        \langle b,H_k(\bm X)\rangle
+    \right]
+    =
+    \langle a,b\rangle_{\mathbb R^{D_k}} .
+\]
+
+Thus a degree-\(k\) candidate feature
+\(\varphi_a(\bm x)=\langle a,H_k(\bm x)\rangle\) is literally a vector in a
+\(D_k\)-dimensional Euclidean feature space as far as \(L^2(P_x)\) norms and
+projections are concerned.
+
+Equivalently, the degree-\(k\) Hermite kernel
+\[
+    K_{H,k}(\bm x,\bm x')
+    =
+    \langle H_k(\bm x),H_k(\bm x')\rangle
+    =
+    \sum_{|\alpha|=k} H_\alpha(\bm x)H_\alpha(\bm x')
+\]
+has integral operator
+\[
+    T_{H,k}f
+    =
+    \sum_{|\alpha|=k}
+    \langle f,H_\alpha\rangle_{L^2(P_x)} H_\alpha .
+\]
+This is the orthogonal projector onto the degree-\(k\) Hermite chaos. Its only
+nonzero eigenvalue is \(1\), with multiplicity \(D_k\). If the same block is
+reached through a random-feature activation, as in the construction of
+Subsection~\ref{gif:rf_maths}, the eigenvalue is multiplied by the squared
+Hermite coefficient and by normalization constants, but the multiplicity is
+still at most \(D_k\).
+
+Therefore,
+effective dimension relevant for the recovery of \(h^{(1)}\) is bounded by this
+Hermite block rank. For a block eigenvalue \(a_k>0\),
+\[
+    D_{\mathrm{toy},1}^{(k)}(r)
+    =
+    \sum_{j=1}^{D_k}\frac{a_k}{a_k+r}
+    =
+    \frac{a_k}{a_k+r}D_k
+    \le D_k
+    =
+    \binom{d+k-1}{k}
+    =
+    O(d^k),
+\]
+and for resolutions \(\lambda\lesssim a_k\) this is
+\(\asymp D_k\). Hence, during first-level
+feature recovery, the statistical fluctuation is governed by the ambient
+degree-\(k\) Hermite space.
+
+The planted first-level variables in Appendix~\ref{app:th_rf},
+\[
+    h_i^{(1)}(\bm x)
+    =
+    \langle A_i^{(1)},H_k(\bm x)\rangle,
+    \qquad i=1,\ldots,d_1,
+\]
+form a \(d_1=d^\epsilon\) dimensional signal subspace inside this
+\(D_k=O(d^k)\) dimensional Hermite block. The residual effective dimension
+controls the size of the empirical noise over the full candidate block, while
+the planted subspace controls the rank and strength of the population signal.
+Concretely, by the definition of $y$, we have that:
+\begin{equation}
+     \mathbb{E}[y(h_i^{(1)}(\bm x))^2] \sim \frac{1}{\sqrt{d_1}}
+\end{equation}
+
+
+Substituting the above scaling into the sample complexity prediction prescribed by Theorem \ref{prop:emergence} gives the
+\(d^{k+\epsilon}\) first-stage sample scale stated in
+Appendix~\ref{app:th_rf}.
+
+
+
+\subsection{Effective dimension in the multi-index models}
+
+
+We now discuss how the sample complexity prediction in Proposition \ref{prop:emergence} recovers the rates in the setting of multi-index models with power-law dependence on the label. 
+
+We follow here \cite{defilippis2026scaling,defilippis2026optimal} and consider hierarchical multi-index target \(y = f^*(\langle\bm{w}_1^*,\bm{x}\rangle,\dots,\langle\bm{w}_r^*,\bm{x}\rangle) + \xi\) with isotropic Gaussian inputs \(\bm{x}\sim\mathcal{N}(0,\bm{I}_d)\) and orthonormal teacher directions \(\{\bm{w}_i^*\}_{i=1}^r\). Because the input covariance is the identity \(D^\ell \asymp d\), at the slice-wise scale used in Proposition~\ref{prop:emergence}. The features at layer \(\ell\) along each candidate direction have unit variance under the Gaussian input, so the variance scale is order one, \(\tau = r_\ell^{(k)} = O(1)\). Finally, the power-law dependence of the label on the teacher coefficients translates into a power-law decay of the population correlations across the planted directions: the \(i\)-th spike satisfies \(\rho_\ell^{(i)} = O(i^{-\gamma})\), where \(\gamma>0\) is the exponent governing the label spectrum. Plugging \(D_k^\ell \asymp d\), \(\tau = O(1)\) and \(\rho^{(i)} = O(i^{-\gamma})\) into the recovery condition \(n \gg (r_\ell^{(k)})^2 D_k^\ell / (\rho_\ell^{(k)})^2\) of Proposition~\ref{prop:emergence} yields the sample-complexity threshold \(n_i \gtrsim d\, i^{2\gamma}\) for resolving the \(i\)-th spike, which matches the optimal scaling laws derived in~\cite{defilippis2026scaling,defilippis2026optimal}.

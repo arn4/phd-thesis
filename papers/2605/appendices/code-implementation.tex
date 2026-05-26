@@ -1,0 +1,142 @@
+\section{Code Implementation}
+
+\label{app:code-implem}
+
+All experiments are carried out with a self-contained Python package built on PyTorch \cite{paszke2019pytorch}, Numpy \cite{harris2020array}, Scipy \cite{virtanen2020scipy} and scikit-learn \cite{pedregosa2011scikit}. The source code is available in the attached zip file.
+
+For each layer $\ell = 1, \ldots, L$, the trainer
+(i) estimates the RMS norm
+$c_\ell = \bigl(\tfrac{1}{n}\sum_i \|\mathbf{h}_{\ell-1}^{(i)}\|^2\bigr)^{1/2}$
+to keep pre-activations $O(1)$;
+(ii) draws a frozen random map
+$\mathbf{W}_\ell \in \mathbb{R}^{d_{\ell-1}\times p_\ell}$,
+$W_{\ell,ij}\sim\mathcal{N}(0,1)$,
+and forms
+$\mathbf{Z}_\ell = p_\ell^{-1/2}\,
+\sigma_\ell\!\bigl(\mathbf{H}_{\ell-1}\mathbf{W}_\ell / c_\ell\bigr)$;
+(iii) computes the top-$k_\ell$ eigenvectors $\mathbf{V}_\ell$ of the signed
+covariance
+$\mathbf{C}_\ell = \tfrac{1}{n}\mathbf{Z}_\ell^\top
+\operatorname{diag}(\mathbf{y})\,\mathbf{Z}_\ell$
+ranked by $|\lambda|$; and
+(iv) sets $\mathbf{H}_\ell = \mathbf{Z}_\ell\mathbf{V}_\ell$.
+
+The eigendecomposition of $\mathbf{C}_\ell$ is the dominant cost, and three
+paths are dispatched automatically based on $(n,p_\ell,k_\ell)$: for
+$p_\ell\le 25{,}000$ on GPU, $\mathbf{C}_\ell$ is formed explicitly and
+diagonalised with \texttt{torch.linalg.eigh}; for moderate $p_\ell$ on CPU,
+the full LAPACK eigensolver is used when $k_\ell\ge p_\ell/4$ and Lanczos \\
+(\texttt{scipy.sparse.linalg.eigsh}) otherwise; for $p_\ell > 50{,}000$ and
+$k_\ell\le p_\ell/2$, a \texttt{LinearOperator} is passed to \texttt{eigsh}
+so that $\mathbf{C}_\ell$ is never materialised, requiring only $O(np_\ell)$
+memory and two passes per Lanczos iteration. A deterministic starting vector
+$\mathbf{v}_0=\mathbf{1}/\!\sqrt{p_\ell}$ ensures reproducibility, and when
+$\mathbf{Z}_\ell$ does not fit in GPU memory, features are streamed in batches
+and $\mathbf{C}_\ell$ is accumulated via outer products before calling
+\texttt{eigsh}.
+
+The final representation $\mathbf{H}_L$ is passed to
+\texttt{sklearn.linear\_model.RidgeCV}; classification accuracy is obtained by thresholding at zero (targets $\pm 1$). 
+
+\subsection{Figure Reproducibility}\label{app:hyper-params}
+
+We list below the hyperparameters used for each figure (panel by panel).
+Unless stated otherwise, random-feature weights are Gaussian, biases are zero,
+the final readout is ridge regression, and curves are averaged over multiple
+seeds.
+
+\begin{description}[leftmargin=1.5em]
+
+  \item[\Cref{fig:heatmaps}, left.]
+    Binary CIFAR-10 (animals vs.\ vehicles), $L=3$ ReLU LoFi layers.
+    Test error vs.\ $n$ for ridge, 3-layer random features, and LoFi with
+    $p\in\{5000, 10000\}$; LoFi ranks $(k_1,k_2)$ optimally found after a logarithmic grid search in $[2, p-1]^2$. Ridge $\lambda$ optimally tuned with \texttt{RidgeCV} from \cite{pedregosa2011scikit} in $[10^{-6}, 10^{6}]$ with $500$ points; 10 seeds.
+
+  \item[\Cref{fig:heatmaps}, right.]
+    Same setup. Test error grid over $(k_1,k_2)$ at fixed $p=5000$, $k_3=p$, for $n\in\{5000,10000,20000,50000\}$. Stars mark the best $(k_1,k_2)$ in each grid. 10 seeds.
+
+  \item[\Cref{fig:gradient-alignment}.]
+    Four-layer FC ReLU net on binary CIFAR-10; width $p=1000$ , LoFi ranks
+    $k=25$, $n=50000$. SGD: batch size 512, lr 0.06 with cosine + warmup,
+    98 steps.
+
+  \item[\Cref{fig:cnn-filter-activations}, left.]
+    Binary CIFAR-10 animal-vehicle. Convolutional LoFi: 4 conv layers ($3{\times}3$,
+    $2{\times}2$ pool, $L_2$ norm) + 1 FC layer; channels $p=4096$ , ranks
+    32,64,128,256, ReLU; $n=50000$. Top first-layer filters from the three RGB
+    channels.
+
+  \item[\Cref{fig:cnn-filter-activations}, right.]
+    Same architecture. Activation maps of the 6th LoFi feature on test images
+    at successive depths.
+
+\item[\Cref{fig:rf_theoretical}, left, center.]
+    Hierarchical teacher of App.~\ref{app:th_rf} with $k=2$, $\epsilon=\tfrac12$ and $g^\star=\tanh$; $d\in\{80,100,120,140\}$. RF widths $(p_1,p_2)\in\{(20000,512),(30000,768),(40000,1024),(50000,1280)\}$, spherical weights, and activations as in App.~\ref{app:rf-estimator}. The top eigenvectors are computed with a power iteration using at most $15$ iterations and oversampling parameter $10$. Readout: polynomial kernel of maximal degree $5$, ridge regularization $10^{-6}$, kernel regularization $10^{-4}$. Left: test MSE vs.\ $\alpha=\log(n)/\log(d)$. Center: overlap between $\widehat h^{(1)}$ and $h^{(1)}$ vs.\ $\alpha$. $10$ seeds.
+
+\item[\Cref{fig:rf_theoretical}, right.]
+    Same hierarchical teacher with $q=2$, $d=100$, $\epsilon=\tfrac12$, $\alpha=3$, and $g^\star=\tanh$, using a first-layer random-feature width $p_1=10000$ and the activations of App.~\ref{app:rf-estimator}. The displayed spectrum is computed with a randomized eigensolver.
+    One seed.
+    
+\item[\Cref{fig:rf_spectrum}]
+  Same hierarchical teacher as in \Cref{fig:rf_theoretical}, right, with $q=2$, $d=100$, $\epsilon=\tfrac12$, and $g^\star=\tanh$, using a first-layer random-feature width $p_1=10000$ and the activations of App.~\ref{app:rf-estimator}. The figure shows the spectrum of the first-layer spectral operator for several values of $\alpha \in \{1.5, 2.0, 2.5, 3.0, 3.5\}$, each computed with a randomized eigensolver. One seed per value of $\alpha$.
+
+  \item[\Cref{fig:kernel-heatmaps}]
+    Kernel LoFi (App.~\ref{app:kernel-nlofi}) on binary CIFAR-10 (animals vs.\ vehicles), $L=3$ layers, ReLU activation. Test error grid over $(k_1,k_2)\in[10,n-1]^2$ for $n\in\{1000,5000\}$; stars mark the best $(k_1,k_2)$. 10 seeds. The final optimization for the ridge parameter of Kernel Ridge Regression is done for $\lambda \in [10^{-5}, 1]$ with 20 log-spaced points.
+
+  \item[\Cref{fig:gd-lofi-comparison}.]
+    Binary CIFAR-10 animal vehicle, $n\in[10^2,5\times 10^4]$. Matched architectures with
+    $p=4096$ , The LoFi ranks are kept fixed between architectures $32,64,128,256$. SGD: batch $B=512$,
+    $\eta\propto\sqrt{B/n}$ (peak 0.01), cosine + warmup, total steps fixed
+    across $n$. 10 seeds. 
+
+  \item[\Cref{fig:sigmoid-one-layer}.]
+    Binary CIFAR-10, single LoFi hidden layer (ReLU), only the hidden
+    representation reduced to rank $k$. $p\in\{100, 500, 1000, 5000\}$,
+    $n\in\{10000,25000\}$, $\lambda$ optimally tuned with \texttt{RidgeCV} from \cite{pedregosa2011scikit} in $[10^{-6}, 10^{6}]$ with $500$ points. Shading: $\pm 1$ std over 5 seeds.
+
+  \item[\Cref{fig:nlofi-convergence}.]
+    Binary CIFAR-10 (animals vs.\ vehicles), 3-layer ReLU LoFi with last layer before Ridge not reduced. Test MSE vs.\ width $p$ for $n\in\{200,500,1000,2000,5000\}$. All shaded areas are average over 10 seeds.
+
+  \item[\Cref{fig:sample-complexity-pred}]
+    Binary CIFAR-10 (animals vs.\ vehicles); a 2-layer ReLU LoFi with a
+    population proxy obtained from the full dataset ($N=60{,}000$).
+    For each sample size $n$, the LoFi pipeline is fit on a fresh
+    permutation of $n$ training points (with $\bm W_1,\bm W_2$ held fixed
+    across permutations); we plot the index-aligned overlap
+    $|\langle\hat{\bm v}_i^{(n)},\hat{\bm v}_i^{(N)}\rangle|^2$ for the top
+    $i=1,\dots,6$ eigenvectors of the layer-$\ell$ signed covariance. Mean
+    $\pm$ SEM over $100$ dataset permutations. Dashed verticals: predicted
+    thresholds $n_\ell^k$ from~\cref{eq:real-data-emergence-estimate}.
+
+  \item[\Cref{fig:sample-complexity-pred-conv}]
+      Binary CIFAR-10 (animals vs.\ vehicles); a 2-layer convolutional ReLU LoFi (random convolutions with $P=5{,}000$ channels, $5{\times}5$ kernels, padding $2$, stride $1$; layer-1 eigenreduction $K_1=100$) with a population proxy obtained from $N=30{,}000$ samples. For each sample size $n$, the LoFi pipeline is fit on a fresh permutation of $n$ training points (with $\bm W_1,\bm W_2$ held fixed across permutations); we plot the per-layer diagonal overlaps $|\langle\hat{\bm v}_i^{(n)},\hat{\bm v}_i^{(N)}\rangle|^2$ for $i=1,\dots,8$, sorted descending within each draw so that $i=1$ is best-aligned axis at that $n$. Mean $\pm$ SEM over $100$ dataset permutations. Dashed verticals: predicted thresholds $n_\ell^k$ from~\cref{eq:real-data-emergence-estimate}.
+
+  \item[\Cref{fig:eigenvalues-histogram}.]
+    Binary CIFAR-10. Two conv layers (kernel $3\times3$, $p=512$, $2{\times}2$
+    pool, $L_2$ norm) + FC layer ($p=512$); $n\in\{200,500,2000,50000\}$,
+    ranks $k_\ell=32,64,128$. Symlog $x$-axis; top-5 eigenvalues marked.
+
+  \item[\Cref{fig:celeba-feature-importance}, top.]
+    CelebA at $64{\times}64$, attribute \emph{High Cheekbones} from CelebA.
+    $L=3$ FC LoFi layers (ReLU), $P=50000$, $(k_1, k_2, k_3) = (100,50,20)$,
+    $n=200{,}000$, seed $0$. Importance via Eq.~\eqref{eq:importance-layer}; Fourier low-pass parameters $f_0=0.15$, $\alpha=3.0$.
+
+  \item[\Cref{fig:celeba-feature-importance}, bottom.]
+    Same setup, attribute \emph{Smiling} from CelebA.
+
+  \item[\Cref{fig:additional-cnn-feature-visualizations}, left.]
+    CelebA \emph{Gender}. Six conv LoFi layers
+    ($5{\times}5$, $2{\times}2$ pool, $L_2$ norm) + FC layer; channels
+    $p=512$, ranks 16, 32,64,128,256,512 , ReLU; $n=500000$. First-layer
+    $5{\times}5$ filters as RGB images.
+
+  \item[\Cref{fig:additional-cnn-feature-visualizations}, right.]
+    Same architecture. Activations of the 1st-ranked (top) and 7th-ranked
+    (bottom) eigenvectors at each conv layer (shallow$\to$deep), on six test
+    images.
+
+\end{description}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

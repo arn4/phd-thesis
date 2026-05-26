@@ -1,0 +1,15 @@
+\section{Conclusion}
+
+% We compared various setups to train multi-vector models, from the usual small KD step on top of a dense-pretrained model to full pre-training. We found that the usual setup is too shallow and leaves a lot of performance on the table, but that investing in a supervised step yields performance close to full pre-training without requiring the most costly unsupervised phase. Performing these additional steps yields models that outperform models that leverages much stronger data and set new state-of-the-art.
+We compared various setups for training multi-vector models, ranging from the conventional small KD step applied on top of a dense pre-trained model to full pre-training. We found that the conventional approach is lacking in depth, resulting in a significant untapped potential in terms of performance. However, we observed that investing in a supervised step leads to performance that approaches the level achieved through full pre-training, without the necessity of the most expensive unsupervised phase. This results in models that demonstrate superior performance in comparison to those leveraging stronger data and establish a new state-of-the-art.
+We also investigated the impact of prompts on model performances. We found that, in the context of repurposing pre-trained models, it is imperative to meticulously align the pre-training step with respect to the use, or non-use, of prompts. We showed that the utilization of full prompts results in a positive impact in comparison with the employment of single token query and document markers. These findings present a range of interesting research avenues. To help explore multi-vector pre-training and those avenues, we publicly release \href{https://huggingface.co/collections/lightonai/colbert-zero}{all intermediate checkpoints}, including unsupervised and supervised stages with and without prompts. The full \href{https://github.com/lightonai/pylate/tree/main/examples/train/ColBERT-zero/}{training scripts}, built on PyLate and leveraging public data, are also available. We hope these resources will help the community explore the many open questions raised by our findings, from the role of prompts to the scaling behavior of multi-vector training.
+
+\paragraph{Acknowledgments}
+This work was supported as part of the Swiss AI Initiative by a grant from the Swiss National Supercomputing Centre (CSCS) under project \texttt{IDa120} on \href{https://www.cscs.ch/computers/alps}{Alps}.
+We also want to thank Raphaël Sourty for the helpful discussions and reviewing the early version of this work.
+%%
+%% Define the bibliography file to be used
+
+
+%%
+%% If your work has an appendix, this is the place to put it.

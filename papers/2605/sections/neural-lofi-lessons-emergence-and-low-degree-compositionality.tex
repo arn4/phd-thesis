@@ -1,0 +1,177 @@
+\section{Neural LoFi lessons: emergence and low-degree compositionality}
+
+\label{sec:lofi-lessons}
+Neural LoFi is not proposed here as a replacement for backpropagation, but as a tractable, simpler, surrogate for understanding learning. This section now attempts to draw lessons from the surrogate. 
+
+\subsection{Emergence of concepts, effective dimension, and a criterion}
+\label{sec:emergence-snr}
+
+A growing body of empirical evidence suggests that learning is often not a smooth process: training dynamics can display long plateaus followed by abrupt transitions, with new directions in representation space \emph{emerging} sequentially rather than all at once
+\cite{wei2022emergent,raventos2023pretraining,arora2023theory,schaeffer2023are}.
+Neural LoFi provides a simple mechanism for this phenomenon. By Theorem~\ref{thm:variational-rkhs}, the $k$th feature extracted by layer $\ell$ maximizes the following second-order {\it empirical} correlation:
+
+\begin{equation}
+\widehat \rho_\ell^{(k)}
+:=
+\sup_{\|\varphi\|_{\mathcal H_{\ell-1}}=1, \varphi \perp \varphi_1,\cdots, \varphi_{k-1}}
+\left|
+\widehat{\mathbb E}_n
+\left[
+y\,\varphi(\bm x)^2
+\right]
+\right|,
+\label{eq:lofi-accessibility}
+\end{equation}
+where $\mathcal H_{\ell-1}$ is the RKHS induced by the representation after $\ell-1$ layers, and $\widehat{\mathbb E}_n$ is the empirical average over data. This variational form gives a direct criterion for feature emergence. Suppose that the features $\varphi_1,\cdots, \varphi_{k-1}$ have been extracted and define the set of candidate features as:
+
+\begin{equation}
+  \mathcal{S}^\ell_{k}
+  \coloneqq
+  \left\{
+  \varphi\in\mathcal H_{\ell-1}:
+  \norm{\varphi}_{\mathcal H_{\ell-1}}=1,\,
+  \varphi \perp \varphi_1,\cdots, \varphi_{k-1}
+  \right\}.
+  \label{eq:lofi-candidate-class}
+\end{equation}
+For a fixed unit-norm feature
+$\varphi\in \mathcal{S}^\ell_{k}$, define
+\begin{equation}
+    c_\ell(\varphi)
+    :=
+    \mathbb E\left[y\,\varphi(\bm x)^2\right],
+    \qquad
+    \widehat c_{\ell,n}(\varphi)
+    :=
+    \widehat{\mathbb E}_n\left[y\,\varphi(\bm x)^2\right].
+\end{equation}
+The empirical correlation $\widehat c_{\ell,n}(\varphi)$ fluctuates around its population value
+$c_\ell(\varphi)$. Since Neural LoFi optimizes over a class of candidate features, the relevant measure of variance is the uniform fluctuation over $\mathcal{S}^\ell_{k}$,
+\begin{equation}
+\tau^k_\ell(n)
+\coloneqq
+\sup_{\varphi \in  \mathcal{S}^\ell_{k}}
+\left|
+\widehat c_{\ell,n}(\varphi)-c_\ell(\varphi)
+\right|.
+\end{equation}
+
+To recover the population minimizer feature, the variance must be small w.r.t. the population correlation
+\begin{equation}
+\rho_\ell^{(k)}
+    :=
+    \sup_{\varphi \in  \mathcal{S}^\ell_{k}}
+    \left|
+    \mathbb E\left[y\,\varphi(\bm x)^2\right]
+    \right|.
+\end{equation}
+
+Hence, the criterion for the emergence of a feature at layer $\ell$ becomes:
+\begin{equation}
+    \rho_\ell^{(k)}
+    \gg
+    \tau^k_\ell(n) .
+    \label{eq:lofi-emergence-threshold}
+\end{equation}
+Below this threshold, the leading empirical direction is dominated by noise. Above it, a task-dependent direction separates from the noise and becomes learnable: Feature emergence is thus akin to a phase transition {\it \`a la} Baik-Ben Arous-P{\'e}ch{\'e}/Edwards-Jones (BBP/EA) \cite{baik2005phase,edwards1976eigenvalue}.  
+%For small sample size, the empirical operator is noise-dominated and its leading eigenvectors are spurious. Near the critical sample size, signal and noise become comparable, and a task-relevant eigenvalue begins to separate from the spectral bulk. For large sample size, the signal dominates and the extracted feature reliably approximates the population direction. 
+%We make the scaling of the flucations $\tau^k_\ell(n)$ explicit 
+We show in Appendix~\ref{app:effective-dimension}, using local Rademacher-complexity bounds over $\mathcal{S}^\ell_{k}$ \cite{mendelson2003performance,bartlett2005local}, that up to poly-logarithmic factors:
+\begin{equation}\label{eq:emergence_feature}
+     \tau_\ell^k(n)
+    \lesssim
+    r^k_{\ell}\sqrt{\frac{D_{\ell,k}^{\mathrm{eff}}(r^k_{\ell})}{n}},
+\end{equation}
+where \(D_{\ell,k}^{\mathrm{eff}}(r)\) is the {\it residual effective dimension} of features with scale $r$ (see Def.\ref{def:lofi-effective-dimension}) within the current RKHS after removing the previously extracted features \cite{caponnetto2007optimal,rudi2017generalization}, and $r^k_{\ell}\coloneqq \argmax_{r} (r \sqrt{D_{\ell,k}^{\mathrm{eff}}(r)})$ is the dominant scale of fluctuations among candidate features. This can be estimated from the empirical spectrum of the kernel, making Eq.\eqref{eq:lofi-emergence-threshold} a data-driven diagnostic for emergence of concepts. 
+
+We develop this formalization of emergence further in Appendix~\ref{app:effective-dimension}. The criterion recovers known sample-complexity scales in solvable hierarchical models
+\cite{defilippis2026optimal,tabanelli2026deep,nichani2023provable,wang2024learning,fu2025learning}. More importantly, on real data it predicts the sample scale at which learned concepts appear in different layers: in the CIFAR-10 experiment of Section~\ref{sec:real-data}, individual eigenvector overlaps rise near the predicted thresholds; see Fig.~\ref{fig:sample-complexity-pred}. This makes Neural LoFi a quantitative theory of layerwise concept emergence.
+
+\subsection{Why depth helps: low-degree compositionality}
+\label{sec:low-degree-compositionality}
+While approximation-theoretic works show that deep networks can represent certain compositional functions much more efficiently than shallow ones, especially in tree-like or hierarchical settings
+\cite{mhaskar2017when,telgarsky2016benefits}, efficient representation does not by itself imply efficient learning. The previous discussion motivates the notion of \emph{low-degree compositionality}: depth is useful to learn functions when each layer exposes a new low-degree signal that is visible in the representation constructed by the previous layers. This means that the target admits a sequence of intermediate representations
+\[
+\bm x
+\;\longrightarrow\;
+\bm z_1(\bm x)
+\;\longrightarrow\;
+\bm z_2(\bm x)
+\;\longrightarrow\;
+\cdots
+\;\longrightarrow\;
+\bm z_L(\bm x),
+\]
+such that, at each stage, the next useful representation is visible through a low-degree statistic of the current one. In the second-order Neural LoFi mechanism, this is precisely the condition that the population counterpart of Equation~\eqref{eq:lofi-accessibility} is larger than the statistical noise floor. Thus, at layer $\ell$, Neural LoFi asks whether the current representation contains a simple feature whose second-order statistics are predictive of the task. This gives a learnability criterion for compositional structure: A deep model does not benefit from {\it arbitrary compositions}; it benefits from {\it hierarchies} in which each intermediate step exposes a {\it statistically detectable low-degree signal}. 
+Equivalently, the target should become progressively simpler when expressed in the learned coordinates. 
+
+\emph{A function may be high-degree, or otherwise complex, as a function of the original input, while still being learnable through a {\bf sequence of low-degree problems}: Depth then converts one hard estimation problem in the input space into several easier estimation problems in adapted representation spaces.} 
+
+This perspective is consistent with a growing body of theoretical work on idealized models, where compositional structure leads to sequential feature recovery and sample-complexity gains from depth, see:
+\cite{cagnetta2024how,favero2021locality,favero2025how,garnierbrun2025how,dandi2026computational,tabanelli2026deep,ren2026provable,cagnetta2026deriving}. Neural LoFi abstracts a common principle from these settings: a useful hierarchy is one whose next layer is statistically visible through low-degree correlations in the representation already learned. This viewpoint is in particular related to the {\it compositional information exponent} introduced for hierarchical Gaussian targets
+\cite{dandi2026computational}. In that setting, one assumes access to a planted hierarchy of intermediate features $\bm h_\ell^\star(\bm x)$ and asks for the smallest degree $q$ such that
+\begin{equation}
+\left\|
+\mathbb E
+\left[
+(\bm h_\ell^\star(\bm x))^{\otimes q}
+f^\star(\bm x)
+\right]
+\right\|_F
+=
+\Theta(1).
+\label{eq:cie-planted}
+\end{equation}
+A low compositional exponent means that the target has a strong low-degree dependence on the hidden intermediate representation. Instead of assuming access to $\bm h_\ell^\star$, Neural LoFi searches over the current learned feature space through Eq.~\eqref{eq:lofi-accessibility}, and acts as a data-adaptive compositional information test by asking whether the current representation contains simple, statistically visible features that are predictive of the task.
+In this sense, Neural LoFi implements a supervised coarse-graining procedure: Each layer keeps a small number of task-relevant directions and discards much of the irrelevant high-dimensional variation, in a way reminiscent of  physics renormalization-inspired views of learning across scales
+\cite{wilson1983renormalization}. 
+%The important point is that the coarse-graining is not arbitrary: it is driven by low-degree correlations with the label. Depth is useful precisely when this procedure can be repeated, revealing one statistically accessible component of the hierarchy after another.
+
+
+
+\subsection{Further related works}
+
+\paragraph{Hessian and spectral learning}
+Hessian-based spectral information has long played a central role in statistical physics and high-dimensional inference, for instance in community detection \cite{saade2014spectral}, spiked matrix--tensor models \cite{ros2019complex,mannelli2019who,mannelli2020marvels}, and BBP/EA-type  selection mechanisms \cite{baik2005phase,edwards1976eigenvalue}. Related label-weighted second-order operators also appear in single-index and multi-index estimation, where they yield spectral initializations and recovery procedures \cite{lu2020phase,mondelli2018fundamental,maillard2020phase,vilucchio2025asymptotics}. More recently, similar operators have been connected to the early dynamics of shallow neural networks through Hessian or Hessian-like interpretations \cite{bonnaire2025role,zhang2025neural,montanari2026phase,defilippis2026optimal}. Neural LoFi extends this  viewpoint beyond the first initial layer and to iterative multi-layer methods.
+
+
+
+
+
+\paragraph{Beyond second order} While the second-order operator \eqref{eq:lofi-main-operator} is  the first nontrivial term in the expansion, higher-order terms correspond to {\it tensor} correlations between the current representation and the label. In Gaussian single-index and multi-index models, such higher-degree components govern harder directions and later learning time scales, as captured by information, leap, and generative exponents \cite{arous2021online,abbe2023sgd,damian2024computational,troiani2024fundamental,damian2026generative}. Higher-order LoFi variants could replace \(y\varphi^2\) by higher-degree statistics, but would lead to (difficult) tensor spectral problems, as tensor PCA can be notably harder than matrix PCA \cite{hopkins2015tensor,lesieur2017statistical,wein2019kikuchi,arous2020algorithmic}. This limitation also points to a natural future direction: Multi-pass gradient descent can break the constraints imposed by information and leap exponents by repeatedly transforming the effective label and representation \cite{dandi2024benefits} as well as through staircase mechanisms \cite{mannelli2019who,abbe2021staircase,benarous2024stochastic,bardone2024sliding,tabanelli2025computational}.  An interesting direction for future work is a multi-pass Neural LoFi, alternating low-degree spectral filtering with target/residual transformations and feature correction, that would connect the present mechanism to the more powerful generative-exponent/SQ-type learnability picture. We further discuss  connections with this theoretical literature in App.\ref{app:two-layer}.\looseness=-1
+
+\paragraph{Quadratic networks and spectral feature learning.}
+A closely related line of work studies quadratic and polynomial networks, where the feature-learning component of the dynamics is especially transparent. Early works analyzed the optimization landscape and recovery properties of one-hidden-layer or polynomial networks through tensor and low-rank structure
+\cite{ge2016matrix,venturi2019spurious,saraomannelli2020optimization,arjevani2026geometry}.
+More recent high-dimensional analyses of overparameterized quadratic networks show that ERM can be mapped to matrix sensing with nuclear-norm regularization, so that capacity control emerges through low-rank learned feature maps
+\cite{erba2025nuclear}. Even closer to our perspective, \cite{defilippis2026scaling} characterize the spectra of trained quadratic and diagonal networks in the feature-learning regime: informative directions appear as spectral outliers or spikes, while the bulk corresponds to learned noise or overfitting and should be pruned. A related bulk-plus-spikes picture was later observed in attention models
+\cite{boncoraglio2025inductive}. This mirrors the Neural LoFi mechanism: the Hessian-like label-weighted operator extracts task-correlated spectral directions and discards the residual bulk. 
+
+This viewpoint is also consistent with empirical observations that trained deep networks often exhibit structured, non-random spectra in their learned weights with eigenvalues popping out of the bulk \cite{martin2021implicit}.
+
+
+\paragraph{Scattering, coarse-graining, and multiscale representations}
+Our construction is  related in spirit to scattering transforms \cite{andreux2020kymatio}. Both scattering and Neural LoFi build representations through a multilevel cascade of filtering and nonlinear lifting. The key difference is that scattering uses fixed analytic filters, typically wavelets, designed for invariance and stability, whereas Neural LoFi is supervised and task-adaptive: each layer selects directions through a label-weighted spectral operator on the current representation. This also resonates with coarse-graining and renormalization-inspired views of deep representations \cite{marchand2023multiscale}.
+
+\paragraph{Rainbow networks}
+The rainbow analysis  of \cite{guth2024rainbow} gives a post-training description of deep nets: trained layers behave like random feature maps with learned, often low-rank, weight covariances, yielding deterministic hierarchical kernels in the infinite-width limit. In this view, feature learning amounts to identifying low-dimensional covariance structure between random high-dimensional embeddings. Neural LoFi provides a possible mechanism for the emergence of this structure: its label-weighted spectral operator selects the task-correlated directions to keep, while the subsequent random lift re-expands them into a new feature space. 
+
+\paragraph{Mechanistic interpretability}
+Neural LoFi is complementary to mechanistic interpretability, which aims to reverse-engineer trained networks into interpretable features and circuits \cite{olah2020zoom,elhage2021mathematical}. Rather than starting from a trained model and asking which circuits implement a behavior, Neural LoFi asks why certain features are selected during training. Its basic objects are spectral directions in representation space, not necessarily individual neurons, aligning with the modern ``features as directions'' viewpoint underlying superposition \cite{elhage2022toy}.
+
+
+
+
+\paragraph{Recursive Feature Machines} A recent line of work proposed the \emph{average gradient outer product} (AGOP) as a mechanism for feature learning and uses it to define Recursive Feature Machines, iterative algorithms for adaptive feature learning and dimensionality reduction \cite{radhakrishnan2024mechanism,radhakrishnan2025linear}. This is close in philosophy to Neural LoFi: both seek a simple iterative surrogate for representation learning. The constructions differ, however. AGOP-based methods use gradient covariances of a learned predictor, whereas Neural LoFi crucially uses the next order approximation with the Hessian.
+
+\paragraph{Local and backpropagation-free learning } In spirit,
+Neural LoFi is also related to local alternatives to backpropagation, including feedback alignment and direct feedback alignment
+\cite{lillicrap2016random,n2016direct,launay2020direct}, local-loss and layerwise training methods
+\cite{n2019training,belilovsky2020decoupled}, target propagation
+\cite{lee2015difference}, and biologically inspired plasticity rules
+\cite{illing2019biologically,illing2021local}. Although Neural LoFi is not proposed as a biologically faithful model, it is backpropagation-free and layerwise: its spectral operator can be approximated by label-modulated Hebbian/Oja-style updates\cite{oja1982simplified,sanger1989optimal,gerstner2018eligibility,illing2021local}.
+
+
+\paragraph{Pruning}  Neural LoFi also gives a feature-space perspective on why overparameterization and pruning are not contradictory. Classical pruning methods show that many weights or connections can be removed after training with little loss in performance
+\cite{lecun1989optimal,han2015learning}, while the lottery-ticket hypothesis suggests that large dense networks may contain smaller trainable subnetworks
+\cite{frankle2020linear}. In Neural LoFi, width and rank play complementary roles: large width creates a rich feature space in which task-correlated directions can be discovered, while  pruning retains only the directions that finite data can reliably support. Thus large networks are useful for discovery, but low-rank feature selection controls the effective dimension used for prediction.

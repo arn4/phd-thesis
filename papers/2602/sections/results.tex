@@ -1,0 +1,182 @@
+\subsection{Main Results}
+\begin{table*}[t]
+\centering
+\caption{Retrieval performance (nDCG@10) across BEIR benchmark datasets.}
+\label{tab:original-results}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{l c ccccccccccccccc}
+\toprule
+\textbf{Model} & \textbf{Avg} & \rotatebox{90}{\textbf{FiQA}} & \rotatebox{90}{\textbf{NFCorpus}} & \rotatebox{90}{\textbf{TREC-COVID}} & \rotatebox{90}{\textbf{Touche}} & \rotatebox{90}{\textbf{ArguAna}} & \rotatebox{90}{\textbf{Quora}} & \rotatebox{90}{\textbf{SCIDOCS}} & \rotatebox{90}{\textbf{SciFact}} & \rotatebox{90}{\textbf{NQ}} & \rotatebox{90}{\textbf{ClimateFEVER}} & \rotatebox{90}{\textbf{HotpotQA}} & \rotatebox{90}{\textbf{DBPedia}} & \rotatebox{90}{\textbf{CQADupstack}} & \rotatebox{90}{\textbf{FEVER}} & \rotatebox{90}{\textbf{MSMARCO}} \\
+\midrule
+\multicolumn{17}{l}{\textit{Baselines}} \\
+\midrule
+ModernBERT-embed-unsupervised & 47.05 & 42.53 & 35.33 & 68.44 & 18.58 & 48.82 & 88.63 & 19.83 & 72.30 & 46.32 & 22.97 & 60.00 & 37.97 & 42.40 & 67.39 & 34.23 \\
+ModernBERT-embed-supervised & 52.89 & 40.59 & 33.40 & \textbf{84.15} & 31.91 & 48.96 & \textbf{88.85} & 18.59 & 69.63 & 62.15 & 35.67 & 67.11 & 41.50 & 42.08 & 87.35 & 41.47 \\
+GTE-ModernColBERT & 54.67 & 45.28 & \textbf{37.93} & 83.59 & 31.23 & 48.51 & 86.61 & 19.06 & 76.34 & 61.80 & 30.62 & 77.32 & 48.03 & 41.00 & 87.44 & 45.32 \\
+gte-modernbert & 55.33 & \textbf{48.81} & 36.44 & 81.95 & 21.68 & \textbf{72.68} & 88.55 & 21.29 & \textbf{77.40} & 57.62 & \textbf{37.74} & 69.47 & 41.79 & 42.63 & \textbf{91.03} & 40.90 \\
+\midrule
+\multicolumn{17}{l}{\textit{KD from dense supervised}} \\
+\midrule
+embed-base distilled & 54.09 & 42.51 & 37.01 & 79.52 & 34.58 & 51.75 & 87.67 & 18.15 & 75.04 & 61.45 & 28.31 & 76.70 & 47.54 & 40.68 & 84.82 & 45.57 \\
+\midrule
+\multicolumn{17}{l}{\textit{Supervised + KD from dense unsupervised}} \\
+\midrule
+embed-base supervised & 50.72 & 40.09 & 35.56 & 71.12 & 25.53 & 44.27 & 86.96 & 18.19 & 73.78 & 58.89 & 32.95 & 71.49 & 43.23 & 42.55 & 70.51 & 45.72 \\
+embed-base distilled & 55.12 & 41.50 & 36.51 & 77.46 & \textbf{33.77} & 52.45 & 86.26 & 18.66 & 74.90 & \textbf{62.24} & 37.27 & \textbf{80.07} & \textbf{48.27} & 41.60 & 89.71 & \textbf{46.17} \\
+\midrule
+\multicolumn{17}{l}{\textit{ColBERT-Zero} (full pre-training)} \\
+\midrule
+Unsupervised & 51.44 & 45.38 & 36.88 & 67.82 & 22.59 & 51.53 & 87.78 & \textbf{22.30} & 76.76 & 58.80 & 24.24 & 68.29 & 43.16 & \textbf{45.76} & 81.58 & 38.78 \\
+Supervised & 51.81 & 42.45 & 35.60 & 74.72 & 23.83 & 41.81 & 87.19 & 19.85 & 73.71 & 61.95 & 35.01 & 71.37 & 46.20 & 45.16 & 72.61 & 45.68 \\
+Distilled & \textbf{55.43} & 42.62 & 37.28 & 78.69 & 36.13 & 53.07 & 85.24 & 19.88 & 76.50 & 61.66 & 35.72 & 79.41 & 47.48 & 41.34 & 90.59 & 45.80 \\
+\bottomrule
+\end{tabular}%
+}
+\end{table*}
+
+
+% \begin{table*}[t]
+% \centering
+% \caption{Retrieval performance (nDCG@10) across BEIR benchmark datasets.}
+% \label{tab:original-results}
+% \resizebox{\textwidth}{!}{%
+% \begin{tabular}{l c ccccccccccccccc}
+% \toprule
+% \textbf{Model} & \textbf{Avg} & \rotatebox{90}{\textbf{FiQA}} & \rotatebox{90}{\textbf{NFCorpus}} & \rotatebox{90}{\textbf{TREC-COVID}} & \rotatebox{90}{\textbf{Touche}} & \rotatebox{90}{\textbf{ArguAna}} & \rotatebox{90}{\textbf{Quora}} & \rotatebox{90}{\textbf{SCIDOCS}} & \rotatebox{90}{\textbf{SciFact}} & \rotatebox{90}{\textbf{NQ}} & \rotatebox{90}{\textbf{ClimateFEVER}} & \rotatebox{90}{\textbf{HotpotQA}} & \rotatebox{90}{\textbf{DBPedia}} & \rotatebox{90}{\textbf{CQADupstack}} & \rotatebox{90}{\textbf{FEVER}} & \rotatebox{90}{\textbf{MSMARCO}} \\
+% \midrule
+% \multicolumn{17}{l}{\textit{Baselines}} \\
+% \midrule
+% ModernBERT-embed-unsupervised & 47.05 & 42.53 & 35.33 & 68.44 & 18.58 & 48.82 & 88.63 & 19.83 & 72.30 & 46.32 & 22.97 & 60.00 & 37.97 & 42.40 & 67.39 & 34.23 \\
+% ModernBERT-embed-supervised & 52.89 & 40.59 & 33.40 & \textbf{84.15} & 31.91 & 48.96 & \textbf{88.85} & 18.59 & 69.63 & 62.15 & 35.67 & 67.11 & 41.50 & 42.08 & 87.35 & 41.47 \\
+% \texttt{GTE-ModernColBERT} & 54.67 & 45.28 & \textbf{37.93} & 83.59 & 31.23 & 48.51 & 86.61 & 19.06 & 76.34 & 61.80 & 30.62 & 77.32 & 48.03 & 41.00 & 87.44 & 45.32 \\
+% gte-modernbert-base & 55.33 & \textbf{48.81} & 36.44 & 81.95 & 21.68 & \textbf{72.68} & 88.55 & 21.29 & \textbf{77.40} & 57.62 & \textbf{37.74} & 69.47 & 41.79 & 42.63 & \textbf{91.03} & 40.90 \\
+% \midrule
+% \multicolumn{17}{l}{\textit{ColBERT-Zero (base results, no prompt)}} \\
+% \midrule
+% Unsupervised (no prompt) & 51.70 & 45.31 & 34.72 & 73.55 & 23.26 & 52.56 & 88.15 & \textbf{22.63} & 76.10 & 59.18 & 24.24 & 66.66 & 42.61 & 45.56 & 81.88 & 39.15 \\
+% Supervised (no prompt) & 52.39 & 43.36 & 36.01 & 72.42 & 23.79 & 47.42 & 87.79 & 21.30 & 73.85 & \textbf{62.25} & 31.61 & 70.32 & 44.07 & 44.03 & 85.54 & 42.11 \\
+% Distilled (no prompt) & 54.61 & 43.14 & 36.60 & 78.60 & \textbf{36.36} & 49.49 & 88.05 & 19.13 & 76.42 & 61.73 & 32.70 & 76.99 & 47.69 & 40.21 & 85.97 & 46.01 \\
+% \midrule
+% \multicolumn{17}{l}{\textit{KD from dense supervised}} \\
+% \midrule
+% embed-base distilled (no prompt) & 52.58 & 41.58 & 36.33 & 78.69 & 33.30 & 50.16 & 82.59 & 18.01 & 75.15 & 60.30 & 25.75 & 75 & 45.92 & 39.39 & 82.27 & 45.06 \\
+% embed-base distilled (prompt) & 53.83 & 41.74 & 36.87 & 79.65 & 34.52 & 51.06 & 87.31 & 18.41 & 76.06 & 61.24 & 27.56 & 75.38 & 47.48 & 40.43 & 84.24 & 45.47 \\
+% \quad + extra token train & 53.84 & 42.07 & 36.81 & 79.08 & 34.47 & 50.94 & 87.53 & 18.18 & 75.18 & 61.53 & 27.90 & 75.60 & 47.41 & 40.71 & 84.61 & 45.55 \\
+% \quad + extra token train/eval & 54.09 & 42.51 & 37.01 & 79.52 & 34.58 & 51.75 & 87.67 & 18.15 & 75.04 & 61.45 & 28.31 & 76.70 & 47.54 & 40.68 & 84.82 & 45.57 \\
+% \midrule
+% \multicolumn{17}{l}{\textit{Supervised + KD from dense unsupervised}} \\
+% \midrule
+% embed-base supervised (prompt) & 51.08 & 41.34 & 36.04 & 73.57 & 26.61 & 42.98 & 87.25 & 17.88 & 70.80 & 60.59 & 30.52 & 71.22 & 44.01 & 43.31 & 74.53 & 45.58 \\
+% \quad + extra token & 50.72 & 40.09 & 35.56 & 71.12 & 25.53 & 44.27 & 86.96 & 18.19 & 73.78 & 58.89 & 32.95 & 71.49 & 43.23 & 42.55 & 70.51 & 45.72 \\
+% embed-base distilled (prompt) & 54.95 & 42.19 & 36.73 & 79.37 & 36.10 & 52.51 & 87.31 & 18.80 & 75.57 & 61.66 & 33.67 & 78.05 & 47.77 & 41.03 & 87.52 & 45.96 \\
+% \quad + extra token  & 55.12 & 41.50 & 36.51 & 77.46 & 33.77 & 52.45 & 86.26 & 18.66 & 74.90 & 62.24 & 37.27 & \textbf{80.07} & \textbf{48.27} & 41.60 & 89.71 & 46.17 \\
+% \midrule
+% \multicolumn{17}{l}{\textit{ColBERT-Zero fine-tuning with prompts starting from unsupervised ColBERT without prompts}} \\
+% \midrule
+% Supervised (prompt) & 52.62 & 44.67 & 36.20 & 72.68 & 24.47 & 48.83 & 88.00 & 21.27 & 72.65 & 61.85 & 32.84 & 69.79 & 44.98 & 44.84 & 84.95 & 41.34 \\
+% Distilled (prompt) & 54.18 & 42.75 & 37.28 & 77.86 & 35.19 & 49.73 & 87.61 & 18.97 & 75.43 & 61.64 & 30.75 & 77.32 & 47.48 & 39.72 & 84.59 & \textbf{46.36} \\
+% \midrule
+% \multicolumn{17}{l}{\textit{ColBERT-Zero (fully pre-trained with prompts)}} \\
+% \midrule
+% Unsupervised (prompt, full pre-training) & 51.44 & 45.38 & 36.88 & 67.82 & 22.59 & 51.53 & 87.78 & 22.30 & 76.76 & 58.80 & 24.24 & 68.29 & 43.16 & \textbf{45.76} & 81.58 & 38.78 \\
+% Supervised (prompt, full pre-training) & 51.81 & 42.45 & 35.60 & 74.72 & 23.83 & 41.81 & 87.19 & 19.85 & 73.71 & 61.95 & 35.01 & 71.37 & 46.20 & 45.16 & 72.61 & 45.68 \\
+% Distilled (prompt, full pre-training) & \textbf{\underline{55.43}} & 42.62 & 37.28 & 78.69 & 36.13 & 53.07 & 85.24 & 19.88 & 76.50 & 61.66 & 35.72 & 79.41 & 47.48 & 41.34 & 90.59 & 45.80 \\
+% \bottomrule
+% \end{tabular}%
+% }
+% \end{table*}
+% \subsection{Original results}
+% We report all results in Table~\ref{tab:original-results}. The first thing to note is that, the fully pre-trained ColBERT model outperforms not only the best ColBERT model obtained using a dense base model (and so \texttt{GTE-ModernColBERT}) but also gte-modernbert itself. The significance of this result is best appreciated in context: at the time of writing the model is the top-1 model on the MTEB BEIR leaderboard for model <150M parameters (top-4 for models <300M).
+We evaluate the different models on the BEIR~\cite{thakur2021beir} benchmark and report the nDCG@10 values in Table~\ref{tab:original-results}. We also report several models sharing the same backbone (ModernBERT-base) to provide comparison. Specifically, we report the dense model from Nomic (ModernBERT-embed), the state-of-the-art late interaction model GTE-ModernColBERT as its base model, gte-modernbert. 
+
+Our first finding is that, the fully pre-trained ColBERT model outperforms not only the state-of-the-art late interaction model GTE-ModernColBERT but also its base model, gte-modernbert. This is very strong result, as those are performant models optimized on strong non-public data. The superiority of the GTE data over the Nomic one is shown by the huge gap in BEIR results for the dense models (52.9 for Nomic data vs 55.33 for GTE data). The significance of this result is best appreciated in context: at the time of writing\footnote{January 2026} the model is ranked as the top-1 model on the \href{https://huggingface.co/spaces/mteb/leaderboard}{MTEB BEIR leaderboard}~\cite{muennighoff2022mteb} for model <150M parameters (top-4 for models <500M). Consequently,  this highlights that \textbf{running a full ColBERT pre-training before performing knowledge distillation is noticeably better than only performing KD on top of a pre-trained dense model}. This is further confirmed by the results obtained by performing the KD step on top of the dense supervised model from Nomic, lagging much behind the fully ColBERT-pre-trained model by more than 1.3 pts of nDCG@10 despite leveraging the same data. 
+
+
+Having established that KD alone is insufficient, we now explore whether a supervised contrastive phase before KD can close this gap without the costly unsupervised pre-training. Starting from the unsupervised dense model and running both the supervised and knowledge distillation phases in the ColBERT setting, we observe a gain of more than 1 nDCG@10 over KD alone, nearly matching the fully pre-trained ColBERT (0.31 difference).  This demonstrate that this setup is a \textbf{highly efficient alternative that skips the most computationally intensive training stage while retaining nearly all the performance benefits}. This costs 40 GH200-hours instead of 408: \textbf{roughly 10× cheaper for 99.4\% of the performance}. While the full three-step pipeline retains a slight edge, the difference is limited, particularly considering the potential for noise from BEIR, and is likely to diminish further with heavier fine-tuning, as discussed in Section~\ref{sec:discussions}.
+
+% \textbf{This demonstrates that a relatively lightweight supervised phase before KD recovers most of the benefit of full ColBERT pre-training}.
+
+% Our next research question is to establish whether the gap could be closed by running a supervised phase in the ColBERT setting before the KD phase, making the training a bit heavier than only performing KD but still skipping the most expensive unsupervised phase. When running both the supervised and knowledge distillation phase in the ColBERT setting starting from the unsupervised dense model, we observe a gain of more than 1 nDCG@10, almost closing the gap with the fully pre-trained ColBERT. These results highlight that \textbf{only a small knowledge distillation step for ColBERT training on top of a dense model is not enough to get the best performance possible and that running a more thorough supervised phase before largely improves the performance}. Although the full pre-training of ColBERT still appears to have an edge, it is relatively  limited, particularly considering the potential for noise from BEIR.
+% Moreover, it is probable that, the heavier the fine-tuning, the less likely this is to matter, as discussed in Section~\ref{sec:discussions}. 
+
+% Indeed, as knowledge distillation usually \textit{improves} the results after supervised fine-tuning, the fact that performing contrastive before KD enhance the results hints that these results are less about the objective but rather the scale of the training, letting the model learn to work in a multi-vector setting. Thus, performing only KD but at a larger scale would most likely work the same if not even better (as the signal is better). The goal of this study was to explore usual setup, where the scale is inversely proportional to the quality of the signal as it is more expensive to create it.
+%£this gap will surely be even smaller the better (higher quality/bigger quantity) the supervised phase. %Likewise, it seems that running the pre-training in the ColBERT setting yields a small advantage over running only the fine-tuning. However, it is probable that, the heavier the fine-tuning, the less likely this is to matter.
+
+\subsection{Impact of the Prompt}
+\label{sec:prompts}
+It is important to note that Nomic's dense models are pre-trained using specific prompts ( ``\texttt{search\_query:}" and ``\texttt{search\_document:}"). Unlike frameworks like Promptriever~\cite{weller2025promptriever}, which use prompts to enable task-specific ``promptability", Nomic utilizes them to enforce an asymmetric encoding. While ColBERT features a native asymmetric mechanism via [Q] and [D] markers, a mismatch between the pre-training prompts and our fine-tuning setup could undermine performance. To ensure a fair comparison, all models reported in the previous section utilize these prompts. However, we experienced with a ``prompt-free" ColBERT-Zero model (i.e, full pre-training) and observed a significant performance drop, suggesting that prompts provide benefits beyond mere identification. To explore this phenomenon, we ran various training with and without prompts at different steps of the training and also explore the impact of increasing the query and document lengths to account for the additional prompts\footnote{During training, as increasing the lengths during evaluation introduce little to no change: we cover the maximum lengths of the BEIR datasets}. As the prompts are both 7 tokens long, we increased the query/documents lengths by 7.
+
+As shown in Table~\ref{tab:prompts-main}, our results highlights that aligning the fine-tuning setup with the pre-training (by using prompts) is crucial; our ablation studies confirm that misalignment leads to significant performance degradation. Incorporating prompts during the fine-tuning of pre-trained models with prompts enhances results, while including them for models pre-trained without prompts leads to a decline. However, even when the pre-training and fine-tuning setups are aligned, the model leveraging more explicit prompts still significantly outperforms the other. This does suggest that those prompts are beneficial. That said, it is hard to properly disentangle all the possible reasons explaining the differences in performance as there are different effect at play. We conjecture this may be a form of implicit \emph{query expansion}, a mechanism that has shown very useful in the early variant of ColBERT~\cite{khattab2020colbert}. Typically, these tokens serve as ``placeholder" tokens that does not correspond to a specific semantic token but can be used by the model to store global information about the sequence. Despite being very helpful, this mechanism is not used in modern models leveraging Flash Attention\footnote{Query expansion worked by using PAD tokens that were not attended by other tokens in the sequence. In the original (not optimized) attention implementations, all the attentions scores were computed and the contributions of masked tokens were zeroed out at the end so that the representations of the tokens were only computed w.r.t unmasked tokens. However, the representations of the masked tokens w.r.t all the others tokens were still computed. Those are usually thrown away using attention mask afterwards, but in the case of ColBERT, those were used as query expansion. With more recent and optimized implementations of attention such as Flash Attention, the embedding of masked tokens are zeros/NaNs, preventing their usage as query expansion.}~\cite{dao2022flashattention} such as ModernBERT~\cite{warner2025smarter}, the base model used by all models in our experiments. Our preliminary analysis (detailed in Appendix~\ref{appendix:prompts}) suggests that the performance gains stem from a joint effect of prompts and query/document lengths, pointing to a richer interaction between these factors; to facilitate further investigation of this interaction, we release checkpoints of models trained both with and without prompts at each stage.
+
+
+% However, our current experimental data (detailed in Appendix~\ref{appendix:prompts}) remains inconclusive and seems to indicate that it is a joint effect of the prompts and query/document lengths.
+
+
+
+
+
+% We conjecture this may be a form of implicit \emph{query expansion}, though our current experimental data (detailed in Appendix~\ref{appendix:prompts}) remains inconclusive. As a final remark, it is worth noting that aligning the fine-tuning setup with the pre-training (by using prompts) is crucial; our ablation studies confirm that misalignment leads to significant performance degradation.
+
+% \begin{table*}[t]
+% \centering
+% \caption{Retrieval performance (nDCG@10) across BEIR benchmark datasets for various setups with and without the use of prompts.}
+% \label{tab:prompts-main}
+% \resizebox{\textwidth}{!}{%
+% \begin{tabular}{l c ccccccccccccccc}
+% \toprule
+% \textbf{Model} & \textbf{Avg} & \rotatebox{90}{\textbf{FiQA}} & \rotatebox{90}{\textbf{NFCorpus}} & \rotatebox{90}{\textbf{TREC-COVID}} & \rotatebox{90}{\textbf{Touche}} & \rotatebox{90}{\textbf{ArguAna}} & \rotatebox{90}{\textbf{Quora}} & \rotatebox{90}{\textbf{SCIDOCS}} & \rotatebox{90}{\textbf{SciFact}} & \rotatebox{90}{\textbf{NQ}} & \rotatebox{90}{\textbf{ClimateFEVER}} & \rotatebox{90}{\textbf{HotpotQA}} & \rotatebox{90}{\textbf{DBPedia}} & \rotatebox{90}{\textbf{CQADupstack}} & \rotatebox{90}{\textbf{FEVER}} & \rotatebox{90}{\textbf{MSMARCO}} \\
+% \midrule
+% \multicolumn{17}{l}{From unsupervised dense with prompts} \\
+% \midrule
+% Base results & 54.44 & 41.30 & 36.00 & 79.23 & 33.52 & 52.27 & 87.52 & 18.28 & 74.90 & 61.35 & 33.25 & 77.64 & 47.40 & 41.18 & 86.57 & 46.15 \\
+% \quad + prompts & 55.12 & 41.50 & 36.51 & 77.46 & 33.77 & 52.45 & 86.26 & 18.66 & 74.90 & 62.24 & 37.27 & 80.07 & 48.27 & 41.60 & 89.71 & 46.17 \\
+% \midrule
+% \multicolumn{17}{l}{From unsupervised ColBERT with prompts} \\
+% \midrule
+% Base results & 54.17 & 42.99 & 37.49 & 71.95 & 27.90 & 49.29 & 88.26 & 20.29 & 76.85 & 62.20 & 32.77 & 77.91 & 47.43 & 44.67 & 89.36 & 43.14 \\
+% \quad + prompts & 55.43 & 42.62 & 37.28 & 78.69 & 36.13 & 53.07 & 85.24 & 19.88 & 76.50 & 61.66 & 35.72 & 79.41 & 47.48 & 41.34 & 90.59 & 45.80 \\
+% \midrule
+% \multicolumn{17}{l}{From unsupervised ColBERT without prompts} \\
+% \midrule
+% Base results & 54.61 & 43.14 & 36.60 & 78.60 & 36.36 & 49.49 & 88.05 & 19.13 & 76.42 & 61.73 & 32.70 & 76.99 & 47.69 & 40.21 & 85.97 & 46.01 \\
+% \quad + prompts & 54.18 & 42.75 & 37.28 & 77.86 & 35.19 & 49.73 & 87.61 & 18.97 & 75.43 & 61.64 & 30.75 & 77.32 & 47.48 & 39.72 & 84.59 & 46.36 \\
+% \bottomrule
+% % From unsupervised dense with prompts & 54.44 & 41.30 & 36.00 & 79.23 & 33.52 & 52.27 & 87.52 & 18.28 & 74.90 & 61.35 & 33.25 & 77.64 & 47.40 & 41.18 & 86.57 & 46.15 \\
+% % \quad + prompts & 55.12 & 41.50 & 36.51 & 77.46 & 33.77 & 52.45 & 86.26 & 18.66 & 74.90 & 62.24 & 37.27 & 80.07 & 48.27 & 41.60 & 89.71 & 46.17 \\
+% % From unsupervised ColBERT with prompts & 54.17 & 42.99 & 37.49 & 71.95 & 27.90 & 49.29 & 88.26 & 20.29 & 76.85 & 62.20 & 32.77 & 77.91 & 47.43 & 44.67 & 89.36 & 43.14 \\
+% % \quad + prompts & 55.43 & 42.62 & 37.28 & 78.69 & 36.13 & 53.07 & 85.24 & 19.88 & 76.50 & 61.66 & 35.72 & 79.41 & 47.48 & 41.34 & 90.59 & 45.80 \\
+% % From unsupervised ColBERT without prompts & 54.61 & 43.14 & 36.60 & 78.60 & 36.36 & 49.49 & 88.05 & 19.13 & 76.42 & 61.73 & 32.70 & 76.99 & 47.69 & 40.21 & 85.97 & 46.01 \\
+% % \quad + prompts & 54.18 & 42.75 & 37.28 & 77.86 & 35.19 & 49.73 & 87.61 & 18.97 & 75.43 & 61.64 & 30.75 & 77.32 & 47.48 & 39.72 & 84.59 & 46.36 \\
+% % \bottomrule
+% \end{tabular}%
+% }
+% \end{table*}
+
+
+\begin{table*}[t]
+\centering
+\caption{Retrieval performance (nDCG@10) across BEIR benchmark datasets when performing supervised + KD phases on top of unsupervised models pre-trained with or without prompts and the impact of adding the prompts during fine-tuning.}
+\label{tab:prompts-main}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{l c ccccccccccccccc}
+\toprule
+\textbf{Model} & \textbf{Avg} & \rotatebox{90}{\textbf{FiQA}} & \rotatebox{90}{\textbf{NFCorpus}} & \rotatebox{90}{\textbf{TREC-COVID}} & \rotatebox{90}{\textbf{Touche}} & \rotatebox{90}{\textbf{ArguAna}} & \rotatebox{90}{\textbf{Quora}} & \rotatebox{90}{\textbf{SCIDOCS}} & \rotatebox{90}{\textbf{SciFact}} & \rotatebox{90}{\textbf{NQ}} & \rotatebox{90}{\textbf{ClimateFEVER}} & \rotatebox{90}{\textbf{HotpotQA}} & \rotatebox{90}{\textbf{DBPedia}} & \rotatebox{90}{\textbf{CQADupstack}} & \rotatebox{90}{\textbf{FEVER}} & \rotatebox{90}{\textbf{MSMARCO}} \\
+\midrule
+ModernBERT-embed-unsupervised \textbf{with} prompts & 47.05 & 42.53 & 35.33 & 68.44 & 18.58 & 48.82 & 88.63 & 19.83 & 72.30 & 46.32 & 22.97 & 60.00 & 37.97 & 42.40 & 67.39 & 34.23 \\
+\quad Supervised + KD \textbf{with} prompts & 55.12 & 41.50 & 36.51 & 77.46 & 33.77 & 52.45 & 86.26 & 18.66 & 74.90 & 62.24 & 37.27 & 80.07 & 48.27 & 41.60 & 89.71 & 46.17 \\
+\quad Supervised + KD \textit{without} prompts & 54.44 & 41.30 & 36.00 & 79.23 & 33.52 & 52.27 & 87.52 & 18.28 & 74.90 & 61.35 & 33.25 & 77.64 & 47.40 & 41.18 & 86.57 & 46.15 \\
+
+\midrule
+ColBERT-Zero-unsupervised \textbf{with} prompts & 51.44 & 45.38 & 36.88 & 67.82 & 22.59 & 51.53 & 87.78 & 22.30 & 76.76 & 58.80 & 24.24 & 68.29 & 43.16 & 45.76 & 81.58 & 38.78 \\
+\quad Supervised + KD \textbf{with} prompts & 55.43 & 42.62 & 37.28 & 78.69 & 36.13 & 53.07 & 85.24 & 19.88 & 76.50 & 61.66 & 35.72 & 79.41 & 47.48 & 41.34 & 90.59 & 45.80 \\
+\quad Supervised + KD \textit{without} prompts & 54.17 & 42.99 & 37.49 & 71.95 & 27.90 & 49.29 & 88.26 & 20.29 & 76.85 & 62.20 & 32.77 & 77.91 & 47.43 & 44.67 & 89.36 & 43.14 \\
+
+\midrule
+ColBERT-Zero-unsupervised \textit{without} prompts & 51.70 & 45.31 & 34.72 & 73.55 & 23.26 & 52.56 & 88.15 & 22.63 & 76.1 & 59.18 & 24.24 & 66.66 & 42.61 & 45.56 & 81.88 & 39.15 \\
+\quad Supervised + KD \textbf{with} prompts & 54.18 & 42.75 & 37.28 & 77.86 & 35.19 & 49.73 & 87.61 & 18.97 & 75.43 & 61.64 & 30.75 & 77.32 & 47.48 & 39.72 & 84.59 & 46.36 \\
+\quad Supervised + KD \textit{without} prompts & 54.61 & 43.14 & 36.60 & 78.60 & 36.36 & 49.49 & 88.05 & 19.13 & 76.42 & 61.73 & 32.70 & 76.99 & 47.69 & 40.21 & 85.97 & 46.01 \\
+
+\bottomrule
+\end{tabular}%
+}
+\end{table*}

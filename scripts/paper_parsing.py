@@ -56,6 +56,7 @@ MACRO_PATTERNS: dict[str, str] = {
     "newtheorem":          "s r o r o",
     "newcounter":          "r o",
     "newlength":           "r",
+    "definecolor":         "o r r r",
 }
 
 # Non-standard syntaxes, handled by dedicated consumers.
@@ -75,6 +76,7 @@ KIND_BUCKET: dict[str, int] = {
     "newenvironment": 2, "renewenvironment": 2,
     "newtheorem": 3,
     "newcounter": 4, "newlength": 4, "newdimen": 4,
+    "definecolor": 5,
 }
 
 BUCKET_HEADERS: dict[int, str] = {
@@ -83,6 +85,7 @@ BUCKET_HEADERS: dict[int, str] = {
     2: "Environments",
     3: "Theorems",
     4: "Counters & lengths",
+    5: "Colors",
 }
 
 
@@ -315,6 +318,16 @@ def consume_pattern(text: str, pos: int, pattern: str) -> tuple[int, str | None]
                 if name is None:
                     inner = text[start + 1 : pos - 1].strip()
                     name = _name_from_inner(inner)
+            elif name is None and text[probe] == "\\":
+                # No-brace target form: \newcommand\foo[n]{body}. The name is
+                # a bare control sequence rather than {\foo}. Capture the CS
+                # name and advance; subsequent r/o/s slots resume normally.
+                cs_end, cs_name = read_control_seq(text, probe)
+                if not cs_name:
+                    return end_after_consumed, name
+                name = cs_name
+                pos = cs_end
+                end_after_consumed = pos
             else:
                 # Required arg missing — bail out without advancing.
                 return end_after_consumed, name

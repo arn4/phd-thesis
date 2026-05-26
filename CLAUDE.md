@@ -58,7 +58,7 @@ Once a `latexmkrc` exists, prefer `latexmk` over invoking `pdflatex` / `biber` b
 latexmk -pdf -jobname=2302 -outdir=build/2302 papers/stand-alone-paper.tex
 ```
 
-The driver loads the thesis-wide preamble (`papers-dependencies.tex` + `papers-macros.tex`) and bib (`papers-bibliography.bib`), picks the paper via `\jobname`, and uses biblatex (`authoryear-comp` style) with biber. The driver blocks a handful of legacy packages (`natbib`, `cleveref`, `algorithmic`, `subfigure`, `color`) before inputting the global preamble — those are workarounds for unresolved conflicts in the merged preamble that should eventually be cleaned up via `merge-preambles`.
+The driver loads the thesis-wide preamble (`papers-dependencies.tex` + `papers-macros.tex`) and bib (`papers-bibliography.bib`), picks the paper via `\jobname`, and uses biblatex (`authoryear-comp` style) with biber. `cleveref` is loaded by the driver itself rather than by `papers-dependencies.tex`, because it must load after `hyperref`.
 
 ## Working with the user
 

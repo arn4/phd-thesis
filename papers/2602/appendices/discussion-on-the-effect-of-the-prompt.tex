@@ -1,0 +1,169 @@
+\section{Discussion on the Effect of the Prompt}
+
+\label{appendix:prompts}
+In this appendix, we provide a detailed analysis of the impact of prompts on model performance and the secondary effects of increased sequence lengths for queries and documents. We investigate whether the performance gains observed in the main text are merely a \emph{structural effect} of processing additional tokens, or if the prompts trigger more complex behaviors such as \emph{query expansion} as discussed in Section~\ref{sec:prompts}. To isolate these variables, we conducted a series of ablations by fine-tuning different models with and without the prompts (\textbf{+Prompt} setting) as well as with and without accounting for token-length parity (\textbf{+Length} setting), that is, increasing the query/document lengths by the length of the prompts, 7 tokens. All the results are reported in Table~\ref{tab:full-ablation-results} and a synthesis of the effect of each parameter for different base model on the BEIR average is presented in Table~\ref{tab:delta-heatmap}.
+As discussed in the main body, matching the pre-training setup is crucial for downstream performance. Incorporating prompts during the fine-tuning of pre-trained models with prompts enhances results, while including them for models pre-trained without prompts leads to a decline. Notably, the most significant relative gains occur when performing only the KD phase, further underscoring the pivotal role of alignment. We observe that in the supervised + KD scenario, the model has more opportunity to adapt to initial misalignment, whereas the \emph{KD-only} setting is far more sensitive to the pre-training configuration. Crucially, however, alignment alone does not account for all the observed gains. As detailed in Section~\ref{sec:prompts}, comparing full ColBERT pre-training with and without prompts isolates the effect of prompts from any alignment confound, since both models are evaluated after end-to-end training in their respective settings. \textbf{This confirms that prompts provide an intrinsic benefit beyond simply matching the fine-tuning setup to the pre-training one}. 
+
+When trying to disentangle the effect of the prompts ``content" and the increased length, we observe gains by adding the prompts even when not accounting for the additional tokens during the training of the models. While changing the length during evaluation only does not change the results (we cover the lengths of the BEIR benchmark), we conducted additional testing to determine the impact of increasing the query/document length during training. It appears that increasing the length is beneficial, even without incorporating the prompts. Again, in this case, the most significant gains are achieved by focusing solely on the KD. This phenomenon can be attributed to the fact that supplementary tokens offer extra training signals, a feature that is particularly advantageous for brief training. 
+
+Thus, it appears that both factors explain the performance boost. These factors seem to be additive, as incorporating both increases performance beyond either individual component. Interestingly, while this holds true whether using a dense or a ColBERT model as the unsupervised base, the prompt-pre-trained ColBERT model benefits significantly more from their combination. Indeed, while the gain for the dense model is smaller than the sum of the individual contributions, the combined gain for the fully pre-trained ColBERT model is much larger than the sum of its individual gains. 
+
+Our running theory is that the observed performance boost stems from a synergy between \emph{structural alignment} and \emph{representational capacity}. We conjecture that ColBERT, unlike dense models, treats the pre-training configuration, specifically the combination of prompts and extended sequence length, as a unified template. Because the query budget is relatively short, introducing a prompt without increasing length at the supervised stage creates a \emph{token-budget trade-off} where the prompt displacement of content tokens neutralizes the alignment benefits. The synergistic gain only emerges when the prompts provide the `instruction" and the additional length provides the ``semantic real estate" necessary for the model to execute pre-trained behaviors like \emph{implicit query expansion} without signal interference. However, this remains a preliminary conjecture; further investigation is required using a wider range of prompt variations and incremental length scales to definitively isolate the individual and combined mechanisms at play.
+
+% using the ColBERT-Zero architecture, comparing the standard prompt-based approach against configurations that account for token-length parity. Our findings suggests that the influence of prompts extends beyond simple sequence padding, though as we discuss below, the underlying mechanisms remain multifaceted.
+
+% \begin{table*}[t]
+% \centering
+% \caption{Retrieval performance (nDCG@10) across BEIR benchmark datasets.}
+% \label{tab:original-results}
+% \resizebox{\textwidth}{!}{%
+% \begin{tabular}{l c ccccccccccccccc}
+% \toprule
+% \textbf{Model} & \textbf{Avg} & \rotatebox{90}{\textbf{FiQA}} & \rotatebox{90}{\textbf{NFCorpus}} & \rotatebox{90}{\textbf{TREC-COVID}} & \rotatebox{90}{\textbf{Touche}} & \rotatebox{90}{\textbf{ArguAna}} & \rotatebox{90}{\textbf{Quora}} & \rotatebox{90}{\textbf{SCIDOCS}} & \rotatebox{90}{\textbf{SciFact}} & \rotatebox{90}{\textbf{NQ}} & \rotatebox{90}{\textbf{ClimateFEVER}} & \rotatebox{90}{\textbf{HotpotQA}} & \rotatebox{90}{\textbf{DBPedia}} & \rotatebox{90}{\textbf{CQADupstack}} & \rotatebox{90}{\textbf{FEVER}} & \rotatebox{90}{\textbf{MSMARCO}} \\
+% \midrule
+% \multicolumn{17}{l}{\textit{Baselines}} \\
+% \midrule
+% ModernBERT-embed-unsupervised & 47.05 & 42.53 & 35.33 & 68.44 & 18.58 & 48.82 & 88.63 & 19.83 & 72.30 & 46.32 & 22.97 & 60.00 & 37.97 & 42.40 & 67.39 & 34.23 \\
+% ModernBERT-embed-supervised & 52.89 & 40.59 & 33.40 & \textbf{84.15} & 31.91 & 48.96 & \textbf{88.85} & 18.59 & 69.63 & 62.15 & 35.67 & 67.11 & 41.50 & 42.08 & 87.35 & 41.47 \\
+% \texttt{GTE-ModernColBERT} & 54.67 & 45.28 & \textbf{37.93} & 83.59 & 31.23 & 48.51 & 86.61 & 19.06 & 76.34 & 61.80 & 30.62 & 77.32 & 48.03 & 41.00 & 87.44 & 45.32 \\
+% gte-modernbert-base & 55.33 & \textbf{48.81} & 36.44 & 81.95 & 21.68 & \textbf{72.68} & 88.55 & 21.29 & \textbf{77.40} & 57.62 & \textbf{37.74} & 69.47 & 41.79 & 42.63 & \textbf{91.03} & 40.90 \\
+% \midrule
+% \multicolumn{17}{l}{\textit{KD from dense supervised}} \\
+% \midrule
+% embed-base distilled & 54.09 & 42.51 & 37.01 & 79.52 & 34.58 & 51.75 & 87.67 & 18.15 & 75.04 & 61.45 & 28.31 & 76.70 & 47.54 & 40.68 & 84.82 & 45.57 \\
+% \midrule
+% \multicolumn{17}{l}{\textit{Supervised + KD from dense unsupervised}} \\
+% \midrule
+% embed-base supervised & 50.72 & 40.09 & 35.56 & 71.12 & 25.53 & 44.27 & 86.96 & 18.19 & 73.78 & 58.89 & 32.95 & 71.49 & 43.23 & 42.55 & 70.51 & 45.72 \\
+% embed-base distilled & 55.12 & 41.50 & 36.51 & 77.46 & \textbf{33.77} & 52.45 & 86.26 & 18.66 & 74.90 & \textbf{62.24} & 37.27 & \textbf{80.07} & \textbf{48.27} & 41.60 & 89.71 & \textbf{46.17} \\
+% \midrule
+% \multicolumn{17}{l}{\textit{ColBERT-Zero} (full pre-training)} \\
+% \midrule
+% Unsupervised & 51.44 & 45.38 & 36.88 & 67.82 & 22.59 & 51.53 & 87.78 & \textbf{22.30} & 76.76 & 58.80 & 24.24 & 68.29 & 43.16 & \textbf{45.76} & 81.58 & 38.78 \\
+% Supervised & 51.81 & 42.45 & 35.60 & 74.72 & 23.83 & 41.81 & 87.19 & 19.85 & 73.71 & 61.95 & 35.01 & 71.37 & 46.20 & 45.16 & 72.61 & 45.68 \\
+% Distilled & \textbf{55.43} & 42.62 & 37.28 & 78.69 & 36.13 & 53.07 & 85.24 & 19.88 & 76.50 & 61.66 & 35.72 & 79.41 & 47.48 & 41.34 & 90.59 & 45.80 \\
+% \bottomrule
+% \end{tabular}%
+% }
+% \end{table*}
+
+
+% Define checkmark and crossmark
+\newcommand{\cmark}{\ding{51}}  % checkmark
+\newcommand{\xmark}{\ding{55}}  % crossmark
+
+\begin{table*}[htbp]
+\centering
+\caption{Retrieval performance on the BEIR benchmark studying the impact of adding prompts and increasing query/document lengths.}
+\label{tab:full-ablation-results}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{l cc | c | ccccccccccccccc}
+\toprule
+& \multicolumn{2}{c|}{\textbf{Settings}} & & \multicolumn{15}{c}{\textbf{Datasets}} \\
+\cmidrule(lr){2-3} \cmidrule(lr){5-19}
+\textbf{Method} & \textbf{+Prompt} & \textbf{+Length} & \textbf{Avg} & \textbf{FiQA} & \textbf{NFC} & \textbf{COV} & \textbf{Tou} & \textbf{Arg} & \textbf{Quo} & \textbf{SciD} & \textbf{SciF} & \textbf{NQ} & \textbf{Clim} & \textbf{Hot} & \textbf{DBP} & \textbf{CQA} & \textbf{FEV} & \textbf{MSM} \\
+\midrule
+\multicolumn{19}{l}{\textbf{\textit{KD from dense supervised (with prompts)}}} \\
+\midrule
+\multirow{4}{*}{Distilled} 
+  & \xmark & \xmark & 52.58 & 41.58 & 36.33 & 78.69 & 33.30 & 50.16 & 82.59 & 18.01 & 75.15 & 60.30 & 25.00 & 75.00 & 45.92 & 39.39 & 82.27 & 45.06  \\
+& \cmark & \xmark & 53.83 & 41.74 & 36.87 & 79.65 & 34.52 & 51.06 & 87.31 & 18.41 & 76.06 & 61.24 & 27.56 & 75.38 & 47.48 & 40.43 & 84.24 & 45.47 \\
+& \xmark & \cmark & 53.28 & 41.99 & 36.41 & 78.79 & 36.76 & 47.77 & 87.51 & 18.18 & 75.21 & 60.56 & 25.63 & 76.34 & 45.83 & 39.61 & 83.42 & 45.16 \\
+& \cmark & \cmark & \textbf{54.09} & 42.51 & 37.01 & 79.52 & 34.58 & 51.75 & 87.67 & 18.15 & 75.04 & 61.45 & 28.31 & 76.70 & 47.54 & 40.68 & 84.82 & 45.57 \\
+\midrule
+\multicolumn{19}{l}{\textit{\textbf{Supervised + KD from dense unsupervised (with prompts)}}} \\
+\midrule
+\multirow{4}{*}{Supervised} 
+  & \xmark & \xmark & 51.33 & 42.30 & 34.52 & 73.97 & 25.22 & 49.66 & 87.67 & 17.94 & 73.57 & 60.14 & 28.53 & 72.13 & 42.54 & 42.90 & 74.04 & 44.80 \\
+& \cmark & \xmark & 51.08 & 41.34 & 36.04 & 73.57 & 26.61 & 42.98 & 87.25 & 17.88 & 70.80 & 60.59 & 30.52 & 71.22 & 44.01 & 43.31 & 74.53 & 45.58 \\
+& \xmark & \cmark & 51.08 & 40.93 & 35.49 & 70.56 & 22.59 & 48.96 & 87.56 & 17.50 & 71.99 & 60.50 & 32.61 & 72.90 & 43.47 & 42.10 & 73.98 & 45.07 \\
+& \cmark & \cmark & 50.72 & 40.09 & 35.56 & 71.12 & 25.53 & 44.27 & 86.96 & 18.19 & 73.78 & 58.89 & 32.95 & 71.49 & 43.23 & 42.55 & 70.51 & 45.72 \\
+\cmidrule(lr){1-19}
+\multirow{4}{*}{Distilled} 
+  & \xmark & \xmark & 54.44 & 41.30 & 36.00 & 79.23 & 33.52 & 52.27 & 87.52 & 18.28 & 74.90 & 61.35 & 33.25 & 77.64 & 47.40 & 41.18 & 86.57 & 46.15 \\
+& \cmark & \xmark & 54.95 & 42.19 & 36.73 & 79.37 & 36.10 & 52.51 & 87.31 & 18.80 & 75.57 & 61.66 & 33.67 & 78.05 & 47.77 & 41.03 & 87.52 & 45.96 \\
+& \xmark & \cmark & 54.82 & 42.36 & 36.33 & 80.11 & 37.47 & 48.51 & 87.74 & 18.11 & 75.92 & 61.58 & 34.46 & 78.31 & 47.27 & 40.59 & 87.21 & 46.39 \\
+& \cmark & \cmark & \textbf{55.12} & 41.50 & 36.51 & 77.46 & 33.77 & 52.45 & 86.26 & 18.66 & 74.90 & 62.24 & 37.27 & 80.07 & 48.27 & 41.60 & 89.71 & 46.17 \\
+\midrule
+\multicolumn{19}{l}{\textit{\textbf{Supervised + KD from ColBERT unsupervised (with prompts)}}} \\
+\midrule
+\multirow{3}{*}{Supervised} 
+  & \xmark & \xmark & 52.47 & 43.52 & 36.43 & 66.13 & 22.70 & 47.95 & 87.74 & 19.51 & 75.89 & 62.27 & 31.92 & 72.30 & 46.01 & 44.82 & 86.74 & 43.13 \\
+  & \cmark & \xmark & 52.16 & 43.02 & 35.13 & 71.30 & 21.94 & 44.66 & 88.22 & 21.19 & 74.31 & 61.71 & 30.65 & 70.46 & 46.97 & 45.08 & 84.94 & 42.78 \\
+& \xmark & \cmark & 52.70 & 43.59 & 36.23 & 65.03 & 23.16 & 49.89 & 87.70 & 19.61 & 75.66 & 62.34 & 33.22 & 73.46 & 45.64 & 44.92 & 87.00 & 43.12 \\
+& \cmark & \cmark & 51.81 & 42.45 & 35.60 & 74.72 & 23.83 & 41.81 & 87.19 & 19.85 & 73.71 & 61.95 & 35.01 & 71.37 & 46.20 & 45.16 & 72.61 & 45.68 \\
+\cmidrule(lr){1-19}
+\multirow{4}{*}{Distilled} 
+  & \xmark & \xmark & 54.17 & 42.99 & 37.49 & 71.95 & 27.90 & 49.29 & 88.26 & 20.29 & 76.85 & 62.20 & 32.77 & 77.91 & 47.43 & 44.67 & 89.36 & 43.14 \\
+& \cmark & \xmark & 54.59 & 42.18 & 37.08 & 80.37 & 37.31 & 51.12 & 84.71 & 19.81 & 76.39 & 62.02 & 29.79 & 76.50 & 46.88 & 40.85 & 88.72 & 45.12 \\
+& \xmark & \cmark & 54.47 & 42.50 & 37.85 & 77.94 & 35.65 & 51.42 & 86.99 & 18.88 & 75.73 & 61.60 & 31.37 & 77.97 & 46.81 & 40.50 & 87.08 & 44.83 \\
+& \cmark & \cmark & \textbf{55.43} & 42.62 & 37.28 & 78.69 & 36.13 & 53.07 & 85.24 & 19.88 & 76.50 & 61.66 & 35.72 & 79.41 & 47.48 & 41.34 & 90.59 & 45.80 \\
+\midrule
+\multicolumn{19}{l}{\textit{\textbf{Supervised + KD from ColBERT unsupervised (without prompts)}}} \\
+\midrule
+\multirow{2}{*}{Supervised} 
+  & \xmark & \xmark & 52.39 & 43.36 & 36.01 & 72.42 & 23.79 & 47.42 & 87.79 & 21.30 & 73.85 & 62.25 & 31.61 & 70.32 & 44.07 & 44.03 & 85.54 & 42.11 \\
+& \cmark & \cmark & 52.62 & 44.67 & 36.20 & 72.68 & 24.47 & 48.83 & 88.00 & 21.27 & 72.65 & 61.85 & 32.84 & 69.79 & 44.98 & 44.84 & 84.95 & 41.34 \\
+\cmidrule(lr){1-19}
+\multirow{3}{*}{Distilled} 
+  & \xmark & \xmark & 54.61 & 43.14 & 36.60 & 78.60 & 36.36 & 49.49 & 88.05 & 19.13 & 76.42 & 61.73 & 32.70 & 76.99 & 47.69 & 40.21 & 85.97 & 46.01 \\
+& \xmark & \cmark$^\dagger$ & 54.60 & 43.25 & 36.88 & 78.67 & 36.27 & 49.14 & 88.12 & 19.06 & 76.28 & 61.58 & 32.25 & 77.55 & 47.23 & 40.34 & 86.34 & 46.06 \\
+& \cmark & \cmark & 54.18 & 42.75 & 37.28 & 77.86 & 35.19 & 49.73 & 87.61 & 18.97 & 75.43 & 61.64 & 30.75 & 77.32 & 47.48 & 39.72 & 84.59 & 46.36 \\
+\bottomrule
+\multicolumn{19}{l}{\footnotesize $^\dagger$ Extra length applied only during evaluation.} \\
+\end{tabular}%
+}
+\end{table*}
+
+
+
+
+
+\begin{table}[htbp]
+\centering
+\caption{Average BEIR nDCG@10 with delta ($\Delta$) for adding prompts and increasing lengths vs. baseline (no prompt, no length)}
+\label{tab:delta-heatmap}
+
+\definecolor{pos3}{RGB}{80,200,80}   % Strong positive
+\definecolor{pos2}{RGB}{144,238,144} % Medium positive
+\definecolor{pos1}{RGB}{220,255,220} % Light positive
+\definecolor{neg1}{RGB}{255,220,220} % Light negative
+\definecolor{neg2}{RGB}{255,160,160} % Medium negative
+\definecolor{baseline}{RGB}{240,240,240} % Gray for baseline
+
+\newcolumntype{C}{>{\centering\arraybackslash}m{2.4cm}}
+
+\begin{tabular}{l|C|CCC}
+\toprule
+\textbf{Method / Training} & \textbf{Baseline} & \textbf{+Prompt} & \textbf{+Length} & \textbf{+Both} \\
+\midrule
+\multicolumn{5}{l}{\textit{KD from dense supervised (with prompts)}} \\
+\midrule
+Distilled & \cellcolor{baseline}52.58 & \cellcolor{pos3}+1.25 (53.83) & \cellcolor{pos2}+0.70 (53.28) & \cellcolor{pos3}\textbf{+1.51 (54.09)} \\
+\midrule
+\multicolumn{5}{l}{\textit{Supervised + KD from dense unsupervised (with prompts)}} \\
+\midrule
+Supervised & \cellcolor{baseline}\textbf{51.33} & \cellcolor{neg1}--0.25 (51.08) & \cellcolor{neg1}--0.25 (51.08) & \cellcolor{neg2}--0.61 (50.72) \\
+Distilled & \cellcolor{baseline}54.44 & \cellcolor{pos1}+0.51 (54.95) & \cellcolor{pos1}+0.38 (54.82) & \cellcolor{pos2}\textbf{+0.68 (55.12)} \\
+\midrule
+\multicolumn{5}{l}{\textit{Supervised + KD from ColBERT unsupervised (with prompts)}} \\
+\midrule
+Supervised & \cellcolor{baseline}52.47 & \cellcolor{neg1}--0.31 (52.16) & \cellcolor{pos1}\textbf{+0.23 (52.70)} & \cellcolor{neg2}--0.66 (51.81) \\
+Distilled & \cellcolor{baseline}54.17 & \cellcolor{pos1}+0.42 (54.59) & \cellcolor{pos1}+0.30 (54.47) & \cellcolor{pos3}\textbf{+1.26 (55.43)} \\
+\midrule
+\multicolumn{5}{l}{\textit{Supervised + KD from ColBERT unsupervised (without prompts)}} \\
+\midrule
+Supervised & \cellcolor{baseline}52.39 & \multicolumn{2}{c}{--} & \cellcolor{pos1}\textbf{+0.23 (52.62)} \\
+Distilled & \cellcolor{baseline}\textbf{54.61} & \multicolumn{2}{c}{--} & \cellcolor{neg1}--0.43 (54.18) \\
+\bottomrule
+\end{tabular}
+
+% t\vspace{1em}
+% \footnotesize
+% \textcolor{pos3}{$\blacksquare$} $\Delta > 1.0$ \quad
+% \textcolor{pos2}{$\blacksquare$} $0.5 < \Delta \leq 1.0$ \quad
+% \textcolor{pos1}{$\blacksquare$} $0 < \Delta \leq 0.5$ \quad
+% \textcolor{neg1}{$\blacksquare$} $-0.5 \leq \Delta < 0$ \quad
+% \textcolor{neg2}{$\blacksquare$} $\Delta < -0.5$
+
+\end{table}

@@ -14,11 +14,11 @@
 
 % --- Commands ---
 % from assembler_arxiv.tex:24
-\renewcommand
+\renewcommand\Authfont{\fontsize{11}{14.4}\selectfont}
 % from assembler_arxiv.tex:25
-\renewcommand
+\renewcommand\Affilfont{\fontsize{10}{10.8}\itshape}
 % from macros.tex:5
-\newcommand
+\newcommand\tagthis{\addtocounter{equation}{1}\tag{\theequation}}
 % from macros.tex:14
 \newcommand{\Ea}[1]{\E\left[#1\right]}
 % from macros.tex:15
@@ -741,7 +741,11 @@
 \providecommand{\inlinecomment}[3]{%
   {\color{#1}#2: #3}}
 % from macros.tex:421
-\newcommand
+\newcommand\commenter[2]%
+{%
+  \expandafter\newcommand\csname i#1\endcsname[1]{\inlinecomment{#2}{#1}{##1}}
+  \expandafter\newcommand\csname #1\endcsname[1]{\mycomment{#2}{#1}{##1}}
+}
 % from macros.tex:449
 \def\UrlBreaks{\do\/\do-}
 % from assembler_arxiv.tex:44
@@ -764,3 +768,7 @@
 \newtheorem{assumption}[theorem]{Assumption}
 % from assembler_arxiv.tex:37
 \newtheorem{remark}[theorem]{Remark}
+
+% --- Colors ---
+% from macros.tex:430
+\definecolor{mydarkblue}{rgb}{0,0.08,0.45}

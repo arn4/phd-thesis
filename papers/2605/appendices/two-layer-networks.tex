@@ -1,0 +1,88 @@
+\section{Two-layer networks}
+
+\label{app:two-layer}
+
+\subsection{Training a two-layer network on multi-index models}\label{app:two-layer-mim}
+
+In this section, we instantiate the general framework on a canonical setting that has driven much of the recent theory of feature learning: \emph{training a two-layer network on a Gaussian multi-index model} (e.g. ~\cite{goldt2019dynamics,benarous2024stochastic,abbe2021staircase,abbe2023sgd,dandi2023how,bietti2022learning,bietti2023learning,arnaboldi2023high,damian2024computational,damian2026generative,dandi2024benefits}.)
+
+The goal of this subsection is to make explicit how the second-order correlation criterion that drives Neural LoFi in the main text reduces, in this setting, to the classical \emph{information exponent} of ~\cite{benarous2024stochastic}, and how the regime $\mathrm{IE}\le 2$ is precisely the regime in which Neural LoFi alone (i.e., a single low-degree filtering step) suffices for weak recovery of the hidden subspace. This is connected to a recent line of work on the Hessian of the loss in, e.g. \cite{bonnaire2025role,zhang2025neural,defilippis2026optimal,montanari2026phase}. We then describe how, when $\mathrm{IE}=2$, the resulting dynamics of the two-layer network under gradient descent take the form of a \emph{saddle-to-saddle} cascade through the top directions of the population correlation matrix.
+
+\paragraph{Setting}
+We consider inputs $\bx\in\mathbb{R}^d$ with $\bx\sim\mathcal{N}(0,I_d)$ and a teacher of \emph{multi-index} form
+\begin{equation}\label{eq:mim-teacher}
+y \;=\; f^\star(\bx) \;=\; g^\star\!\bigl(\langle \bu^\star_1,\bx\rangle,\dots,\langle \bu^\star_r,\bx\rangle\bigr) + \xi,
+\end{equation}
+where $U^\star=[\bu^\star_1,\dots,\bu^\star_r]\in\mathbb{R}^{d\times r}$ has orthonormal columns spanning a hidden subspace $V^\star\subset\mathbb{R}^{d}$ of dimension $r=\mathcal{O}(1)$, $g^\star:\mathbb{R}^r\to\mathbb{R}$ is a fixed link function with $\mathbb{E}[g^\star(Z)^2]<\infty$ for $Z\sim\mathcal{N}(0,I_r)$, and $\xi$ is independent sub-Gaussian noise. The student is the two-layer network
+\begin{equation}\label{eq:two-layer-student}
+\hat f(\bx) \;=\; \frac{1}{\sqrt{p}}\sum_{i=1}^{p} a_i\,\sigma\!\bigl(\langle\bw_i,\bx\rangle\bigr),\qquad \bw_i\in\mathbb{R}^d,\ a_i\in\mathbb{R},
+\end{equation}
+trained by (online or layerwise) gradient descent on the squared loss with small initialization $\bw_i(0)\sim\mathcal{N}(0,d^{-1}I_d)$ and second-layer weights $a_i$ either fixed at random signs or trained on a fresh batch. This is the standard setup of e.g. ~\cite{goldt2019dynamics,arnaboldi2023high,benarous2024stochastic,bietti2023learning,abbe2023sgd,dandi2024benefits}.
+
+\paragraph{From the LoFi correlation criterion to the information exponent}
+Specializing the first-layer ($\ell=1$) Neural LoFi criterion of equation~\eqref{eq:lofi-accessibility} to this setting, the input representation is $\bz_0(\bx)=\bx$, and the population version of the second-order correlation maximized by Neural LoFi at layer $1$ becomes
+\begin{equation}\label{eq:lofi-mim}
+\rho(\varphi)
+\;=\;
+\Bigl|\,\mathbb{E}\!\left[y\,\varphi(\bx)^2\right]\Bigr|,
+\qquad
+\varphi\in\mathcal{H}_0,\ \|\varphi\|_{\mathcal{H}_0}=1,
+\end{equation}
+where $\mathcal{H}_0=L^2(\gamma_d)$ is the Gaussian RKHS associated with the identity representation reducing to the constraint $\norm{\bw}=1$.
+. Expanding $f^\star$ in the Hermite basis, $f^\star(\bx)=\sum_{k\ge 0}\langle f^\star,H_k\rangle\,H_k(U^{\star\top}\bx)$, and any test feature $\varphi$ in the same basis, the criterion~\eqref{eq:lofi-mim} retains only the components of $\varphi^2$ that overlap with the lowest non-zero Hermite component of $f^\star$. Following~\cite{benarous2024stochastic}, define the \emph{information exponent} of $f^\star$ as
+\begin{equation}\label{eq:ie-def}
+\mathrm{IE}(f^\star)
+\;\coloneqq\;
+\min\bigl\{\,k\ge 1 \,:\, \mathbb{E}[f^\star(\bx)\,H_k(\langle \bu,\bx\rangle)]\not\equiv 0 \text{ for some } \bu\in V^\star\,\bigr\}.
+\end{equation}
+Our second-order correlation $\rho(\varphi)$ probes $\varphi^2$, so it is sensitive to the first two Hermite components. In particular,
+\begin{itemize}
+    \item if $\mathrm{IE}(f^\star)=1$ (linear teacher direction), the maximizer of~\eqref{eq:lofi-mim} corresponds to $\varphi$ linear in $\bx$ and aligned with the leading direction of $\mathbb{E}[y\bx]$;
+        \item if $\mathrm{IE}(f^\star)=2$, the maximizer is a quadratic form in $\bx$ and the criterion reduces to the top-eigenvector problem for the population correlation matrix $C^\star\coloneqq \mathbb{E}[y\,\bx\bx^\top]\!-\!\mathbb{E}[y]\,I_d$;
+            \item if $\mathrm{IE}(f^\star)\ge 3$, the second-order correlation is degenerate at the population level on the hidden subspace, and a single LoFi step recovers no signal.
+            \end{itemize}
+            This is precisely the well-known threshold separating ``easy'' from ``hard'' multi-index problems for online SGD~\cite{benarous2024stochastic,bietti2022learning,abbe2021staircase,damian2024computational}.
+
+            \paragraph{Neural LoFi suffices for weak recovery when $\mathrm{IE}\le 2$.}
+            Let $\hat C^{(1)}=\frac{1}{n}\sum_{\mu=1}^n y_\mu\,\bx_\mu\bx_\mu^\top - \bar y\,I_d$ be the empirical correlation used by Neural LoFi at layer $1$, and let $\widehat V_1$ be the top-$k_1$ eigenspace of $\hat C^{(1)}$. The following statement, which is a direct consequence of matrix concentration results applied to $\hat{C}^
+            {(1)}$, makes the link with weak recovery quantitative.
+
+            \begin{proposition}[Neural LoFi recovers $V^\star$ when $\mathrm{IE}\le 2$]\label{prop:lofi-ie-2}
+            Assume the multi-index model~\eqref{eq:mim-teacher} with $\mathrm{IE}(f^\star)\le 2$ and bounded link function. There exist constants $c,C,\delta>0$ depending only on $g^\star$ such that, with sample size $n\ge C\,d$, the top-$r$ eigenspace $\widehat V_1$ of $\hat C^{(1)}$ satisfies
+            \begin{equation}
+            \Bigl\|\,P_{\widehat V_1} - P_{V^\star}\,\Bigr\|_{\mathrm{op}} \;\le\; 1-\delta,
+            \qquad
+            \text{i.e.\ weak recovery of }V^\star,
+            \end{equation}
+            with probability $1-d^{-c}$.
+            \end{proposition}
+
+            In other words, when $\mathrm{IE}\le 2$, a single Neural LoFi layer is statistically sufficient: the same low-degree filtering step that, in the main text, defines the Neural LoFi feature already captures the hidden subspace at the optimal $n=\Theta(d)$ sample complexity, in agreement with the upper bounds of~\cite{benarous2024stochastic,abbe2023sgd}. When $\mathrm{IE}\ge 3$, Proposition~\ref{prop:lofi-ie-2} fails by construction, and recovery of $V^\star$ requires either non-Gaussian preprocessing of $y$ (e.g.\ polynomial reweightings, as in~\cite{damian2024computational,damian2026generative}) or genuinely deeper compositionality, which is the regime studied in Appendix~\ref{app:GD-neural} and the main text.
+
+            \paragraph{Saddle-to-saddle dynamics in the Neural LoFi regime with $\mathrm{IE}=2$.}
+            We now describe how, under the same multi-index model with $\mathrm{IE}(f^\star)=2$, the actual gradient-descent dynamics of the two-layer network~\eqref{eq:two-layer-student} traverse the top directions of $C^\star$ in a saddle-to-saddle cascade, recovering the same ordered features as Neural LoFi.
+
+            Order the eigenvalues of $C^\star$ as $\lambda_1>\lambda_2>\cdots>\lambda_r>0$ on the hidden subspace and $\lambda_{r+1}=\cdots=\lambda_d=0$ off it, with associated eigenvectors $\bv^\star_1,\dots,\bv^\star_r$. With small initialization $\|\bw_i(0)\|\asymp d^{-1/2}$ and step-size $\eta$, the leading-order continuous-time dynamics of the (rescaled) neuron weights $\widetilde\bw_i(t)$ satisfy, after averaging over the second-layer signs, a power-iteration--type ODE driven by $C^\star$:
+            \begin{equation}\label{eq:two-layer-pi}
+            \dot{\widetilde\bw}_i(t)
+            \;=\;
+            \bigl(C^\star - \widetilde\bw_i^\top C^\star \widetilde\bw_i\,I_d\bigr)\,\widetilde\bw_i(t)\,+\,o(1),
+            \end{equation}
+            Equation~\eqref{eq:two-layer-pi} is the gradient flow of $-\widetilde\bw^\top C^\star \widetilde\bw$ on the sphere, whose only attractors are the top eigenvectors $\pm\bv^\star_1$ and whose other critical points are strict saddles indexed by the remaining $\bv^\star_j$.
+
+            When several eigenvalues $\lambda_j$ are well separated, this gives rise to the \emph{saddle-to-saddle} picture: starting from a small isotropic initialization, the trajectory spends a time $T_j\asymp \lambda_j^{-1}\log(d)$ in a neighborhood of the saddle associated with $\bv^\star_j$ before escaping along the next leading direction \cite{arous2026learning}. The neurons therefore learn the directions $\bv^\star_1,\bv^\star_2,\dots,\bv^\star_r$ \emph{sequentially}, in order of decreasing population correlation $\lambda_j$, with sharp transitions between successive plateaus.
+
+            The eigenbasis traversed by GD in such saddle-to-saddle dynamics is exactly the basis selected by the Neural LoFi criterion~\eqref{eq:lofi-mim}. In both cases, the relevant operator is $C^\star=\mathbb{E}[y\,\bx\bx^\top]$ (up to centering), and the ordering by $\lambda_j$ is the ordering of low-degree correlations with the label. Neural LoFi can thus be viewed as the \emph{static abstraction} of the saddle-to-saddle GD dynamics in the $\mathrm{IE}=2$ regime, replacing the dynamics through saddles by a single eigendecomposition of $\hat C^{(1)}$.
+
+            
+Finally, we note that with the use of a different loss other than the squared loss or with data reuse or label transformations~\cite{damian2024computational,damian2026generative}, the criterion in Equation \ref{eq:lofi-mim} is modified to:
+
+\begin{equation}\label{eq:lofi-mim-gen}
+\rho_g(\varphi)
+\;=\;
+\Bigl|\,\mathbb{E}\!\left[g(y)\,\varphi(\bx)^2\right]\Bigr|,
+\qquad
+\varphi\in\mathcal{H}_0,\ \|\varphi\|_{\mathcal{H}_0}=1,
+\end{equation}
+
+for a transformation $g:\mathbb{R}\rightarrow\mathbb{R}$. The condition $\rho_g(\varphi)\neq 0$ then corresponds to generative exponent~\cite{damian2026generative,arous2021online} $\geq 2$ instead of the information exponent~\cite{benarous2024stochastic}.

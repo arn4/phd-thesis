@@ -20,7 +20,7 @@
 % from assembler.tex:63
 \newcommand{\otherlabel}[2]{\protected@edef\@currentlabel{#2}\label{#1}}
 % from math_commands.tex:5
-\newcommand
+\newcommand\tagthis{\addtocounter{equation}{1}\tag{\theequation}}
 % from math_commands.tex:7
 \newcommand{\dP}{\mathbb{P}}
 % from math_commands.tex:16
@@ -731,13 +731,17 @@
 \providecommand{\inlinecomment}[3]{%
   {\color{#1}#2: #3}}
 % from math_commands.tex:402
-\newcommand
+\newcommand\commenter[2]%
+{%
+  \expandafter\newcommand\csname i#1\endcsname[1]{\inlinecomment{#2}{#1}{##1}}
+  \expandafter\newcommand\csname #1\endcsname[1]{\mycomment{#2}{#1}{##1}}
+}
 % from assembler.tex:67
 \newcommand{\vDelta}{\mathbf{\Delta}}
 % from assembler.tex:68
 \def\hR{\widehat{\mathcal{R}}}
 % from assembler.tex:69
-\newcommand
+\newcommand\Et[1]{\mathbb{E}_t\left[#1\right]}
 
 % --- Environments ---
 % from assembler.tex:71

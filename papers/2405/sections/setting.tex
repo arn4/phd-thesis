@@ -1,0 +1,121 @@
+\section{Setting and Main Contributions}
+\label{sec:main:setting}
+
+Given a dataset of $N$ labeled examples $\{\vec z^\nu, y^\nu\}_{\nu \in [N]}$ in $d$ dimensions, we analyze the learning properties of fully connected two-layer networks with first layer weights $W=\{\vec w_j\}_{j \in [p]}$, second layer $\vec a \in \mathbb{R}^p$, and activation function $\sigma: \mathbb R \to \mathbb R$
+\begin{align}
+    f(\vec z; W, \vec a) = \frac{1}{p} \sum_{j =1}^p a_j \sigma \left(\langle \vec z, \vec w_j \rangle \right) \label{eq:def_nn}
+\end{align}
+We consider target functions that are dependent only on few orthogonal relevant directions $k=O_d(1)$ encoded in the target's weight matrix $W^\star = \{\vec w^\star_r\}_{r \in [k]} \in \mathbb{R}^{k\times d}$:
+\begin{align}
+    y^\nu = f^\star(\vec z^\nu) = h^\star(W^\star \vec z^\nu)
+\end{align}
+This model for structured data is usually referred to as a \textit{multi-index} model. Our main objective will be to analyze how efficiently two-layer nets adapt to this low-dimensional structure during training. To ensure that all necessary Gaussian expectations exist, we make the following non-restrictive assumption on $\sigma, h^\star$:
+\begin{assumption}\label{assump:poly_growth}
+    The functions $\sigma$ and $h^\star$ have at most polynomial growth, in the sense that there exists a constant $C > 0$ such that for all $x \in \mathbb{R}, \vec{x} \in \mathbb{R}^k$,
+    \begin{equation}\label{eq:poly_growth}
+        |\sigma(x)| \leq C(1 + |x|)^C \quad \text{and} \quad |h^\star(\vec{x})| \leq C(1 + \|\vec{x}\|)^C.
+    \end{equation} 
+\end{assumption}
+\paragraph{Training algorithm --}
+Our goal is to minimize the following objective:
+\begin{equation}
+    \cR(W, \vec{a}) = \E_{\vec{z}, y}\left[ \cL(f(\vec{z}, W, \vec{a}), y) \right]
+\end{equation}
+where $\cL: \R \times \R \to \R$ is a loss function, and the expectation is over the data distribution.
+
+This objective is non-convex, and we do not have direct access to the expectation over the data. A central question in Machine Learning is therefore to quantify the properties of the weights attained at convergence by different algorithms. In this manuscript we consider a specific class of one-pass training routines to minimize the empirical risk. First, we partition the dataset in disjoint mini-batches of size $n_b$, i.e. $\mathcal{D} = \cup_{t \in [T]}\{\vec x^\nu, y^\nu\}_{\nu \in [tn_b, (t+1)n_b]}$ where $T$ is the total number of iterations considered. For each algorithmic step, we update the hidden layer neurons $W=\{\vec w_j\}_{j \in [p]}$ with the program $\mathcal{A}: (\vec w_{j,t}, \gamma, \rho, n_b) \in \mathbb{R}^{d+3} \to \vec w_{t+1,j} \in \mathbb{R}^d$.
+\begin{myalgorithm}[Optimizer Main Step]
+\label{algo:optimizer_main_step}
+ \begin{equation}
+ \begin{aligned}
+     \vec w_{t+1,j} & =  \mathcal{A}(\vec w_t, \gamma, \rho, n_b) 
+     =  \vec w_{t,j} - \frac{\gamma }{n_b}\sum_{\nu \in [n_b]
+     }\nabla_{\vec w_{t,j}}
+     \cL
+    \left(
+    f (\vec z^\nu; 
+    \Tilde{W}_t(\rho), \vec a_0 ),  y^\nu  \right) \\
+   \Tilde{\vec{w}}_{t, j} (\rho) &= \vec{w}_{t, j} - \rho \nabla_{\vec w_{t,j}}
+    \cL\left( f(\vec z^\nu; W_t, \vec a_0),  y^\nu \right)
+ \end{aligned}
+\label{eq:algorithm}     
+ \end{equation}
+\end{myalgorithm}
+This class of algorithms defined by the optimizer step $\mathcal{A}(\cdot\,, \gamma, \rho, n_b)$, in which we consider the final gradient update after taking a linear combination of the current iterate and its current gradient (noted as $\Tilde{W}_t(\rho)$ in the above), is broadly used in different contexts. Indeed, routines with positive $\rho$ parameters correspond to Extragradient methods (EgD) \citep{korpelevi1976extragradient}, while with negative $\rho$ have been recently used in the context of Sharpness Aware Minimization (SAM) \citep{foret2021sharpness}. For clarity, we present our theoretical results with the above, easily interpretable, Algorithm~\ref{algo:optimizer_main_step}. However, our theoretical claims are valid in a more general setting; we refer to Appendices~(\ref{sec:app:proofs}, \ref{sec:app:numerics}) for additional results on more general optimizer steps. 
+% The complete description of the algorithmic routine is given in App.~\ref{sec:app:numerics} (See Algorithm~\ref{algo:full_algorithm}).
+
+As previously stated, the central object of our analysis is the efficiency of the network to adapt to the low-dimensional structure identified by $W^\star$. Therefore, we focus on the learned representations by the first layer weights $W_t$ while keeping the second layer weights $\vec a_t = \vec a_0$ fixed during training. This assumption is favorable to performing the theoretical analysis and is largely used in the theoretical community (e.g., \cite{damian2022neural,ba2022high,bietti2022learning}).
+
+Numerous theoretical efforts have been devoted to understanding the sample complexity needed to learn multi-index targets. However, an important aspect of many algorithmic routines considered is to exploit a clever \textit{warm start} to initialize the iterates \citep{mondelli2018fundamental,luo2019optimal,maillard2020phase,chen2020learning}. We show in this work that such preprocessing of the data is not needed to learn all polynomial multi-index functions in $T=O(d \log d)$ with the routine in Alg.~\ref{algo:optimizer_main_step}. Instead, we consider a fully agnostic initialization of the network:
+
+\begin{assumption}\label{assump:init}
+For each $j \in [p]$, the initial first-layer weight $\vec{w}_{0, j}$ is initialized according to the uniform measure on the sphere:
+\[ \vec{w}_{0, j} \overset{i.i.d}{\sim}\operatorname{Unif}(\mathbb{S}^{d-1}). \]
+The second-layer weights are drawn i.i.d in $\{-1, 1\}$:
+\[ a_{0, j} \overset{i.i.d}{\sim}\operatorname{Unif}(\{-1, 1\}). \]
+\end{assumption}
+
+\paragraph{Weak recovery in high dimensions --}
+The essential object in our analysis is the evolution of the correlation between the hidden neurons $W = \{\vec w_j\}_{j \in [p]}$ and the target's weights $W^\star$, as a function of the algorithmic time steps. More precisely, we are interested in the number of algorithmic steps needed to achieve an order one correlation with the target's weights $W^\star$, known as \textit{weak recovery}. 
+\begin{definition}[Weak recovery]
+\label{def:weak_recovery}
+    The \textit{target subspace} $V^\star$ is defined as the span of the rows of the target weights $W^\star$:
+    \begin{align}
+    \label{eq:main:teacher_subspace_def}
+        V^\star = \operatorname{span}(\vec w^\star_1, \dots, \vec w^\star_k)
+    \end{align}
+    We define the weak recovery stopping time for a parameter $\eta \in (0,1)$ independent from $d$ as:
+\begin{equation}
+    t^{+}_{\eta} = \operatorname{min}\{t \geq 0: \lVert W W^{\star \top} \lVert_F \geq \eta\}
+\end{equation}
+\end{definition}
+
+\paragraph{From Information Exponents to Generative Exponents --}Recent works have sharply theoretically characterized the weak recovery stopping time for a variety of multi-index targets learned with one-pass SGD. \cite{arous2021online} for the single-index case, then \cite{abbe2022merged} for the multi-index one have unveiled the presence of an Information Exponent $\ell$ characterizing the time complexity needed to weakly recover the target subspace $V^\star$, defined in the single-index case as
+\begin{equation}
+    \ell = \min \{ k \in \N \::\: \Eb{x \sim \cN(0, 1)}{h^\star(x)H_k(x)} \neq 0 \}.
+\end{equation}
+where $H_k$ is the $k$-th Hermite polynomial \citep{odonnell2014analysis}.
+Under this framework, the sample complexity required to achieve weak recovery when the link function has Information Exponent $\ell$ is \citep{arous2021online}
+\begin{align} \label{eq:gba_time_scaling}
+    T(\ell) = 
+        \begin{cases}
+        &O(d^{\ell -1} ) \qquad \hspace{0.8em}\text{if $\ell>2$} \\
+        &O(d \log{d} ) \qquad \text{if $\ell=2$} \\
+        &O(d) \qquad \hspace{2.2em}\text{if $\ell=1$}.
+    \end{cases}
+\end{align}
+These bounds have been improved by \cite{damian2023smoothing} up to order $d^{\ell/2}$; the latter matches the so-called \emph{Correlated Statistical Query} lower bound, which considers queries of the form $\Ea{y \phi(\vec{z})}$.
+
+However, this Information Exponent is not the right measure of complexity for low-dimensional weak recovery. Some iterative algorithms, for instance, are known to perform drastically better\citep{barbier2019optimal,celentano2021high,mondelli2018fundamental,luo2019optimal,maillard2020phase,troiani2024fundamental}. Recently \cite{damian2024computational} introduced a new Generative Exponent $\ell^\star$ (generative exponent) governing the weak recovery time scaling for algorithms in the Statistical Query (SQ) or Low Degree Polynomial (LDP) family. This exponent is defined as
+\begin{equation}
+    \ell^\star = \min \{ k \in \N \::\: \Eb{x \sim \cN(0, 1)}{f(h^\star(x))H_k(x)} \neq 0 \ \text{for some} \ f: \R \to \R \},
+\end{equation}
+which allows for the application of arbitrary transformations of the labels before performing the queries. Under this definition, the ``hard'' problems with $\ell^\star > 2$ are also impossible to learn for the best first-order algorithm, \emph{Approximate Message Passing} \citep{troiani2024fundamental}. 
+
+We discuss in this work the extension of the generative exponent to the multi-index setting and investigate the dynamics of specific gradient-based programs (Algorithm~\ref{algo:optimizer_main_step}) as a function of the freshly defined hardness exponent $\ell^*$. 
+These theoretical findings match the recent one of \cite{kou2024matching} on the computational efficiency of SGD in learning sparse $k-$parity (associated with $\ell^\star = k$).
+
+When the optimal transformation $f$ is known, a simple SGD algorithm on $(\vec{z}, f(y))$ achieves the Generative Exponent lower bound. However, one problem remains: does there exist a class of SGD-like algorithms that can achieve this lower bound agnostically?
+
+\paragraph{Achieving lower bounds with data repetition --}
+
+Although the performance of single-pass SGD is limited by the Information Exponent of $h^\star$, the situation drastically changes when multiple-pass algorithms are considered. Recently, \cite{dandi2024benefits} proved that non-even single-index targets are weakly recovered in $T = O(d)$ when considering extensive batch sizes with multiple pass. This begs the question of how good can a ``reusing'' algorithm be. We answer this question for the class of polynomial link functions:
+\begin{theorem}[Informal]
+    There is a choice of hyperparameters such that if $h^\star$ is a polynomial function, Algorithm~\ref{algo:optimizer_main_step} achieves weak recovery in $O(d\log(d)^2)$ samples.
+\end{theorem}
+This shows in particular that a simple gradient-based algorithm, which only requires seeing the data twice, is optimal for learning any polynomials.
+
+\paragraph{Learning representations --}
+Learning relevant features from data is a fundamental property of neural networks. However, much theoretical work has focused on lazy training in two-layer networks \citep{jacot2018neural}, where features are not effectively learned. In this regime, shallow networks behave as kernel machines, which struggle to adapt to low-dimensional structures in data \citep{ghorbani2020when}. Understanding representation learning and corrections to the kernel regime is thus a key challenge in machine learning theory \citep{dudeja2018learning,atanasov2022neural,bietti2022learning,damian2022neural,petrini2022learning}. In this manuscript we provably characterize the number of iterations needed from Algorithm~\ref{algo:optimizer_main_step} to learn the relevant features of the data, i.e., attain weak recovery of the target subspace. Our results provide the scaling of the relevant hyperparameters $(\gamma, \rho)$ with the diverging input dimension $d$. The minibatch size will be fixed to $n_b =1$ in the main body, and we refer to Appendix~\ref{sec:app:numerics} for the extension to larger batch sizes.
+
+
+\subsection*{Summary of Main Results}
+\begin{itemize}[noitemsep,leftmargin=1em,wide=0pt]
+    \item We prove for single-index targets that one-pass gradient-based algorithms surpass the Correlation Statistical Query (CSQ) limits established by the Information Exponent \citep{arous2021online}.  
+    \item We unveil that the dynamics of the family of Alg.~\ref{algo:optimizer_main_step} are governed by the generative exponent \cite{damian2024computational}, with an additional polynomial restriction on the transformation of the output.
+    \item We generalize the notion of generative exponent to multi-index targets. As in the single-index case, one-pass gradient-based algorithms can overcome CSQ performance dictated by the Leap Coefficient \citep{abbe2022merged}. Our definition is consistent with the one of \citep{troiani2024fundamental}. 
+    \item We prove that all polynomial multi-index functions are learned by Algorithm~\ref{algo:optimizer_main_step} either with total sample complexity $O(d)$ or $O(d \log(d)^2)$ if associated with the presence of a symmetry. 
+    \item  The implementation of Algorithm~\ref{algo:optimizer_main_step} does not require pre-processing to initially correlate the estimation with the ground truth, and learns the meaningful representations from data alone. This is in contrast numerous findings (e.g., \cite{mondelli2018fundamental,luo2019optimal,maillard2020phase} for single index targets or \cite{chen2020learning} for multi-index ones).
+    \item We characterize the class of hard functions not learned  in (almost) linear sample complexity. We show, however, that such functions can be learned through an hierarchical mechanism that extends the CSQ staircase first developed in \cite{abbe2021staircase} to a different, larger set, of functions.
+    \item We validate the formal theoretical claims with detailed numerical illustrations. The code to reproduce representative figures is available at \url{https://github.com/IdePHICS/Repetita-Iuvant}.
+\end{itemize}
