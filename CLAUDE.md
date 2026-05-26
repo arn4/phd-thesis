@@ -15,7 +15,7 @@ Present at the repo root:
 - `pyproject.toml` / `uv.lock` — uv-managed environment for those scripts.
 - `CLAUDE.md` — this file.
 
-No thesis LaTeX source or build config (`latexmkrc`, document class, merged thesis-wide `.bib`) exists yet. Do not assume conventional directories (`chapters/`, `src/`, `bib/`, etc.) exist until you've checked.
+No thesis LaTeX source or build config (`latexmkrc`, document class) exists yet. The merged thesis-wide `.bib` (`papers-bibliography.bib` at the repo root) is generated on demand by `scripts/merge_bibs.py` — invoke via the `merge-bibs` skill. Do not assume conventional directories (`chapters/`, `src/`, `bib/`, etc.) exist until you've checked.
 
 ## Source material: `arxiv-papers/`
 
@@ -30,7 +30,7 @@ For each included arXiv paper there are three artifacts at the top of `arxiv-pap
 General expectations when assembling the thesis:
 
 - **Macro / command collisions are likely** across papers. Plan to consolidate into a single thesis-wide macros file rather than `\input`-ing per-paper macros blindly.
-- **Bibliographies must be merged and deduplicated** from the per-paper sidecars into a thesis-wide `.bib`. Use `scripts/check_bib_coverage.py` to verify that every cite key in each paper's `.bbl` is present in its sidecar `.bib` before merging.
+- **Bibliographies must be merged and deduplicated** from the per-paper sidecars into a thesis-wide `.bib` (handled by the `merge-bibs` skill).
 - **Treat `arxiv-papers/` as read-only source.** Tarballs and unpacked directories must remain byte-identical to what arXiv shipped; the sidecar `.bib` files are managed by Luca, not Claude. Edit copies in the thesis tree, never the originals — re-deriving the unpacked source from the tarballs should always be possible. In particular, after running `latexmk` inside any unpacked paper directory, clean up with `latexmk -C` so no aux files are left behind.
 - **Tarballs and unpacked papers are git-ignored** (only the sidecar `.bib` files are tracked). To re-create them on a fresh checkout, run `uv run scripts/fetch_arxiv_sources.py` — it pulls each version-pinned tarball from `https://arxiv.org/src/<id>v<n>` and extracts it.
 

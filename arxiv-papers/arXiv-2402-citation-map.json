@@ -1,0 +1,940 @@
+{
+  "sidecar": "arXiv-2402.bib",
+  "mappings": {
+    "ABUZ18": {
+      "global_tag": "agoritsas2018out",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:ABUZ18",
+        "arXiv-2506.bib:ABUZ18"
+      ]
+    },
+    "Aubin_2019": {
+      "global_tag": "aubin2019committee",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2506.bib:Aubin_2019"
+    },
+    "BenArous2021": {
+      "global_tag": "arous2021online",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2406.bib:arous2021online"
+    },
+    "Bietti2022": {
+      "global_tag": "bietti2022learning",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2305.bib:Bietti2022"
+    },
+    "CK93": {
+      "global_tag": "cugliandolo1993analytical",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:CK93",
+        "arXiv-2506.bib:CK93"
+      ]
+    },
+    "Canatar2021": {
+      "global_tag": "canatar2021spectral",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:Canatar2021",
+        "arXiv-2406.bib:Canatar2021",
+        "arXiv-2506.bib:Canatar2021"
+      ]
+    },
+    "Cu02": {
+      "global_tag": "cugliandolo2003dynamics",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:Cu02",
+        "arXiv-2506.bib:Cu02"
+      ]
+    },
+    "Cui2021": {
+      "global_tag": "cui2021generalization",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:Cui2021",
+        "arXiv-2406.bib:Cui2021",
+        "arXiv-2506.bib:Cui2021"
+      ]
+    },
+    "Cui2022": {
+      "global_tag": "cui2022error",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2506.bib:Cui2022"
+    },
+    "Dhifallah2020": {
+      "global_tag": "dhifallah2020precise",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:Dhifallah2020",
+        "arXiv-2406.bib:Dhifallah2020",
+        "arXiv-2506.bib:Dhifallah2020"
+      ]
+    },
+    "Dietrich1999": {
+      "global_tag": "dietrich1999statistical",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:Dietrich1999",
+        "arXiv-2406.bib:Dietrich1999",
+        "arXiv-2506.bib:Dietrich1999"
+      ]
+    },
+    "Donhauser2021": {
+      "global_tag": "donhauser2021how",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:Donhauser2021",
+        "arXiv-2406.bib:Donhauser2021",
+        "arXiv-2506.bib:Donhauser2021"
+      ]
+    },
+    "FFR19": {
+      "global_tag": "folena2019memories",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:FFR19",
+        "arXiv-2506.bib:FFR19"
+      ]
+    },
+    "Fr07": {
+      "global_tag": "franz2007dynamics",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:Fr07",
+        "arXiv-2506.bib:Fr07"
+      ]
+    },
+    "GKKR96": {
+      "global_tag": "georges1996dynamical",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:GKKR96",
+        "arXiv-2506.bib:GKKR96"
+      ]
+    },
+    "Ghorbani2019": {
+      "global_tag": "ghorbani2019limitations",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2302.bib:ghorbani_2019"
+    },
+    "Ghorbani2020": {
+      "global_tag": "ghorbani2020when",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:Ghorbani2020",
+        "arXiv-2406.bib:Ghorbani2020",
+        "arXiv-2506.bib:Ghorbani2020",
+        "arXiv-2605.bib:ghorbani2020neural"
+      ]
+    },
+    "Gotze2019ConcentrationIF": {
+      "global_tag": "gotze2019concentration",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:Gotze2019ConcentrationIF",
+        "arXiv-2406.bib:Gotze2019ConcentrationIF",
+        "arXiv-2506.bib:Gotze2019ConcentrationIF"
+      ]
+    },
+    "MKZ16": {
+      "global_tag": "maimbourg2016solution",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:MKZ16",
+        "arXiv-2506.bib:MKZ16"
+      ]
+    },
+    "Mei2023": {
+      "global_tag": "mei2022generalizationerror",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2305.bib:Mei2023"
+    },
+    "Mignacco_2022": {
+      "global_tag": "mignacco2022effective",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:Mignacco_2022",
+        "arXiv-2506.bib:Mignacco_2022"
+      ]
+    },
+    "Montanari2022": {
+      "global_tag": "montanari2022universality",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2302.bib:montanari2022universality"
+    },
+    "NEURIPS2020_fb647ca6": {
+      "global_tag": "chen2020understanding",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:NEURIPS2020_fb647ca6",
+        "arXiv-2406.bib:NEURIPS2020_fb647ca6",
+        "arXiv-2506.bib:NEURIPS2020_fb647ca6"
+      ]
+    },
+    "Naveh2021": {
+      "global_tag": "naveh2021self",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:Naveh2021",
+        "arXiv-2406.bib:Naveh2021",
+        "arXiv-2506.bib:Naveh2021"
+      ]
+    },
+    "Opper2001": {
+      "global_tag": "opper2001universal",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:Opper2001",
+        "arXiv-2406.bib:Opper2001",
+        "arXiv-2506.bib:Opper2001"
+      ]
+    },
+    "Opper_92": {
+      "global_tag": "eissfeller1992new",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:Opper_92",
+        "arXiv-2506.bib:Opper_92"
+      ]
+    },
+    "Opper_94": {
+      "global_tag": "eissfeller1994mean",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:Opper_94",
+        "arXiv-2506.bib:Opper_94"
+      ]
+    },
+    "Roy_2019": {
+      "global_tag": "roy2019numerical",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:Roy_2019",
+        "arXiv-2506.bib:Roy_2019"
+      ]
+    },
+    "Rudi2017": {
+      "global_tag": "rudi2017generalization",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2402.bib:rudi2017generalization",
+        "arXiv-2405.bib:rudi2017generalization",
+        "arXiv-2405.bib:Rudi2017",
+        "arXiv-2406.bib:rudi2017generalization",
+        "arXiv-2406.bib:Rudi2017",
+        "arXiv-2506.bib:rudi2017generalization",
+        "arXiv-2506.bib:Rudi2017",
+        "arXiv-2605.bib:rudi2017generalization"
+      ]
+    },
+    "SBCKUZ20": {
+      "global_tag": "mannelli2020marvels",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:SBCKUZ20",
+        "arXiv-2506.bib:SBCKUZ20",
+        "arXiv-2605.bib:sarao2020marvels"
+      ]
+    },
+    "SKUZ19": {
+      "global_tag": "mannelli2019passed",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:SKUZ19",
+        "arXiv-2506.bib:SKUZ19"
+      ]
+    },
+    "SMG13": {
+      "global_tag": "saxe2014exact",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2605.bib:saxe2014exact"
+    },
+    "SMG13#2": {
+      "global_tag": "saxe2014exact",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2605.bib:saxe2014exact"
+    },
+    "SZipp81": {
+      "global_tag": "sompolinsky1981dynamic",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:SZipp81",
+        "arXiv-2506.bib:SZipp81"
+      ]
+    },
+    "Seroussi2023": {
+      "global_tag": "seroussi2023separation",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:Seroussi2023",
+        "arXiv-2406.bib:Seroussi2023",
+        "arXiv-2506.bib:Seroussi2023"
+      ]
+    },
+    "Sompolinsky_88": {
+      "global_tag": "sompolinsky1988chaos",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:Sompolinsky_88",
+        "arXiv-2506.bib:Sompolinsky_88"
+      ]
+    },
+    "Spigler2020": {
+      "global_tag": "spigler2020asymptotic",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:Spigler2020",
+        "arXiv-2406.bib:Spigler2020",
+        "arXiv-2506.bib:Spigler2020"
+      ]
+    },
+    "abbe2021staircase": {
+      "global_tag": "abbe2021staircase",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:abbe2021staircase",
+        "arXiv-2406.bib:abbe2021staircase",
+        "arXiv-2506.bib:abbe2021staircase",
+        "arXiv-2605.bib:abbe2021staircase"
+      ]
+    },
+    "abbe2022merged": {
+      "global_tag": "abbe2022merged",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2302.bib:pmlr-v178-abbe22a"
+    },
+    "abbe2023sgd": {
+      "global_tag": "abbe2023sgd",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2405.bib:abbe2023sgd"
+    },
+    "amir2021sgd": {
+      "global_tag": "amir2021sgd",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:amir2021sgd",
+        "arXiv-2506.bib:amir2021sgd"
+      ]
+    },
+    "andrews2004special": {
+      "global_tag": "andrews2004special",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:andrews2004special",
+        "arXiv-2506.bib:andrews2004special"
+      ]
+    },
+    "arnaboldi.stephan.ea_2023_high": {
+      "global_tag": "arnaboldi2023high",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2405.bib:arnaboldi.stephan.ea_2023_high"
+    },
+    "arous1997symmetric": {
+      "global_tag": "benarous1997symmetric",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:arous1997symmetric",
+        "arXiv-2506.bib:arous1997symmetric"
+      ]
+    },
+    "atanasov2022neural": {
+      "global_tag": "atanasov2022neural",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:atanasov2022neural",
+        "arXiv-2406.bib:atanasov2022neural",
+        "arXiv-2506.bib:atanasov2022neural"
+      ]
+    },
+    "aubin2020generalization": {
+      "global_tag": "aubin2020generalization",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2506.bib:aubin2020generalization"
+    },
+    "ba2022high": {
+      "global_tag": "ba2022high",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2305.bib:Ba2022"
+    },
+    "ba2023learning": {
+      "global_tag": "ba2023learning",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2405.bib:ba2023learning"
+    },
+    "bach2017breaking": {
+      "global_tag": "bach2017breaking",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:bach2017breaking",
+        "arXiv-2406.bib:bach2017breaking",
+        "arXiv-2506.bib:bach2017breaking"
+      ]
+    },
+    "barbier2019optimal": {
+      "global_tag": "barbier2019optimal",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2305.bib:Barbier2019#2"
+    },
+    "bayati2011dynamics": {
+      "global_tag": "bayati2011dynamics",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2506.bib:bayati2011dynamics"
+    },
+    "ben2022high": {
+      "global_tag": "arous2022high",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2506.bib:ben2022high"
+    },
+    "berthier2023learning": {
+      "global_tag": "berthier2023learning",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2506.bib:berthier2024learning"
+    },
+    "bickel2007local": {
+      "global_tag": "bickel2007local",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:bickel2007local",
+        "arXiv-2406.bib:bickel2007local",
+        "arXiv-2506.bib:bickel2007local"
+      ]
+    },
+    "bietti2023learning": {
+      "global_tag": "bietti2023learning",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:bietti2023learning",
+        "arXiv-2406.bib:bietti2023learning",
+        "arXiv-2506.bib:bietti2023learning",
+        "arXiv-2605.bib:bietti2023learning"
+      ]
+    },
+    "bolthausen2014iterative": {
+      "global_tag": "bolthausen2014iterative",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:bolthausen2014iterative",
+        "arXiv-2506.bib:bolthausen2014iterative"
+      ]
+    },
+    "bordelon2023dynamics": {
+      "global_tag": "bordelon2023dynamics",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2406.bib:bordelon2023dynamics"
+    },
+    "bordelon20a": {
+      "global_tag": "bordelon2020spectrum",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:bordelon20a",
+        "arXiv-2406.bib:bordelon20a",
+        "arXiv-2506.bib:bordelon20a"
+      ]
+    },
+    "bosch2023precise": {
+      "global_tag": "bosch2023precise",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2406.bib:bosch2023precise"
+    },
+    "bouchaud1998out": {
+      "global_tag": "bouchaud1998out",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:bouchaud1998out",
+        "arXiv-2506.bib:bouchaud1998out"
+      ]
+    },
+    "boursier2022gradient": {
+      "global_tag": "boursier2022gradient",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2302.bib:boursier2022gradient",
+        "arXiv-2305.bib:Boursier2022",
+        "arXiv-2405.bib:boursier2022gradient",
+        "arXiv-2406.bib:boursier2022gradient",
+        "arXiv-2506.bib:boursier2022gradient"
+      ]
+    },
+    "boyd_2006_randomized": {
+      "global_tag": "boyd2006randomized",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:boyd_2006_randomized",
+        "arXiv-2406.bib:boyd_2006_randomized",
+        "arXiv-2506.bib:boyd_2006_randomized"
+      ]
+    },
+    "celentano2021highdimensional": {
+      "global_tag": "celentano2021high",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2506.bib:celentano2021highdimensionalasymptoticsordermethods"
+    },
+    "chen2020learning": {
+      "global_tag": "chen2020learning",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2506.bib:chen20a"
+    },
+    "chen2021efficiently": {
+      "global_tag": "chen2021efficiently",
+      "reason": "assigned"
+    },
+    "chen2022hardness": {
+      "global_tag": "chen2022hardness",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2506.bib:chen2022hardness",
+        "arXiv-2506.bib:chen2022hardness#2"
+      ]
+    },
+    "chen2022learning": {
+      "global_tag": "chen2022learning",
+      "reason": "assigned"
+    },
+    "chizat2018global": {
+      "global_tag": "chizat2018global",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2302.bib:chizat_2018"
+    },
+    "chizat_2019_lazy": {
+      "global_tag": "chizat2019lazy",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2302.bib:chizat_2019"
+    },
+    "cho2011analysis": {
+      "global_tag": "cho2011analysis",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:cho2011analysis",
+        "arXiv-2406.bib:cho2011analysis",
+        "arXiv-2506.bib:cho2011analysis"
+      ]
+    },
+    "damian2022neural": {
+      "global_tag": "damian2022neural",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2305.bib:Damian2022"
+    },
+    "damian_2023_smoothing": {
+      "global_tag": "damian2023smoothing",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2405.bib:damian_2023_smoothing"
+    },
+    "dandi2023twolayer": {
+      "global_tag": "dandi2023how",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2506.bib:dandi2023two"
+    },
+    "dandi2023universality": {
+      "global_tag": "dandi2023universality",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2506.bib:dandi2023universality"
+    },
+    "devroye2013probabilistic": {
+      "global_tag": "devroye2013probabilistic",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:devroye2013probabilistic",
+        "arXiv-2406.bib:devroye2013probabilistic",
+        "arXiv-2506.bib:devroye2013probabilistic"
+      ]
+    },
+    "diakonikolas2020algorithms": {
+      "global_tag": "diakonikolas2020algorithms",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2506.bib:pmlr-v125-diakonikolas20d"
+    },
+    "fan2020spectra": {
+      "global_tag": "fan2020spectra",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:fan2020spectra",
+        "arXiv-2406.bib:fan2020spectra",
+        "arXiv-2506.bib:fan2020spectra"
+      ]
+    },
+    "gerace2022gaussian": {
+      "global_tag": "gerace2022gaussian",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:gerace2022gaussian",
+        "arXiv-2406.bib:gerace2022gaussian",
+        "arXiv-2506.bib:gerace2022gaussian"
+      ]
+    },
+    "gerace_generalisation_2020": {
+      "global_tag": "gerace2020generalisation",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:gerace_generalisation_2020",
+        "arXiv-2406.bib:gerace_generalisation_2020",
+        "arXiv-2506.bib:gerace_generalisation_2020"
+      ]
+    },
+    "gerbelot2023rigorous": {
+      "global_tag": "gerbelot2022rigorous",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2506.bib:gerbelot_dmft"
+    },
+    "goel2020superpolynomial": {
+      "global_tag": "goel2020superpolynomial",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2506.bib:goel2020superpolynomial"
+      ]
+    },
+    "goldt2020modeling": {
+      "global_tag": "goldt2020modeling",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2302.bib:Goldt2020Modeling"
+    },
+    "goldt_gaussian_2021": {
+      "global_tag": "goldt2022gaussian",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:goldt_gaussian_2021",
+        "arXiv-2406.bib:goldt_gaussian_2021",
+        "arXiv-2506.bib:goldt_gaussian_2021"
+      ]
+    },
+    "goyal2017accurate": {
+      "global_tag": "goyal2017accurate",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:goyal2017accurate",
+        "arXiv-2406.bib:goyal2017accurate",
+        "arXiv-2506.bib:goyal2017accurate"
+      ]
+    },
+    "grad_1949_note": {
+      "global_tag": "grad1949note",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:grad_1949_note",
+        "arXiv-2406.bib:grad_1949_note",
+        "arXiv-2506.bib:grad_1949_note"
+      ]
+    },
+    "greub2012multilinear": {
+      "global_tag": "greub2012multilinear",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:greub2012multilinear",
+        "arXiv-2406.bib:greub2012multilinear",
+        "arXiv-2506.bib:greub2012multilinear"
+      ]
+    },
+    "hu2022universality": {
+      "global_tag": "hu2022universality",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2302.bib:hu2020universality"
+    },
+    "jacot2021saddle": {
+      "global_tag": "jacot2022saddle",
+      "reason": "assigned",
+      "tag_baseline": "jacot2021saddle",
+      "merged_from": [
+        "arXiv-2305.bib:jacot2022saddletosaddle",
+        "arXiv-2405.bib:jacot2021saddle",
+        "arXiv-2406.bib:jacot2021saddle",
+        "arXiv-2506.bib:jacot2021saddle"
+      ]
+    },
+    "janson1997gaussian": {
+      "global_tag": "janson1997gaussian",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:janson1997gaussian",
+        "arXiv-2406.bib:janson1997gaussian",
+        "arXiv-2506.bib:janson1997gaussian"
+      ]
+    },
+    "kalimeris2019sgd": {
+      "global_tag": "kalimeris2019sgd",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2302.bib:kalimeris_2019"
+    },
+    "kearns1998efficient": {
+      "global_tag": "kearns1998efficient",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2506.bib:Kearns1998"
+    },
+    "klenke2013probability": {
+      "global_tag": "klenke2013probability",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:klenke2013probability",
+        "arXiv-2406.bib:klenke2013probability",
+        "arXiv-2506.bib:klenke2013probability"
+      ]
+    },
+    "ledoux_1991_probability": {
+      "global_tag": "ledoux1991probability",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:ledoux_1991_probability",
+        "arXiv-2406.bib:ledoux_1991_probability",
+        "arXiv-2506.bib:ledoux_1991_probability"
+      ]
+    },
+    "lewkowycz2021the": {
+      "global_tag": "lewkowycz2021large",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:lewkowycz2021the",
+        "arXiv-2406.bib:lewkowycz2021the",
+        "arXiv-2506.bib:lewkowycz2021the"
+      ]
+    },
+    "li2020review": {
+      "global_tag": "li2020review",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:li2020review",
+        "arXiv-2406.bib:li2020review",
+        "arXiv-2506.bib:li2020review"
+      ]
+    },
+    "loureiro22a": {
+      "global_tag": "loureiro2022fluctuations",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:loureiro22a",
+        "arXiv-2406.bib:loureiro22a",
+        "arXiv-2506.bib:loureiro22a"
+      ]
+    },
+    "loureiro_learning_2021": {
+      "global_tag": "loureiro2021learning",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2302.bib:NEURIPS2021_9704a4fc"
+    },
+    "maillard2020phase": {
+      "global_tag": "maillard2020phase",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2305.bib:Maillard2020"
+    },
+    "mannelli2019afraid": {
+      "global_tag": "mannelli2019who",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:mannelli2019afraid",
+        "arXiv-2506.bib:mannelli2019afraid",
+        "arXiv-2605.bib:sarao2019afraid"
+      ]
+    },
+    "mannelli2021just": {
+      "global_tag": "mannelli2021just",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:mannelli2021just",
+        "arXiv-2506.bib:mannelli2021just"
+      ]
+    },
+    "mei2018mean": {
+      "global_tag": "mei2018mean",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2605.bib:mei2018mean"
+    },
+    "mei_generalization_2022": {
+      "global_tag": "mei2022generalization",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2305.bib:Mei2022",
+        "arXiv-2405.bib:mei_generalization_2022",
+        "arXiv-2406.bib:mei_generalization_2022",
+        "arXiv-2506.bib:mei_generalization_2022"
+      ]
+    },
+    "mignacco2020dynamical": {
+      "global_tag": "mignacco2020dynamical",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:mignacco2020dynamical",
+        "arXiv-2506.bib:mignacco2020dynamical",
+        "arXiv-2506.bib:mignacco2020dynamical#2"
+      ]
+    },
+    "mignacco2021stochasticity": {
+      "global_tag": "mignacco2021stochasticity",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2305.bib:Mignacco_2021"
+    },
+    "mityagin2020zero": {
+      "global_tag": "mityagin2020zero",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:mityagin2020zero",
+        "arXiv-2406.bib:mityagin2020zero",
+        "arXiv-2506.bib:mityagin2020zero"
+      ]
+    },
+    "moniri2023theory": {
+      "global_tag": "moniri2023theory",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2405.bib:moniri2023theory"
+    },
+    "mousavihosseini2023gradientbased": {
+      "global_tag": "mousavihosseini2023gradient",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2405.bib:mousavihosseini2023gradientbased"
+    },
+    "o2014analysis": {
+      "global_tag": "odonnell2014analysis",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2402.bib:odonnell_2014_analysis"
+    },
+    "odonnell_2014_analysis": {
+      "global_tag": "odonnell2014analysis",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2402.bib:o2014analysis",
+        "arXiv-2405.bib:odonnell_2014_analysis",
+        "arXiv-2405.bib:o2014analysis",
+        "arXiv-2406.bib:odonnell_2014_analysis",
+        "arXiv-2406.bib:o2014analysis",
+        "arXiv-2506.bib:odonnell_2014_analysis",
+        "arXiv-2506.bib:o2014analysis"
+      ]
+    },
+    "olver_2010_nist": {
+      "global_tag": "olver2010nist",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:olver_2010_nist",
+        "arXiv-2406.bib:olver_2010_nist",
+        "arXiv-2506.bib:olver_2010_nist"
+      ]
+    },
+    "pena_1995_decoupling": {
+      "global_tag": "pena1995decoupling",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:pena_1995_decoupling",
+        "arXiv-2406.bib:pena_1995_decoupling",
+        "arXiv-2506.bib:pena_1995_decoupling"
+      ]
+    },
+    "pesce2023gaussian": {
+      "global_tag": "pesce2023are",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2405.bib:pesce2023gaussian"
+    },
+    "petrini2022learning": {
+      "global_tag": "petrini2022learning",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2405.bib:petrini2022learning"
+    },
+    "pmlr-v206-bosch23a": {
+      "global_tag": "bosch2023random",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:pmlr-v206-bosch23a",
+        "arXiv-2406.bib:pmlr-v206-bosch23a",
+        "arXiv-2506.bib:pmlr-v206-bosch23a"
+      ]
+    },
+    "pmlr-v75-dudeja18a": {
+      "global_tag": "dudeja2018learning",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:pmlr-v75-dudeja18a",
+        "arXiv-2406.bib:pmlr-v75-dudeja18a",
+        "arXiv-2506.bib:pmlr-v75-dudeja18a"
+      ]
+    },
+    "polyak2005feynman": {
+      "global_tag": "polyak2005feynman",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:polyak2005feynman",
+        "arXiv-2406.bib:polyak2005feynman",
+        "arXiv-2506.bib:polyak2005feynman"
+      ]
+    },
+    "refinetti2021classifying": {
+      "global_tag": "refinetti2021classifying",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2302.bib:refinetti2021classifying"
+    },
+    "rotskoff2018trainability": {
+      "global_tag": "rotskoff2022trainability",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2305.bib:rotskoff2018trainability"
+    },
+    "rudi2017generalization": {
+      "global_tag": "rudi2017generalization",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2402.bib:Rudi2017"
+    },
+    "saad.solla_1995_line": {
+      "global_tag": "saad1995line",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2302.bib:saad_1995"
+    },
+    "schroder2023deterministic": {
+      "global_tag": "schroder2023deterministic",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2506.bib:schroder2023deterministic"
+    },
+    "simon2022eigenlearning": {
+      "global_tag": "simon2022eigenlearning",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2506.bib:simon2022eigenlearning"
+    },
+    "sirignano2020mean": {
+      "global_tag": "sirignano2020mean",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2302.bib:sirignano2020mean",
+        "arXiv-2305.bib:sirignano2020mean",
+        "arXiv-2405.bib:sirignano2020mean",
+        "arXiv-2406.bib:sirignano2020mean",
+        "arXiv-2506.bib:sirignano2020mean"
+      ]
+    },
+    "vaart_1996_weak": {
+      "global_tag": "vandervaart1996weak",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:vaart_1996_weak",
+        "arXiv-2406.bib:vaart_1996_weak",
+        "arXiv-2506.bib:vaart_1996_weak"
+      ]
+    },
+    "vershynin2010introduction": {
+      "global_tag": "vershynin2010introduction",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:vershynin2010introduction",
+        "arXiv-2406.bib:vershynin2010introduction",
+        "arXiv-2506.bib:vershynin2010introduction"
+      ]
+    },
+    "vershynin2018high": {
+      "global_tag": "vershynin2018high",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2302.bib:vershynin_2018_high"
+    },
+    "xiao2022precise": {
+      "global_tag": "xiao2022precise",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:xiao2022precise",
+        "arXiv-2406.bib:xiao2022precise",
+        "arXiv-2506.bib:xiao2022precise"
+      ]
+    },
+    "zdeborova2020understanding": {
+      "global_tag": "zdeborova2020understanding",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2302.bib:zdeborova_2020"
+    },
+    "zweig2023symmetric": {
+      "global_tag": "zweig2023symmetric",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2405.bib:zweig2023symmetric"
+    }
+  }
+}

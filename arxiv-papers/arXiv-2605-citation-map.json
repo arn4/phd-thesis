@@ -1,0 +1,629 @@
+{
+  "sidecar": "arXiv-2605.bib",
+  "mappings": {
+    "abbe2021staircase": {
+      "global_tag": "abbe2021staircase",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2402.bib:abbe2021staircase"
+    },
+    "abbe2023sgd": {
+      "global_tag": "abbe2023sgd",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2405.bib:abbe2023sgd"
+    },
+    "allen2023backward": {
+      "global_tag": "allenzhu2023backward",
+      "reason": "assigned"
+    },
+    "andreux2020kymatio": {
+      "global_tag": "andreux2020kymatio",
+      "reason": "assigned"
+    },
+    "arjevani2026geometry": {
+      "global_tag": "arjevani2026geometry",
+      "reason": "assigned"
+    },
+    "arnaboldi2023high": {
+      "global_tag": "arnaboldi2023high",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2405.bib:arnaboldi.stephan.ea_2023_high"
+    },
+    "aronszajn1950theory": {
+      "global_tag": "aronszajn1950theory",
+      "reason": "assigned"
+    },
+    "arora2023theory": {
+      "global_tag": "arora2023theory",
+      "reason": "assigned"
+    },
+    "arous2020algorithmic": {
+      "global_tag": "arous2020algorithmic",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2302.bib:arous2020algorithmic"
+    },
+    "arous2021online": {
+      "global_tag": "arous2021online",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2406.bib:arous2021online"
+    },
+    "arous2026learning": {
+      "global_tag": "arous2026learning",
+      "reason": "assigned"
+    },
+    "bahri2024explaining": {
+      "global_tag": "bahri2021explaining",
+      "reason": "assigned",
+      "tag_baseline": "bahri2024explaining",
+      "merged_from": [
+        "arXiv-2302.bib:bahri_2021"
+      ]
+    },
+    "baik2005phase": {
+      "global_tag": "baik2005phase",
+      "reason": "assigned"
+    },
+    "bardone2024sliding": {
+      "global_tag": "bardone2024sliding",
+      "reason": "assigned"
+    },
+    "bartlett2005local": {
+      "global_tag": "bartlett2005local",
+      "reason": "assigned"
+    },
+    "belilovsky2020decoupled": {
+      "global_tag": "belilovsky2020decoupled",
+      "reason": "assigned"
+    },
+    "benarous2024stochastic": {
+      "global_tag": "benarous2024stochastic",
+      "reason": "assigned"
+    },
+    "bietti2022learning": {
+      "global_tag": "bietti2022learning",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2305.bib:Bietti2022"
+    },
+    "bietti2023learning": {
+      "global_tag": "bietti2023learning",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2402.bib:bietti2023learning"
+    },
+    "blanchard2007statistical": {
+      "global_tag": "blanchard2007statistical",
+      "reason": "assigned"
+    },
+    "boncoraglio2025inductive": {
+      "global_tag": "boncoraglio2025inductive",
+      "reason": "assigned"
+    },
+    "bonnaire2025role": {
+      "global_tag": "bonnaire2025role",
+      "reason": "assigned"
+    },
+    "bordelon2022self": {
+      "global_tag": "bordelon2022self",
+      "reason": "assigned"
+    },
+    "bronstein2021geometric": {
+      "global_tag": "bronstein2021geometric",
+      "reason": "assigned"
+    },
+    "cagnetta2024deep": {
+      "global_tag": "cagnetta2024how",
+      "reason": "assigned"
+    },
+    "cagnetta2025learning": {
+      "global_tag": "cagnetta2025learning",
+      "reason": "assigned"
+    },
+    "cagnetta2026deriving": {
+      "global_tag": "cagnetta2026deriving",
+      "reason": "assigned"
+    },
+    "caponnetto2007optimal": {
+      "global_tag": "caponnetto2007optimal",
+      "reason": "assigned"
+    },
+    "chizat2018global": {
+      "global_tag": "chizat2018global",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2302.bib:chizat_2018"
+    },
+    "chizat2019lazy": {
+      "global_tag": "chizat2019lazy",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2302.bib:chizat_2019"
+    },
+    "damian2024computational": {
+      "global_tag": "damian2024computational",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2405.bib:damian2024computational",
+        "arXiv-2506.bib:damian2024computationalstatistical",
+        "arXiv-2506.bib:damian2024computationalstatistical#2",
+        "arXiv-2506.bib:damian2024computational"
+      ]
+    },
+    "damiangenerative": {
+      "global_tag": "damian2026generative",
+      "reason": "assigned"
+    },
+    "dandi2024benefits": {
+      "global_tag": "dandi2024benefits",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2405.bib:dandi2024benefits"
+    },
+    "dandi2024two": {
+      "global_tag": "dandi2023how",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2506.bib:dandi2023two"
+    },
+    "dandicomputational": {
+      "global_tag": "dandi2026computational",
+      "reason": "assigned"
+    },
+    "davis1970rotation": {
+      "global_tag": "davis1970rotation",
+      "reason": "assigned"
+    },
+    "defilippis2025scaling": {
+      "global_tag": "defilippis2026scaling",
+      "reason": "assigned"
+    },
+    "defilippis2026optimal": {
+      "global_tag": "defilippis2026optimal",
+      "reason": "assigned"
+    },
+    "edwards1976eigenvalue": {
+      "global_tag": "edwards1976eigenvalue",
+      "reason": "assigned"
+    },
+    "elhage2021mathematical": {
+      "global_tag": "elhage2021mathematical",
+      "reason": "assigned"
+    },
+    "elhage2022toy": {
+      "global_tag": "elhage2022toy",
+      "reason": "assigned"
+    },
+    "erbanuclear": {
+      "global_tag": "erba2025nuclear",
+      "reason": "assigned"
+    },
+    "favero2021locality": {
+      "global_tag": "favero2021locality",
+      "reason": "assigned"
+    },
+    "favero2025compositional": {
+      "global_tag": "favero2025how",
+      "reason": "assigned"
+    },
+    "frankle2019lottery": {
+      "global_tag": "frankle2020linear",
+      "reason": "assigned"
+    },
+    "fu2025learning": {
+      "global_tag": "fu2025learning",
+      "reason": "assigned"
+    },
+    "garnierbrun2025transformerslearnstructureddata": {
+      "global_tag": "garnierbrun2025how",
+      "reason": "assigned"
+    },
+    "ge2016matrix": {
+      "global_tag": "ge2016matrix",
+      "reason": "assigned"
+    },
+    "ge2017learning": {
+      "global_tag": "ge2017learning",
+      "reason": "assigned"
+    },
+    "gerstner2018eligibility": {
+      "global_tag": "gerstner2018eligibility",
+      "reason": "assigned"
+    },
+    "ghorbani2020neural": {
+      "global_tag": "ghorbani2020when",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2402.bib:Ghorbani2020"
+    },
+    "goldt2019dynamics": {
+      "global_tag": "goldt2019dynamics",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2302.bib:goldt_2019"
+    },
+    "gunasekar2018characterizing": {
+      "global_tag": "gunasekar2018characterizing",
+      "reason": "assigned"
+    },
+    "guth2024rainbow": {
+      "global_tag": "guth2024rainbow",
+      "reason": "assigned"
+    },
+    "hajjar2024training": {
+      "global_tag": "hajjar2024training",
+      "reason": "assigned"
+    },
+    "han2015learning": {
+      "global_tag": "han2015learning",
+      "reason": "assigned"
+    },
+    "hinton2012imagenet": {
+      "global_tag": "krizhevsky2012imagenet",
+      "reason": "assigned"
+    },
+    "hopkins2015tensor": {
+      "global_tag": "hopkins2015tensor",
+      "reason": "assigned"
+    },
+    "hu2024asymptotics": {
+      "global_tag": "hu2024asymptotics",
+      "reason": "assigned"
+    },
+    "huh2024platonic": {
+      "global_tag": "huh2024platonic",
+      "reason": "assigned"
+    },
+    "illing2019biologically": {
+      "global_tag": "illing2019biologically",
+      "reason": "assigned"
+    },
+    "illing2021local": {
+      "global_tag": "illing2021local",
+      "reason": "assigned"
+    },
+    "jacot2018neural": {
+      "global_tag": "jacot2018neural",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2302.bib:jacot_2018"
+    },
+    "jung2018extension": {
+      "global_tag": "jung2018extension",
+      "reason": "assigned"
+    },
+    "kaplan2020scaling": {
+      "global_tag": "kaplan2020scaling",
+      "reason": "assigned"
+    },
+    "koltchinskii2006local": {
+      "global_tag": "koltchinskii2006local",
+      "reason": "assigned"
+    },
+    "krizhevsky2009learning": {
+      "global_tag": "krizhevsky2009learning",
+      "reason": "assigned"
+    },
+    "launay2020direct": {
+      "global_tag": "launay2020direct",
+      "reason": "assigned"
+    },
+    "lecun1989optimal": {
+      "global_tag": "lecun1989optimal",
+      "reason": "assigned"
+    },
+    "lecun2015deep": {
+      "global_tag": "lecun2015deep",
+      "reason": "assigned"
+    },
+    "lee2015difference": {
+      "global_tag": "lee2015difference",
+      "reason": "assigned"
+    },
+    "lee2019wide": {
+      "global_tag": "lee2019wide",
+      "reason": "assigned"
+    },
+    "lesieur2017statistical": {
+      "global_tag": "lesieur2017statistical",
+      "reason": "assigned"
+    },
+    "lillicrap2016random": {
+      "global_tag": "lillicrap2016random",
+      "reason": "assigned"
+    },
+    "liu2015faceattributes": {
+      "global_tag": "liu2015deep",
+      "reason": "assigned"
+    },
+    "lu2020phase": {
+      "global_tag": "lu2020phase",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2506.bib:lu2020phase"
+    },
+    "maillard2020phase": {
+      "global_tag": "maillard2020phase",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2305.bib:Maillard2020"
+    },
+    "marchand2022wavelet": {
+      "global_tag": "marchand2023multiscale",
+      "reason": "assigned"
+    },
+    "martin2021implicit": {
+      "global_tag": "martin2021implicit",
+      "reason": "assigned"
+    },
+    "mei2018mean": {
+      "global_tag": "mei2018mean",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2302.bib:mei_2018",
+        "arXiv-2305.bib:mei2018mean",
+        "arXiv-2305.bib:mei_2018",
+        "arXiv-2402.bib:mei2018mean",
+        "arXiv-2405.bib:mei2018mean",
+        "arXiv-2406.bib:mei2018mean",
+        "arXiv-2506.bib:mei2018mean"
+      ]
+    },
+    "mei2022generalization": {
+      "global_tag": "mei2022generalizationerror",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2305.bib:Mei2023"
+    },
+    "mendelson2003performance": {
+      "global_tag": "mendelson2003performance",
+      "reason": "assigned"
+    },
+    "mercer1909functions": {
+      "global_tag": "mercer1909functions",
+      "reason": "assigned"
+    },
+    "mhaskar2017deep": {
+      "global_tag": "mhaskar2017when",
+      "reason": "assigned"
+    },
+    "mondelli2018fundamental": {
+      "global_tag": "mondelli2018fundamental",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2305.bib:mondelli18a"
+    },
+    "montanari2026phase": {
+      "global_tag": "montanari2026phase",
+      "reason": "assigned"
+    },
+    "nichani2023provable": {
+      "global_tag": "nichani2023provable",
+      "reason": "assigned"
+    },
+    "nokland2016direct": {
+      "global_tag": "n2016direct",
+      "reason": "assigned"
+    },
+    "nokland2019training": {
+      "global_tag": "n2019training",
+      "reason": "assigned"
+    },
+    "numpy": {
+      "global_tag": "harris2020array",
+      "reason": "assigned"
+    },
+    "oja1982simplified": {
+      "global_tag": "oja1982simplified",
+      "reason": "assigned"
+    },
+    "olah2020zoom": {
+      "global_tag": "olah2020zoom",
+      "reason": "assigned"
+    },
+    "olshausen1996emergence": {
+      "global_tag": "olshausen1996emergence",
+      "reason": "assigned"
+    },
+    "pacelli2023statistical": {
+      "global_tag": "pacelli2023statistical",
+      "reason": "assigned"
+    },
+    "pytorch": {
+      "global_tag": "paszke2019pytorch",
+      "reason": "assigned"
+    },
+    "radha2024": {
+      "global_tag": "radhakrishnan2024mechanism",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2605.bib:radhakrishnan2024mechanism",
+        "arXiv-2605.bib:radha2024mechanism"
+      ]
+    },
+    "radha2024mechanism": {
+      "global_tag": "radhakrishnan2024mechanism",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2605.bib:radha2024"
+    },
+    "radhakrishnan2024mechanism": {
+      "global_tag": "radhakrishnan2024mechanism",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2605.bib:radha2024"
+    },
+    "radhakrishnan2025linear": {
+      "global_tag": "radhakrishnan2025linear",
+      "reason": "assigned"
+    },
+    "raventos2023pretraining": {
+      "global_tag": "raventos2023pretraining",
+      "reason": "assigned"
+    },
+    "ren2025emergence": {
+      "global_tag": "ren2025emergence",
+      "reason": "assigned"
+    },
+    "ren2026provable": {
+      "global_tag": "ren2026provable",
+      "reason": "assigned"
+    },
+    "ros2019complex": {
+      "global_tag": "ros2019complex",
+      "reason": "assigned"
+    },
+    "rosasco2010learning": {
+      "global_tag": "rosasco2010learning",
+      "reason": "assigned"
+    },
+    "rotskoff2018neural": {
+      "global_tag": "rotskoff2018neural",
+      "reason": "assigned"
+    },
+    "rudi2017generalization": {
+      "global_tag": "rudi2017generalization",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2402.bib:Rudi2017"
+    },
+    "saade2014spectral": {
+      "global_tag": "saade2014spectral",
+      "reason": "assigned"
+    },
+    "sanger1989optimal": {
+      "global_tag": "sanger1989optimal",
+      "reason": "assigned"
+    },
+    "sarao2019afraid": {
+      "global_tag": "mannelli2019who",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2402.bib:mannelli2019afraid"
+    },
+    "sarao2020complex": {
+      "global_tag": "saraomannelli2020complex",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2305.bib:Mannelli2020b"
+    },
+    "sarao2020marvels": {
+      "global_tag": "mannelli2020marvels",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2402.bib:SBCKUZ20"
+    },
+    "sarao2020optimization": {
+      "global_tag": "saraomannelli2020optimization",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2305.bib:Mannelli2020"
+    },
+    "saxe2014exact": {
+      "global_tag": "saxe2014exact",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2302.bib:saxe2013",
+        "arXiv-2402.bib:SMG13",
+        "arXiv-2402.bib:SMG13#2",
+        "arXiv-2405.bib:SMG13",
+        "arXiv-2405.bib:SMG13#2",
+        "arXiv-2506.bib:SMG13",
+        "arXiv-2506.bib:SMG13#2"
+      ]
+    },
+    "schaeffer2023emergent": {
+      "global_tag": "schaeffer2023are",
+      "reason": "assigned"
+    },
+    "scholkopf2002learning": {
+      "global_tag": "scholkopf2002learning",
+      "reason": "assigned"
+    },
+    "scikit-learn": {
+      "global_tag": "pedregosa2011scikit",
+      "reason": "assigned"
+    },
+    "scipy": {
+      "global_tag": "virtanen2020scipy",
+      "reason": "assigned"
+    },
+    "sejnowski2020unreasonable": {
+      "global_tag": "sejnowski2020unreasonable",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2302.bib:sejnowski_2020"
+    },
+    "shawe2005eigenspectrum": {
+      "global_tag": "shawetaylor2005eigenspectrum",
+      "reason": "assigned"
+    },
+    "sirignano2020mean": {
+      "global_tag": "sirignano2020meanfield",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2302.bib:sirignano2019mean"
+    },
+    "steinwart2008support": {
+      "global_tag": "steinwart2008support",
+      "reason": "assigned"
+    },
+    "sterge2022statistical": {
+      "global_tag": "sterge2022statistical",
+      "reason": "assigned"
+    },
+    "tabanelli2025computational": {
+      "global_tag": "tabanelli2025computational",
+      "reason": "assigned"
+    },
+    "tabanelli2026deep": {
+      "global_tag": "tabanelli2026deep",
+      "reason": "assigned"
+    },
+    "telgarsky2016benefits": {
+      "global_tag": "telgarsky2016benefits",
+      "reason": "assigned"
+    },
+    "troianifundamental": {
+      "global_tag": "troiani2024fundamental",
+      "reason": "assigned",
+      "tag_baseline": "troiani2025fundamental",
+      "merged_from": [
+        "arXiv-2405.bib:troiani2024fundamental",
+        "arXiv-2506.bib:troiani2024fundamental"
+      ]
+    },
+    "tropp2012user": {
+      "global_tag": "tropp2012user",
+      "reason": "assigned"
+    },
+    "venturi2019spurious": {
+      "global_tag": "venturi2019spurious",
+      "reason": "assigned"
+    },
+    "vilucchio2025asymptotics": {
+      "global_tag": "vilucchio2025asymptotics",
+      "reason": "assigned"
+    },
+    "wang2023learning": {
+      "global_tag": "wang2024learning",
+      "reason": "assigned"
+    },
+    "wei2022emergent": {
+      "global_tag": "wei2022emergent",
+      "reason": "assigned"
+    },
+    "wein2019kikuchi": {
+      "global_tag": "wein2019kikuchi",
+      "reason": "assigned"
+    },
+    "wen2025when": {
+      "global_tag": "wen2025when",
+      "reason": "assigned"
+    },
+    "wilson1983renormalization": {
+      "global_tag": "wilson1983renormalization",
+      "reason": "assigned"
+    },
+    "yang2021tuning": {
+      "global_tag": "yang2021tuning",
+      "reason": "assigned"
+    },
+    "yosinseki2014transferable": {
+      "global_tag": "yosinski2014how",
+      "reason": "assigned"
+    },
+    "zeiler2014visualizing": {
+      "global_tag": "zeiler2014visualizing",
+      "reason": "assigned"
+    },
+    "zhang2002effective": {
+      "global_tag": "zhang2002effective",
+      "reason": "assigned"
+    },
+    "zhang2025neural": {
+      "global_tag": "zhang2025neural",
+      "reason": "assigned"
+    },
+    "zwald2005convergence": {
+      "global_tag": "zwald2005convergence",
+      "reason": "assigned"
+    }
+  }
+}

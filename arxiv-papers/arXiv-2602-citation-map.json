@@ -1,0 +1,520 @@
+{
+  "sidecar": "arXiv-2602.bib",
+  "mappings": {
+    "10.5555/3524938.3525087": {
+      "global_tag": "chen2020simple",
+      "reason": "assigned"
+    },
+    "1555162": {
+      "global_tag": "conti2009old",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2602.bib:Conti:2009:DDS:1555009.1555162"
+      ]
+    },
+    "1984:1040142": {
+      "global_tag": "anon1984untitled",
+      "reason": "assigned"
+    },
+    "2004:ITE:1009386.1010128": {
+      "global_tag": "anon2004ieee",
+      "reason": "assigned"
+    },
+    "384253": {
+      "global_tag": "werneck2000old",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2602.bib:Werneck:2000:FMC:351827.384253"
+      ]
+    },
+    "6:1:1": {
+      "global_tag": "jearcher1984user",
+      "reason": "assigned"
+    },
+    "6:3:380": {
+      "global_tag": "korach1984distributed",
+      "reason": "assigned"
+    },
+    "7:1:137": {
+      "global_tag": "dunlop1985generalizing",
+      "reason": "assigned"
+    },
+    "7:2:183": {
+      "global_tag": "heering1985monolingual",
+      "reason": "assigned"
+    },
+    "7:3:359": {
+      "global_tag": "nielson1985program",
+      "reason": "assigned"
+    },
+    "897367": {
+      "global_tag": "buss1987vertex",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2602.bib:Buss:1987:VTB:897367"
+      ]
+    },
+    "Ablamowicz07": {
+      "global_tag": "ablamowicz2007clifford",
+      "reason": "assigned"
+    },
+    "Abril07": {
+      "global_tag": "abril2007patent",
+      "reason": "assigned"
+    },
+    "Adya-01": {
+      "global_tag": "adya2004multi",
+      "reason": "assigned"
+    },
+    "Akyildiz-01": {
+      "global_tag": "akyildiz2002wireless",
+      "reason": "assigned"
+    },
+    "Akyildiz-02": {
+      "global_tag": "akyildiz2007survey",
+      "reason": "assigned"
+    },
+    "Amsthm15": {
+      "global_tag": "anon2015amsthm",
+      "reason": "assigned"
+    },
+    "Andler79": {
+      "global_tag": "andler1979predicate",
+      "reason": "assigned"
+    },
+    "Bahl-02": {
+      "global_tag": "bahl2004ssch",
+      "reason": "assigned"
+    },
+    "Buss:1987:VTB:897367": {
+      "global_tag": "buss1987vertex",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2602.bib:897367"
+    },
+    "CROSSBOW": {
+      "global_tag": "anon2008xbow",
+      "reason": "assigned"
+    },
+    "Clarkson85": {
+      "global_tag": "clarkson1985algorithms",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2602.bib:Clarkson:1985:ACP:911891"
+    },
+    "Clarkson:1985:ACP:911891": {
+      "global_tag": "clarkson1985algorithms",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2602.bib:Clarkson85"
+      ]
+    },
+    "Cohen07": {
+      "global_tag": "cohen2007deciding",
+      "reason": "assigned"
+    },
+    "ColBERT-small": {
+      "global_tag": "clavie2025colbert",
+      "reason": "assigned"
+    },
+    "Conti:2009:DDS:1555009.1555162": {
+      "global_tag": "conti2009old",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2602.bib:1555162"
+    },
+    "Culler-01": {
+      "global_tag": "culler2004overview",
+      "reason": "assigned"
+    },
+    "Czerwinski:2008:1358628": {
+      "global_tag": "li2008portalis",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2602.bib:Li:2008:PUC:1358628.1358946"
+    },
+    "DBLP:conf/acl/WarnerCCWHTGBLA25": {
+      "global_tag": "warner2025smarter",
+      "reason": "assigned"
+    },
+    "DBLP:conf/cikm/ChaffinS25": {
+      "global_tag": "chaffin2025pylate",
+      "reason": "assigned"
+    },
+    "DBLP:conf/iclr/WellerDLPZH25": {
+      "global_tag": "weller2025promptriever",
+      "reason": "assigned"
+    },
+    "DBLP:conf/naacl/SanthanamKSPZ22": {
+      "global_tag": "santhanam2022colbertv2",
+      "reason": "assigned"
+    },
+    "DBLP:conf/rep4nlp/GaoZHC21": {
+      "global_tag": "gao2021scaling",
+      "reason": "assigned"
+    },
+    "DBLP:conf/sigir/KhattabZ20": {
+      "global_tag": "khattab2020colbert",
+      "reason": "assigned"
+    },
+    "DBLP:journals/corr/abs-2104-08663": {
+      "global_tag": "thakur2021beir",
+      "reason": "assigned"
+    },
+    "DBLP:journals/corr/abs-2212-03533": {
+      "global_tag": "wang2022text",
+      "reason": "assigned"
+    },
+    "DBLP:journals/corr/abs-2407-15831": {
+      "global_tag": "moreira2024nv",
+      "reason": "assigned"
+    },
+    "DBLP:journals/corr/abs-2510-14880": {
+      "global_tag": "takehi2025fantastic",
+      "reason": "assigned"
+    },
+    "DBLP:journals/tmlr/NussbaumMMD25": {
+      "global_tag": "nussbaum2025nomic",
+      "reason": "assigned"
+    },
+    "Dijkstra:1979:GSC:1241515.1241518": {
+      "global_tag": "dijkstra1979go",
+      "reason": "assigned"
+    },
+    "Douglass98": {
+      "global_tag": "douglass1998statecarts",
+      "reason": "assigned"
+    },
+    "Editor00": {
+      "global_tag": "harel1979first",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2602.bib:Harel79"
+    },
+    "Editor00a": {
+      "global_tag": "harel1979first",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2602.bib:Harel79"
+    },
+    "Fear05": {
+      "global_tag": "fear2005publication",
+      "reason": "assigned"
+    },
+    "GM05": {
+      "global_tag": "geiger2005structured",
+      "reason": "assigned"
+    },
+    "GTE-ModernColBERT": {
+      "global_tag": "chaffin2025gte",
+      "reason": "assigned"
+    },
+    "Goossens:1999:LWC:553897": {
+      "global_tag": "goossens1999latex",
+      "reason": "assigned"
+    },
+    "Harel78": {
+      "global_tag": "harel1978logics",
+      "reason": "assigned"
+    },
+    "Harel79": {
+      "global_tag": "harel1979first",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2602.bib:Editor00",
+        "arXiv-2602.bib:Editor00a"
+      ]
+    },
+    "Harvard-01": {
+      "global_tag": "anon2008codeblue",
+      "reason": "assigned"
+    },
+    "Hoare:1972:CIN:1243380.1243382": {
+      "global_tag": "hoare1972chapter",
+      "reason": "assigned"
+    },
+    "Hollis:1999:VBD:519964": {
+      "global_tag": "hollis1999visual",
+      "reason": "assigned"
+    },
+    "JCohen96": {
+      "global_tag": "anon1996special",
+      "reason": "assigned"
+    },
+    "JoeScientist001": {
+      "global_tag": "scientist2009fountain",
+      "reason": "assigned"
+    },
+    "KA:2001": {
+      "global_tag": "kong2001implementation",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2602.bib:KAGM:2001",
+        "arXiv-2602.bib:Kong:2002:IEC:887006.887010",
+        "arXiv-2602.bib:Kong:2003:IEC:887006.887011",
+        "arXiv-2602.bib:Kong:2004:IEC:123456.887010",
+        "arXiv-2602.bib:Kong:2005:IEC:887006.887010",
+        "arXiv-2602.bib:Kong:2006:IEC:887006.887010"
+      ]
+    },
+    "KAGM:2001": {
+      "global_tag": "kong2001implementation",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2602.bib:KA:2001"
+    },
+    "Kirschmer:2010:AEI:1958016.1958018": {
+      "global_tag": "kirschmer2010algorithmic",
+      "reason": "assigned"
+    },
+    "Knuth97": {
+      "global_tag": "knuth1997art",
+      "reason": "assigned"
+    },
+    "Knuth98": {
+      "global_tag": "knuth1998art",
+      "reason": "assigned"
+    },
+    "Kong:2002:IEC:887006.887010": {
+      "global_tag": "kong2001implementation",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2602.bib:KA:2001"
+    },
+    "Kong:2003:IEC:887006.887011": {
+      "global_tag": "kong2001implementation",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2602.bib:KA:2001"
+    },
+    "Kong:2004:IEC:123456.887010": {
+      "global_tag": "kong2001implementation",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2602.bib:KA:2001"
+    },
+    "Kong:2005:IEC:887006.887010": {
+      "global_tag": "kong2001implementation",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2602.bib:KA:2001"
+    },
+    "Kong:2006:IEC:887006.887010": {
+      "global_tag": "kong2001implementation",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2602.bib:KA:2001"
+    },
+    "Kosiur01": {
+      "global_tag": "kosiur2001understanding",
+      "reason": "assigned"
+    },
+    "Lee05": {
+      "global_tag": "lee2005interview",
+      "reason": "assigned"
+    },
+    "Lee:1978:TQA:800025.1198348": {
+      "global_tag": "lee1981transcript",
+      "reason": "assigned"
+    },
+    "Li:2008:PUC:1358628.1358946": {
+      "global_tag": "li2008portalis",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2602.bib:Czerwinski:2008:1358628"
+      ]
+    },
+    "MR781536": {
+      "global_tag": "hormander1985analysislinear",
+      "reason": "assigned",
+      "tag_baseline": "hormander1985analysis",
+      "collided_with": [
+        "hormander1985analysis"
+      ]
+    },
+    "MR781537": {
+      "global_tag": "hormander1985analysis",
+      "reason": "assigned"
+    },
+    "McCracken:1990:SSC:575315": {
+      "global_tag": "mccracken1990simplified",
+      "reason": "assigned"
+    },
+    "Mullender:1993:DS(:302430": {
+      "global_tag": "anon1993distributed",
+      "reason": "assigned"
+    },
+    "Mumford:1987:MES:54905.54911": {
+      "global_tag": "mumford1987managerial",
+      "reason": "assigned"
+    },
+    "Natarajan-01": {
+      "global_tag": "natarajan2007investigating",
+      "reason": "assigned"
+    },
+    "Novak03": {
+      "global_tag": "smith2010experiment",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2602.bib:Smith10"
+    },
+    "Obama08": {
+      "global_tag": "obama2008more",
+      "reason": "assigned"
+    },
+    "Petrie:1986:NAD:12345": {
+      "global_tag": "petrie1986new",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2602.bib:Petrie:1986:NAD:899644"
+    },
+    "Petrie:1986:NAD:899644": {
+      "global_tag": "petrie1986new",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2602.bib:Petrie:1986:NAD:12345"
+      ]
+    },
+    "Poker06": {
+      "global_tag": "pokeredgecom2006stats",
+      "reason": "assigned"
+    },
+    "R": {
+      "global_tag": "team2019r",
+      "reason": "assigned"
+    },
+    "Reason-ModernColBERT": {
+      "global_tag": "chaffin2025reason",
+      "reason": "assigned"
+    },
+    "Rous08": {
+      "global_tag": "rous2008enabling",
+      "reason": "assigned"
+    },
+    "SaeediJETC10": {
+      "global_tag": "saeedi2010synthesis",
+      "reason": "assigned"
+    },
+    "SaeediMEJ10": {
+      "global_tag": "saeedi2010library",
+      "reason": "assigned"
+    },
+    "Smith10": {
+      "global_tag": "smith2010experiment",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2602.bib:Novak03"
+      ]
+    },
+    "Spector90": {
+      "global_tag": "spector1990achieving",
+      "reason": "assigned"
+    },
+    "TUGInstmem": {
+      "global_tag": "anon2017institutional",
+      "reason": "assigned"
+    },
+    "Thornburg01": {
+      "global_tag": "thornburg2001introduction",
+      "reason": "assigned"
+    },
+    "Tzamaloukas-01": {
+      "global_tag": "tzamaloukas2000channel",
+      "reason": "assigned"
+    },
+    "UMassCitations": {
+      "global_tag": "anzaroot2013umass",
+      "reason": "assigned"
+    },
+    "VanGundy07": {
+      "global_tag": "gundy2007catch",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2602.bib:VanGundy08"
+    },
+    "VanGundy08": {
+      "global_tag": "gundy2007catch",
+      "reason": "assigned",
+      "tag_baseline": "gundy2008catch",
+      "merged_from": [
+        "arXiv-2602.bib:VanGundy07",
+        "arXiv-2602.bib:VanGundy09"
+      ]
+    },
+    "VanGundy09": {
+      "global_tag": "gundy2007catch",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2602.bib:VanGundy08"
+    },
+    "Wenzel:1992:TVA:146022.146089": {
+      "global_tag": "wenzel1992three",
+      "reason": "assigned"
+    },
+    "Werneck:2000:FMC:351827.384253": {
+      "global_tag": "werneck2000old",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2602.bib:384253"
+    },
+    "Zhou-06": {
+      "global_tag": "zhou2008body",
+      "reason": "assigned"
+    },
+    "Zhou:2010:MMS:1721695.1721705": {
+      "global_tag": "zhou2010multifrequency",
+      "reason": "assigned"
+    },
+    "anisi03": {
+      "global_tag": "anisi2003optimal",
+      "reason": "assigned"
+    },
+    "book-minimal": {
+      "global_tag": "knuth1981seminumerical",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2602.bib:test"
+    },
+    "bowman:reasoning": {
+      "global_tag": "bowman1993reasoning",
+      "reason": "assigned"
+    },
+    "braams:babel": {
+      "global_tag": "braams1991babel",
+      "reason": "assigned"
+    },
+    "clark:pct": {
+      "global_tag": "clark1991post",
+      "reason": "assigned"
+    },
+    "dao2022flashattention": {
+      "global_tag": "dao2022flashattention",
+      "reason": "assigned"
+    },
+    "gerndt:89": {
+      "global_tag": "gerndt1989automatic",
+      "reason": "assigned"
+    },
+    "herlihy:methodology": {
+      "global_tag": "herlihy1993methodology",
+      "reason": "assigned"
+    },
+    "knuth:texbook": {
+      "global_tag": "knuth1984book",
+      "reason": "assigned"
+    },
+    "ko94": {
+      "global_tag": "kornerup1994mapping",
+      "reason": "assigned"
+    },
+    "lamport:latex": {
+      "global_tag": "lamport1986document",
+      "reason": "assigned"
+    },
+    "muennighoff2022mteb": {
+      "global_tag": "muennighoff2022mteb",
+      "reason": "assigned"
+    },
+    "reid:scribe": {
+      "global_tag": "reid1980high",
+      "reason": "assigned"
+    },
+    "salas:calculus": {
+      "global_tag": "salas1978calculus",
+      "reason": "assigned"
+    },
+    "test": {
+      "global_tag": "knuth1981seminumerical",
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2602.bib:book-minimal"
+      ]
+    },
+    "weller2025seqvsseqopen": {
+      "global_tag": "weller2025seq",
+      "reason": "assigned"
+    }
+  }
+}

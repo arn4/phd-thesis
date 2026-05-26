@@ -3,7 +3,10 @@ name = "phd-thesis-helpers"
 version = "0.1.0"
 description = "Helper scripts for assembling Luca Arnaboldi's PhD thesis."
 requires-python = ">=3.10"
-dependencies = []
+dependencies = [
+    "bibtexparser>=1.4.4",
+    "pylatexenc>=2.10",
+]
 
 [tool.uv]
 package = false
