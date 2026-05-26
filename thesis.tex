@@ -1,0 +1,61 @@
+\documentclass[11pt,a4paper,openright]{book}
+
+\usepackage[main=english,italian,french]{babel}
+\let\og\relax \let\no\relax  % babel-french reserves these; papers-macros.tex reuses them as math.
+
+\input{papers-dependencies.tex}
+\input{papers-macros.tex}
+
+% cleveref must load after hyperref (same constraint as papers/stand-alone-paper.tex).
+\usepackage[capitalize,noabbrev]{cleveref}
+
+\usepackage{pdfpages}
+\usepackage{import}
+\usepackage{csquotes}  % recommended by biblatex when babel is loaded
+\usepackage[backend=biber,style=authoryear-comp,natbib=true]{biblatex}
+\addbibresource{papers-bibliography.bib}
+
+\title{<thesis title TBD>}
+\author{Luca Arnaboldi}
+
+\begin{document}
+
+% \frontmatter is called *before* the cover so the cover and the first
+% mainmatter chapter don't both produce a hyperref \page.1 destination.
+\frontmatter
+
+% --- Cover (external one-page PDF; typeset placeholder if missing) ---
+\IfFileExists{cover.pdf}
+  {\includepdf[pages=-]{cover.pdf}}
+  {\input{front-matter/cover-placeholder.tex}}
+
+% --- Abstracts (English, Italian, French) ---
+\input{front-matter/abstract-en.tex}
+\input{front-matter/abstract-it.tex}
+\input{front-matter/abstract-fr.tex}
+
+% --- Acknowledgements ---
+\input{front-matter/acknowledgements.tex}
+
+% --- Foreword ---
+\input{front-matter/foreword.tex}
+
+% --- Table of contents ---
+\tableofcontents
+
+\mainmatter
+
+% --- Main content (placeholder; chapters land here later) ---
+\input{chapters/introduction.tex}
+
+\backmatter
+
+% --- Bibliography ---
+\printbibliography[heading=bibintoc]
+
+% --- CV (external PDF; typeset placeholder if missing) ---
+\IfFileExists{cv.pdf}
+  {\includepdf[pages=-]{cv.pdf}}
+  {\input{front-matter/cv-placeholder.tex}}
+
+\end{document}
