@@ -1,0 +1,6 @@
+arxiv-papers/*.tar.gz
+arxiv-papers/*/
+.DS_Store
+.venv/
+__pycache__/
+uv.lock
