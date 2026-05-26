@@ -4,46 +4,63 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project goal
 
-This repository will become Luca Arnaboldi's PhD thesis: a single organic LaTeX document that integrates (a subset of) his published arXiv papers into a coherent manuscript to be presented to a thesis commission. The selection of papers to include and the chapter structure are not yet finalised.
+This repository will become Luca Arnaboldi's PhD thesis: a single organic LaTeX document that integrates (a subset of) his published arXiv papers into a coherent manuscript. The selection of papers and the chapter structure are not yet finalised.
 
 ## Current state
 
-Present at the repo root:
+At the repo root:
 
-- `arxiv-papers/` — source material (see below).
-- `scripts/` — Python helper scripts (run with `uv run scripts/<name>.py`).
-- `pyproject.toml` / `uv.lock` — uv-managed environment for those scripts.
-- `CLAUDE.md` — this file.
+- `arxiv-papers/` — per-paper sources + editorial sidecars (see below).
+- `scripts/` — Python helpers. **Don't invoke them directly** — use the project skills (`merge-bibs`, `parse-paper`, `merge-preambles`, `check-paper`, `extract-paper`); they run the script with the right flags and produce concise reports.
+- `papers-bibliography.bib`, `papers-dependencies.tex`, `papers-macros.tex` — thesis-wide merged outputs, regenerable via the merger skills from the per-paper sidecars + the editorial state recorded inline (provenance + `% [skip:...]` markers) and in the `arxiv-papers/arXiv-YYMM-*-map.json` files.
+- `papers/YYMM/` — per-paper thesis-ready content (abstract.tex, main.tex, sections/, appendices/, figs/), produced by `extract-paper`. Tracked in git; hand-editable after extraction.
+- `papers/stand-alone-paper.tex` — shared `\jobname`-dispatched driver that compiles any extracted paper individually for review (auto-generated; do not edit by hand).
+- `build/` — latexmk aux/PDF output from standalone compiles. Gitignored.
+- `pyproject.toml` / `uv.lock` — uv-managed environment.
 
-No thesis LaTeX source or build config (`latexmkrc`, document class) exists yet. The merged thesis-wide `.bib` (`papers-bibliography.bib` at the repo root) is generated on demand by `scripts/merge_bibs.py` — invoke via the `merge-bibs` skill. Do not assume conventional directories (`chapters/`, `src/`, `bib/`, etc.) exist until you've checked.
+No thesis LaTeX source or build config (`latexmkrc`, document class) exists yet. Do not assume conventional directories (`chapters/`, `src/`, `bib/`) exist until checked.
 
-## Source material: `arxiv-papers/`
+## `arxiv-papers/` layout
 
-For each included arXiv paper there are three artifacts at the top of `arxiv-papers/`:
+Each included paper has up to eight artefacts, all keyed by **YYMM prefix** (so paper `arXiv-2302.05882v1` shares `arXiv-2302.bib`, `arXiv-2302-macros.tex`, etc.):
 
-1. `arXiv-<id>.tar.gz` — the pristine arXiv tarball (e.g. `arXiv-2302.05882v1.tar.gz`).
-2. `arXiv-<id>/` — the unpacked submission directory.
-3. `arXiv-<YYMM>.bib` — a sidecar BibTeX file with the references cited by that paper, supplied by Luca (the originals were not bundled in the arXiv source). **The mapping is by YYMM prefix**, not the full ID: e.g. paper `arXiv-2302.05882v1/` ↔ bib `arXiv-2302.bib`. A sidecar `.bib` is typically a superset of what its paper actually cites (extra entries are fine).
+| Artefact | Tracked? | Owner / source |
+| --- | --- | --- |
+| `arXiv-<id>.tar.gz` | gitignored | pristine arXiv tarball; re-fetch via `scripts/fetch_arxiv_sources.py` |
+| `arXiv-<id>/` | gitignored | unpacked submission (read-only; must stay byte-identical to the tarball) |
+| `arXiv-YYMM.bib` | tracked | hand-managed by Luca; **do not edit** |
+| `arXiv-YYMM-citation-map.json` | tracked | bib merge state, managed by `merge-bibs` |
+| `arXiv-YYMM-packages.tex` | tracked | extracted package loads, managed by `parse-paper` |
+| `arXiv-YYMM-macros.tex` | tracked | extracted macro / environment / theorem defs, managed by `parse-paper` |
+| `arXiv-YYMM-metadata.json` | tracked | plain-text title + `Surname Name` author list — **hand-curated** via `parse-paper`, not script-written |
+| `arXiv-YYMM-macro-map.json` | tracked | local-macro → global-name mapping (for prose-folding later), managed by `merge-preambles` |
 
-**Do not assume internal structure of an unpacked paper.** The layouts differ — some are single-file, some use `sections/` / `figures/` subdirs, the `.bbl` filename varies (`arxiv.bbl`, `main.bbl`, `assembler.bbl`, …), macros may live in `macros.tex` or be inlined, vendored `.sty` files may or may not be present. Always `ls` the specific paper's directory before working with it; never generalise from one paper to the rest.
+A sidecar `.bib` is typically a superset of what its paper actually cites — extra entries are fine.
 
-General expectations when assembling the thesis:
+**Do not assume internal structure of an unpacked paper.** Layouts differ: single-file vs `sections/` subdir, `.bbl` filename varies (`arxiv.bbl`, `main.bbl`, `assembler.bbl`, …), macros may live in `macros.tex` or be inlined, vendored `.sty` / `.cls` files may or may not be present. Always `ls` the specific paper's directory before working with it.
 
-- **Macro / command collisions are likely** across papers. Plan to consolidate into a single thesis-wide macros file rather than `\input`-ing per-paper macros blindly.
-- **Bibliographies must be merged and deduplicated** from the per-paper sidecars into a thesis-wide `.bib` (handled by the `merge-bibs` skill).
-- **Treat `arxiv-papers/` as read-only source.** Tarballs and unpacked directories must remain byte-identical to what arXiv shipped; the sidecar `.bib` files are managed by Luca, not Claude. Edit copies in the thesis tree, never the originals — re-deriving the unpacked source from the tarballs should always be possible. In particular, after running `latexmk` inside any unpacked paper directory, clean up with `latexmk -C` so no aux files are left behind.
-- **Tarballs and unpacked papers are git-ignored** (only the sidecar `.bib` files are tracked). To re-create them on a fresh checkout, run `uv run scripts/fetch_arxiv_sources.py` — it pulls each version-pinned tarball from `https://arxiv.org/src/<id>v<n>` and extracts it.
+**Tarballs and unpacked dirs are read-only.** After running `latexmk` inside any unpacked paper directory, clean up with `latexmk -C` so no aux files are left behind. Edit copies in the thesis tree, never the originals.
 
 ## Build toolchain (planned)
 
 - **LaTeX:** `latexmk` driving `pdflatex`.
-- **Bibliography:** `biblatex` with the `biber` backend. Merged `.bib` lives in the thesis tree, not under `arxiv-papers/`.
-- **Document class:** not yet decided (no confirmed university template). Keep the class choice swappable.
-- **Python (helper scripts):** managed with `uv`. Run with `uv run scripts/<name>.py`; add deps with `uv add`. `pyproject.toml` and `uv.lock` live at the repo root.
+- **Bibliography:** `biblatex` with the `biber` backend. `natbib` is intentionally skipped in `papers-dependencies.tex` (`% [skip:package] natbib` / `% [skip:passopts] natbib`).
+- **Document class:** not yet decided; keep the class choice swappable.
+- **Python:** managed with `uv`. Invoke helpers via the skills.
 
-Once a `latexmkrc` exists, prefer `latexmk` over invoking `pdflatex`/`biber` by hand — it handles the multi-pass dance.
+Once a `latexmkrc` exists, prefer `latexmk` over invoking `pdflatex` / `biber` by hand — it handles the multi-pass dance.
+
+## Per-paper standalone builds
+
+`extract-paper` converts each unpacked paper into `papers/YYMM/`, then `papers/stand-alone-paper.tex` lets you compile any one of them from the repo root:
+
+```
+latexmk -pdf -jobname=2302 -outdir=build/2302 papers/stand-alone-paper.tex
+```
+
+The driver loads the thesis-wide preamble (`papers-dependencies.tex` + `papers-macros.tex`) and bib (`papers-bibliography.bib`), picks the paper via `\jobname`, and uses biblatex (`authoryear-comp` style) with biber. The driver blocks a handful of legacy packages (`natbib`, `cleveref`, `algorithmic`, `subfigure`, `color`) before inputting the global preamble — those are workarounds for unresolved conflicts in the merged preamble that should eventually be cleaned up via `merge-preambles`.
 
 ## Working with the user
 
-- Luca is the author; when in doubt about scope, structure, or which papers to include, ask rather than guessing — these are editorial decisions, not implementation details.
+- Luca is the author. When in doubt about scope, structure, or which papers to include, ask — these are editorial decisions, not implementation details.
 - Prefer small, reversible LaTeX changes (one section at a time) over large restructurings; thesis prose is hand-tuned and easy to clobber.

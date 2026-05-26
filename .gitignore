@@ -4,3 +4,4 @@ arxiv-papers/*/
 .venv/
 __pycache__/
 uv.lock
+build/
