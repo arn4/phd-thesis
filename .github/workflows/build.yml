@@ -1,0 +1,104 @@
+name: build
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        target:
+          - { id: "2302",   root: "papers/stand-alone-paper.tex", args: "-pdf -jobname=2302 -outdir=build/2302",   pdf: "build/2302/2302.pdf" }
+          - { id: "2305",   root: "papers/stand-alone-paper.tex", args: "-pdf -jobname=2305 -outdir=build/2305",   pdf: "build/2305/2305.pdf" }
+          - { id: "2402",   root: "papers/stand-alone-paper.tex", args: "-pdf -jobname=2402 -outdir=build/2402",   pdf: "build/2402/2402.pdf" }
+          - { id: "2405",   root: "papers/stand-alone-paper.tex", args: "-pdf -jobname=2405 -outdir=build/2405",   pdf: "build/2405/2405.pdf" }
+          - { id: "2406",   root: "papers/stand-alone-paper.tex", args: "-pdf -jobname=2406 -outdir=build/2406",   pdf: "build/2406/2406.pdf" }
+          - { id: "2506",   root: "papers/stand-alone-paper.tex", args: "-pdf -jobname=2506 -outdir=build/2506",   pdf: "build/2506/2506.pdf" }
+          - { id: "2602",   root: "papers/stand-alone-paper.tex", args: "-pdf -jobname=2602 -outdir=build/2602",   pdf: "build/2602/2602.pdf" }
+          - { id: "2605",   root: "papers/stand-alone-paper.tex", args: "-pdf -jobname=2605 -outdir=build/2605",   pdf: "build/2605/2605.pdf" }
+          - { id: "thesis", root: "thesis.tex",                   args: "-pdf",                                     pdf: "build/thesis.pdf"    }
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compile ${{ matrix.target.id }}
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: ${{ matrix.target.root }}
+          latexmk_use_lualatex: true
+          latexmk_shell_escape: false
+          args: ${{ matrix.target.args }}
+
+      - name: Upload ${{ matrix.target.id }} PDF
+        uses: actions/upload-artifact@v4
+        with:
+          name: pdf-${{ matrix.target.id }}
+          path: ${{ matrix.target.pdf }}
+          if-no-files-found: error
+          retention-days: 30
+
+  deploy:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Collect PDFs
+        uses: actions/download-artifact@v4
+        with:
+          path: site
+          pattern: pdf-*
+          merge-multiple: true
+
+      - name: Generate index.html
+        run: |
+          cat > site/index.html <<'HTML'
+          <!doctype html>
+          <html lang="en">
+          <meta charset="utf-8">
+          <title>Luca Arnaboldi — PhD Thesis Drafts</title>
+          <style>
+            body { font-family: system-ui, sans-serif; max-width: 40em; margin: 3em auto; padding: 0 1em; line-height: 1.5; }
+            h1 { font-size: 1.4em; }
+            ul { padding-left: 1.2em; }
+            li { margin: .4em 0; }
+            .meta { color: #666; font-size: .9em; }
+          </style>
+          <h1>Luca Arnaboldi — PhD Thesis Drafts</h1>
+          <ul>
+            <li><a href="thesis.pdf">Full thesis (draft)</a></li>
+            <li><a href="2302.pdf">Paper 2302</a></li>
+            <li><a href="2305.pdf">Paper 2305</a></li>
+            <li><a href="2402.pdf">Paper 2402</a></li>
+            <li><a href="2405.pdf">Paper 2405</a></li>
+            <li><a href="2406.pdf">Paper 2406</a></li>
+            <li><a href="2506.pdf">Paper 2506</a></li>
+            <li><a href="2602.pdf">Paper 2602</a></li>
+            <li><a href="2605.pdf">Paper 2605</a></li>
+          </ul>
+          <p class="meta">Built from tag <code>${{ github.ref_name }}</code> (commit <code>${{ github.sha }}</code>).</p>
+          </html>
+          HTML
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
