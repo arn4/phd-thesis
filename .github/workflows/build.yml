@@ -28,12 +28,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Reject uncommented \includeonly in thesis.tex
+      - name: Reject drafting toggles in thesis.tex
         run: |
+          fail=0
           if grep -nE '^[[:space:]]*\\includeonly' thesis.tex; then
-            echo "::error file=thesis.tex::thesis.tex has an uncommented \\includeonly (see line above). It is a drafting toggle and must be commented out before merging."
-            exit 1
+            echo "::error file=thesis.tex::thesis.tex has an uncommented \\includeonly (see line above)."
+            fail=1
           fi
+          if grep -nE '^[[:space:]]*\\documentclass\[[^]]*\bdraft\b[^]]*\]' thesis.tex; then
+            echo "::error file=thesis.tex::thesis.tex has 'draft' in \\documentclass options (see line above)."
+            fail=1
+          fi
+          exit $fail
 
       - id: filter
         if: ${{ !startsWith(github.ref, 'refs/tags/') }}
