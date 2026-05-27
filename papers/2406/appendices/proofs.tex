@@ -9,7 +9,7 @@
 
 Throughout this section, the update process on $\vec{w}_t$ will be written as
 \begin{equation}\label{2406:eq:app:one_step_w}
-    \vec{w}_{t+1} = \frac{\vec{w}_t - \gamma\, \vec{g}_t}{\norm{\vec{w}_t - \gamma\, \vec{g}_t}},
+    \vec{w}_{t+1} = \frac{\vec{w}_t - \gamma \vec{g}_t}{\norm{\vec{w}_t - \gamma \vec{g}_t}},
 \end{equation}
 where $\vec{g}_t$ is the gradient at time $t$: $\vec{g}_t = \nabla_{w_{t}} \ell_t$, and $\ell_t$ is the empirical loss at time $t$, that can be either the correlation or the square loss. When considering the update of the process $(\vec{w}_t)_{t \geq 0}$, it will be useful to distinguish between the randomness in $\vec{w}_t$ and the one introduced by the batch drawn at time $t$. To this end, we introduce the filtration $(\cF_t)_{t\geq 0}$ adapted to the process $\vec{w}_t$, and we shall denote by $\dP_t$ (resp. $\dE_t$) the probability (resp. expectation) conditioned on $\cF_t$.
 
@@ -17,7 +17,7 @@ where $\vec{g}_t$ is the gradient at time $t$: $\vec{g}_t = \nabla_{w_{t}} \ell_
  \begin{definition}
      For any $\alpha \in \R$, let $\psi_\alpha(x) = e^{x^\alpha} - 1$. Let $X$ be a real random variable; the \emph{Orlicz norm} $\norm{X}_{\psi_\alpha}$ is defined as
      \begin{equation}
-         \norm{X}_{\psi_\alpha} = \inf \left\{t > 0\::\: \dE\left[ \psi_\alpha\left(\frac{|X|}{t} \right)\right] \leq 1\right\}
+         \norm{X}_{\psi_\alpha} = \inf \left\{t > 0: \dE\left[ \psi_\alpha\left(\frac{|X|}{t} \right)\right] \leq 1\right\}
      \end{equation}
  \end{definition}
  It can be checked that $\norm{\cdot}_{\psi_\alpha}$ is a well-defined norm on random variables for $\alpha \geq  1$, and can be slightly modified into a norm when $\alpha < 1$; see \cite{ledoux1991probability,vandervaart1996weak} for more information. We say that a random variable is sub-gaussian (resp. sub-exponential) if its $\psi_2$ (resp. $\psi_1$) norm is finite. The main use of this definition is the following concentration inequality:
@@ -61,7 +61,7 @@ As a result, any $\psi_\alpha$-norm bound yields exponential convergence tails. 
 Throughout this section, the update process on $\vec{w}_t$ will be written as
 \begin{equation}
 %\label{2406:eq:app:one_step_w}
-    \vec{w}_{t+1} = \frac{\vec{w}_t - \gamma\, \vec{g}_t}{\norm{\vec{w}_t - \gamma\, \vec{g}_t}},
+    \vec{w}_{t+1} = \frac{\vec{w}_t - \gamma \vec{g}_t}{\norm{\vec{w}_t - \gamma \vec{g}_t}},
 \end{equation}
 where $\vec{g}_t$ is the gradient at time $t$: $\vec{g}_t = \nabla_{w_{t}} \ell_t$, and $\ell_t$ is the empirical loss $t$, that can be either the correlation or the square loss. A direct computation of both gradients implies the following lemma:
 \begin{lemma}
@@ -117,7 +117,7 @@ and the following $\gamma$-dependent time:
 \begin{proposition}\label{2406:prop:app:diff_ineq_m}
 Define
 \begin{equation}
-    t_{\max} = \frac{n_b}{C_{\max} d \log(d)^{C_{\max}}\, \gamma^2},
+    t_{\max} = \frac{n_b}{C_{\max} d \log(d)^{C_{\max}} \gamma^2},
 \end{equation}
 for some sufficiently large $C_{\max} > 0$. Then, for a sufficiently small choice of $c_\gamma$:
 \begin{enumerate}
@@ -173,7 +173,7 @@ Further, under the event $\cE_t$, we have $1/2 \leq c_t \leq 2$.
         m_{t+1} = \frac{m_t - \gamma c_t \langle \vec{w}^\star,\vec{g}_t^\bot \rangle}{\norm{\vec{w}_t - \gamma c_t \vec{g}_t^\bot}}.
     \end{equation}
     Expanding the norm in the denominator, and using that $\norm{\vec{w}_t} = 1$ and $\langle \vec{w}_t, \vec{g}_t^\bot \rangle = 0$:
-    \[ \norm{\vec{w}_t - \gamma\, \vec{g}_t} = \sqrt{1 + \gamma^2 c_t^2 \norm{\vec{g}_t^\bot}^2} \]
+    \[ \norm{\vec{w}_t - \gamma \vec{g}_t} = \sqrt{1 + \gamma^2 c_t^2 \norm{\vec{g}_t^\bot}^2} \]
     By the convexity inequality $(1+x)^{-1/2} \geq 1 - x/2$, valid for all $x \geq 0$, Equation \eqref{2406:eq:app:one_step_m} becomes
     \begin{align*}
         m_{t+1} &\geq \left(m_t - \gamma c_t \langle \vec{w}^\star,\vec{g}_t^\bot \rangle \right) \left( 1 - \frac{\gamma^2 c_t^2}2 \norm{\vec{g}_t^\bot}^2 \right).

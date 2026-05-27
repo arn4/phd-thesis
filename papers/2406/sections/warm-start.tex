@@ -83,7 +83,7 @@ and auxiliary integrals bearing expectations over $\mathcal{N}(\vec 0, \Omega)$:
 Then, there exists a constant $C$ independent from the input data dimension, such that the discrete stochastic process for the covariance \(\{\Omega_t\}_{t\in\mathbb{N}}\) in eq.~\eqref{2406:eq:main:covariance_def} induced by projected SGD dynamics is approximated by the deterministic covariance matrix \(\bar\Omega(t)\) with precision:
 \begin{equation}
 \label{2406:eq:main:time_horizon}
-    \mathbb{E} \norm{\Omega_t - \bar \Omega(t\Delta \tau)} \le e^{Ct}\sqrt{\Delta \tau}\,
+    \mathbb{E} \norm{\Omega_t - \bar \Omega(t\Delta \tau)} \le e^{Ct}\sqrt{\Delta \tau}
 \end{equation}
 with
     $\Delta \tau = d^{\max(-\delta,-2\delta+1-\mu)}$.
@@ -104,7 +104,7 @@ We refer to Appendix~\ref{2406:sec:app:derivation_of_lb_equations} for the infor
 
 In Fig.~\ref{2406:fig:warm_start_pd}~(left) we summarize the results of Prop.~\ref{2406:prop:main:exact_asympt} in a compact phase diagram. 
 The following dynamical regimes appear:
-\begin{itemize}[noitemsep,leftmargin=1em,wide=0pt]
+\begin{itemize}
     \item \textbf{Population Flow}: The dynamics of the sufficient statistics described by a deterministic set of ODEs~\eqref{2406:eq:spherical_closed_form_ode} is equivalent to population gradient flow. 
     \item \textbf{Noise learning}: The dynamic is dominated by high-dimensional noise, and consequently the algorithm does not learn the target;
         the behavior is reflected in the ODEs.
@@ -146,6 +146,6 @@ The asymptotic form of this term can be exactly computed to be (using Prop.~\ref
     \phi^{\rm{BC}}_{jl}=&\mathbb{E}\left[\sigma'(\lambda_j)\mathcal E \left(\lambda^\star\right)^\top\right]P^{-1}\mathbb{E}\left[\sigma'(\lambda_l)\mathcal E \lambda^\star\right]+\\
 &\mathbb{E}\left[\sigma'(\lambda_j)\mathcal E (\lambda^\bot)^\top\right]\left(Q^\bot\right)^{-1}\mathbb{E}\left[\sigma'(\lambda_l)\mathcal E \lambda^\bot\right]
 \end{align}
-with $ \vec \lambda^\bot = \vec \lambda - MP^{-1}\vec\lambda^\star\,\,\text{and}\,\,
+with $ \vec \lambda^\bot = \vec \lambda - MP^{-1}\vec\lambda^\star\text{and}
 Q^\bot = Q - M P^{-1}M^\top$.
 Although the contribution of the above term is asymptotically vanishing in the ODE description~\eqref{2406:eq:spherical_closed_form_ode} when $d \to \infty$, any theoretical description at finite $d$ will effectively depend on $\phi^{\rm{BC}}_{jl}$. In App.~\ref{2406:sec:app:hyperparams} we provide additional numerical investigation on the importance of~\eqref{2406:eq:main:large_batch_term} and the role of large batch sizes for non-asymptotic corrections to the characterization in Prop.~\ref{2406:prop:main:exact_asympt}. Moreover, we note that taking into account the presence of large batch size is pivotal to illustrate the time~/~complexity tradeoffs for weak recovery of the target subspace, as thoroughly discussed in Section~\ref{2406:sec:main:cold_start}.

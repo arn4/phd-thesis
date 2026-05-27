@@ -18,7 +18,7 @@ Similarly, we can consider the continuous equivalent of the gradient flow equati
 Through conservation of matter arguments, the evolution of the empirical measure for particles following the gradient flow equation \eqref{2302:eq:gf} obeys the following partial differential equation:
 \begin{equation}
     \label{2302:eq:def:gf_pde}\tag{GF-PDE}
-    \partial_t \mu_t = \nabla_{\vec{w}} \cdot \left( \mu_t\,\varphi(\,\cdot\,, \mu_t) \right) 
+    \partial_t \mu_t = \nabla_{\vec{w}} \cdot \left( \mu_t\varphi(\cdot, \mu_t) \right) 
 \end{equation}
 
 \begin{theorem}[\cite{mei2019mean}, Propositions 13-16]\label{2302:thm:mei_mf_bound}
@@ -54,9 +54,9 @@ where $\vec{g}$ is a uniform unit vector in $V^\bot$. Then $\mu_t$ is the measur
 \begin{equation}
 \label{2302:eq:app:df_pde}\tag{DF-PDE}
     \begin{split}
-        \partial_t \tilde\mu_t &= \nabla_{(\vec{m}, q)} \cdot \left( \tilde \mu_t \tilde \varphi(\,\cdot\,, \tilde \mu_t) \right) \\
+        \partial_t \tilde\mu_t &= \nabla_{(\vec{m}, q)} \cdot \left( \tilde \mu_t \tilde \varphi(\cdot, \tilde \mu_t) \right) \\
         \tilde \varphi_{\vec{m}}((\vec{m}, q), \tilde \mu) &= \mathbb{E}_{\vec{x}, \vec{g}}\left[ \sigma'(\tilde{\vec{w}}^\top \vec{x}) W^\star \vec{x} \left( f_{\Theta^\star}(\vec{x}) - \tilde f_{\tilde \mu}(\vec{x}) \right) \right] \\
-        \tilde \varphi_{q}((\vec{m}, q), \tilde \mu) &= \mathbb{E}_{\vec{x}, \vec{g}}\left[ \sigma'(\tilde{\vec{w}}^\top \vec{x}) \sqrt{q}\,\vec{g}^\top \vec{x} \left( f_{\Theta^\star}(\vec{x}) -\tilde  f_{\tilde \mu}(\vec{x}) \right) \right]
+        \tilde \varphi_{q}((\vec{m}, q), \tilde \mu) &= \mathbb{E}_{\vec{x}, \vec{g}}\left[ \sigma'(\tilde{\vec{w}}^\top \vec{x}) \sqrt{q}\vec{g}^\top \vec{x} \left( f_{\Theta^\star}(\vec{x}) -\tilde  f_{\tilde \mu}(\vec{x}) \right) \right]
     \end{split}
 \end{equation}
 where $\vec{x} = (\vec{z}, \vec{r}) \sim \mathcal{N}(0, \sfrac{1}{d}I_d)$ is a normalised Gaussian vector, $\vec{g} \sim \mathrm{Unif}(\mathbb{S}^{d-k-1})$, and

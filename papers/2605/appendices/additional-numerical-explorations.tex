@@ -267,9 +267,9 @@ We analyze the eigenvalue spectra learned by ridge spectral networks on a binary
 back-propagate through the random features and accumulate the absolute
 Jacobian--vector product over the training set,
 \begin{equation}
-  I_k^{(\ell)}(d) \;=\; \frac{1}{N}\sum_{i=1}^{N}
-  \left| \frac{\partial}{\partial x_{i,d}} \!\left( v_k^{(\ell)\!\top} \phi_\ell(x_i) \right) \right|
-  \;=\; \frac{1}{N}\sum_{i=1}^{N} \left| J_\ell(x_i)^{\!\top} v_k^{(\ell)} \right|_d,
+  I_k^{(\ell)}(d) = \frac{1}{N}\sum_{i=1}^{N}
+  \left| \frac{\partial}{\partial x_{i,d}} \left( v_k^{(\ell)\top} \phi_\ell(x_i) \right) \right|
+  = \frac{1}{N}\sum_{i=1}^{N} \left| J_\ell(x_i)^{\top} v_k^{(\ell)} \right|_d,
   \label{2605:eq:importance_per_k}
 \end{equation}
 where $J_\ell(x) = \partial \phi_\ell(x)/\partial x \in \mathbb{R}^{P\times D}$.
@@ -282,13 +282,13 @@ Different eigenvectors carry very different amounts of label signal. Rather than
 treating them uniformly, we aggregate the $K_\ell$ retained per-$k$ importance
 maps with weights given by the absolute signed-covariance eigenvalues,
 \begin{equation}\label{2605:eq:importance-layer}
-  \bar{I}^{(\ell)}(d) \;=\;\frac{\sum_{k=0}^{K_\ell-1} |\lambda_k^{(\ell)}|\, I_k^{(\ell)}(d)}{\sum_{k=0}^{K_\ell-1} |\lambda_k^{(\ell)}|}.
+  \bar{I}^{(\ell)}(d) =\frac{\sum_{k=0}^{K_\ell-1} |\lambda_k^{(\ell)}| I_k^{(\ell)}(d)}{\sum_{k=0}^{K_\ell-1} |\lambda_k^{(\ell)}|}.
 \end{equation}
 This emphasises directions that most strongly co-vary with the target while
 preserving the spatial information carried by the lower-ranked, but still
 label-aligned, eigenvectors.
 
-In~\Cref{2605:fig:celeba-feature-importance} each panel shows $\bar{I}^{(\ell)}$ reshaped to the $64\!\times\!64$ image grid and averaged over the three colour channels. We min--max rescale each panel independently to $[0,1]$. 
+In~\Cref{2605:fig:celeba-feature-importance} each panel shows $\bar{I}^{(\ell)}$ reshaped to the $64\times64$ image grid and averaged over the three colour channels. We min--max rescale each panel independently to $[0,1]$. 
 The shared colorbar reports this per-panel normalised intensity. The vertical label on the leftmost panel names the binary CelebA attribute used as $y$.
 
 \paragraph{Filter and activations for CNNs} In Section~\ref{2605:sec:real-data} we have already discussed the filters and activations learned by LoFi for CNNs. Here we provide additional visualizations of these filters and activations, for different layers and training set sizes.

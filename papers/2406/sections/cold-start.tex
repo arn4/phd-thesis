@@ -35,10 +35,10 @@ This assumption is useful to provide rigorous guarantees as it largely reduces t
 % \begin{equation}\label{2406:eq:initial_distribution_QM}
 % \begin{split}
 %     Q_{jj} \sim \text{Dirac}(1), \quad
-%     j\neq l:\;
-%     \sqrt{d}\,Q^{0}_{jl} \xrightarrow{d\to+\infty} \gauss(0,1)
+%     j\neq l:
+%     \sqrt{d}Q^{0}_{jl} \xrightarrow{d\to+\infty} \gauss(0,1)
 %     \\
-%     \sqrt{d}\,M^{0}_{j} \xrightarrow{d\to+\infty} \gauss(0,1).
+%     \sqrt{d}M^{0}_{j} \xrightarrow{d\to+\infty} \gauss(0,1).
 % \end{split}
 % \end{equation}
 % In the case where $\text{IE}=2$ and \(n_b=1\), this initialization has been refered also as \emph{mediocrity} \cite{arnaboldi2023escaping}, since the flatness of the loss at initialization makes the problem hard to learn even if is a maximum of the population risk. 
@@ -94,16 +94,16 @@ We are now in the position to formally state the result:
  % \begin{adjustwidth}{-0cm}{}
 \begin{tabular}{r| c | c | c |l}
    & SGD & SGD & Correlation loss SGD & One step  \\ 
-  &with $n_b \lesssim d^{\sfrac{\ell}{2}}$ &with $ d^{\sfrac{\ell}{2}} <\!\!< n_b \lesssim d^{\max (\ell-1,1) }$ &with $n_b=o\left(d^{\max(\ell-1, 1)}\right)$ &with $n_b \!=\! O(d^\ell)$ \\ 
- \hline  $\ell\!=\!1$& $T \!= O(\sfrac{d}{n_b}), N \!=\! O(d)$ & $T\!=\!O(1), N \!=\! O(d)$ & $T\!=\!O(\sfrac{d}{n_b}), N \!=\! O(d)$   & $T\!=\!1, N \!=\! O(d)$\\ 
- \hline  $\ell\!=\!2$ & $T\!=\! O(\sfrac{d \log{d}}{n_b}), N\!=\!O(d \log{d})$ & $T\!=\!O(\log{d}), N \!=\! O(d \log{d})$ & $T \!=\! O( \sfrac{d\log{d}}{n_b}), N \!=\! O(d \log{d})$ & $T\!=\!1, N \!=\! O(d^2)$ \\
+  &with $n_b \lesssim d^{\sfrac{\ell}{2}}$ &with $ d^{\sfrac{\ell}{2}} << n_b \lesssim d^{\max (\ell-1,1) }$ &with $n_b=o\left(d^{\max(\ell-1, 1)}\right)$ &with $n_b = O(d^\ell)$ \\ 
+ \hline  $\ell=1$& $T = O(\sfrac{d}{n_b}), N = O(d)$ & $T=O(1), N = O(d)$ & $T=O(\sfrac{d}{n_b}), N = O(d)$   & $T=1, N = O(d)$\\ 
+ \hline  $\ell=2$ & $T= O(\sfrac{d \log{d}}{n_b}), N=O(d \log{d})$ & $T=O(\log{d}), N = O(d \log{d})$ & $T = O( \sfrac{d\log{d}}{n_b}), N = O(d \log{d})$ & $T=1, N = O(d^2)$ \\
  \hline
- $\ell>2$ & $T \!=\! O(\sfrac{d^{\ell -1}}{n_b}), N \!=\! O(d^{\ell-1})$ & $T=O(d^{\sfrac{\ell}{2} - 1}), N \!=\! O(n_b d^{\sfrac{\ell}{2} - 1})$ & $T\!=\!O(\sfrac{d^{\ell-1}}{n_b}), N \!=\! O(d^{\ell-1})$ & $T\!=\!1, N\!=\! O(d^{\ell})$ \\
+ $\ell>2$ & $T = O(\sfrac{d^{\ell -1}}{n_b}), N = O(d^{\ell-1})$ & $T=O(d^{\sfrac{\ell}{2} - 1}), N = O(n_b d^{\sfrac{\ell}{2} - 1})$ & $T=O(\sfrac{d^{\ell-1}}{n_b}), N = O(d^{\ell-1})$ & $T=1, N= O(d^{\ell})$ \\
  \hline
 \end{tabular}
 % \end{adjustwidth}
-\caption{\textbf{Time~/~Complexity tradeoffs:} Number of iterations $T$ and the total number of samples $N$ needed to achieve weak recovery of the target for different training protocols in high dimensions. \textbf{Left:} One-pass SGD of batch size $n_b = d^{\sfrac{\ell}{2}}$, in this regime the optimal time complexity is obtained rescaling by $n_b$ the result of \cite{arous2021online} for $n_b=1$, i.e. by choosing the optimal learning rate $\gamma = O(n_b d^{-\sfrac{\ell}{2}})$. \textbf{Center-left:} One-pass SGD with batch size $d^{\sfrac{\ell}{2}} <\!\!< n_b \lesssim d^{\max (\ell-1,1)}$, for hard problems ($\ell > 2$) the sample complexity is significantly increased with respect to the $n_b=1$ case up to $N = O(n_bd^{\sfrac{\ell}{2}-1})$. The learning rate cannot be increased proportionally to $n_b$ in this region, fixed to be $\gamma = O(1)$. \textbf{Center-Right:} Correlation loss SGD with $n_b = o(d^{\max(\ell-1, 1)})$, this training protocol overcomes the limitation of SGD when $n_b >\!\!>d^{\sfrac{\ell}{2}}$ and $\ell >2$; the total sample complexity is $N=O(d^{\ell-1})$. The learning rate is fixed again to be proportional to the batch size $\gamma = O(n_bd^{-\sfrac{\ell}{2}})$. \textbf{Right:} The target is weakly recovered with one GD step of $n_b=O(d^\ell)$ batch. The learning rate is chosen as $\gamma = O( d^{\sfrac{(\ell-1)}{2}})$ for the One Step routine \cite{dandi2023how}.
-% , while is fixed to the optimal for fastest weak recovery for the other algorithms,  as characterized by Theorems.~(\ref{2406:thm:main:sgd_weak_recovery}\, ,\,\ref{2406:thm:main:no_yhat_weak_recovery}). 
+\caption{\textbf{Time~/~Complexity tradeoffs:} Number of iterations $T$ and the total number of samples $N$ needed to achieve weak recovery of the target for different training protocols in high dimensions. \textbf{Left:} One-pass SGD of batch size $n_b = d^{\sfrac{\ell}{2}}$, in this regime the optimal time complexity is obtained rescaling by $n_b$ the result of \cite{arous2021online} for $n_b=1$, i.e. by choosing the optimal learning rate $\gamma = O(n_b d^{-\sfrac{\ell}{2}})$. \textbf{Center-left:} One-pass SGD with batch size $d^{\sfrac{\ell}{2}} << n_b \lesssim d^{\max (\ell-1,1)}$, for hard problems ($\ell > 2$) the sample complexity is significantly increased with respect to the $n_b=1$ case up to $N = O(n_bd^{\sfrac{\ell}{2}-1})$. The learning rate cannot be increased proportionally to $n_b$ in this region, fixed to be $\gamma = O(1)$. \textbf{Center-Right:} Correlation loss SGD with $n_b = o(d^{\max(\ell-1, 1)})$, this training protocol overcomes the limitation of SGD when $n_b >>d^{\sfrac{\ell}{2}}$ and $\ell >2$; the total sample complexity is $N=O(d^{\ell-1})$. The learning rate is fixed again to be proportional to the batch size $\gamma = O(n_bd^{-\sfrac{\ell}{2}})$. \textbf{Right:} The target is weakly recovered with one GD step of $n_b=O(d^\ell)$ batch. The learning rate is chosen as $\gamma = O( d^{\sfrac{(\ell-1)}{2}})$ for the One Step routine \cite{dandi2023how}.
+% , while is fixed to the optimal for fastest weak recovery for the other algorithms,  as characterized by Theorems.~(\ref{2406:thm:main:sgd_weak_recovery} ,\ref{2406:thm:main:no_yhat_weak_recovery}). 
 } 
 \label{2406:table:weak_recovery}
 \end{center}
@@ -126,7 +126,7 @@ This section shows a similar phenomenology to \cite{arous2021online}: if we opti
 
 \textbf{Self-interaction regime --- } Conversely, the region $d^{\sfrac{\ell}{2}} \ll n_b \lesssim d^{\max (\ell-1,1)}$ does not adhere to the same straightforward paradigm. 
 % The dynamics of weights norm is dominated by a \textit{ self-interaction term } leading to the \emph{Correlation Loss SGD} region. 
-Indeed, standard SGD is not able to achieve weak recovery of the teacher direction using $T(n_b)\! =\! \sfrac{I(\ell)}{n_b}$ time iterations, but a simple modification of it - that we call \emph{Correlation Loss SGD} - is able to. The number of steps needed to weakly recover the target with this new training protocol can then be pushed down to \(T=\mathrm{polylog}(d)\) when using batch sizes $n_b = O(d^{\max (\ell-1,1)})$. We refer to the next section for a detailed analysis of this regime.
+Indeed, standard SGD is not able to achieve weak recovery of the teacher direction using $T(n_b) = \sfrac{I(\ell)}{n_b}$ time iterations, but a simple modification of it - that we call \emph{Correlation Loss SGD} - is able to. The number of steps needed to weakly recover the target with this new training protocol can then be pushed down to \(T=\mathrm{polylog}(d)\) when using batch sizes $n_b = O(d^{\max (\ell-1,1)})$. We refer to the next section for a detailed analysis of this regime.
  % \\ \textbf{Sub-power region ---} If $n = \omega(d^{\ell-1})$ Theorem \ref{2406:thm:main:sgd_weak_recovery} does not offer a sharp characterization of this region. 
  
 \textbf{One step regime ---} Recent works have discussed the role of one large learning rate gradient descent step (\textit{giant step}) when training of two-layer networks \citep{ba2022high,damian2022neural,dandi2023how}. More precisely, \cite{dandi2023how} sharply characterizes the section $n_b = \Omega(d^{\ell})$ where it is possible to learn the teacher direction in just one step by setting the learning rate to $\delta_{\rm{giant-step}}(\mu) = \frac{1-\ell}{2}$. 

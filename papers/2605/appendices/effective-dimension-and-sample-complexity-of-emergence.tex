@@ -10,7 +10,7 @@ Recall the residual candidate class
   =
   \left\{
   \varphi\in\mathcal H_{\ell-1}:
-  \norm{\varphi}_{\mathcal H_{\ell-1}}=1,\,
+  \norm{\varphi}_{\mathcal H_{\ell-1}}=1,
   \varphi \perp \varphi_1,\cdots, \varphi_{k-1}
   \right\}.
 \]
@@ -18,7 +18,7 @@ Let \(T_{\ell-1}:L^2(P_x)\to L^2(P_x)\) be the integral operator of the current 
 \[
     (T_{\ell-1}f)(\bm x)
     =
-    \int K_{\ell-1}(\bm x,\bm x')f(\bm x')\,dP_x(\bm x'),
+    \int K_{\ell-1}(\bm x,\bm x')f(\bm x')dP_x(\bm x'),
 \]
 and let \(\Pi^\perp_k\) denote the projection orthogonal to the selected features \(\varphi_1,\dots,\varphi_{k-1}\). The residual covariance operator is
 \[
@@ -33,7 +33,7 @@ Let  \(\{\lambda^{\ell,k}_j\}_{j\geq 1}\) denote the eigenvalues of \(T_{\ell,k}
     \begin{equation}
     D^\ell_k(r)
     \coloneqq
-    \operatorname{Tr}\!\left[
+    \operatorname{Tr}\left[
         T_{\ell,k}(T_{\ell,k}+r I)^{-1}
     \right]
     =
@@ -76,7 +76,7 @@ holds and the kernel \(K_{\ell-1}\) and labels \(y\) are uniformly bounded. Let
 \[
     r_\ell^{k,\star}
     \coloneqq
-    \argmax_{r:\, r \leq \lambda_1^{\ell,k}}
+    \argmax_{r: r \leq \lambda_1^{\ell,k}}
     r\sqrt{D^\ell_k(r)} .
 \]
 Here \(\lambda_1^{\ell,k}\) is the top residual eigenvalue, hence the largest
@@ -92,7 +92,7 @@ Then, for any \(\delta>0\), there is a constant
     \widehat c_{\ell,n}(\varphi)-c_\ell(\varphi)
     \right|
     \le
-    \widetilde C_{\ell,H}\,
+    \widetilde C_{\ell,H}
     r_\ell^{k,\star}
     \sqrt{\frac{D^\ell_k(r_\ell^{k,\star})}{n}} .
     \end{aligned}
@@ -133,7 +133,7 @@ We will show that:
 \begin{equation}
     \tau^k_\ell(r,n)
     \lesssim
-    \widetilde C_{\ell,H}\,
+    \widetilde C_{\ell,H}
     r\sqrt{\frac{D^\ell_k(r)}{n}}
     \label{2605:eq:lofi-noise-floor}
 \end{equation}
@@ -143,7 +143,7 @@ The above bound follows through an extension of Theorem~2.1 in
 \[
     \mathbb E R_n
     \left\{
-        f\in\mathcal H:\norm{f}_{\mathcal H}\le 1,\,
+        f\in\mathcal H:\norm{f}_{\mathcal H}\le 1,
         \mathbb E f(\bm X)^2\le r
     \right\}
     \lesssim
@@ -181,7 +181,7 @@ Any $\varphi$ with $\norm{\varphi}_{\mathcal{H}}=1$ can be expressed in the basi
     \varphi_\beta(\bm x)
     =
     \sum_{j\ge1}
-    \beta_j\sqrt{\lambda_j^{\ell,k}}\,
+    \beta_j\sqrt{\lambda_j^{\ell,k}}
     \phi_j^{\ell,k}(\bm x),
     \qquad
     \sum_j\beta_j^2\le 1.
@@ -200,7 +200,7 @@ The constraint $\E[\varphi(\bm X)^2]\le r$ then translates to
 The proof of Theorem~2.1 in 
 \cite{mendelson2003performance} relates the set $I_r$ to an ellipsoid $B_r$ through the following inclusions:
 \[
-    B_r\subset I_r\subset \sqrt2\,B_r,
+    B_r\subset I_r\subset \sqrt2B_r,
     \qquad
     B_r
     :=
@@ -209,7 +209,7 @@ The proof of Theorem~2.1 in
     \mu_j(r)=\left(\min\{1,r/\lambda_j^{\ell,k}\}\right)^{-1}.
 \]
 Thus the supremum over \(I_r\) is bounded, up to an absolute constant, by the
-supremum over \(B_r\). Setting \(\theta_j=\sqrt{\mu_j(r)}\,\beta_j\), 
+supremum over \(B_r\). Setting \(\theta_j=\sqrt{\mu_j(r)}\beta_j\), 
 \(B_r\) is re-parameterized as the Euclidean unit ball \(\norm{\theta}_2\le1\). Next, define
 \[
     a_j(r) \coloneqq \frac{\lambda_j^{\ell,k}}{\mu_j(r)}
@@ -220,13 +220,13 @@ supremum over \(B_r\). Setting \(\theta_j=\sqrt{\mu_j(r)}\,\beta_j\),
 The decomposition $\varphi_\beta(\bm x)
     =
     \sum_{j\ge1}
-    \beta_j\sqrt{\lambda_j^{\ell,k}}\,
+    \beta_j\sqrt{\lambda_j^{\ell,k}}
     \phi_j^{\ell,k}(\bm x)$ can then be re-expressed as:
     \begin{align*}
          &\sum_{j\ge1}
-    \beta_j\sqrt{\lambda_j^{\ell,k}}\,
+    \beta_j\sqrt{\lambda_j^{\ell,k}}
     \phi_j^{\ell,k}(\bm x)\\&= \sum_j
-    \sqrt{\mu_j(r)}\,\beta_j \frac{1}{\sqrt{\mu_j(r)}}\phi_j^{\ell,k}(\bm x)\\&= \sum_j
+    \sqrt{\mu_j(r)}\beta_j \frac{1}{\sqrt{\mu_j(r)}}\phi_j^{\ell,k}(\bm x)\\&= \sum_j
             \theta_j\sqrt{a_j(r)}\phi_j^{\ell,k}(\bm x)
     \end{align*}
 
@@ -251,7 +251,7 @@ Define:
 \[
     v_{\ell,k,r}(\bm x)
     :=
-    \left(\sqrt{a_j(r)}\,\phi_j^{\ell,k}(\bm x)\right)_{j\ge1},
+    \left(\sqrt{a_j(r)}\phi_j^{\ell,k}(\bm x)\right)_{j\ge1},
 \]
 then the RHS in Equation \ref{2605:eq:radbound} can be expressed as:
 \begin{equation}\label{2605:eq:matconc}
@@ -275,7 +275,7 @@ We now bound Equation \ref{2605:eq:matconc} through a matrix concentration argum
 \[
     M_{\ell,k}(r)
     :=
-        \E\!\left[
+        \E\left[
             \norm{v_{\ell,k,r}(\bm X)}_2^2
             v_{\ell,k,r}(\bm X)
             \otimes
@@ -295,12 +295,12 @@ since $a_j(r) \leq r$. Subsequently by Cauchy--Schwarz and hypercontractivity (A
     \begin{aligned}
     \left\langle u,M_{\ell,k}(r)u\right\rangle
     &=
-    \sum_j a_j(r)\,
-    \E\!\left[
+    \sum_j a_j(r)
+    \E\left[
         \big(\phi_j^{\ell,k}(\bm X)\big)^2g_u(\bm X)^2
     \right]                                                   \\
     &\le
-    \sum_j a_j(r)\,
+    \sum_j a_j(r)
     \norm{\phi_j^{\ell,k}}_{L^4(P_x)}^2
     \norm{g_u}_{L^4(P_x)}^2                                   \\
     &\le
@@ -308,14 +308,14 @@ since $a_j(r) \leq r$. Subsequently by Cauchy--Schwarz and hypercontractivity (A
     \psi_{\ell,k}(r)^2
     \E[g_u(\bm X)^2]
     \le
-    H_\ell^4 r\,\psi_{\ell,k}(r)^2 .
+    H_\ell^4 r\psi_{\ell,k}(r)^2 .
     \end{aligned}
 \]
 Therefore
 \[
    \norm{M_{\ell,k}(r)}_2
     \lesssim
-    H_\ell^4 r\,\psi_{\ell,k}(r)^2
+    H_\ell^4 r\psi_{\ell,k}(r)^2
     \asymp
     H_\ell^4 r^2D^\ell_k(r).
 \]
@@ -328,7 +328,7 @@ factors:
         \sum_{i=1}^n\epsilon_i\varphi(\bm X_i)^2
     \right|
     \lesssim
-    H_\ell^2\sqrt{nr}\,\psi_{\ell,k}(r)
+    H_\ell^2\sqrt{nr}\psi_{\ell,k}(r)
     \asymp
     H_\ell^2 n r\sqrt{\frac{D^\ell_k(r)}{n}}.
 \]
@@ -345,7 +345,7 @@ Define the true label, weighted covariance:
     \bm C^{(\ell)}
     \coloneqq
     \mathbb{E}[
-    y\,
+    y
     \bz_{\ell-1}(\bm x)
     {\bz}_{\ell-1}(\bm x)^\top] ,
 \end{equation}
@@ -359,7 +359,7 @@ and the unweighted covariance:
 \end{equation}
 
 To estimate the cutoff $n^k_\ell$ for the number of samples required for the recovery of $\phi_k$, we proceed as follows:
-\begin{enumerate}[leftmargin=2em]
+\begin{enumerate}
     \item Let $\bv_1,\dots \bv_{k-1}$ denote the top $k-1$ eigenvectors of $\bm C^{(\ell)}$. Compute the residual covariance:
     \begin{equation}
         \bm\Sigma^{(\ell)}_k \coloneqq (I-\bv_{k-1}\bv_{k-1}^\top) \bm\Sigma^{(\ell)}_{k-1}(I-\bv_{k-1}\bv_{k-1}^\top).
@@ -398,7 +398,7 @@ Hermite tensor as
 For Gaussian inputs, these coordinates are orthonormal in \(L^2(P_x)\). Hence,
 for any two coefficient vectors \(a,b\in\mathbb R^{D_k}\),
 \[
-    \mathbb E\!\left[
+    \mathbb E\left[
         \langle a,H_k(\bm X)\rangle
         \langle b,H_k(\bm X)\rangle
     \right]
@@ -481,4 +481,4 @@ Appendix~\ref{2605:app:th_rf}.
 
 We now discuss how the sample complexity prediction in Proposition \ref{2605:prop:emergence} recovers the rates in the setting of multi-index models with power-law dependence on the label. 
 
-We follow here \cite{defilippis2026scaling,defilippis2026optimal} and consider hierarchical multi-index target \(y = f^*(\langle\bm{w}_1^*,\bm{x}\rangle,\dots,\langle\bm{w}_r^*,\bm{x}\rangle) + \xi\) with isotropic Gaussian inputs \(\bm{x}\sim\mathcal{N}(0,\bm{I}_d)\) and orthonormal teacher directions \(\{\bm{w}_i^*\}_{i=1}^r\). Because the input covariance is the identity \(D^\ell \asymp d\), at the slice-wise scale used in Proposition~\ref{2605:prop:emergence}. The features at layer \(\ell\) along each candidate direction have unit variance under the Gaussian input, so the variance scale is order one, \(\tau = r_\ell^{(k)} = O(1)\). Finally, the power-law dependence of the label on the teacher coefficients translates into a power-law decay of the population correlations across the planted directions: the \(i\)-th spike satisfies \(\rho_\ell^{(i)} = O(i^{-\gamma})\), where \(\gamma>0\) is the exponent governing the label spectrum. Plugging \(D_k^\ell \asymp d\), \(\tau = O(1)\) and \(\rho^{(i)} = O(i^{-\gamma})\) into the recovery condition \(n \gg (r_\ell^{(k)})^2 D_k^\ell / (\rho_\ell^{(k)})^2\) of Proposition~\ref{2605:prop:emergence} yields the sample-complexity threshold \(n_i \gtrsim d\, i^{2\gamma}\) for resolving the \(i\)-th spike, which matches the optimal scaling laws derived in~\cite{defilippis2026scaling,defilippis2026optimal}.
+We follow here \cite{defilippis2026scaling,defilippis2026optimal} and consider hierarchical multi-index target \(y = f^*(\langle\bm{w}_1^*,\bm{x}\rangle,\dots,\langle\bm{w}_r^*,\bm{x}\rangle) + \xi\) with isotropic Gaussian inputs \(\bm{x}\sim\mathcal{N}(0,\bm{I}_d)\) and orthonormal teacher directions \(\{\bm{w}_i^*\}_{i=1}^r\). Because the input covariance is the identity \(D^\ell \asymp d\), at the slice-wise scale used in Proposition~\ref{2605:prop:emergence}. The features at layer \(\ell\) along each candidate direction have unit variance under the Gaussian input, so the variance scale is order one, \(\tau = r_\ell^{(k)} = O(1)\). Finally, the power-law dependence of the label on the teacher coefficients translates into a power-law decay of the population correlations across the planted directions: the \(i\)-th spike satisfies \(\rho_\ell^{(i)} = O(i^{-\gamma})\), where \(\gamma>0\) is the exponent governing the label spectrum. Plugging \(D_k^\ell \asymp d\), \(\tau = O(1)\) and \(\rho^{(i)} = O(i^{-\gamma})\) into the recovery condition \(n \gg (r_\ell^{(k)})^2 D_k^\ell / (\rho_\ell^{(k)})^2\) of Proposition~\ref{2605:prop:emergence} yields the sample-complexity threshold \(n_i \gtrsim d i^{2\gamma}\) for resolving the \(i\)-th spike, which matches the optimal scaling laws derived in~\cite{defilippis2026scaling,defilippis2026optimal}.

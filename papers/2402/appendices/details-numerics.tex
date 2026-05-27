@@ -16,11 +16,11 @@ Here $\vec\zeta^{(t)}$ is a zero mean Gaussian Process with covariance
 \end{align}
 and the effective regularisation $\Lambda^{(t)}$ concentrates to
 \begin{align} %\label{2402:eq:lambda_def}
-    \Lambda^{(t)} = \alpha\mathbb{E}_{\vec h}\left[\nabla^2_{\vec h^{(t)}}\ell\left( \vec h^{(t)}\right)\right]\,.
+    \Lambda^{(t)} = \alpha\mathbb{E}_{\vec h}\left[\nabla^2_{\vec h^{(t)}}\ell\left( \vec h^{(t)}\right)\right].
 \end{align}
 The memory kernel $R_\ell^{(t,\tau)}$ is identically zero for $t\leq \tau$ while for $t > \tau$ it concentrates to
 \begin{align} %\label{2402:eq:R_def}
-    R_\ell^{(t,\tau)} = \alpha \mathbb{E}_{\vec h}\left[\frac{\partial\, \nabla_{\vec h^{(t)}}\ell\left( \vec h^{(t)}\right)}{\partial\, \zeta^{(\tau)}} \right]
+    R_\ell^{(t,\tau)} = \alpha \mathbb{E}_{\vec h}\left[\frac{\partial \nabla_{\vec h^{(t)}}\ell\left( \vec h^{(t)}\right)}{\partial \zeta^{(\tau)}} \right]
 \end{align}
 % with the process $T^{(t,\tau)}$ distributed as
 % \begin{align} \label{2402:eq:T_update}

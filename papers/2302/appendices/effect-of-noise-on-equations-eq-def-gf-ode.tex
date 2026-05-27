@@ -6,11 +6,11 @@ In this appendix we present some corrective terms to Equations~\eqref{2302:eq:de
 In \cite{veiga2022phase} the terms proportional to $\sfrac{\lr}{\hids}$ are neglected completely when running numerical integrations. However, we noticed that a term from $\Psi^{(\mathrm{Var})}_{ij}(\Omega)$ could be kept in order to get better agreement between ODEs and simulation in presence of label noise at small but finite $\sfrac{\gamma}{p}\ll 1$.
 Letting \(\mathcal{E}^*  \coloneqq \mathcal{E} - \sqrt{\noise}z\), we can decompose
 \[
-    \Psi^{(\mathrm{Var})}_{ij}(\Omega) = \mathbb E_{(\vec{\lambda},\vec{\lambda}^{\star})\sim\mathcal{N}(\vec{0}_{\hids+\hidt}, \Omega)} \left[\sigma'(\lambda_i)\sigma'(\lambda_j)\,{\mathcal{E}^*}^2 \right] + \mathbb E_{(\vec{\lambda},\vec{\lambda}^{\star})\sim\mathcal{N}(\vec{0}_{\hids+\hidt}, \Omega)} \left[\sigma'(\lambda_i)\sigma'(\lambda_j)\,\noise \right],
+    \Psi^{(\mathrm{Var})}_{ij}(\Omega) = \mathbb E_{(\vec{\lambda},\vec{\lambda}^{\star})\sim\mathcal{N}(\vec{0}_{\hids+\hidt}, \Omega)} \left[\sigma'(\lambda_i)\sigma'(\lambda_j){\mathcal{E}^*}^2 \right] + \mathbb E_{(\vec{\lambda},\vec{\lambda}^{\star})\sim\mathcal{N}(\vec{0}_{\hids+\hidt}, \Omega)} \left[\sigma'(\lambda_i)\sigma'(\lambda_j)\noise \right],
 \]
 allowing us to define
 \begin{equation}
-    \Psi^{(\mathrm{noise})}_{ij}(\Omega) \coloneqq \mathbb E_{(\vec{\lambda},\vec{\lambda}^{\star})\sim\mathcal{N}(\vec{0}_{\hids+\hidt}, \Omega)} \left[\sigma'(\lambda_i)\sigma'(\lambda_j)\,\noise \right].
+    \Psi^{(\mathrm{noise})}_{ij}(\Omega) \coloneqq \mathbb E_{(\vec{\lambda},\vec{\lambda}^{\star})\sim\mathcal{N}(\vec{0}_{\hids+\hidt}, \Omega)} \left[\sigma'(\lambda_i)\sigma'(\lambda_j)\noise \right].
 \end{equation}
 The asymptotic of this term at late times $t\gg 1$ was explicitly computed in \cite{biehl1995learning} and \cite{goldt2019dynamics} for different architectures, where it was found that $\Psi^{(\mathrm{noise})}_{ij} \propto \noise$. In these cases, when the dynamics approaches the point where \(\mathcal{E}^* \sim \sfrac{\lr\noise}{\hids}\), then the term $\Psi^{(\mathrm{GF})}_{ij}(\Omega)$ is of the same order of $\sfrac{\lr}{\hids}\Psi^{(\mathrm{noise})}_{ij}(\Omega)$, while the remaining part of $\Psi^{(\mathrm{Var})}_{ij}(\Omega)$ is still negligible since is scaling as \({\mathcal{E}^*}^2\). 
 It follows that the first order correction in $\sfrac{\gamma}{p}$ of equations \eqref{2302:eq:def:gf_ode} is given by: 

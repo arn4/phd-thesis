@@ -9,7 +9,7 @@ Consider the standard $L$-layer network
 \qquad
 \bz_0(\bx)=\bx,
 \qquad
-z_\ell(x)=\sigma\!\bigl(W_\ell \bz_{\ell-1}(\bx)\bigr),\quad \ell=1,\dots,L,
+z_\ell(x)=\sigma\bigl(W_\ell \bz_{\ell-1}(\bx)\bigr),\quad \ell=1,\dots,L,
 \label{2605:eq:sec2-arch}
 \end{equation}
 with square loss $\mathcal{L}=\tfrac{1}{2n}\sum_\mu(y_\mu-\hat f(\bx_\mu))^2$. The final readout $a_L\in\mathbb{R}^{p_L}$ is fixed throughout training; the weight matrices $W_\ell$ are updated layer-wise.
@@ -46,11 +46,11 @@ $\sigma(0)=0$, and $\|\sigma'\|_\infty,\|\sigma''\|_\infty,\|\sigma'''\|_\infty<
 Define the \emph{linear spike direction} and the \emph{label-weighted covariance} at layer $\ell$:
 \begin{equation}\label{2605:eq:sec2-linear-component}
 \hat{\bu}_\ell
-\coloneqq \frac{1}{n}\sum_{\mu=1}^n y_\mu\,\bz_{\ell-1}(\bx_\mu),
+\coloneqq \frac{1}{n}\sum_{\mu=1}^n y_\mu\bz_{\ell-1}(\bx_\mu),
 \qquad
 \widehat{C}^{(\ell)}
 \coloneqq \frac{1}{n}\sum_{\mu=1}^n
-y_\mu\,\bz_{\ell-1}(\bx_\mu)\bz_{\ell-1}(\bx_\mu)^\top.
+y_\mu\bz_{\ell-1}(\bx_\mu)\bz_{\ell-1}(\bx_\mu)^\top.
 \end{equation}
 
 \begin{theorem}[Layerwise GD approximation]\label{2605:thm:neural-lofi}
@@ -79,8 +79,8 @@ where \(c_0=\sigma'(0)\). Suppose that the effective readout for neuron $i$ is n
 for a fixed \(c_{\rm rd}>0\). For such neurons and \(0\le t<T_\ell\),
 \begin{equation}\label{2605:eq:sec2-main-dynamics}
 w_{\ell,i}(t+1) - w_{\ell,i}(t)
-= \eta\,c_0\,\bar{a}_{\ell,i}\,\hat{\bu}_\ell
-+ \eta\,\bar{a}_{\ell,i}\,c_1\,\widehat{C}^{(\ell)}\,w_{\ell,i}(t)
+= \etac_0\bar{a}_{\ell,i}\hat{\bu}_\ell
++ \eta\bar{a}_{\ell,i}c_1\widehat{C}^{(\ell)}w_{\ell,i}(t)
 + R_{\ell,i}(t),
 \end{equation}
 where \(c_1=\sigma''(0)\). For every \(0\le t\le T_\ell\) the accumulated residual obeys
@@ -99,7 +99,7 @@ the first two nontrivial orders in the layer-\(\ell\) initialization scale.
 
 \begin{remark}
 The three components in Equation~\eqref{2605:eq:sec2-main-dynamics} have the following roles:
-\begin{itemize}[noitemsep]
+\begin{itemize}
 \item \textbf{Linear spike.} $\eta c_0 \bar{a}_{\ell,i}\hat{\bu}_\ell$ is independent of the current weight; over the horizon $T_\ell$ it moves the neuron by $O(\alpha_\ell)$ toward the empirical label-feature correlation.
 \item \textbf{Covariance amplification.} $\eta \bar{a}_{\ell,i} c_1\widehat{C}^{(\ell)}w_{\ell,i}(t)$ is linear in the current weight and amplifies components aligned with the leading eigenvectors of $\widehat{C}^{(\ell)}$.
 \item \textbf{Remainder.} The per-step remainder is second order in the current
@@ -128,7 +128,7 @@ For the standard architecture the gradient of the loss w.r.t.\
 \begin{equation}\label{2605:eq:jacobian}
 \bm{J}_{L\ell}(x)
 := \frac{\partial z_L(x)}{\partial z_\ell(x)}
-= \prod_{m=\ell+1}^{L}\mathrm{diag}\!\bigl(\sigma'(\bm{h}_m(x))\bigr)W_m,
+= \prod_{m=\ell+1}^{L}\mathrm{diag}\bigl(\sigma'(\bm{h}_m(x))\bigr)W_m,
 \quad \bm{h}_m(x)=W_m z_{m-1}(x),
 \end{equation}
 and the sample-dependent effective readout
@@ -139,8 +139,8 @@ By the chain rule,
 \begin{equation}\label{2605:eq:full-grad}
 \nabla_{w_{\ell,i}}\mathcal{L}
 = -\frac{1}{n}\sum_{\mu=1}^n
-  r_\mu\,\bar{a}_{\ell,i}(\bx_\mu)\,
-  \sigma'\!\bigl(u_{\ell,i}(\bx_\mu)\bigr)\,\bz_{\ell-1}(\bx_\mu),
+  r_\mu\bar{a}_{\ell,i}(\bx_\mu)
+  \sigma'\bigl(u_{\ell,i}(\bx_\mu)\bigr)\bz_{\ell-1}(\bx_\mu),
 \quad r_\mu := y_\mu - \hat f(\bx_\mu),
 \end{equation}
 where $u_{\ell,i}(x)=\langle w_{\ell,i},\bz_{\ell-1}(x)\rangle$.
@@ -154,8 +154,8 @@ considered below the representations are uniformly bounded and
 \(\|\bm h_m(x)\|\lesssim\alpha_m\), and Taylor expanding \(\sigma'\) around
 zero gives
 \begin{equation}\label{2605:eq:diag-expand}
-\mathrm{diag}(\sigma'(\bm{h}_m(x))) = c_0 I + c_1\,\mathrm{diag}(\bm{h}_m(x)) + O(\alpha_m^2),
-\quad c_0=\sigma'(0),\;c_1=\sigma''(0).
+\mathrm{diag}(\sigma'(\bm{h}_m(x))) = c_0 I + c_1\mathrm{diag}(\bm{h}_m(x)) + O(\alpha_m^2),
+\quad c_0=\sigma'(0),c_1=\sigma''(0).
 \end{equation}
 Let
 \[
@@ -210,13 +210,13 @@ Hence, at the start of
 layer \(\ell\),
 \[
 \|\hat{\bu}_\ell\|
-\le \frac1n\sum_\mu |y_\mu|\,\|\bz_{\ell-1}(\bx_\mu)\|
+\le \frac1n\sum_\mu |y_\mu|\|\bz_{\ell-1}(\bx_\mu)\|
 \le K,
 \]
 and
 \[
 \|\widehat C^{(\ell)}\|_{\mathrm{op}}
-\le \frac1n\sum_\mu |y_\mu|\,\|\bz_{\ell-1}(\bx_\mu)\|^2
+\le \frac1n\sum_\mu |y_\mu|\|\bz_{\ell-1}(\bx_\mu)\|^2
 \le K .
 \]
 
@@ -236,7 +236,7 @@ On this horizon,
 \(|u_{\ell,i}(\bx_\mu)|\le K\alpha_\ell\).  Taylor's theorem and
 Assumption~\ref{2605:ass:nonlin} give
 \begin{equation}\label{2605:eq:sec2-sigma-linearization}
-\sigma'(u) = c_0 + c_1\,u + \omega_\sigma(u),\quad
+\sigma'(u) = c_0 + c_1u + \omega_\sigma(u),\quad
 |\omega_\sigma(u)|\leq \tfrac{1}{2}\|\sigma'''\|_\infty u^2 .
 \end{equation}
 Moreover, by~\eqref{2605:eq:readout-const-approx},
@@ -244,15 +244,15 @@ Moreover, by~\eqref{2605:eq:readout-const-approx},
 with \(\sup_\mu|\varepsilon_{\ell,i}(\bx_\mu)|=o(\alpha_\ell)\).  Thus the
 readout replacement error is smaller than the leading readout contribution
 itself; quantitatively it is
-\(|\bar a_{\ell,i}|\,o(\alpha_\ell)=o(\alpha_\ell^2)\), because
+\(|\bar a_{\ell,i}|o(\alpha_\ell)=o(\alpha_\ell^2)\), because
 \(|\bar a_{\ell,i}|=O(\gamma_\ell)=o(\alpha_\ell)\).  By the hierarchy of scales, we further have
 $|\hat f(\bx_\mu)|=o(\alpha_\ell^2)$, and
 $r_\mu=y_\mu+o(\alpha_\ell^2)$.
 Substituting these three estimates in~\eqref{2605:eq:full-grad} yields
 \[
 \frac1n\sum_{\mu=1}^n
-r_\mu\,\bar a_{\ell,i}(\bx_\mu)\,
-\sigma'\!\bigl(u_{\ell,i}(\bx_\mu)\bigr)\,\bz_{\ell-1}(\bx_\mu)
+r_\mu\bar a_{\ell,i}(\bx_\mu)
+\sigma'\bigl(u_{\ell,i}(\bx_\mu)\bigr)\bz_{\ell-1}(\bx_\mu)
 =
 \bar a_{\ell,i}\bigl[c_0\hat{\bu}_\ell
 +c_1\widehat C^{(\ell)}w_{\ell,i}(t)\bigr]
@@ -263,7 +263,7 @@ with the per-step error bound
 \|\mathcal E_{\ell,i}(t)\|
 \le
 K\Bigl(
-    |\bar a_{\ell,i}|\,\sup_\mu|\varepsilon_{\ell,i}(\bx_\mu)|
+    |\bar a_{\ell,i}|\sup_\mu|\varepsilon_{\ell,i}(\bx_\mu)|
     + |\bar a_{\ell,i}|\alpha_\ell^2
     + o(\alpha_\ell^2)
 \Bigr)
@@ -278,7 +278,7 @@ $R_{\ell,i}(t):=\eta\mathcal E_{\ell,i}(t)$ proves
         \sum_{s=0}^{t-1}R_{\ell,i}(s)
     \right\|
     \le
-    \eta t\,K\alpha_\ell^2
+    \eta tK\alpha_\ell^2
     \le
     K\alpha_\ell^3,
 \]

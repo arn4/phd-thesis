@@ -1224,11 +1224,47 @@ _BREAK_OPTARG_RE = re.compile(
 # Linebreak optional spacing arg: \\[2em] -> \\, \\*[2em] -> \\*
 _LINEBREAK_OPT_RE = re.compile(r"(\\\\\*?)\s*\[[^\]]*\]")
 
+# Enumitem optional arg on list environments:
+#   \begin{itemize}[noitemsep,leftmargin=1em,wide=0pt]  ->  \begin{itemize}
+# The user wants the whole bracket gone even when it bundles a stylistic
+# `label=...` option — default LaTeX list rendering is fine.
+_LIST_OPT_RE = re.compile(
+    r"\\begin\s*\{(?P<env>itemize|enumerate|description)\}\s*\[[^\]]*\]"
+)
+
+# Whole-call strip for \setlist[*]?{...} (global enumitem layout config).
+_SETLIST_RE = re.compile(
+    r"\\setlist\*?\s*(?:\[[^\]]*\])?\s*\{[^{}]*\}"
+)
+
+# Whole-call strip for \setlength{\<list-spacing-register>}{...}. Restricted
+# to list-layout registers so semantic registers (\baselineskip, \textwidth)
+# stay untouched.
+_SETLENGTH_SPACING_RE = re.compile(
+    r"\\setlength\s*\{\\(?:itemsep|parsep|topsep|partopsep|"
+    r"listparindent|labelwidth|labelsep|leftmargin|rightmargin)\}"
+    r"\s*\{[^{}]*\}"
+)
+
+# Math-mode kerning macros. The single-punctuation forms (\, \; \: \! \>)
+# are pure kerning. \quad and \qquad are deliberately KEPT — they express
+# semantic spacing (cases of a piecewise definition, equations on the same
+# line). The punctuation set is `,;:!>` exactly, so escaped characters like
+# \\&, \\%, \\_, \\{, \\}, \\$, \\#, \\\\ are unaffected.
+_MATH_KERN_PUNCT_RE = re.compile(r"\\[,;:!>]")
+
+# Named kerning macros (each ends in letters — word-boundary needed).
+_MATH_KERN_NAMED_RE = re.compile(
+    r"\\(?:thinspace|medspace|thickspace|enspace|hairspace|"
+    r"negthinspace|negmedspace|negthickspace)(?![A-Za-z@])"
+)
+
 # Float environments whose optional [ht!] placement arg we strip.
 _FLOAT_ENVS = (
     "figure", r"figure\*",
     "table", r"table\*",
     "longtable", "sidewaystable", "sidewaysfigure",
+    "algorithm", "algorithm2e",
 )
 _FLOAT_PLACEMENT_RE = re.compile(
     rf"\\begin\s*\{{(?P<env>{'|'.join(_FLOAT_ENVS)})\}}\s*\[[^\]]*\]"
@@ -1272,11 +1308,20 @@ def _strip_spacing_and_layout(text: str, counts: dict[str, int]) -> str:
     text = count_and_drop(_SPACING_BRACE_RE, "vspace/hspace/addvspace", text)
     text = count_and_drop(_SPACING_BARE_RE, "bigskip/hfill/noindent/...", text)
     text = count_and_drop(_BREAK_OPTARG_RE, "pagebreak/linebreak", text)
+    text = count_and_drop(_SETLIST_RE, "setlist", text)
+    text = count_and_drop(_SETLENGTH_SPACING_RE, "setlength spacing", text)
+    text = count_and_drop(_MATH_KERN_PUNCT_RE, "math-kern \\,/\\;/\\:/\\!/\\>", text)
+    text = count_and_drop(_MATH_KERN_NAMED_RE, "math-kern named", text)
     # \\[2em] -> \\
     def lb_repl(m: re.Match) -> str:
         counts["\\\\[len]"] = counts.get("\\\\[len]", 0) + 1
         return m.group(1)
     text = _LINEBREAK_OPT_RE.sub(lb_repl, text)
+    # \begin{itemize|enumerate|description}[...] -> \begin{...}
+    def list_repl(m: re.Match) -> str:
+        counts["itemize/enumerate opts"] = counts.get("itemize/enumerate opts", 0) + 1
+        return f"\\begin{{{m.group('env')}}}"
+    text = _LIST_OPT_RE.sub(list_repl, text)
     return text
 
 

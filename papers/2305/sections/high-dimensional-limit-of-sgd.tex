@@ -55,10 +55,10 @@ As discussed in the related works, the high-dimensional limit of one-pass SGD fo
 When $d\to\infty$, the weights are be orthogonal with high probability. In terms of the sufficient statistics: 
 \begin{equation}\label{2305:eq:initial_distribution_QM}
     \Q_{jj} \sim \text{Dirac}(1), \qquad
-    j\neq l:\;
-    \sqrt{d}\,\Q^{0}_{jl} \xrightarrow{d\to+\infty} \gauss(0,1)
+    j\neq l:
+    \sqrt{d}\Q^{0}_{jl} \xrightarrow{d\to+\infty} \gauss(0,1)
     \quad\text{and}\quad
-    \sqrt{d}\,\M^{0}_{j} \xrightarrow{d\to+\infty} \gauss(0,1).
+    \sqrt{d}\M^{0}_{j} \xrightarrow{d\to+\infty} \gauss(0,1).
 \end{equation}
 Therefore, since the variance of $(m^{0},Q^{0})$ decays as $\sfrac{1}{d}$, the higher the dimension, the closer a random initialization is to a stationary point of the dynamics. Moreover, of all the $d$ directions, there exists $d-p-1$ directions orthogonal to $w_{\star}$ and $\{w^{0}_{j}\}_{j\in[p]}$ along which the population risk \eqref{2305:eq:def:risk} remains constant. The proliferation of flat directions close to initialization severely slows down the SGD dynamics at high-dimensions, which typically requires $n=O(d\log{d})$ steps to develop a significant correlation with the signal in order to escape this region. This scenario, which we refer to as \emph{escaping mediocrity}, is common to many hard learning problems \citep{arous2021online}. In the following, we leverage the exact description \eqref{2305:eq:overlapping_ODE} derived in this section to estimate precisely how much data is required for SGD to escape mediocrity in the prototypical phase retrieval problem \eqref{2305:eq:def:teacher}. 
 

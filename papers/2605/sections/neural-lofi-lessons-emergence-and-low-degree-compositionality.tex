@@ -17,7 +17,7 @@ Neural LoFi provides a simple mechanism for this phenomenon. By Theorem~\ref{260
 \left|
 \widehat{\mathbb E}_n
 \left[
-y\,\varphi(\bm x)^2
+y\varphi(\bm x)^2
 \right]
 \right|,
 \label{2605:eq:lofi-accessibility}
@@ -29,7 +29,7 @@ where $\mathcal H_{\ell-1}$ is the RKHS induced by the representation after $\el
   \coloneqq
   \left\{
   \varphi\in\mathcal H_{\ell-1}:
-  \norm{\varphi}_{\mathcal H_{\ell-1}}=1,\,
+  \norm{\varphi}_{\mathcal H_{\ell-1}}=1,
   \varphi \perp \varphi_1,\cdots, \varphi_{k-1}
   \right\}.
   \label{2605:eq:lofi-candidate-class}
@@ -39,11 +39,11 @@ $\varphi\in \mathcal{S}^\ell_{k}$, define
 \begin{equation}
     c_\ell(\varphi)
     :=
-    \mathbb E\left[y\,\varphi(\bm x)^2\right],
+    \mathbb E\left[y\varphi(\bm x)^2\right],
     \qquad
     \widehat c_{\ell,n}(\varphi)
     :=
-    \widehat{\mathbb E}_n\left[y\,\varphi(\bm x)^2\right].
+    \widehat{\mathbb E}_n\left[y\varphi(\bm x)^2\right].
 \end{equation}
 The empirical correlation $\widehat c_{\ell,n}(\varphi)$ fluctuates around its population value
 $c_\ell(\varphi)$. Since Neural LoFi optimizes over a class of candidate features, the relevant measure of variance is the uniform fluctuation over $\mathcal{S}^\ell_{k}$,
@@ -62,7 +62,7 @@ To recover the population minimizer feature, the variance must be small w.r.t. t
     :=
     \sup_{\varphi \in  \mathcal{S}^\ell_{k}}
     \left|
-    \mathbb E\left[y\,\varphi(\bm x)^2\right]
+    \mathbb E\left[y\varphi(\bm x)^2\right]
     \right|.
 \end{equation}
 
@@ -93,13 +93,13 @@ While approximation-theoretic works show that deep networks can represent certai
 \cite{mhaskar2017when,telgarsky2016benefits}, efficient representation does not by itself imply efficient learning. The previous discussion motivates the notion of \emph{low-degree compositionality}: depth is useful to learn functions when each layer exposes a new low-degree signal that is visible in the representation constructed by the previous layers. This means that the target admits a sequence of intermediate representations
 \[
 \bm x
-\;\longrightarrow\;
+\longrightarrow
 \bm z_1(\bm x)
-\;\longrightarrow\;
+\longrightarrow
 \bm z_2(\bm x)
-\;\longrightarrow\;
+\longrightarrow
 \cdots
-\;\longrightarrow\;
+\longrightarrow
 \bm z_L(\bm x),
 \]
 such that, at each stage, the next useful representation is visible through a low-degree statistic of the current one. In the second-order Neural LoFi mechanism, this is precisely the condition that the population counterpart of Equation~\eqref{2605:eq:lofi-accessibility} is larger than the statistical noise floor. Thus, at layer $\ell$, Neural LoFi asks whether the current representation contains a simple feature whose second-order statistics are predictive of the task. This gives a learnability criterion for compositional structure: A deep model does not benefit from {\it arbitrary compositions}; it benefits from {\it hierarchies} in which each intermediate step exposes a {\it statistically detectable low-degree signal}. 

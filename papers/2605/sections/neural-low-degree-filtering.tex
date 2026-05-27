@@ -43,7 +43,7 @@ $. We show  in Appendix \ref{2605:app:GD-neural}, that under a layer-wise vanish
     :=
     \frac1n
     \sum_{\mu=1}^n
-    y_\mu\,
+    y_\mu
     \bz_{\ell-1}(\bm x_\mu)
     {\bz}_{\ell-1}(\bm x_\mu)^\top .
 \end{equation}
@@ -54,22 +54,22 @@ Suppose that  $\hat f(x)$ is trained through layer-wise gradient descent with in
 
 \begin{equation}\label{2605:eq:thm1approxmain}
 \bw_{\ell,i}(t+1) - \bw_{\ell,i}(t)
-\approx \eta\,c_0 \hat{\bu}_\ell
-+ \eta\,c_1\widehat{C}^{(\ell)}\,\bw_{\ell,i}(t)+O(\norm{\bw_{\ell,i}(0)}^2),
+\approx \etac_0 \hat{\bu}_\ell
++ \etac_1\widehat{C}^{(\ell)}\bw_{\ell,i}(t)+O(\norm{\bw_{\ell,i}(0)}^2),
 \end{equation}
 for some constants $c_0,c_1>0$.
 \end{proposition}
 
-The first term in Eq. \ref{2605:eq:thm1approxmain} is the linear correlation between the current representation and the label. It can be removed by centering, by fitting the best linear predictor in the current representation, or simply interpreted as the degree-one component of the dynamics. The second term, however, is the first genuinely multiple feature-learning component. Let $\widehat{C}^{(\ell)}=\hat{V}\Lambda\hat{V}^\top$ denote the eigendecomposition. For small step-size, the linear term $c_1\widehat{C}^{(\ell)}\,\bw_{\ell,i}(t)$ yields the per-neuron approximation $\bw_{\ell,i}(t)\approx \exp(c_1 \widehat{\bm C}^{(\ell)} t)\,\bw_{\ell,i}(0)$. Stacking the $p_\ell$ neuron weights into the row matrix $W_\ell(t)\in\mathbb{R}^{p_\ell\times p_{\ell-1}}$ with $i$-th row $\bw_{\ell,i}(t)^\top$, the dynamics splits into two interpretable pieces:
+The first term in Eq. \ref{2605:eq:thm1approxmain} is the linear correlation between the current representation and the label. It can be removed by centering, by fitting the best linear predictor in the current representation, or simply interpreted as the degree-one component of the dynamics. The second term, however, is the first genuinely multiple feature-learning component. Let $\widehat{C}^{(\ell)}=\hat{V}\Lambda\hat{V}^\top$ denote the eigendecomposition. For small step-size, the linear term $c_1\widehat{C}^{(\ell)}\bw_{\ell,i}(t)$ yields the per-neuron approximation $\bw_{\ell,i}(t)\approx \exp(c_1 \widehat{\bm C}^{(\ell)} t)\bw_{\ell,i}(0)$. Stacking the $p_\ell$ neuron weights into the row matrix $W_\ell(t)\in\mathbb{R}^{p_\ell\times p_{\ell-1}}$ with $i$-th row $\bw_{\ell,i}(t)^\top$, the dynamics splits into two interpretable pieces:
 \begin{equation}\label{2605:eq:lofi-decomp}
     W_\ell(t)
-    \;\approx\;
-    W_\ell(0)\,\exp\!\bigl(c_1\,\widehat{\bm C}^{(\ell)}\,t\bigr)
-    \;=\;
-    \underbrace{W_\ell(0)\,\hat{\bm V}}_{\text{random transformation}} \times \qquad \underbrace{\exp(c_1\,\Lambda\,t)\,\hat{\bm V}^{\!\top}}_{\text{spectral filter}\,\to\,\text{top-eigenvector projection}}\,.
+    \approx
+    W_\ell(0)\exp\bigl(c_1\widehat{\bm C}^{(\ell)}t\bigr)
+    =
+    \underbrace{W_\ell(0)\hat{\bm V}}_{\text{random transformation}} \times \qquad \underbrace{\exp(c_1\Lambdat)\hat{\bm V}^{\top}}_{\text{spectral filter}\to\text{top-eigenvector projection}}.
 \end{equation}
-The second part depends only on $\widehat{\bm C}^{(\ell)}$: it projects onto the eigen-basis of $\widehat{\bm C}^{(\ell)}$ and reweighs each direction by $\exp(c_1\lambda_r^{(\ell)} t)$, exponentially amplifying directions with the largest eigenvalues, so an early-stopped power iteration will approximate hard projection onto the top-$k$ eigenvectors as $t$ grows. The first part $W_\ell(0)\,\hat{\bm V}$ is $t-$independent: it is a fixed random linear transformation of those eigenvectors, inherited from the i.i.d.\ initialization of the neuron weights. 
-The post-training feature map $\sigma\bigl(W_\ell(t)\,\bz_{\ell-1}(\bm x)\bigr)$ at each layer is therefore, to leading order, the composition of (i)~a spectral filter that selects the leading eigen-directions of $\widehat{\bm C}^{(\ell)}$ and (ii)~a random per-neuron mixing of those directions: small-initialization training acts, to leading order, as a {\it spectral filtering} of the  representation. \looseness=-1
+The second part depends only on $\widehat{\bm C}^{(\ell)}$: it projects onto the eigen-basis of $\widehat{\bm C}^{(\ell)}$ and reweighs each direction by $\exp(c_1\lambda_r^{(\ell)} t)$, exponentially amplifying directions with the largest eigenvalues, so an early-stopped power iteration will approximate hard projection onto the top-$k$ eigenvectors as $t$ grows. The first part $W_\ell(0)\hat{\bm V}$ is $t-$independent: it is a fixed random linear transformation of those eigenvectors, inherited from the i.i.d.\ initialization of the neuron weights. 
+The post-training feature map $\sigma\bigl(W_\ell(t)\bz_{\ell-1}(\bm x)\bigr)$ at each layer is therefore, to leading order, the composition of (i)~a spectral filter that selects the leading eigen-directions of $\widehat{\bm C}^{(\ell)}$ and (ii)~a random per-neuron mixing of those directions: small-initialization training acts, to leading order, as a {\it spectral filtering} of the  representation. \looseness=-1
 
 
 While the exponential weighting in Equation \ref{2605:eq:lofi-decomp} holds under vanishing initialization and small time-scales, we expect, in general, the network to maintain a preference towards features corresponding to larger eigenvalues for other training regimes. We discuss how weighting regimes arise under different training settings for two-layer networks in App. \ref{2605:app:two-layer}. The simplest choice of such weights is top-$k$ selection: $w(\lambda_r^{(\ell)})=1$ for $r\leq k$ for some $k$, and $0$ otherwise, which we use in Alg.\ref{2605:alg:neural-lofi}. 
@@ -83,7 +83,7 @@ Unlike the general gradient descent dynamics involving complex interactions acro
 
 \subsection{The Neural Low-Degree Filtering algorithm}
 The decomposition in Eq.~\eqref{2605:eq:lofi-decomp} directly motivates the two operations of Neural LoFi (Algorithm~\ref{2605:alg:neural-lofi}), which replace the implicit dynamics of the Neural LoFi regime (Proposition~\ref{2605:thm:layerwise-GD}) with two concrete, decoupled steps per layer: First, a \emph{filter} step projects the current representation onto the leading eigen-directions of the label-weighted moment operator $\widehat{\bm C}^{(\ell)}$, making the spectral filter explicit as $\widehat{\bm V}_\ell$. Second, a \emph{lift} step applies a nonlinear random feature map $\bm R_\ell$ that emulates the per-neuron randomness of the left factor $W_\ell(0)\hat{\bm V}$ in Eq.~\eqref{2605:eq:lofi-decomp}, producing the next representation.
-\begin{algorithm}[t]
+\begin{algorithm}
 \caption{Neural Low-Degree Filtering}
 \label{2605:alg:neural-lofi}
 \begin{algorithmic}[1]
@@ -100,7 +100,7 @@ The decomposition in Eq.~\eqref{2605:eq:lofi-decomp} directly motivates the two 
         \gets
         \frac1n
         \sum_{\mu=1}^n
-        y_\mu\,
+        y_\mu
       \bz_{\ell-1}(\bm x_\mu)
         \bz_{\ell-1}(\bm x_\mu)^\top \in \mathbb{R}^{p_{\ell-1} \times p_{\ell - 1}}.
 \]
@@ -123,7 +123,7 @@ The decomposition in Eq.~\eqref{2605:eq:lofi-decomp} directly motivates the two 
         \bm z_\ell(\bm x)
         \gets
         \sfrac{1}{\sqrt{p_\ell}} \sigma(\bm R_\ell \bm g_\ell(\bm x)),
-        \,
+        
         \bm R_\ell\in\mathbb R^{p_\ell\times k_\ell}.
     $}
     \Comment{Lift by nonlinear random feature map}
@@ -192,7 +192,7 @@ Since $\hat{\bm v}^{(\ell)}_1$ maximizes $\bv^\top\widehat{\bm C}^{(\ell)}\bv$ s
     \left|
     \frac1n
     \sum_{\mu=1}^n
-    y_\mu\,\varphi(\bm x_\mu)^2
+    y_\mu\varphi(\bm x_\mu)^2
     \right|.
     \label{2605:eq:lofi-rkhs-variational}
 \end{equation}
@@ -207,25 +207,25 @@ This is the sense in which the method is a low-degree filter.  We show in App.\r
 Let $\hat{\bm v}^\ell_0$ denote the linear component and $[\hat{\bm v}^{(\ell)}_1,\dots,\hat{\bm v}^{(\ell)}_{k_\ell}]$ the ordered eigenvectors from Algorithm~\ref{2605:alg:neural-lofi}. 
 Define the linear feature
 \[
-    \psi^\ell(\bm x) \coloneqq \langle \hat{\bm v}^\ell_0,\, \bz_{\ell-1}(\bm x)\rangle,
+    \psi^\ell(\bm x) \coloneqq \langle \hat{\bm v}^\ell_0, \bz_{\ell-1}(\bm x)\rangle,
 \]
 and the second-order features $\varphi_j(\bm x) \coloneqq \langle \hat{\bm v}^{(\ell)}_j,\bz_{\ell-1}(\bm x)\rangle$ for $j=1,\dots,k_\ell$. Then:
-\begin{enumerate}[label=(\roman*),noitemsep,leftmargin=1em,wide=0pt]
+\begin{enumerate}
     \item \textbf{Linear feature.} $\psi^\ell$ is the unit-norm maximizer of the empirical first-order correlation with $y$:
     \begin{equation}
-        \psi^\ell \;=\; \argmax_{\psi:\,\|\psi\|_{\mathcal H_{\ell-1}}=1}
-        \left|\,\widehat{\mathbb E}_n\bigl[y\,\psi(\bm x)\bigr]\,\right|.
+        \psi^\ell = \argmax_{\psi:\|\psi\|_{\mathcal H_{\ell-1}}=1}
+        \left|\widehat{\mathbb E}_n\bigl[y\psi(\bm x)\bigr]\right|.
         \label{2605:eq:prop-linear-var}
     \end{equation}
     \item \textbf{Second-order features.} For each $k=1,\dots,k_\ell$, $\varphi_k$ is the unit-norm maximizer of the empirical second-order correlation, successively orthogonalized to the previously selected features:
     \begin{equation}
-        \varphi_k \;=\; \argmax_{\substack{\varphi:\,\|\varphi\|_{\mathcal H_{\ell-1}}=1\\ \varphi\perp\varphi_1,\dots,\varphi_{k-1}}}
-        \left|\,\widehat{\mathbb E}_n\bigl[y\,\varphi(\bm x)^2\bigr]\,\right|.
+        \varphi_k = \argmax_{\substack{\varphi:\|\varphi\|_{\mathcal H_{\ell-1}}=1\\ \varphi\perp\varphi_1,\dots,\varphi_{k-1}}}
+        \left|\widehat{\mathbb E}_n\bigl[y\varphi(\bm x)^2\bigr]\right|.
         \label{2605:eq:prop-quadratic-var}
     \end{equation}
     \item \textbf{Infinite-width convergence.} Let $K^{\infty}_{\ell-1}$ denote the infinite-width limiting kernel obtained as the layer width $p_{\ell-1}\to\infty$, and let $\{\phi^{\infty}_k\}_{k\geq 1}$ be its eigenfunctions ordered by decreasing eigenvalue magnitude with the selected limiting eigenvalues separated from the rest of the spectrum. Then, for any  pseudo-lipschitz (of finite order) $\sigma(\cdot)$, and any fixed $k$, as $p_{\ell-1}\to\infty$,
     \[
-        \varphi_k \;\xrightarrow{\;\;\;}\; \phi^{\infty}_k,
+        \varphi_k \xrightarrow{} \phi^{\infty}_k,
     \]
     where convergence is in $L^2$ under the data distribution, and $\phi^{\infty}_1,\cdots, \phi^{\infty}_k$ satisfy the corresponding limiting {\it deterministic} variational criteria.
 \end{enumerate}

@@ -50,7 +50,7 @@ We now move to our main problem: estimating the time SGD takes to escape mediocr
   (1-T)\left(\risk{\left(\bar{m}(0)\right)}-\frac{\Delta}{2}\right) = \left(\risk\left({\bar{m}\left(t_\text{ext}\right)}\right)-\frac{\Delta}{2}\right).
 \end{equation}
 The above can be exactly solved by numerically integrating \eqref{2305:eq:spherical-p1-ode} and then finding the root of \eqref{2305:eq:exit_time_implicit_equation}. However, an analytical expression for the ODE exit time can be found from the following two observations:
-\begin{itemize}[noitemsep,leftmargin=1em,wide=0pt]
+\begin{itemize}
     \item From the discussion around equation ~\eqref{2305:eq:initial_distribution_QM}, initializing at random in high-dimensions imply that \(\bar{m}(0)=\varepsilon \ll 1\), so we can consider the linearization of equation \eqref{2305:eq:spherical-p1-ode} in $\varepsilon$ and solve it analytically. For small enough \(T\), this will lead us to an accurate result;
     \item Even if the ODE trajectories are deterministic, the exit time \(t_\text{ext}\) is a random variable of the random initialization.
 \end{itemize}
@@ -66,7 +66,7 @@ Borrowing the jargon from statistical physics, we refer to $t_\text{ext}^\text{(
     \right].
 \end{equation}
 Again, borrowing the jargon from statistical physics we refer to $t_\text{ext}^\text{(qnc)}$ as the \emph{quenched exit time}. Some comments on this result are in order:
-\begin{itemize}[leftmargin=1em,wide=0pt]
+\begin{itemize}
     \item By concavity of the logarithm function, we have $t^{\rm (qnc)}_{\rm ext}\geq t^{\rm (anl)}_{\rm ext}$.
     \item For both notions, we have $t_{\rm ext} = O(\log{d})$ implying $n=O(d\log{d})$ samples are required to escape mediocrity, consistent with the rates in the literature \citep{chen2019gradient,tan2019online,arous2021online}.
     \item Both exit times are monotonically increasing in both $\gamma\in[0,\sfrac{1}{6}]$ and $\Delta\geq 0$. Recalling that $\delta t = \sfrac{\gamma}{d}$, this implies the existence of an optimal learning rate $\gamma_{\rm opt}=\sfrac{1}{(12+\Delta)}$ that minimizes the number of samples required to escape mediocrity.
@@ -84,8 +84,8 @@ Stochastic corrections to the deterministic high-dimensional limit of one-pass S
 % Focusing on the unconstrained case with \(p=1\), we can evolve Eqs.~\eqref{2305:eq:overlapping_ODE} in a stochastic differential equation
 \begin{equation}\label{2305:eq:overlapping_SDE}
     \begin{split}
-    \dif \M_{1} &= \Psi_{1}{(\Omega)}\dif t + \sqrt{\frac{\gamma}{d}} \, \vec{\sigma}_\M{(\Omega)} \cdot \dif \b_t \\
-    \dif \Q_{11} &= \Phi_{11}{(\Omega)}\dif t + \sqrt{\frac{\gamma}{d}} \, \vec{\sigma}_\Q{(\Omega)} \cdot \dif \b_t 
+    \dif \M_{1} &= \Psi_{1}{(\Omega)}\dif t + \sqrt{\frac{\gamma}{d}}  \vec{\sigma}_\M{(\Omega)} \cdot \dif \b_t \\
+    \dif \Q_{11} &= \Phi_{11}{(\Omega)}\dif t + \sqrt{\frac{\gamma}{d}}  \vec{\sigma}_\Q{(\Omega)} \cdot \dif \b_t 
     \end{split}
 \end{equation}
 where \(\dif \b_t\) is a 2-dimensional Wiener process, and \(\vec{\sigma}_M\) and \(\vec{\sigma}_Q\) are defined as
@@ -118,7 +118,7 @@ Notice that the stochastic correction is proportional to \(\sqrt{\sfrac{\gamma}{
 \begin{equation}
 \label{2305:eq:sde:p1}
 \begin{split}
- \dod{\M_1}{t} &= \left(\Psi_{1}{(\mat{\Omega})} - \frac{\M_{1}}{2}\Phi_{11}{(\mat{\Omega})}\right)\dif t + \sqrt{\frac{\gamma}{d}} \, \left(\vec{\sigma}_\M-\frac{m_1}{2}\vec{\sigma}_\Q\right)\cdot\dif\b_t 
+ \dod{\M_1}{t} &= \left(\Psi_{1}{(\mat{\Omega})} - \frac{\M_{1}}{2}\Phi_{11}{(\mat{\Omega})}\right)\dif t + \sqrt{\frac{\gamma}{d}}  \left(\vec{\sigma}_\M-\frac{m_1}{2}\vec{\sigma}_\Q\right)\cdot\dif\b_t 
 \end{split}
 \end{equation}
 Figure~\ref{2305:fig:sde_p1} compares different instances of finite size simulations with instances of the SDE \eqref{2305:eq:sde:p1} with the same initial condition. Although the stochastic correction offers a better description of the process at large but finite dimensions, we find that quite surprisingly they have a small impact in the exit time. Hence, the formulas \eqref{2305:eq:exit_time_p1} \& \eqref{2305:eq:exit:quenched} derived in the Section \ref{2305:sec:exit:deterministic} for random initialization provide a good approximation to the exit time. In Appendix ~\ref{2305:app:SDE_exit_time} we discuss how to derive an exit time formulae with the stochastic corrections, both annealed and quenched one. As just showed, the new formulas do not offer any improvements compared to the deterministic ones, nevertheless the stochastic process can describe the dynamic even when the initialization is exactly \(m=0\), that is a fixed point of the ODE.

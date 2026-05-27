@@ -25,7 +25,7 @@ We focus on the high-dimensional Gaussian teacher-student model of \cite{tabanel
 For $q\geq 1$, we denote by $H_q(\cdot)$ the normalized Hermite polynomial of order $q$, either in its scalar or tensor-valued form.\footnote{
 For a vector $\bx\in\mathbb R^m$, the tensor Hermite polynomial $H_q(\bx)\in(\mathbb R^m)_{\mathrm{sym}}^{\otimes q}$ is defined through the tensorial Rodrigues formula
 $
-\sqrt{q!}\,H_q(\bx)
+\sqrt{q!}H_q(\bx)
 =
 (-1)^q e^{\|\bx\|^2/2}
 \nabla_{\bx}^{\otimes q}
@@ -34,7 +34,7 @@ $
 where $\nabla_{\bx}^{\otimes q}$ denotes the $q$-fold symmetric tensor of derivatives. 
 For $m=1$, this reduces to the normalized scalar Hermite polynomial
 $
-\sqrt{q!}\,H_q(z)
+\sqrt{q!}H_q(z)
 =
 (-1)^q e^{z^2/2}
 \frac{d^q}{dz^q}
@@ -277,7 +277,7 @@ where $e\in\mathbb R^{D_2}$ is the normalized trace direction in the degree-$2$ 
 \begin{align}
     \|R_2\|_{\op}
     \le
-    \widetilde O\!\left(
+    \widetilde O\left(
         \sqrt{\frac{D_2}{p_1}}
         +
         \frac{D_2}{p_1}
@@ -289,7 +289,7 @@ Finally, let $A^{(1)}\in\mathbb R^{d_1\times D_2}$ be the matrix of planted firs
 \begin{align}
     A_{\RF}^{(1)}
     :=
-    \sqrt{D_2}\,
+    \sqrt{D_2}
     A^{(1)}
     P_2^\top
     \in\mathbb R^{d_1\times p_1}.
@@ -318,20 +318,20 @@ high probability:
 \right\|_{\op}
 \nonumber\\
 &\qquad\le
-\widetilde O\!\left(
+\widetilde O\left(
     \sqrt{\frac{d^2d_1}{n}}
 \right)
 +
-\widetilde O\!\left(
+\widetilde O\left(
     \frac{d_1}{\sqrt d}
 \right)
 +
-\widetilde O\!\left(
+\widetilde O\left(
     \frac1{\sqrt{d_1}}
 \right)
 \nonumber\\
 &\qquad\quad+
-\widetilde O\!\left(
+\widetilde O\left(
     d_1\sqrt{\frac{d_1}{n}}
     +
     \frac{d_1^2}{d^2}
@@ -384,7 +384,7 @@ We use the RF Gram decomposition stated above,
     |\theta_d|\le \widetilde O(d),
     \quad
     \|R_2\|_{\op} \le
-    \widetilde O\!\left(
+    \widetilde O\left(
         \sqrt{\frac{D_2}{p_1}}
         +
         \frac{D_2}{p_1}
@@ -398,24 +398,24 @@ bounds:
 \begin{align}
     \|A^{(1)}e\|_2
     &\le
-    \widetilde O\!\left(\frac{\sqrt{d_1}}{d}\right),
+    \widetilde O\left(\frac{\sqrt{d_1}}{d}\right),
     \label{2605:eq:Ae-bound}
     \\
     \|C\|_{\op}
     &\le
-    \widetilde O\!\left(\frac1{\sqrt{d_1}}\right),
+    \widetilde O\left(\frac1{\sqrt{d_1}}\right),
     \label{2605:eq:C-op-bound}
     \\
     \|e^\top C A^{(1)\top}\|_2
     &\le
-    \widetilde O\!\left(
+    \widetilde O\left(
         \sqrt{\frac{d_1}{n}}+\frac1d
     \right),
     \label{2605:eq:eCA-bound}
     \\
     |e^\top C e|
     &\le
-    \widetilde O\!\left(
+    \widetilde O\left(
         \frac1{\sqrt n}
         +
         \frac{\sqrt{d_1}}{d^2}
@@ -445,7 +445,7 @@ and therefore, using
     \sqrt{d_1}
     \|A^{(1)}K_2CA^{(1)\top}\|_{\op}
     \le
-    \widetilde O\!\left(
+    \widetilde O\left(
         d_1\sqrt{\frac{d_1}{n}}
         +
         \frac{d_1}{d}
@@ -464,7 +464,7 @@ so by \eqref{2605:eq:Ae-bound} and \eqref{2605:eq:eCe-bound},
     \sqrt{d_1}
     \|A^{(1)}K_2CK_2A^{(1)\top}\|_{\op}
     \le
-    \widetilde O\!\left(
+    \widetilde O\left(
         d_1\sqrt{\frac{d_1}{n}}
         +
         \frac{d_1^2}{d^2}
@@ -478,7 +478,7 @@ $R_2CK_2$, and they satisfy
     \sqrt{d_1}
     \|A^{(1)}K_2CR_2A^{(1)\top}\|_{\op}
     \le
-    \widetilde O\!\left(
+    \widetilde O\left(
         \sqrt{d_1}\left(
         \sqrt{\frac{D_2}{p_1}}
         +
@@ -489,7 +489,7 @@ $R_2CK_2$, and they satisfy
 with the same bound for the transpose. The $R_2CR_2$ term contributes at
 most
 \[
-    \widetilde O\!\left(
+    \widetilde O\left(
         \sqrt{d_1}\left(
         \sqrt{\frac{D_2}{p_1}}
         +
@@ -508,14 +508,14 @@ Combining these estimates gives the bridge bound
     A^{(1)\top}
 \right\|_{\op}&
 \le
-\widetilde O\!\left(
+\widetilde O\left(
     d_1\sqrt{\frac{d_1}{n}}
     +
     \frac{d_1}{d}
     +
     \frac{d_1^2}{d^2}
 \right) \nonumber\\
-& + \widetilde O\!\left( \sqrt{d_1}\left(\sqrt{\frac{D_2}{p_1}}
+& + \widetilde O\left( \sqrt{d_1}\left(\sqrt{\frac{D_2}{p_1}}
         +
         \frac{D_2}{p_1}
     \right)\left(1+\sqrt{\frac{D_2}{p_1}}
@@ -533,15 +533,15 @@ Theorem~3.1 of \cite{tabanelli2026deep} gives
     \nu_1A^{(2)}
 \right\|_{\op}
 \le
-\widetilde O\!\left(
+\widetilde O\left(
     \sqrt{\frac{d^2d_1}{n}}
 \right)
 +
-\widetilde O\!\left(
+\widetilde O\left(
     \frac{d_1}{\sqrt d}
 \right)
 +
-\widetilde O\!\left(
+\widetilde O\left(
     \frac1{\sqrt{d_1}}
 \right).
 \]

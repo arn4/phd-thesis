@@ -22,11 +22,11 @@ We first consider a toy model in which the full Neural LoFi mechanism can be ins
 \cite{nichani2023provable,wang2024learning,fu2025learning,tabanelli2026deep}, let $\bm x\sim \mathcal N(0,I_d)$ and generate labels through a planted compositional hierarchy
 $
 \bm x
-\;\longrightarrow\;
+\longrightarrow
 \bm h^{(1)}(\bm x)
-\;\longrightarrow\;
+\longrightarrow
 h^{(2)}(\bm x)
-\;\longrightarrow\;
+\longrightarrow
 y$. Let $H_k(\bm x)$ denote the degree-$k$ Hermite feature vector of the input. We plant $d_1=d^\varepsilon$ random directions
 $\bm A_1^{(1)},\ldots,\bm A_{d_1}^{(1)}$ in this degree-$k$ feature space, together with a random symmetric matrix
 $\bm A^{(2)}\in\mathbb R^{d_1\times d_1}$ acting on the first hidden layer. The hidden variables are
@@ -116,7 +116,7 @@ Let $\bm z_{\ell-1}(\bm x_\mu)\in\mathbb R^{s_\ell\times p_{\ell-1}}$ denote the
     \frac{1}{n s_\ell}
     \sum_{\mu=1}^n
     \sum_{j=1}^{s_\ell}
-    y_\mu\,
+    y_\mu
     \bm z_{\ell-1}(\bm x_\mu)_j
     \bm z_{\ell-1}(\bm x_\mu)_j^\top .
 \end{equation}
