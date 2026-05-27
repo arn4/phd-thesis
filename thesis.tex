@@ -2,14 +2,10 @@
 
 \usepackage[main=english,italian,french]{babel}
 \let\og\relax \let\no\relax  % babel-french reserves these; papers-macros.tex reuses them as math.
+\usepackage{thesis-style}  % must precede papers-dependencies.tex so its \PassOptionsToPackage calls take effect
 
 \input{papers-dependencies.tex}
 \input{papers-macros.tex}
-
-% Engine is lualatex (latexmkrc): fontspec switches the font interface from
-% T1-encoded ec-lmr10 (no č/ğ/curly-quote glyphs) to OpenType Latin Modern,
-% which covers the full Unicode repertoire used in the bibliography.
-\usepackage{fontspec}
 
 % cleveref must load after hyperref (same constraint as papers/stand-alone-paper.tex).
 \usepackage[capitalize,noabbrev]{cleveref}
@@ -17,27 +13,11 @@
 \usepackage{pdfpages}
 \usepackage{import}
 \usepackage{csquotes}  % recommended by biblatex when babel is loaded
-\usepackage[backend=biber,style=authoryear-comp,natbib=true]{biblatex}
+\usepackage[backend=biber,style=alphabetic,natbib=true]{biblatex}
 \addbibresource{papers-bibliography.bib}
 
 \title{<thesis title TBD>}
 \author{Luca Arnaboldi}
-
-% \paperchapter{title}{authors}{abstract-input-path}
-%   Special "paper-style" chapter: standard \chapter heading, then the
-%   author list (italic, centred) and the abstract (sans-serif, indented).
-%   Tune the typography here.
-\newcommand{\paperchapter}[3]{%
-  \chapter{#1}%
-  \begin{center}\itshape #2\end{center}%
-  \begingroup
-    \small\sffamily
-    \begin{quote}
-      \noindent\textbf{Abstract.}\enspace\input{#3}%
-    \end{quote}
-  \endgroup
-  \par\vspace{0.5\baselineskip}%
-}
 
 \begin{document}
 

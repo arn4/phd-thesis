@@ -1,0 +1,49 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{thesis-style}[2026/05/27 Luca Arnaboldi thesis style]
+
+% Options for packages that papers-dependencies.tex loads bare.
+% This .sty MUST be loaded before \input{papers-dependencies.tex}.
+\PassOptionsToPackage{%
+  colorlinks,linkcolor=blue,urlcolor=magenta,citecolor=green,bookmarks%
+}{hyperref}
+\PassOptionsToPackage{section}{placeins}
+
+% Packages that papers-dependencies.tex deliberately skips.
+\RequirePackage[%
+  paper=a4paper,%
+  textwidth=140mm,%
+  textheight=210mm,%
+  marginratio={4:6,5:5}%
+]{geometry}
+\RequirePackage[indent=0cm]{parskip}
+
+% EB Garamond as the main text font. Ships with TeX Live, so no
+% system/CI font conditional is needed. Falls back silently if the
+% font is somehow missing.
+% \setmainfont is deferred to \AtEndPreamble so it runs after T1 fontenc
+% (loaded later by papers-dependencies.tex) — otherwise fontenc would
+% re-bind rmfamily to T1 ec-fonts and leak ec-rm into the bibliography.
+\RequirePackage{etoolbox}
+\RequirePackage{fontspec}
+\AtEndPreamble{%
+  \IfFontExistsTF{EB Garamond}{%
+    \setmainfont{EB Garamond}%
+  }{}%
+}
+
+% \paperchapter{title}{authors}{abstract-input-path}
+%   Standard \chapter heading, then italic author list and sans-serif
+%   indented abstract. Tune typography here.
+\newcommand{\paperchapter}[3]{%
+  \chapter{#1}%
+  \begin{center}\itshape #2\end{center}%
+  \begingroup
+    \small
+    \begin{quote}
+      \noindent\textsc{Abstract.}\enspace\input{#3}%
+    \end{quote}
+  \endgroup
+  \par\vspace{0.5\baselineskip}%
+}
+
+\endinput
