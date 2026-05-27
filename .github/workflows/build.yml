@@ -28,6 +28,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Reject uncommented \includeonly in thesis.tex
+        run: |
+          if grep -nE '^[[:space:]]*\\includeonly' thesis.tex; then
+            echo "::error file=thesis.tex::thesis.tex has an uncommented \\includeonly (see line above). It is a drafting toggle and must be commented out before merging."
+            exit 1
+          fi
+
       - id: filter
         if: ${{ !startsWith(github.ref, 'refs/tags/') }}
         uses: dorny/paths-filter@v3

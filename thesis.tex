@@ -19,6 +19,11 @@
 \title{<thesis title TBD>}
 \author{Luca Arnaboldi}
 
+% Drafting toggle: uncomment and list only the chapters you want typeset.
+% A full build (no \includeonly) must have been run at least once so every
+% per-file .aux exists; cross-refs and page numbers then stay correct.
+% \includeonly{chapters/paper-2302}
+
 \begin{document}
 
 % \frontmatter is called *before* the cover so the cover and the first
@@ -47,15 +52,15 @@
 \mainmatter
 
 % --- Introductory chapters ---
-\input{chapters/introduction.tex}
-\input{chapters/background.tex}
+\include{chapters/introduction}
+\include{chapters/background}
 
 % --- Paper chapters (one \paperchapter per included arXiv paper) ---
-\input{chapters/paper-2302.tex}
-\input{chapters/paper-2305.tex}
-\input{chapters/paper-2405.tex}
-\input{chapters/paper-2406.tex}
-\input{chapters/paper-2506.tex}
+\include{chapters/paper-2302}
+\include{chapters/paper-2305}
+\include{chapters/paper-2405}
+\include{chapters/paper-2406}
+\include{chapters/paper-2506}
 
 % --- Appendices, grouped per paper ---
 \appendix
@@ -65,11 +70,11 @@
 \cleardoublepage
 \phantomsection
 \addcontentsline{toc}{part}{Appendices}
-\input{chapters/appendix-2302.tex}
-\input{chapters/appendix-2305.tex}
-\input{chapters/appendix-2405.tex}
-\input{chapters/appendix-2406.tex}
-\input{chapters/appendix-2506.tex}
+\include{chapters/appendix-2302}
+\include{chapters/appendix-2305}
+\include{chapters/appendix-2405}
+\include{chapters/appendix-2406}
+\include{chapters/appendix-2506}
 
 \backmatter
 

@@ -1,0 +1,19 @@
+#!/bin/sh
+# Block commits that include an uncommented \includeonly in thesis.tex.
+# \includeonly is a drafting toggle; committing it means future builds
+# silently typeset only a subset of chapters.
+
+set -e
+
+if ! git diff --cached --name-only --diff-filter=ACMR | grep -qx 'thesis.tex'; then
+    exit 0
+fi
+
+# Check the staged version (not the worktree), so `git add -p` partial stages
+# are evaluated correctly.
+if git show :thesis.tex | grep -nE '^[[:space:]]*\\includeonly' >&2; then
+    echo "" >&2
+    echo "pre-commit: thesis.tex has an uncommented \\includeonly (see line above)." >&2
+    echo "  Comment it out before committing, or use 'git commit --no-verify' to override." >&2
+    exit 1
+fi
