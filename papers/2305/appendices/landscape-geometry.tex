@@ -1,11 +1,11 @@
 \section{Landscape geometry}
 
-\label{app:landscape}
+\label{2305:app:landscape}
 In this appendix we discuss the landscape of the population risk for the phase retrieval problem $p=1$. We start by discussing the Euclidean case first, moving to the sphere next. 
 
 We recall the reader that the loss function is given by given by:
 \begin{align}
-\label{eq:app:poprisk}
+\label{2305:eq:app:poprisk}
 \ell(w) \coloneqq \ell(y,f_{\Theta}(x)) =  \frac{1}{2}\left((w_{\star}^{\top}x)^2+\sqrt{\Delta}z-(w^{\top}x)^2\right)^2
 \end{align}
 As before, we define the pre-activations (or local fields):
@@ -31,14 +31,14 @@ And the Euclidean Hessian is:
     &=2(3\lambda^2-\lambda_{\star}^2+\sqrt{\Delta}z)xx^{\top}
 \end{align}
 % \begin{align}
-% \label{eq:app:poprisk}
+% \label{2305:eq:app:poprisk}
 % \mathcal{R}(w) \coloneqq  \frac{1}{2}\mathbb{E}\left[\left((w_{\star}^{\top}x)^2-(w^{\top}x)\right)^2\right]+\frac{\Delta}{2}, && x\sim\mathcal{N}(0,\sfrac{1}{d}I_{d})
 % \end{align}
 \paragraph{Averaged geometry ---} We now compute the expected geometry by taking population averages of the above. It will be useful to define the correlation variables:
 \begin{align}
    \rho = \frac{||w_{\star}||^2}{d}, && m = \frac{w_{\star}^{\top}w}{d}, && q = \frac{||w||^2}{d}
 \end{align}
-\noindent which we recall are the second moments of the pre-activations $(\lambda_{\star},\lambda)$. With this notation, the population risk (the expected value of \eqref{eq:app:poprisk}) reads:
+ which we recall are the second moments of the pre-activations $(\lambda_{\star},\lambda)$. With this notation, the population risk (the expected value of \eqref{2305:eq:app:poprisk}) reads:
 \begin{align}
     \mathcal{R}(m,q) =\sfrac{\Delta}{2}+ 3\rho^2+3q^2-4m^2-2\rho q
 \end{align}
@@ -90,17 +90,17 @@ From this geometry, a neat picture for the one-pass SGD dynamics in the unconstr
 \begin{align}
     w^{0}\sim\mathcal{N}(0,I_{d}).
 \end{align}
-Note that with high-probability the random initial weights is almost orthogonal to the signal, and we have $(m,q)\approx (0,1)$. Note this is not a critical point, and the initial gradient $\nabla_{w}\mathcal{R}(w^{0}) = 4 w^{0}$ is orthogonal to $w_{\star}$. Indeed, for $p=1$ and $\Delta=0$ the unconstrained ODEs \eqref{eq:overlapping_ODE} are given by:
+Note that with high-probability the random initial weights is almost orthogonal to the signal, and we have $(m,q)\approx (0,1)$. Note this is not a critical point, and the initial gradient $\nabla_{w}\mathcal{R}(w^{0}) = 4 w^{0}$ is orthogonal to $w_{\star}$. Indeed, for $p=1$ and $\Delta=0$ the unconstrained ODEs \eqref{2305:eq:overlapping_ODE} are given by:
 \begin{align}
-\label{eq:app:odes:highd}
+\label{2305:eq:app:odes:highd}
 \dot{m}(t) &= 6 ~m(t) (\rho-q(t))\\
 \dot{q}(t) &= 4\left(q(t)(\rho-3q(t))+2m(t)^2\right) \notag\\
 &\quad + 12\gamma\left(q(t)(\rho^2 + 5q(t)^2-2\rho q(t))+4m^2(\rho-2q(t))\right)
 \end{align}
-\noindent where $\dot{} \coloneqq \sfrac{\dd}{\dd t}$ and we dropped the bars for clarity. Therefore, in the initial stage of the dynamics $\dot{m}\approx 0$ remains almost constant, while $q$ decreases, and the dynamics flow in the direction of the saddle-point $(0,\sfrac{\rho}{3})$. As we have seen, the saddle is mostly flat, with a single negative curvature direction pointing towards $w_{\star}$. This is precisely the mediocrity stage, where the dynamics slows down and SGD gets stuck for a long time before being able to develop significant correlation with $w_{\star}$ and escape.
+ where $\dot{} \coloneqq \sfrac{\dd}{\dd t}$ and we dropped the bars for clarity. Therefore, in the initial stage of the dynamics $\dot{m}\approx 0$ remains almost constant, while $q$ decreases, and the dynamics flow in the direction of the saddle-point $(0,\sfrac{\rho}{3})$. As we have seen, the saddle is mostly flat, with a single negative curvature direction pointing towards $w_{\star}$. This is precisely the mediocrity stage, where the dynamics slows down and SGD gets stuck for a long time before being able to develop significant correlation with $w_{\star}$ and escape.
 
 \subsection{Landscape in the sphere}
-\label{sec:app:spherical}
+\label{2305:sec:app:spherical}
 Recall that the orthogonal projector on a vector $u\in\mathbb{S}^{d-1}$ is given by:
 \begin{align}
     {\rm Proj}_{u}  = I_{d} - uu^{\top}
@@ -115,11 +115,11 @@ Similarly, the Hessian on the sphere can be written as:
     {\rm Hess}_{\mathcal{S}^{d-1}}\ell(w) &= {\rm Proj}_{\mathbb{S}^{d-1}}\left(\nabla_{w}^{2}\ell(w)\right)-\langle w, \nabla_{w}\ell(w)\rangle I_{d}\notag\\
     &=(3\lambda^2-\lambda_{\star}^{2})(xx^{\top}-\lambda\theta x^{\top})+\mathcal{E}(w)\lambda^2 I_{d}
 \end{align}
-\begin{figure}[t]
+\begin{figure}
     \centering
     \includegraphics[width=0.8\textwidth]{figs/landscape}
-    \caption{Low-dimensional illustration of mediocrity at initialization. As discussed in Sec. \ref{sec:app:spherical}, the expected Hessian at initialization is a strict saddle-point with $d-1$ flat directions and a single negative direction pointing towards the global minimum. This scenario is particularly hard for descent based algorithms such as SGD, that require $n=d\log{d}$ samples / steps to develop significant correlation with the signal.}
-    \label{fig:app:landscape}
+    \caption{Low-dimensional illustration of mediocrity at initialization. As discussed in Sec. \ref{2305:sec:app:spherical}, the expected Hessian at initialization is a strict saddle-point with $d-1$ flat directions and a single negative direction pointing towards the global minimum. This scenario is particularly hard for descent based algorithms such as SGD, that require $n=d\log{d}$ samples / steps to develop significant correlation with the signal.}
+    \label{2305:fig:app:landscape}
 \end{figure}
 \paragraph{Averaged geometry ---} Recall that in the sphere we have $\rho=q=1$. Therefore, the population risk now only depends on the correlation $m=\langle w_{\star}, w\rangle$, and reads:
 \begin{align}
@@ -151,7 +151,7 @@ As before, we can now analyze the critical points and their nature.
     \end{align}
    which is positive-define.
 \end{itemize}
-Therefore, the landscape now resembles a golf course: completely flat with a single whole corresponding with the global minimum $w_{\star}$, see Fig.~\ref{fig:app:landscape} for an illustration. This is the prototypical image of mediocrity. In particular, differently from the unconstrained case, random initialization
+Therefore, the landscape now resembles a golf course: completely flat with a single whole corresponding with the global minimum $w_{\star}$, see Fig.~\ref{2305:fig:app:landscape} for an illustration. This is the prototypical image of mediocrity. In particular, differently from the unconstrained case, random initialization
 \begin{align}
     w^{0}\sim {\rm Unif}(\mathbb{S}^{d-1}(\sqrt{d})) 
 \end{align}
@@ -159,7 +159,7 @@ now corresponds to initializing close to the saddle-point point $m^{0}=0$: with 
 \begin{align}
     m^{0}=\sfrac{1}{d}\langle w^{0},w_{\star}\rangle\approx  \sfrac{1}{\sqrt{d}}\ll 1.
 \end{align} 
-For the reader convenience, we recall that the ODEs \eqref{eq:spherical-p1-ode} describing the evolution of the correlation $m$ is given by:
+For the reader convenience, we recall that the ODEs \eqref{2305:eq:spherical-p1-ode} describing the evolution of the correlation $m$ is given by:
 \begin{align}
   \dot{m}(t) &= m{(t)}\left[4(1-6\gamma)(1-m^2{(t)})-2\gamma\Delta\right]
 \end{align}

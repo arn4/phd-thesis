@@ -1,11 +1,11 @@
-\section{Derivation of Eq. \eqref{eq:def:mf_orthogonal} and local fields covariance}
+\section{Derivation of Eq. \eqref{2302:eq:def:mf_orthogonal} and local fields covariance}
 
-\label{app:mean_field_orthogonal_derivation}
-Let's start by taking the time derivative of Eq.~\eqref{eq:def:Qorth}
+\label{2302:app:mean_field_orthogonal_derivation}
+Let's start by taking the time derivative of Eq.~\eqref{2302:eq:def:Qorth}
 \[
     \dod{\Q^\bot}{t} = \dod{\Q}{t} - \dod{\M}{t}\P^{-1}\M^\top - \M\P^{-1}\dod{\M^\top}{t} \coloneqq \Psi^\bot(\Omega),
 \]
-and plugging in equations~\eqref{eq:def:gf_ode}~and~\eqref{eq:def:Psi} one after the other we get
+and plugging in equations~\eqref{2302:eq:def:gf_ode}~and~\eqref{2302:eq:def:Psi} one after the other we get
 \[\begin{split}
 \Psi^\bot_{ij}(\Omega) \!&=\! \mathbb E \Bigg[\!\left(\sigma'(\lambda_i)\lambda_{j}\!+\!\sigma'(\lambda_j)\lambda_{i}\right) \mathcal{E} \!-\!
     \!\sum_{r=1}^k\!\sum_{t=1}^k\!\sigma'(\lambda_i)\lambda^{\star}_{r}\mathcal{E}\!\left[\!\P^{-1}\!\right]_{rt}\!\left[\!\M^\top\!\right]_{tj} -
@@ -32,7 +32,7 @@ substituting in the expression above we finally get
 
 The explicit computation of the expected value depends on the particular activation function used. Even though, the final expression can only be function of the covariance matrix entries, since all the local fields are zero-mean Gaussian variables.
 We report the covariance matrix of local fields
-\begin{equation} \label{eq:def:new_covariance}
+\begin{equation} \label{2302:eq:def:new_covariance}
 \Cov\left[\vec{\lambda}, \vec{\lambda}^\bot, \vec{\lambda}^\star\right] = 
 \begin{pmatrix}
 \Q & \Q^\bot & \M \\

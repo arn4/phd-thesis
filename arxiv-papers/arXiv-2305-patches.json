@@ -1,0 +1,10 @@
+{
+  "_doc": "Per-paper find/replace patches applied as the LAST step of paper_extraction.py. Use only when the upstream arxiv source has a defect that cannot be repaired in any tracked sidecar (citation-map / macro-map / packages / macros).",
+  "find_replace": [
+    {
+      "find": "\\wˆ\\i_j",
+      "replace": "\\w^\\i_j",
+      "comment": "Unicode MODIFIER LETTER CIRCUMFLEX (U+02C6) in arXiv source SDE_with_generic_width.tex; should be the math superscript ^ (U+005E). The original compile rendered silently; the standalone driver does not."
+    }
+  ]
+}

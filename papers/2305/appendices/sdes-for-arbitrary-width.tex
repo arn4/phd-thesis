@@ -1,8 +1,8 @@
 \section{SDEs for arbitrary width}
 
-\label{app:SDE_with_generic_width}
+\label{2305:app:SDE_with_generic_width}
 In this appendix we generalize the discussion of the spherical constrained SDE to network of arbitrary width.
-As we already did at beginning of Section~\ref{sec:width}, we fix the second layer to \(a_j=1\) for everything follow.
+As we already did at beginning of Section~\ref{2305:sec:width}, we fix the second layer to \(a_j=1\) for everything follow.
 \subsection{Unconstrained SDE with $p>1$}
 The updates of overlapping matrixes elements can be written as
 \[\begin{split}
@@ -17,12 +17,12 @@ As we already seen, the usual argument provides setting \(\dif t = \sfrac{\gamma
 \end{split}\]
 where \(\Phi_{jl} = \EV{\mathcal{Q}_{jl}}\) and \(\Psi_{j} = \EV{\mathcal{M}_{j}}\).
 We can now go beyond this and add corrections to concentration, namely adding a Brownian motion, following \cite{arous2022high}:
-\begin{equation}\label{eq:SDE_p_generic}\begin{split}
+\begin{equation}\label{2305:eq:SDE_p_generic}\begin{split}
     \dif \M_{j} &= \Psi_{j} \dif t + \sqrt{\frac{\gamma}{pd}}\vec{\sigma}^\M_{j}\cdot \dif \vec{B}_t \\
     \dif \Q_{jl} &= \Phi_{jl} \dif t + \sqrt{\frac{\gamma}{pd}}\vec{\sigma}^\Q_{jl}\cdot \dif \vec{B}_t.
 \end{split}\end{equation}
 The \(\vec{\sigma}^\M_{j}\) and \(\vec{\sigma}^\Q_{jl}\) are the rows of the matrix obtained by taking the square root of the covariance matrix of all the \(p+p^2\) random variable \(\mathcal{M}_{j}\) and \(\mathcal{Q}_{jl}\):
-\begin{equation}\label{eq:generic_p_variance}
+\begin{equation}\label{2305:eq:generic_p_variance}
   \begin{pmatrix}
     \vec{\sigma}^\M_{1}\\
     \vdots\\
@@ -80,7 +80,7 @@ The \(\vec{\sigma}^\M_{j}\) and \(\vec{\sigma}^\Q_{jl}\) are the rows of the mat
 and  \(\dif \b_t\) is a \(p(1+p)\)-dimensional Wiener process.
 
 \subsection{Spherical Constrained SDE}
-Let's move now to the actual spherical derivation. The steps used are exaclty the same we did in \ref{app:spherical_constraint},  Since we are forcing the weight on the sphere, the update rule that has to be used is
+Let's move now to the actual spherical derivation. The steps used are exaclty the same we did in \ref{2305:app:spherical_constraint},  Since we are forcing the weight on the sphere, the update rule that has to be used is
 \[
   \w_j^{\i+1} =\frac{\w^\i_j - \gamma \nabla_{\w_j}{\loss}}{\left\|\w^\nu_j - \gamma \nabla_{\w_j}{\loss}\right\|}\sqrt{d};
 \]
@@ -115,7 +115,7 @@ Expanding up to leading orders we get
             =& \dif \Q_{jl} - \frac{\mathfrak{Q}_{jl}}{2}(\dif \Q_{jj}+\dif \Q_{ll}) + \frac{\mathfrak{Q}_{jl}}{8}(3\dif \Q_{jj}^2+3\dif \Q_{ll}^2 + 2\dif \Q_{jj}\dif \Q_{ll})-\frac12(\dif \Q_{jl}\dif \Q_{jj}+\dif \Q_{jl}\dif \Q_{ll})
 \end{split}\]
 
-We can now use the Itô Lemma on differentials Equations~\eqref{eq:SDE_p_generic},
+We can now use the Itô Lemma on differentials Equations~\eqref{2305:eq:SDE_p_generic},
 obtaining 
 \[
   \dif x_a \dif x_b = \frac{\gamma}{pd}\vec{\sigma}_{x_a} \cdot \vec{\sigma}_{x_b}\dif t, \quad
@@ -123,11 +123,11 @@ obtaining
 so we have some extra drift terms at an higher order.
 
 \subsection{Special cases}
-Computing explicitly the variance in Equation~\eqref{eq:generic_p_variance} is not conceptually different from what exposed in Appendix~\ref{app:square_equations}: expanding all the expression we are left expectations of polynomials of the preactivations.
+Computing explicitly the variance in Equation~\eqref{2305:eq:generic_p_variance} is not conceptually different from what exposed in Appendix~\ref{2305:app:square_equations}: expanding all the expression we are left expectations of polynomials of the preactivations.
 Even if not complex, it is required to compute up to twelfth moments of a multivariate normal distributions, that could lead to very long results. We developed a Mathematica script for addressing this computation, available in the \href{https://github.com/IdePHICS/EscapingMediocrity}{GitHub repository}; it can be used for the covariance of arbitrary network width. In the same repository, we provide the code for numerically integrating the SDE, in the cases \(p=1,2\). These two special case are briefly discussed here.
 
 \paragraph{Explicit expression for \(p=1\)}
-We report here the expression for the variances and covariance introduced in \eqref{eq:app:sde_p1}
+We report here the expression for the variances and covariance introduced in \eqref{2305:eq:app:sde_p1}
 \begin{equation}\begin{split}
  \Var{\left[\mathcal{Q}_{11}\right]} =& 576 \gamma ^2 \Delta  \M^4-2496 \gamma ^2 \Delta  \M^2-11520 \gamma ^2 \M^6+54144 \gamma ^2 \M^4-73728 \gamma ^2 \M^2 \\
     &+544 \gamma  \Delta  \M^2-11136 \gamma  \M^4+22272 \gamma  \M^2+320 \M^4-1600 \M^2+32 \gamma ^2 \Delta ^2 \\
@@ -138,15 +138,15 @@ We report here the expression for the variances and covariance introduced in \eq
 \end{split}\end{equation}
 
 
-\paragraph{Numerical experiments for \(p=2\)} In Figure~\ref{fig:sde_p2} we show the same numerical experiment we presented in Section~\ref{sec:sde_p1}, repeated in the case \(p=2\). Again, we show there is no benefit including the stochasticity in the analysis. All the evidence indicate that even for larger \(p\) there is no effect in including the correction and the time estimation based on the ODE is accurate.
-\begin{figure}[t]
+\paragraph{Numerical experiments for \(p=2\)} In Figure~\ref{2305:fig:sde_p2} we show the same numerical experiment we presented in Section~\ref{2305:sec:sde_p1}, repeated in the case \(p=2\). Again, we show there is no benefit including the stochasticity in the analysis. All the evidence indicate that even for larger \(p\) there is no effect in including the correction and the time estimation based on the ODE is accurate.
+\begin{figure}
     \centering
     \includegraphics[width=0.44\textwidth]{figs/sde_example_p2}
     \includegraphics[width=0.49\textwidth]{figs/sde_example_p2-zoom}
     \caption{multiple run of the simulated SGD and the numerically integrated SDE, always starting from the same initial condition, with \(d=3000\).
-    All the \(t_\text{ext}\) presented are obtained by solving numerically \eqref{eq:exit_time_implicit_equation}.
+    All the \(t_\text{ext}\) presented are obtained by solving numerically \eqref{2305:eq:exit_time_implicit_equation}.
     The SDE captures the variance that the ODE doesn't exhibit, but the $t_\text{ext}$ do not change considerably.}
-    \label{fig:sde_p2}
+    \label{2305:fig:sde_p2}
 \end{figure}
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

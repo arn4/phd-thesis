@@ -1,7 +1,7 @@
 \section{Neural LoFi from Gradient Descent}
 
-\label{app:GD-neural}
-In this section, our goal is to prove Proposition \ref{thm:layerwise-GD}, whose formal version is stated below as Theorem \ref{thm:neural-lofi}, i.e. show that under layerwise training with vanishing initialization, the early-time dynamics of each layer produces spikes along the linear direction $\hat{\bu}_\ell$ and aligns with the top eigenvectors of $\widehat{C}^{(\ell)}$, for a standard fully-connected architecture without skip connections.
+\label{2605:app:GD-neural}
+In this section, our goal is to prove Proposition \ref{2605:thm:layerwise-GD}, whose formal version is stated below as Theorem \ref{2605:thm:neural-lofi}, i.e. show that under layerwise training with vanishing initialization, the early-time dynamics of each layer produces spikes along the linear direction $\hat{\bu}_\ell$ and aligns with the top eigenvectors of $\widehat{C}^{(\ell)}$, for a standard fully-connected architecture without skip connections.
 
 Consider the standard $L$-layer network
 \begin{equation}
@@ -10,7 +10,7 @@ Consider the standard $L$-layer network
 \bz_0(\bx)=\bx,
 \qquad
 z_\ell(x)=\sigma\!\bigl(W_\ell \bz_{\ell-1}(\bx)\bigr),\quad \ell=1,\dots,L,
-\label{eq:sec2-arch}
+\label{2605:eq:sec2-arch}
 \end{equation}
 with square loss $\mathcal{L}=\tfrac{1}{2n}\sum_\mu(y_\mu-\hat f(\bx_\mu))^2$. The final readout $a_L\in\mathbb{R}^{p_L}$ is fixed throughout training; the weight matrices $W_\ell$ are updated layer-wise.
 
@@ -18,16 +18,16 @@ with square loss $\mathcal{L}=\tfrac{1}{2n}\sum_\mu(y_\mu-\hat f(\bx_\mu))^2$. T
 
 
 We write $w_{\ell,i}$ for the $i$-th row of $W_\ell$ and set
-\begin{equation}\label{eq:init-scales}
+\begin{equation}\label{2605:eq:init-scales}
 \alpha_m := \max_i \|\bw_{m,i}(0)\|, \qquad m=1,\dots,L,
 \end{equation}
 with  $\alpha_{L+1}:=\|a_L\|$. 
 
-\begin{assumption}[Layerwise scale separation]\label{ass:scale-sep}
+\begin{assumption}[Layerwise scale separation]\label{2605:ass:scale-sep}
 The dataset, architecture, and activation are fixed. The scales, including the
 final readout scale \(\alpha_{L+1}=\|a_L\|\), form a strict hierarchy: for
 every $\ell$ and every $m\in\{\ell+1,\dots,L+1\}$,
-\begin{equation}\label{eq:scale-hierarchy}
+\begin{equation}\label{2605:eq:scale-hierarchy}
 \alpha_m=o(\alpha_\ell).
 \end{equation}
 \end{assumption}
@@ -38,13 +38,13 @@ below in a scale-counting sense: every replacement of a later-layer quantity by
 its leading initialization-scale term carries at least one additional factor
 from some \(\alpha_m\) with \(m>\ell\).
 
-\begin{assumption}\label{ass:nonlin}
+\begin{assumption}\label{2605:ass:nonlin}
 $\sigma:\mathbb{R}\to\mathbb{R}$ is three times continuously differentiable,
 $\sigma(0)=0$, and $\|\sigma'\|_\infty,\|\sigma''\|_\infty,\|\sigma'''\|_\infty<\infty$.
 \end{assumption}
 
 Define the \emph{linear spike direction} and the \emph{label-weighted covariance} at layer $\ell$:
-\begin{equation}\label{eq:sec2-linear-component}
+\begin{equation}\label{2605:eq:sec2-linear-component}
 \hat{\bu}_\ell
 \coloneqq \frac{1}{n}\sum_{\mu=1}^n y_\mu\,\bz_{\ell-1}(\bx_\mu),
 \qquad
@@ -53,11 +53,11 @@ Define the \emph{linear spike direction} and the \emph{label-weighted covariance
 y_\mu\,\bz_{\ell-1}(\bx_\mu)\bz_{\ell-1}(\bx_\mu)^\top.
 \end{equation}
 
-\begin{theorem}[Layerwise GD approximation]\label{thm:neural-lofi}
-Under Assumptions~\ref{ass:scale-sep}--\ref{ass:nonlin}, there exist constants
+\begin{theorem}[Layerwise GD approximation]\label{2605:thm:neural-lofi}
+Under Assumptions~\ref{2605:ass:scale-sep}--\ref{2605:ass:nonlin}, there exist constants
 $\tau,C>0$ such that the layerwise gradient descent run admits
 horizons
-\begin{equation}\label{eq:layerwise-horizons}
+\begin{equation}\label{2605:eq:layerwise-horizons}
 T_\ell:=\left\lfloor \frac{\tau\alpha_\ell}{\eta}\right\rfloor,
 \qquad \ell=1,\dots,L,
 \end{equation}
@@ -68,23 +68,23 @@ $0\le t\le T_\ell$,
 \]
 Thus the layer receives an $O(\alpha_\ell)$ update while staying on its
 initialization scale.  Define the leading effective readout
-\begin{equation}\label{eq:effective-readout-fc}
+\begin{equation}\label{2605:eq:effective-readout-fc}
 \bar{a}_{\ell,i}
 := c_0^{L-\ell}\Bigl[\Bigl(\prod_{m=\ell+1}^{L}W_m(0)\Bigr)^\top a_L\Bigr]_i
 \end{equation}
 where \(c_0=\sigma'(0)\). Suppose that the effective readout for neuron $i$ is non-degenerate i.e.:
-\begin{equation}\label{eq:readout-nondegenerate}
+\begin{equation}\label{2605:eq:readout-nondegenerate}
     |\bar a_{\ell,i}|\ge c_{\rm rd} \alpha_{L+1}\prod_{m=\ell+1}^{L}\alpha_m
 \end{equation}
 for a fixed \(c_{\rm rd}>0\). For such neurons and \(0\le t<T_\ell\),
-\begin{equation}\label{eq:sec2-main-dynamics}
+\begin{equation}\label{2605:eq:sec2-main-dynamics}
 w_{\ell,i}(t+1) - w_{\ell,i}(t)
 = \eta\,c_0\,\bar{a}_{\ell,i}\,\hat{\bu}_\ell
 + \eta\,\bar{a}_{\ell,i}\,c_1\,\widehat{C}^{(\ell)}\,w_{\ell,i}(t)
 + R_{\ell,i}(t),
 \end{equation}
 where \(c_1=\sigma''(0)\). For every \(0\le t\le T_\ell\) the accumulated residual obeys
-\begin{equation}\label{eq:remainder-bound}
+\begin{equation}\label{2605:eq:remainder-bound}
     \left\|
         \sum_{s=0}^{t-1}R_{\ell,i}(s)
     \right\|
@@ -98,14 +98,14 @@ the first two nontrivial orders in the layer-\(\ell\) initialization scale.
 \end{theorem}
 
 \begin{remark}
-The three components in Equation~\eqref{eq:sec2-main-dynamics} have the following roles:
+The three components in Equation~\eqref{2605:eq:sec2-main-dynamics} have the following roles:
 \begin{itemize}[noitemsep]
 \item \textbf{Linear spike.} $\eta c_0 \bar{a}_{\ell,i}\hat{\bu}_\ell$ is independent of the current weight; over the horizon $T_\ell$ it moves the neuron by $O(\alpha_\ell)$ toward the empirical label-feature correlation.
 \item \textbf{Covariance amplification.} $\eta \bar{a}_{\ell,i} c_1\widehat{C}^{(\ell)}w_{\ell,i}(t)$ is linear in the current weight and amplifies components aligned with the leading eigenvectors of $\widehat{C}^{(\ell)}$.
 \item \textbf{Remainder.} The per-step remainder is second order in the current
 layer scale, hence it accumulates to \(O(\alpha_\ell^3)\) over
 \(T_\ell\asymp \alpha_\ell/\eta\) steps. Terms coming from later layers are
-smaller by the scale hierarchy in Assumption~\ref{ass:scale-sep}.
+smaller by the scale hierarchy in Assumption~\ref{2605:ass:scale-sep}.
 \end{itemize}
 The proof below shows that \(\bar a_{\ell,i}\) is the leading, sample-independent
 backpropagation coefficient along the path from layer \(\ell\) to the readout.
@@ -114,7 +114,7 @@ backpropagation coefficient is accidentally cancelled; such neurons are inactive
 at the displayed order.
 \end{remark}
 
-\subsection{Proof of Theorem~\ref{thm:neural-lofi}}
+\subsection{Proof of Theorem~\ref{2605:thm:neural-lofi}}
 
 \begin{proof}
 All constants below may depend on the fixed data and architecture bounds,
@@ -125,7 +125,7 @@ and do not track separate data, width, or label constants.
 For the standard architecture the gradient of the loss w.r.t.\
 \(w_{\ell,i}\) involves a single backpropagation path through all layers
 \(\ell+1,\dots,L\). Define the layer-to-layer Jacobian
-\begin{equation}\label{eq:jacobian}
+\begin{equation}\label{2605:eq:jacobian}
 \bm{J}_{L\ell}(x)
 := \frac{\partial z_L(x)}{\partial z_\ell(x)}
 = \prod_{m=\ell+1}^{L}\mathrm{diag}\!\bigl(\sigma'(\bm{h}_m(x))\bigr)W_m,
@@ -136,7 +136,7 @@ and the sample-dependent effective readout
     \bar a_{\ell,i}(x):=[\bm J_{L\ell}(x)^\top a_L]_i .
 \]
 By the chain rule,
-\begin{equation}\label{eq:full-grad}
+\begin{equation}\label{2605:eq:full-grad}
 \nabla_{w_{\ell,i}}\mathcal{L}
 = -\frac{1}{n}\sum_{\mu=1}^n
   r_\mu\,\bar{a}_{\ell,i}(\bx_\mu)\,
@@ -145,15 +145,15 @@ By the chain rule,
 \end{equation}
 where $u_{\ell,i}(x)=\langle w_{\ell,i},\bz_{\ell-1}(x)\rangle$.
 
-The key observation is that, under Assumption~\ref{ass:scale-sep}, the activation
+The key observation is that, under Assumption~\ref{2605:ass:scale-sep}, the activation
 derivatives along this path are well approximated by their value at zero, so
 \(\bar a_{\ell,i}(x)\) is approximated by the initialization-dependent
-coefficient in~\eqref{eq:effective-readout-fc}. On the layerwise horizons
+coefficient in~\eqref{2605:eq:effective-readout-fc}. On the layerwise horizons
 considered below the representations are uniformly bounded and
 \(\|W_m\|_{\mathrm{op}}\lesssim \alpha_m\). Hence
 \(\|\bm h_m(x)\|\lesssim\alpha_m\), and Taylor expanding \(\sigma'\) around
 zero gives
-\begin{equation}\label{eq:diag-expand}
+\begin{equation}\label{2605:eq:diag-expand}
 \mathrm{diag}(\sigma'(\bm{h}_m(x))) = c_0 I + c_1\,\mathrm{diag}(\bm{h}_m(x)) + O(\alpha_m^2),
 \quad c_0=\sigma'(0),\;c_1=\sigma''(0).
 \end{equation}
@@ -173,7 +173,7 @@ scale bound
 \]
 Since each \(\alpha_m=o(\alpha_\ell)\) for \(m>\ell\), the right-hand side is
 \(o(\alpha_\ell)\). Therefore
-\begin{equation}\label{eq:Jac-correction}
+\begin{equation}\label{2605:eq:Jac-correction}
 \|\bm{J}_{L\ell}(x) - \bm{J}_{L\ell}^{(0)}\|_{\mathrm{op}}
 = o(\alpha_\ell),
 \end{equation}
@@ -185,8 +185,8 @@ readout gives, with \(\gamma_\ell=\alpha_{L+1}\prod_{m=\ell+1}^L\alpha_m\),
     K\gamma_\ell
     \left(\sum_{m=\ell+1}^{L}\alpha_m\right),
 \]
-while \eqref{eq:readout-nondegenerate} gives the relative estimate
-\begin{equation}\label{eq:readout-const-approx}
+while \eqref{2605:eq:readout-nondegenerate} gives the relative estimate
+\begin{equation}\label{2605:eq:readout-const-approx}
     \frac{|\bar{a}_{\ell,i}(x)-\bar{a}_{\ell,i}|}
     {|\bar a_{\ell,i}|}
     \le
@@ -234,12 +234,12 @@ $t$ with $\eta t\le \tau\alpha_\ell$,
 
 On this horizon,
 \(|u_{\ell,i}(\bx_\mu)|\le K\alpha_\ell\).  Taylor's theorem and
-Assumption~\ref{ass:nonlin} give
-\begin{equation}\label{eq:sec2-sigma-linearization}
+Assumption~\ref{2605:ass:nonlin} give
+\begin{equation}\label{2605:eq:sec2-sigma-linearization}
 \sigma'(u) = c_0 + c_1\,u + \omega_\sigma(u),\quad
 |\omega_\sigma(u)|\leq \tfrac{1}{2}\|\sigma'''\|_\infty u^2 .
 \end{equation}
-Moreover, by~\eqref{eq:readout-const-approx},
+Moreover, by~\eqref{2605:eq:readout-const-approx},
 \(\bar a_{\ell,i}(\bx_\mu)=\bar a_{\ell,i}(1+\varepsilon_{\ell,i}(\bx_\mu))\)
 with \(\sup_\mu|\varepsilon_{\ell,i}(\bx_\mu)|=o(\alpha_\ell)\).  Thus the
 readout replacement error is smaller than the leading readout contribution
@@ -248,7 +248,7 @@ itself; quantitatively it is
 \(|\bar a_{\ell,i}|=O(\gamma_\ell)=o(\alpha_\ell)\).  By the hierarchy of scales, we further have
 $|\hat f(\bx_\mu)|=o(\alpha_\ell^2)$, and
 $r_\mu=y_\mu+o(\alpha_\ell^2)$.
-Substituting these three estimates in~\eqref{eq:full-grad} yields
+Substituting these three estimates in~\eqref{2605:eq:full-grad} yields
 \[
 \frac1n\sum_{\mu=1}^n
 r_\mu\,\bar a_{\ell,i}(\bx_\mu)\,
@@ -272,7 +272,7 @@ K\Bigl(
 Finally,
 $w_{\ell,i}(t+1)-w_{\ell,i}(t)=-\eta\nabla_{w_{\ell,i}}\mathcal L$, so setting
 $R_{\ell,i}(t):=\eta\mathcal E_{\ell,i}(t)$ proves
-\eqref{eq:sec2-main-dynamics}.  Summing over \(0\le s<t\le T_\ell\) gives
+\eqref{2605:eq:sec2-main-dynamics}.  Summing over \(0\le s<t\le T_\ell\) gives
 \[
     \left\|
         \sum_{s=0}^{t-1}R_{\ell,i}(s)
@@ -282,5 +282,5 @@ $R_{\ell,i}(t):=\eta\mathcal E_{\ell,i}(t)$ proves
     \le
     K\alpha_\ell^3,
 \]
-which is \eqref{eq:remainder-bound}.
+which is \eqref{2605:eq:remainder-bound}.
 \end{proof}

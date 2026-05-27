@@ -1,5 +1,5 @@
 \section{Details on the numerics}
-\label{sec:app:hyperparams}
+\label{2402:sec:app:hyperparams}
 
 \subsection{DMFT equations with a single stochastic process}
 In this section, we present a set of exact equations equivalent to the ones in the main text, but that depend on a single stochastic process.
@@ -7,7 +7,7 @@ In this section, we present a set of exact equations equivalent to the ones in t
 % and their norm $Q^{(t)} = W^{(t)} W^{(t)\top} \in \mathbb{R}^{p \times p}$ 
 % \textit{as well as} the preactivation of the weights of the teacher $\vec h^* = W^* \vec z / \sqrt{d} \in \mathbb{R}^k$ and the student $\vec h^{(t)} = W^{(t)} \vec z / \sqrt{d} \in \mathbb{R}^p$.
  It is possible to show that asymptotically in the proportional limit, i.e. for $d\to\infty$ and $n=\alpha d$, the pre-activations of the student are distributed as $\vec h^{(t)} = \vec r^{(t)} + M^{(t)}\vec h^*$, with the constraint:
-\begin{align} \label{eq:r_update}
+\begin{align} \label{2402:eq:r_update}
     \vec r^{(t+1)} = \vec r^{(t)} -\eta \left[ \left(\lambda+\Lambda^{(t)}\right) \vec r^{(t)} + \nabla_{\vec h^{(t)}}\ell\left( \vec h^{(t)}\right)-\sum_{\tau=0}^{t-1} R_\ell^{(t,\tau)}\vec r^{(t)}+\vec\zeta^{(t)}\right]\nonumber
 \end{align}
 Here $\vec\zeta^{(t)}$ is a zero mean Gaussian Process with covariance
@@ -15,35 +15,35 @@ Here $\vec\zeta^{(t)}$ is a zero mean Gaussian Process with covariance
     \mathbb{E}_{\vec \zeta}\left[\vec\zeta^{(t)} \vec\zeta^{(\tau)\top}\right] = \alpha\mathbb{E}_{\vec r, \vec h^*}\left[\nabla_{\vec h^{(t)}}\ell\left( \vec h^{(t)}\right)\nabla_{\vec h^{(\tau)}}\ell\left( \vec h^{(\tau)}\right)^\top\right]\nonumber
 \end{align}
 and the effective regularisation $\Lambda^{(t)}$ concentrates to
-\begin{align} %\label{eq:lambda_def}
+\begin{align} %\label{2402:eq:lambda_def}
     \Lambda^{(t)} = \alpha\mathbb{E}_{\vec h}\left[\nabla^2_{\vec h^{(t)}}\ell\left( \vec h^{(t)}\right)\right]\,.
 \end{align}
 The memory kernel $R_\ell^{(t,\tau)}$ is identically zero for $t\leq \tau$ while for $t > \tau$ it concentrates to
-\begin{align} %\label{eq:R_def}
+\begin{align} %\label{2402:eq:R_def}
     R_\ell^{(t,\tau)} = \alpha \mathbb{E}_{\vec h}\left[\frac{\partial\, \nabla_{\vec h^{(t)}}\ell\left( \vec h^{(t)}\right)}{\partial\, \zeta^{(\tau)}} \right]
 \end{align}
 % with the process $T^{(t,\tau)}$ distributed as
-% \begin{align} \label{eq:T_update}
+% \begin{align} \label{2402:eq:T_update}
 %     T^{(t+1,\tau)} &= T^{(t,\tau)} - \eta\left(\lambda + \Lambda^{(t)}\right) T^{(t,\tau)}\\
 %     &- \eta\left[  + \nabla^2_{\vec h^{(t)}}\ell\left( \vec h^{(t)}\right)T^{(t,\tau)}-\sum_{s=\tau}^{t-1} R^{(t,s)} T^{(s,\tau)}\right] \nonumber
 % \end{align}
 % and boundary condition $T^{(t,t)} = 0$.
 Finally, the low dimensionaly projections of the weights $M^{(t)}$ will obey the relation
-\begin{align} %\label{eq:M_update}
+\begin{align} %\label{2402:eq:M_update}
     M^{(t+1)} = M^{(t)} - \eta \alpha \mathbb{E}_{\vec h, \vec h^*}\left[\nabla_{\vec h^{(t)}}\ell\left( \vec h^{(t)}\right) \vec h^{*\top}\right]
 \end{align}
 % and the norm $Q^{(t)}$ will concentrate to
-% \begin{equation} \label{eq:Q_def}
+% \begin{equation} \label{2402:eq:Q_def}
 %     Q^{(t)} = \mathbb{E}_{\vec h}\left[\vec h^{(t)}\vec h^{(t) \top}\right]
 % \end{equation}
 % This set of equations differs from the ones in \citep{celentano2021high,gerbelot2022rigorous} as we can directly write the distribution of the pre-activations, in particular in relation to the teacher.
-% Notice that these definitions are well-posed because of the causal structure of the gradient descent upgrades, and by extension of \eqref{eq:r_update}: the distribution of $\vec r^{(t+1)}$ is completely determined by $\{\vec r^{(\tau)}\}_{\tau \in [t]}$ and the auxiliary quantities in eqs.~(\ref{eq:lambda_def},~\ref{eq:R_def}). Iterating backwards we reach the initial condition $\vec r^{(0)}$, which is a simple function of the data distribution and the initial conditions of the weights. For  details we refer to App. \ref{sec:app:proofs}.
+% Notice that these definitions are well-posed because of the causal structure of the gradient descent upgrades, and by extension of \eqref{2402:eq:r_update}: the distribution of $\vec r^{(t+1)}$ is completely determined by $\{\vec r^{(\tau)}\}_{\tau \in [t]}$ and the auxiliary quantities in eqs.~(\ref{2402:eq:lambda_def},~\ref{2402:eq:R_def}). Iterating backwards we reach the initial condition $\vec r^{(0)}$, which is a simple function of the data distribution and the initial conditions of the weights. For  details we refer to App. \ref{2402:sec:app:proofs}.
 The procedure is explained in detail in appendix D of \citep{gerbelot2022rigorous}, and can be equivalently derived using non-rigorous field theory techniques \citep{agoritsas2018out}.
 
 \subsection{Remark on the numerical integration of the DMFT equations}
-DMFT is an invaluable tool in itself to probe the behaviour of gradient based algorithms. It trades the update equation over heavily coupled weights in \eqref{eq:GD_update} with the ones over completely decoupled preactivations \eqref{eq:r_update} which implies that a Monte Carlo estimation based on \eqref{eq:r_update} is going to be vastly more efficient and it's a trivially parallelisable computation.
+DMFT is an invaluable tool in itself to probe the behaviour of gradient based algorithms. It trades the update equation over heavily coupled weights in \eqref{2402:eq:GD_update} with the ones over completely decoupled preactivations \eqref{2402:eq:r_update} which implies that a Monte Carlo estimation based on \eqref{2402:eq:r_update} is going to be vastly more efficient and it's a trivially parallelisable computation.
 % \et{cite something like opper 84}
-Furthermore, equation \eqref{eq:r_update} is exact in limit of large $d$, which removes completely all finite size effects.
+Furthermore, equation \eqref{2402:eq:r_update} is exact in limit of large $d$, which removes completely all finite size effects.
 % \et{cite something, like one of the Zdeborova Biroli papers on phase retrieval}.
 In practice, an implementation of the DMFT equations is extracting $n$ times using from the initial condition distribution of the practivations and iterating forward.
 % \et{put eqref}. 
@@ -56,7 +56,7 @@ In all the figures the continuous lines are from the numerical integration of th
 For both we fixed the second layer weights to $\pm 1/\sqrt{p}$, as for the cases under consideration this is an equivalent choice to of Gaussian second layer weights $\mathcal{N}(0,\frac{1}{p}{\mathbbm 1}_p)$. For the DMFT integration we used a minimum of $10^6$ Monte Carlo samples in order to have accurate lined. The error bars are too small to be visualised. 
 The direct simulation of the gradient descent dynamics was performed either using PyTorch or a direct implementation in Numpy. In all plots we used a minimum size $d=5000$ for the input dimension, and averaged over at least $32$ independent instances of the dynamics.
 
-In Figure \ref{fig:main:multiple_index} we plot the overlap matrix $M^{(t)}$ projected on two different directions: the parallel to the subspace that is learned in the first step and one direction in the orthogonal of this space.
-The projection operator is computed by performing explicitly the integrals in \eqref{eq:M_fist_step}
+In Figure \ref{2402:fig:main:multiple_index} we plot the overlap matrix $M^{(t)}$ projected on two different directions: the parallel to the subspace that is learned in the first step and one direction in the orthogonal of this space.
+The projection operator is computed by performing explicitly the integrals in \eqref{2402:eq:M_fist_step}
 
 The code is made available through the following Github repository: \href{https://github.com/IdePHICS/benefit-reusing-batch}{https://github.com/IdePHICS/benefit-reusing-batch}.

@@ -1,5 +1,5 @@
-\section{Proof of Theorems \ref{thm:main:sgd_weak_recovery} and \ref{thm:main:no_yhat_weak_recovery}}
-\label{sec:app:proofs}
+\section{Proof of Theorems \ref{2406:thm:main:sgd_weak_recovery} and \ref{2406:thm:main:no_yhat_weak_recovery}}
+\label{2406:sec:app:proofs}
 
 
 \subsection{Preliminaries}
@@ -8,7 +8,7 @@
 \[m_0 > 0 \quad \text{and} \quad c_\ell c_\ell^\star > 0.\]
 
 Throughout this section, the update process on $\vec{w}_t$ will be written as
-\begin{equation}\label{eq:app:one_step_w}
+\begin{equation}\label{2406:eq:app:one_step_w}
     \vec{w}_{t+1} = \frac{\vec{w}_t - \gamma\, \vec{g}_t}{\norm{\vec{w}_t - \gamma\, \vec{g}_t}},
 \end{equation}
 where $\vec{g}_t$ is the gradient at time $t$: $\vec{g}_t = \nabla_{w_{t}} \ell_t$, and $\ell_t$ is the empirical loss at time $t$, that can be either the correlation or the square loss. When considering the update of the process $(\vec{w}_t)_{t \geq 0}$, it will be useful to distinguish between the randomness in $\vec{w}_t$ and the one introduced by the batch drawn at time $t$. To this end, we introduce the filtration $(\cF_t)_{t\geq 0}$ adapted to the process $\vec{w}_t$, and we shall denote by $\dP_t$ (resp. $\dE_t$) the probability (resp. expectation) conditioned on $\cF_t$.
@@ -21,7 +21,7 @@ where $\vec{g}_t$ is the gradient at time $t$: $\vec{g}_t = \nabla_{w_{t}} \ell_
      \end{equation}
  \end{definition}
  It can be checked that $\norm{\cdot}_{\psi_\alpha}$ is a well-defined norm on random variables for $\alpha \geq  1$, and can be slightly modified into a norm when $\alpha < 1$; see \cite{ledoux1991probability,vandervaart1996weak} for more information. We say that a random variable is sub-gaussian (resp. sub-exponential) if its $\psi_2$ (resp. $\psi_1$) norm is finite. The main use of this definition is the following concentration inequality:
- \begin{lemma}\label{lem:app:orlicz_concentration}
+ \begin{lemma}\label{2406:lem:app:orlicz_concentration}
     Let $X$ be a random variable with finite $\psi_\alpha$-norm for some $\alpha > 0$. Then
       \begin{equation}
      \mathbb{P}\left[\left| X - \dE X \right| > t\norm{X}_{\psi_\alpha}\right] \leq 2e^{-t^\alpha}.
@@ -29,7 +29,7 @@ where $\vec{g}_t$ is the gradient at time $t$: $\vec{g}_t = \nabla_{w_{t}} \ell_
  \end{lemma}
 As a result, any $\psi_\alpha$-norm bound yields exponential convergence tails. Orlicz norms are also well-behaved with respect to products:
  
- \begin{lemma}\label{lem:app:orlicz_submult}
+ \begin{lemma}\label{2406:lem:app:orlicz_submult}
      Let $X$ and $Y$ be two random variables such that $\norm{X}_{\psi_\alpha}$ and $\norm{Y}_{\psi_\beta}$ are finite for some $\alpha, \beta > 0$. Then
     \[\norm{XY}_{\psi_{\lambda}} \leq \norm{X}_{\psi_\alpha} \norm{Y}_{\psi_\beta},\]
     where $\lambda$ is the number satisfying $\frac1\alpha + \frac1\beta = \frac1\lambda$.
@@ -49,7 +49,7 @@ As a result, any $\psi_\alpha$-norm bound yields exponential convergence tails. 
 \end{proof}
 
  Finally, we shall use the following theorem:
- \begin{theorem}[Theorem 6.2.3 in \cite{ledoux1991probability}] \label{thm:app:orlicz_sum}
+ \begin{theorem}[Theorem 6.2.3 in \cite{ledoux1991probability}] \label{2406:thm:app:orlicz_sum}
      Let $X_1, \dots, X_n$ be $n$ independent random variables with zero mean and second moment $\dE X_i^2 = \sigma_i^2$. Then,
      \begin{equation}
          \norm{\sum_{i=1}^n X_i}_{\psi_\alpha} \leq K_\alpha \log(n)^{1/\alpha} \left(\sqrt{\sum_{i=1}^n \sigma_i^2} + \max_{i}\norm{X_i}_{\psi_\alpha} \right)
@@ -60,13 +60,13 @@ As a result, any $\psi_\alpha$-norm bound yields exponential convergence tails. 
 
 Throughout this section, the update process on $\vec{w}_t$ will be written as
 \begin{equation}
-%\label{eq:app:one_step_w}
+%\label{2406:eq:app:one_step_w}
     \vec{w}_{t+1} = \frac{\vec{w}_t - \gamma\, \vec{g}_t}{\norm{\vec{w}_t - \gamma\, \vec{g}_t}},
 \end{equation}
 where $\vec{g}_t$ is the gradient at time $t$: $\vec{g}_t = \nabla_{w_{t}} \ell_t$, and $\ell_t$ is the empirical loss $t$, that can be either the correlation or the square loss. A direct computation of both gradients implies the following lemma:
 \begin{lemma}
 Define
-\begin{equation}\label{eq:app:def_ghat_gstar}
+\begin{equation}\label{2406:eq:app:def_ghat_gstar}
     \vec{g}_t^\star = \frac{1}{n_b} \sum_{\nu=1}^{n_b} f^\star(\langle \vec{w}^\star, \vec{z}^\nu \rangle) \sigma'(\langle \vec{w}_t, \vec{z}^\nu \rangle) \vec{z}^\nu \quad \text{and} \quad \hat{\vec{g}}_t = \frac{1}{n_b} \sum_{\nu=1}^{n_b} \sigma(\langle \vec{w}_t, \vec{z}^\nu \rangle) \sigma'(\langle \vec{w}_t, \vec{z}^\nu \rangle) \vec{z}^\nu,
 \end{equation}
     Then the gradient of the correlation loss $\ell^{\mathrm{corr}}$ is $- \vec{g}_t^\star$, while the gradient of the square loss $\ell^{\mathrm{sq}}$ is $\hat{\vec{g}}_t - \vec{g}_t^\star$.
@@ -76,10 +76,10 @@ Hence, the main difference between the gradients of the correlation and square l
 \begin{equation}
     \vec{g}_t^{\star\nu} := f^\star(\langle \vec{w}^\star, \vec{z}^\nu \rangle) \sigma'(\langle \vec{w}_t, \vec{z}^\nu \rangle) \vec{z}^\nu,
 \end{equation}
-and we define $\hat{\vec{g}}_t^\nu$ and $\vec{g}_t^\nu$ in the same way. By Assumption \ref{assump:poly_growth} and Lemma \ref{lem:app:orlicz_submult}, each variable $\vec{g}_t^{\star\nu}$ (resp. $\hat{\vec{g}}_t^\nu, \vec{g}_t^\nu$) has finite $\psi_\alpha$-norm for some $\alpha > 0$, and hence Proposition 2 of \cite{dandi2023how} holds up to $\polylog(n)$ factors. 
+and we define $\hat{\vec{g}}_t^\nu$ and $\vec{g}_t^\nu$ in the same way. By Assumption \ref{2406:assump:poly_growth} and Lemma \ref{2406:lem:app:orlicz_submult}, each variable $\vec{g}_t^{\star\nu}$ (resp. $\hat{\vec{g}}_t^\nu, \vec{g}_t^\nu$) has finite $\psi_\alpha$-norm for some $\alpha > 0$, and hence Proposition 2 of \cite{dandi2023how} holds up to $\polylog(n)$ factors. 
 
 We can also compute the conditional expectation of the gradient $\vec{g}_t$:
-\begin{lemma}\label{lem:app:exp_g}
+\begin{lemma}\label{2406:lem:app:exp_g}
     For any $t \geq 0$, 
     \begin{equation}
         \Et{\vec{g}_t^\star} = \phi(m_t) \vec{w}_t^\star +  \psi^{\mathrm{corr}}(m_t) \vec{w}_t 
@@ -99,7 +99,7 @@ We can also compute the conditional expectation of the gradient $\vec{g}_t$:
 \end{proof}
 
 In the following, we will denote $\psi^{\mathrm{sq}}(x) = \psi^{\mathrm{corr}}(x) - c^{\mathrm{sq}}$. A generic $\psi$ will be used when no specialization is necessary, so that
-\begin{equation}\label{eq:app:exp_g}
+\begin{equation}\label{2406:eq:app:exp_g}
     \Et{\vec{g}_t} = -\phi(m_t) \vec{w}^\star - \psi(m_t) \vec{w}_t.
 \end{equation}
 
@@ -114,7 +114,7 @@ and the following $\gamma$-dependent time:
     \tilde t_{\gamma, \zeta}^+ = \min\{t \geq 0: \gamma m_t^{\ell-1} \geq \zeta\}
 \end{equation}
  Our first goal is to show the following high-probability inequality:
-\begin{proposition}\label{prop:app:diff_ineq_m}
+\begin{proposition}\label{2406:prop:app:diff_ineq_m}
 Define
 \begin{equation}
     t_{\max} = \frac{n_b}{C_{\max} d \log(d)^{C_{\max}}\, \gamma^2},
@@ -132,7 +132,7 @@ for some sufficiently large $C_{\max} > 0$. Then, for a sufficiently small choic
 \end{enumerate}
 \end{proposition}
 
-The rest of this section is devoted to show Proposition \ref{prop:app:diff_ineq_m}. We define the following ``good'' event at time $t$:
+The rest of this section is devoted to show Proposition \ref{2406:prop:app:diff_ineq_m}. We define the following ``good'' event at time $t$:
 \[ \cE_t \coloneqq \left\{ |\langle \vec{g}_t, \vec{w}_t \rangle | \leq \frac1{2\gamma} \right\} \]
 % We can show that $\cE_t$ is a high-probability event, under certain conditions:
 % \begin{lemma}
@@ -145,14 +145,14 @@ The rest of this section is devoted to show Proposition \ref{prop:app:diff_ineq_
 \paragraph{A (almost) deterministic update inequality}
 
 We first expand the projection step to obtain a difference inequality for the process $m_t$. We write 
-\begin{equation}\label{eq:app:grad_decomp}
+\begin{equation}\label{2406:eq:app:grad_decomp}
     \vec{g}_t = \langle \vec{g_t}, \vec{w_t} \rangle \vec{w}_t + \vec{g_t}^\bot,
 \end{equation}  
-where $\vec{g}_t^\bot$ is orthogonal to $\vec{w_t}$. Similarly to Equation~\ref{eq:app:exp_g}, we can compute the expectation of $\vec{g}_t^\bot$:
-\begin{equation}\label{eq:app:exp_gbot}
+where $\vec{g}_t^\bot$ is orthogonal to $\vec{w_t}$. Similarly to Equation~\ref{2406:eq:app:exp_g}, we can compute the expectation of $\vec{g}_t^\bot$:
+\begin{equation}\label{2406:eq:app:exp_gbot}
     \Et{\vec{g}_t} = -\phi(m_t)(\vec{w}_t^\star - m_t \vec{w}_t)
 \end{equation}
-\begin{lemma}\label{lem:app:difference_m_determ}
+\begin{lemma}\label{2406:lem:app:difference_m_determ}
 For any $t \geq 0$, there exists a (random) constant $c_t$ such that the following inequality holds:
 \begin{equation}
     m_{t+1} \geq m_t - \gamma c_t \langle \vec{w}^\star,\vec{g}_t^\bot \rangle - \frac{\gamma^2 c_t^2 m_t \norm{\vec{g}_t^\bot}^2}{2} - \frac12\gamma^3 c_t^3 |\langle w^\star, \vec{g}^\bot \rangle| \norm{\vec{g}_t^\bot}^2.
@@ -162,50 +162,50 @@ Further, under the event $\cE_t$, we have $1/2 \leq c_t \leq 2$.
 \end{lemma}
 
 \begin{proof}
-    We use the decomposition of eq. \eqref{eq:app:grad_decomp} and write
+    We use the decomposition of eq. \eqref{2406:eq:app:grad_decomp} and write
     \[ \vec{w}_t - \gamma \vec{g}_t = (1 - \gamma \langle \vec{g_t}, \vec{w_t} \rangle)\vec{w}_t + \gamma \vec{g}_t^\bot \]
     As a result, if we define
     \[ c_t \coloneqq \frac1{1 - \gamma \langle \vec{g_t}, \vec{w_t} \rangle}, \]
     we have
     \[ \vec{w}_{t+1} = \frac{\vec{w}_t - \gamma c_t \vec{g}_t^\bot}{\norm{\vec{w}_t - \gamma c_t \vec{g}_t^\bot}} \]
-    since the update equation \eqref{eq:app:one_step_w} is invariant w.r.t scaling. Taking the scalar product of the above with $\vec{w}^\star$, we have
-    \begin{equation}\label{eq:app:one_step_m}
+    since the update equation \eqref{2406:eq:app:one_step_w} is invariant w.r.t scaling. Taking the scalar product of the above with $\vec{w}^\star$, we have
+    \begin{equation}\label{2406:eq:app:one_step_m}
         m_{t+1} = \frac{m_t - \gamma c_t \langle \vec{w}^\star,\vec{g}_t^\bot \rangle}{\norm{\vec{w}_t - \gamma c_t \vec{g}_t^\bot}}.
     \end{equation}
     Expanding the norm in the denominator, and using that $\norm{\vec{w}_t} = 1$ and $\langle \vec{w}_t, \vec{g}_t^\bot \rangle = 0$:
     \[ \norm{\vec{w}_t - \gamma\, \vec{g}_t} = \sqrt{1 + \gamma^2 c_t^2 \norm{\vec{g}_t^\bot}^2} \]
-    By the convexity inequality $(1+x)^{-1/2} \geq 1 - x/2$, valid for all $x \geq 0$, Equation \eqref{eq:app:one_step_m} becomes
+    By the convexity inequality $(1+x)^{-1/2} \geq 1 - x/2$, valid for all $x \geq 0$, Equation \eqref{2406:eq:app:one_step_m} becomes
     \begin{align*}
         m_{t+1} &\geq \left(m_t - \gamma c_t \langle \vec{w}^\star,\vec{g}_t^\bot \rangle \right) \left( 1 - \frac{\gamma^2 c_t^2}2 \norm{\vec{g}_t^\bot}^2 \right).
     \end{align*}
     The lemma ensues upon expanding and rearranging the terms.
 \end{proof}
 
-The expansion in Lemma \ref{lem:app:difference_m_determ} can be decomposed in two terms: the term linear in $\gamma$ is a noisy \emph{drift term}, that will drive the dynamics, and that we will decompose as a sum of a deterministic process and a martingale. All other terms in $\gamma^2$ or $\gamma^3$ are corrections that we bound with high probability.
+The expansion in Lemma \ref{2406:lem:app:difference_m_determ} can be decomposed in two terms: the term linear in $\gamma$ is a noisy \emph{drift term}, that will drive the dynamics, and that we will decompose as a sum of a deterministic process and a martingale. All other terms in $\gamma^2$ or $\gamma^3$ are corrections that we bound with high probability.
 
 
 \paragraph{The linear term} We first control the term linear in $\gamma$. We can write
-\begin{equation}\label{eq:app:martingale_decomp}
+\begin{equation}\label{2406:eq:app:martingale_decomp}
      \langle \vec{w}^\star, \vec{g}_t^\bot \rangle =  \langle \vec{w}^\star, \Et{\vec{g}_t^\bot} \rangle + Z_t,
 \end{equation}
-where $(Z_t)_{t \geq 0}$ is by definition a martingale difference sequence for the filtration $(\cF_t)_{t \geq 0}$. The expectation term is straightforward to compute using \eqref{eq:app:exp_gbot}:
+where $(Z_t)_{t \geq 0}$ is by definition a martingale difference sequence for the filtration $(\cF_t)_{t \geq 0}$. The expectation term is straightforward to compute using \eqref{2406:eq:app:exp_gbot}:
 \begin{equation}
-    \langle \vec{w}^\star, \Et{\vec{g}_t^\bot} \rangle = - (1 - m_t^2) \phi(m_t). \label{eq:app:drift_term}
+    \langle \vec{w}^\star, \Et{\vec{g}_t^\bot} \rangle = - (1 - m_t^2) \phi(m_t). \label{2406:eq:app:drift_term}
 \end{equation}
 
 The contribution of the terms $Z_t$ is bounded by the following lemma:
-\begin{lemma}\label{lem:app:bound_martingale}
+\begin{lemma}\label{2406:lem:app:bound_martingale}
     There exists constants $c, C > 0$ such that with probability $1-ce^{-c\log(n)^2}$,
     \begin{equation}
         \sup_{1 \leq t \leq T} \sum_{s = 1}^t Z_s  \leq \frac{C\log(d)^C \sqrt{T}}{\sqrt{n_b}}
     \end{equation}
 \end{lemma}
 \begin{proof}
-     The martingale increment $Z_t$ is an average of $n_b$ independent terms $Z_t^\nu$, that satisfy $\norm{Z_t^\nu}_{\psi_\alpha} \leq C$ for some $\alpha, C > 0$ by Assumption \ref{assump:poly_growth}. As a result, if we define
+     The martingale increment $Z_t$ is an average of $n_b$ independent terms $Z_t^\nu$, that satisfy $\norm{Z_t^\nu}_{\psi_\alpha} \leq C$ for some $\alpha, C > 0$ by Assumption \ref{2406:assump:poly_growth}. As a result, if we define
      \begin{equation*}
          B_\alpha = \sup_{t \geq 0} \norm{Z_t}_{\psi_\alpha},
      \end{equation*}
-     Theorem \ref{thm:app:orlicz_sum} implies that
+     Theorem \ref{2406:thm:app:orlicz_sum} implies that
     \begin{equation*}
         B_\alpha = \frac{\polylog(d)}{\sqrt{n_b}}.
     \end{equation*}
@@ -213,7 +213,7 @@ The contribution of the terms $Z_t$ is bounded by the following lemma:
 \end{proof}
 
 \paragraph{Bounding the corrections} Our next step is to handle the higher-order corrections. We show the following lemma:
-\begin{lemma}\label{lem:app:bound_corrections}
+\begin{lemma}\label{2406:lem:app:bound_corrections}
     Let $T \geq 0$, and $\eta < 1$. There exists a constant $C > 0$ such that for any $t \leq T$
     \begin{equation}
         \mathbb{P}\left(\norm{\vec{g}_t^\bot}^2 \leq C\left(\phi(m_t)^2(1 - m_t)^2  + \frac {d\log(d)^C} {n_b}\right) \quad \forall t \leq t_\eta^+ \wedge T \right) \geq 1 - cTe^{-c\log(d)^2}
@@ -236,7 +236,7 @@ The contribution of the terms $Z_t$ is bounded by the following lemma:
 
 
 \paragraph{Putting it all together} We now combine all the previous bounds into a unique proposition.
-\begin{proposition}\label{prop:app:diff_ineq_estimates}
+\begin{proposition}\label{2406:prop:app:diff_ineq_estimates}
     Let $T \geq 0$. There exists constants $c, C > 0$ such that
     \begin{equation}
         \mathbb{P}\left(m_t \geq m_0 + \sum_{s=0}^{t-1} \Phi_{\mathrm{drift}}(m_s) - C\Phi_{\mathrm{noise}}(m_s) - C K(T) \quad \forall t \leq T \quad \big\vert\quad \bigcap_{t\leq T} \cE_t \right) \geq 1 - Te^{-c\log(n)^2}
@@ -250,11 +250,11 @@ The contribution of the terms $Z_t$ is bounded by the following lemma:
 \end{proposition}
 
 \begin{proof}
-    By summing the inequality of Lemma \ref{lem:app:difference_m_determ} for $0 \leq s \leq t-1$, we get
+    By summing the inequality of Lemma \ref{2406:lem:app:difference_m_determ} for $0 \leq s \leq t-1$, we get
     \begin{equation}
         m_{t+1} \geq m_0 - \sum_{s=0}^{t-1} \gamma c_s \langle \vec{w}^\star,\vec{g}_s^\bot \rangle - \frac{\gamma^2 c_s^2 m_s \norm{\vec{g}_s^\bot}^2}{2} - \frac12\gamma^3 c_s^3 \norm{\vec{g}_s^\bot}^3.
     \end{equation}
-    The linear term is handled using the martingale decomposition \eqref{eq:app:martingale_decomp} combined with the expectation computation of \eqref{eq:app:drift_term} and the bound of Lemma \ref{lem:app:bound_martingale} on the martingale contribution. The terms in $\gamma^2$ and $\gamma^3$ follow from Lemma \ref{lem:app:bound_corrections}, as well as Lemma \ref{lem:app:bound_martingale} with $T = 1$, which implies that
+    The linear term is handled using the martingale decomposition \eqref{2406:eq:app:martingale_decomp} combined with the expectation computation of \eqref{2406:eq:app:drift_term} and the bound of Lemma \ref{2406:lem:app:bound_martingale} on the martingale contribution. The terms in $\gamma^2$ and $\gamma^3$ follow from Lemma \ref{2406:lem:app:bound_corrections}, as well as Lemma \ref{2406:lem:app:bound_martingale} with $T = 1$, which implies that
     \[ |\langle \vec{w}^\star, \vec{g}_t^\bot \rangle \leq C \log(n)^C \]
     for some $C > 0$.
     Finally, under the events $\cE_s$ for $s\leq t$, we can replace every occurence of $c_s$ by either $1/2$ or $2$ depending on the sign of the corresponding term.
@@ -264,15 +264,15 @@ The contribution of the terms $Z_t$ is bounded by the following lemma:
 
 
 
-\paragraph{Proof of Proposition \ref{prop:app:diff_ineq_m}} The expressions of Lemma \ref{lem:app:exp_g} imply the following expansions near 0:
+\paragraph{Proof of Proposition \ref{2406:prop:app:diff_ineq_m}} The expressions of Lemma \ref{2406:lem:app:exp_g} imply the following expansions near 0:
 \begin{align} 
-\phi(m) &= c_{\ell}c_{\ell}^\star m^{\ell-1} + O(m^\ell) & \psi^{\mathrm{corr}}(m) &=  O(m^\ell) & \psi^{\mathrm{sq}}(m) = - c^{\mathrm{sq}} + O(m^\ell) \label{eq:app:phi_psi_bounds}
+\phi(m) &= c_{\ell}c_{\ell}^\star m^{\ell-1} + O(m^\ell) & \psi^{\mathrm{corr}}(m) &=  O(m^\ell) & \psi^{\mathrm{sq}}(m) = - c^{\mathrm{sq}} + O(m^\ell) \label{2406:eq:app:phi_psi_bounds}
 \end{align} 
 As a result, there exists an $\eta > 0$ and constants $C, c > 0$ such that for any $m \leq \eta$,
 \begin{align*}
     c m^{\ell - 1} &\leq \phi(m) \leq C m^{\ell - 1} & |\psi^{\mathrm{corr}}(m)| &\leq C m^{\ell} & |\psi^{\mathrm{sq}}(m)| \leq C.
 \end{align*}
-We first lower bound the drift inequality of Proposition \ref{prop:app:diff_ineq_estimates}. Whenever $m_t \geq \eta$, we have
+We first lower bound the drift inequality of Proposition \ref{2406:prop:app:diff_ineq_estimates}. Whenever $m_t \geq \eta$, we have
 \[ \Phi_{\mathrm{drift}}(m_t) \geq p(\gamma m_t^{\ell - 1}) - C\gamma^2\frac{d}{n_b},  \]
 where $p(x) = x - C(x^2 + x^3)$. Define $\varepsilon > 0$ such that $p(x) > x/2$ on $[0, \varepsilon]$, so when $t \leq t_{\eta}^+ \wedge \tilde t_{\gamma,\varepsilon}^+$
 \[ \Phi_{\mathrm{drift}}(m_t) \geq c\gamma m_t^{\ell-1} - C \gamma^2 \frac{d}{n_b} m.\]
@@ -280,7 +280,7 @@ When $\gamma \leq c_\gamma n_b d^{-\ell/2} \log(d)^{-C_\gamma}$,
 \[ \gamma \frac{d \log(d)^C }{n_b} m \leq c_\gamma (\sqrt{d})^{\ell-2} \leq \frac{cm^{\ell-1}}2 \]
 when $t \leq t_{\kappa/2\sqrt{d}}^-$, $C_\gamma \geq C$ and $c_\gamma \leq c/2 (\kappa/2)^{\ell-2}$.
 
-Having shown $\Phi_{\mathrm{drift}}(m_t) \geq c m_t^{\ell-1}$, it remains to handle the constant terms in Proposition \ref{prop:app:diff_ineq_estimates}. We can compute directly $K(t_{\max})$, which yields
+Having shown $\Phi_{\mathrm{drift}}(m_t) \geq c m_t^{\ell-1}$, it remains to handle the constant terms in Proposition \ref{2406:prop:app:diff_ineq_estimates}. We can compute directly $K(t_{\max})$, which yields
 \[K(t_{\max}) = \frac{\log(d)^{C - C_{\max}/2}}{C_{\max}\sqrt{d}} + C\gamma\log(d)^{C - C_{\max}}\frac d{n_b} \leq \frac{\log(d)^{C - C_{\max}/2}}{C_{\max}\sqrt{d}} + \frac{Cc_\gamma}{\log(d)^{C_{\max}}} d^{-\frac{\ell}{2}} \leq \frac{m_0}{4}, \]
 by choosing $c_\gamma$ small enough and $C_{\max}$ large enough.
 
@@ -296,9 +296,9 @@ Finally, we need to show that the events $\cE_t$ occur with high probability. Th
 \end{lemma}
 
 \begin{proof}
-    We begin with the case of the square loss. From the expression of the gradient expectation in \eqref{eq:app:exp_g}, and the estimates \eqref{eq:app:phi_psi_bounds},
+    We begin with the case of the square loss. From the expression of the gradient expectation in \eqref{2406:eq:app:exp_g}, and the estimates \eqref{2406:eq:app:phi_psi_bounds},
     \[ \Et{\langle \vec{w}_t, \vec{g}_t \rangle} = \psi^{\mathrm{sq}}(m_t) - \phi(m_t)m_t = O(1),\]
-    whenever $t \leq t_\eta^+$. Lemma \ref{lem:app:orlicz_concentration} applied to $\langle \vec{w}_t, \vec{g}_t \rangle$ implies that with probability $1 - ce^{-c\log(n)^2}$
+    whenever $t \leq t_\eta^+$. Lemma \ref{2406:lem:app:orlicz_concentration} applied to $\langle \vec{w}_t, \vec{g}_t \rangle$ implies that with probability $1 - ce^{-c\log(n)^2}$
     \[ |\langle \vec{w}_t, \vec{g}_t \rangle| \leq |\Et{\langle \vec{w}_t, \vec{g}_t \rangle}| +\frac{C\log(d)^C}{\sqrt{n_b}} = O(1) \]
     whenever $\mu > 0$. As a result, if $\gamma \leq c_\gamma$ for $c_\gamma$ small enough, $\cE_t$ holds. The proof for the correlation loss proceeds identically, noting this time that
     \[ \Et{\langle \vec{w}_t, \vec{g}_t \rangle} = \psi^{\mathrm{corr}}(m_t) - \phi(m_t)m_t = O(1) \]
@@ -306,13 +306,13 @@ Finally, we need to show that the events $\cE_t$ occur with high probability. Th
 \end{proof}
 
 \subsection{From the linear regime to one-step recovery}
-We now prove Theorems \ref{thm:main:sgd_weak_recovery} and \ref{thm:main:no_yhat_weak_recovery}. We focus on the case of the correlation loss; the square loss is identical apart from the additional $\gamma \leq c_\gamma$ requirement of Proposition \ref{prop:app:diff_ineq_m}. 
+We now prove Theorems \ref{2406:thm:main:sgd_weak_recovery} and \ref{2406:thm:main:no_yhat_weak_recovery}. We focus on the case of the correlation loss; the square loss is identical apart from the additional $\gamma \leq c_\gamma$ requirement of Proposition \ref{2406:prop:app:diff_ineq_m}. 
 
 We first assume that $n_b = O(d^{\ell-1})$ and
-\begin{equation}\label{eq:app:bound_gamma}
+\begin{equation}\label{2406:eq:app:bound_gamma}
     \gamma \leq  c_\gamma \log(d)^{-C_\gamma} \min\left( n_b d^{-\left(\frac\ell2 \vee 1 \right)},  \right) 
 \end{equation} 
-for constants $c_\gamma, C_\gamma$ to be chosen later. In particular, the condition $\gamma < c_\gamma n_b d^{-\ell/2}$ of Proposition \ref{prop:app:diff_ineq_m} is satisfied.
+for constants $c_\gamma, C_\gamma$ to be chosen later. In particular, the condition $\gamma < c_\gamma n_b d^{-\ell/2}$ of Proposition \ref{2406:prop:app:diff_ineq_m} is satisfied.
 
 \paragraph{The linear regime} The first part of the proof proceeds as in \cite{arous2021online}. Define the function
 \begin{equation}
@@ -323,8 +323,8 @@ for constants $c_\gamma, C_\gamma$ to be chosen later. In particular, the condit
     \end{cases}, 
 \end{equation}
 and $t_{\mathrm{conv}} = \max(1, \gamma^{-1}t_\ell(d))$.
-Proposition \ref{prop:app:diff_ineq_m} as well as Section 5 from \cite{arous2021online} implies the following lemma:
-\begin{lemma} \label{lem:app:boundongamma}
+Proposition \ref{2406:prop:app:diff_ineq_m} as well as Section 5 from \cite{arous2021online} implies the following lemma:
+\begin{lemma} \label{2406:lem:app:boundongamma}
     There exists a constant $C > 0$ such that if $t_{\max} \geq C t_{\mathrm{conv}}$, then with probability at least $1 - ce^{-c\log(n)^2}$,
     \begin{equation}
         \tilde t_{\gamma, \varepsilon} \wedge t_\eta^+ \leq Ct_{\mathrm{conv}}.
@@ -338,11 +338,11 @@ Plugging the expression for $\gamma$ and $t_{\max}$, we get
 \end{align*} 
 Whenever $n_b = O(d^{\ell-1})$, by decreasing $c_\gamma$ and increasing $C_\gamma$, for large enough $d$ and any constant $C$ we have
 \[\frac{\gamma t_{\max}}{t_\ell(d)} \leq C \quad \text{and} \quad t_{\max} \geq C, \]
-as requested in Lemma \ref{lem:app:boundongamma}.
+as requested in Lemma \ref{2406:lem:app:boundongamma}.
 
-Whenever $\gamma \eta^{\ell-1} \leq \varepsilon$, we have $\tilde t_{\gamma, \varepsilon} \geq t_\eta^+$ and hence the proof of Theorem \ref{thm:main:no_yhat_weak_recovery} is complete. It thus remains to treat the converse case. Note that the latter only happens in the correlation loss case, since we can always choose $c_\gamma$ such that $c_\gamma \eta^{\ell-1} \leq \varepsilon$; the dynamics of square loss SGD are therefore only in the linearized regime.
+Whenever $\gamma \eta^{\ell-1} \leq \varepsilon$, we have $\tilde t_{\gamma, \varepsilon} \geq t_\eta^+$ and hence the proof of Theorem \ref{2406:thm:main:no_yhat_weak_recovery} is complete. It thus remains to treat the converse case. Note that the latter only happens in the correlation loss case, since we can always choose $c_\gamma$ such that $c_\gamma \eta^{\ell-1} \leq \varepsilon$; the dynamics of square loss SGD are therefore only in the linearized regime.
 
-\paragraph{One-step recovery above $\tilde t_{\gamma, \varepsilon}$} We now treat the case where $\gamma \eta^{\ell-1} \geq \varepsilon$. For simplicity, let $t = \tilde t_{\gamma, \varepsilon}$, then Lemmas \ref{lem:app:bound_corrections} and \ref{lem:app:bound_martingale} imply that with probability $1 - ce^{-c\log(n)^2}$
+\paragraph{One-step recovery above $\tilde t_{\gamma, \varepsilon}$} We now treat the case where $\gamma \eta^{\ell-1} \geq \varepsilon$. For simplicity, let $t = \tilde t_{\gamma, \varepsilon}$, then Lemmas \ref{2406:lem:app:bound_corrections} and \ref{2406:lem:app:bound_martingale} imply that with probability $1 - ce^{-c\log(n)^2}$
 \begin{align*}
     \norm{\vec{g}_{t}}^2 &\leq C\left((|\phi(m_t)| + |\psi^{\mathrm{corr}}(m_t)|)^2 + \frac{d}{n_b}\right) \leq C \left(m_t^{2\ell-2} + \frac{d}{n_b}\right) \\
     \langle \vec{g}_t, \vec{w}^\star \rangle &= \phi(m_t) + m_t\psi^{\mathrm{corr}}(m_t) + O\left( \frac{\polylog(d)}{\sqrt{n_b}} \right) \geq cm_t^{\ell - 1} + O\left( \frac{\polylog(d)}{\sqrt{n_b}} \right)
@@ -354,6 +354,6 @@ Therefore, for large enough $d$,
 m_t + \gamma \langle \vec{g}_t, \vec{w}^\star \rangle &\geq  \gamma \langle \vec{g}_t, \vec{w}^\star \rangle \geq c\gamma m_t^{\ell-1}\\
 \norm{\vec{w}_t + \gamma \vec{g}_t} &\leq 1 + \gamma \norm{\vec{g}_t} \leq 1 + C \gamma \left(m_t^{\ell-1} + \frac{d}{n_b}\right) \leq (C + \varepsilon^{-1} + c_\gamma^2\varepsilon^{-1}) \gamma m_t^{\ell-1} 
 \end{align*}
-But by taking the scalar product of Equation \eqref{eq:main:gd_update_weights} with $\vec{w}^\star$,
+But by taking the scalar product of Equation \eqref{2406:eq:main:gd_update_weights} with $\vec{w}^\star$,
 \[ m_{t+1} = \frac{m_t + \gamma \langle \vec{g}_t, \vec{w}^\star \rangle}{\norm{\vec{w}_t + \gamma \vec{g}_t}} \geq \frac{c}{C + \varepsilon^{-1} + c_\gamma^2\varepsilon^{-1}} =: \eta'. \]
-Theorem \ref{thm:main:no_yhat_weak_recovery} ensues by redefining $\eta = \min(\eta, \eta').$
+Theorem \ref{2406:thm:main:no_yhat_weak_recovery} ensues by redefining $\eta = \min(\eta, \eta').$

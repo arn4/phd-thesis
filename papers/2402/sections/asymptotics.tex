@@ -1,18 +1,18 @@
 \subsection{Characterization of the dynamics}
 
 
-\label{sec:main:asymptotics}
+\label{2402:sec:main:asymptotics}
 Re-using batches at each gradient step requires keeping track of the pre-activations of the parameters. Since  the number of pre-activations and the dimensions of the parameters grows with $d$, we need a low-dimensional effective dynamics characterizing the quantities of interests such as the overlaps between the student and target parameters. DMFT provides such an effective dynamics through a set of coupled stochastic processes $\boldsymbol \theta^{(t)} \in \R^p$ and $\vec h^{(t)} \in \R^p$ representing the joint-distributions of the student, teacher parameters  $W^{(t)}, W^\star$. and the student, teacher pre-activations respectively.\looseness=-1
 
 We derive the equations and prove their applicability to our setting using existing results in \citep{celentano2021high,gerbelot2022rigorous}. Asymptotically, for $d\!\to\!\infty$ with $n\!=\!\alpha d$, the joint distribution of the student and teacher pre-activations (for each sample), $\vec h^{(t)}_\nu \!=\! W^{(t)} \vec z_\nu / \sqrt{d} \!\in\! \mathbb{R}^p$ and  $\vec h^\star_\nu \!=\! W^\star \vec z_\nu / \sqrt{d} \!\in\! \mathbb{R}^k$ converge in distribution to samples from the stochastic process $\vec h^{(t)}$ and the standard normal variable $\vec h^\star$. Similarly, the joint distribution of each component of the student and teacher weights $W^{(t)}_i \in \mathbb{R}^p,W^\star_i \in \mathbb{R}^k$ with $i \in [d]$ converge in distribution to samples from the stochastic process $\boldsymbol \theta^{(t)}$ and the standard normal variable $\boldsymbol\theta^\star$.
 \begin{align}
-\label{eq:def_processes_main}
+\label{2402:eq:def_processes_main}
 &\boldsymbol{\theta}^{(t+1)} = \left(1- \eta\lambda -\eta\Lambda^{(t)}\right)\boldsymbol{\theta}^{(t)} 
-    + \,\eta \sum_{\tau=0}^{t-1}  R_\mathcal{L}^{(t,\tau)}\boldsymbol{\theta}^{(\tau)} - \,\eta g^{(t)}\boldsymbol{\theta}^\star + \,\eta \sum_{\tau=0}^{t-1}  \tilde R_\mathcal{L}^{(t,\tau)}\boldsymbol{\theta}^\star + \,\eta \boldsymbol{u}^{(t)}\\ \label{eq:def_processes_main_2}
+    + \,\eta \sum_{\tau=0}^{t-1}  R_\mathcal{L}^{(t,\tau)}\boldsymbol{\theta}^{(\tau)} - \,\eta g^{(t)}\boldsymbol{\theta}^\star + \,\eta \sum_{\tau=0}^{t-1}  \tilde R_\mathcal{L}^{(t,\tau)}\boldsymbol{\theta}^\star + \,\eta \boldsymbol{u}^{(t)}\\ \label{2402:eq:def_processes_main_2}
     &\boldsymbol{h}^{(t)} = -\eta\sum_{\tau=0}^{t-1}R_\theta^{(t,\tau)} \nabla_{\boldsymbol{h}} \mathcal{L}(\boldsymbol{h}^{(\tau)}, \boldsymbol{h}^\star) + \boldsymbol{\omega}^{(t)}
 \end{align}
-Notice that the formula above is the high dimensional equivalent of the gradient descent update \eqref{eq:GD_update}. Here $\vec u^{(t)}$ and $(\boldsymbol \omega^{(t)}, \boldsymbol \theta^\star)$ are zero mean Gaussian Process with covariances $C_\mathcal{L}^{(t,\tau)}$ and $\Omega^{(t,\tau)}$ respectively, with
-\begin{align} %\label{eq:def_C_main}
+Notice that the formula above is the high dimensional equivalent of the gradient descent update \eqref{2402:eq:GD_update}. Here $\vec u^{(t)}$ and $(\boldsymbol \omega^{(t)}, \boldsymbol \theta^\star)$ are zero mean Gaussian Process with covariances $C_\mathcal{L}^{(t,\tau)}$ and $\Omega^{(t,\tau)}$ respectively, with
+\begin{align} %\label{2402:eq:def_C_main}
     C_\mathcal{L}^{(t, \tau)} \!\!= 
     \alpha \mathbb{E}_{\boldsymbol{h}^{(t)}, \boldsymbol{h}^\star}\!\left[ \nabla_{\boldsymbol{h}} \mathcal{L}(\boldsymbol{h}^{(t)}, \boldsymbol{h}^\star)\nabla_{\boldsymbol{h}} \mathcal{L}(\boldsymbol{h}^{(\tau)}, \boldsymbol{h}^\star)^\top\!\right] \nonumber \\
     \Omega^{(t,\tau)} \!\!= \!\! \begin{bmatrix}
@@ -25,35 +25,35 @@ Notice that the formula above is the high dimensional equivalent of the gradient
     \end{pmatrix}^\top \!\right] \nonumber
 \end{align}
 the matrix $\Lambda^{(t)}$ can be viewed as an ``effective regularization" on the parameters. $\Lambda^{(t)}$ and the projected gradient $g^{(t)}$ converge in probability to:
-\begin{align} \label{eq:lambda_def}
+\begin{align} \label{2402:eq:lambda_def}
     \Lambda^{(t)} \!=\! \alpha\mathbb{E}_{\boldsymbol{h}^{(t)}, \boldsymbol{h}^\star}\left[\nabla^2_{\vec h}\mathcal{L}\left( \vec h^{(t)}, \boldsymbol{h}^\star\right)\right]\,,\,\\ g^{(t)}\!=\!\alpha \mathbb{E}_{\boldsymbol{h}^{(t)}, \boldsymbol{h}^\star}\left[\nabla_{\vec h}\mathcal{L}\left( \vec h^{(t)}, \boldsymbol{h}^\star\right) \vec h^{\star\top}\right]
 \end{align}
 The memory kernels $R_\mathcal{L}^{(t,\tau)}$, $\tilde R_\mathcal{L}^{(t,\tau)}$, $R_\theta^{(t,\tau)}$ are defined as: 
-\begin{eqnarray} \label{eq:R_def}
+\begin{eqnarray} \label{2402:eq:R_def}
     &R_\theta^{(t,\tau)} = \mathbb{E}_{\boldsymbol{\theta}^{(t)}, \boldsymbol{\theta}^\star}\left[\frac{\partial\, \vec \theta^{(t)}}{\partial\, \vec u^{(\tau)}} \right]\,, \nonumber  \\
     &R_\mathcal{L}^{(t,\tau)} = \alpha \mathbb{E}_{\boldsymbol{h}^{(t)}, \boldsymbol{h}^\star}\left[\frac{\partial\, \nabla_{\vec h}\mathcal{L}\left( \vec h^{(t)}, \boldsymbol{h}^\star\right)}{\partial\, \boldsymbol\omega^{(\tau)}} \right]\,,\\
     &\tilde R_\mathcal{L}^{(t,\tau)} = \alpha \mathbb{E}_{\boldsymbol{h}^{(t)}, \boldsymbol{h}^\star}\left[\frac{\partial\, \nabla_{\vec h}\mathcal{L}\left( \vec h^{(t)}, \boldsymbol{h}^\star\right)}{\partial\, \left(\boldsymbol\theta^\star\right)^{(\tau)}} \right]\,,\quad
 \end{eqnarray}
 and $R_\mathcal{L}^{(t,t)} = \tilde R_\mathcal{L}^{(t,t)} = 0$, $R_\theta^{(t,t)}=1$.
 Finally, the low dimensional projections of the weights $M^{(t)}$ will obey
-\begin{equation} \label{eq:M_update}
+\begin{equation} \label{2402:eq:M_update}
     M^{(t+1)} = (1-\eta\lambda)M^{(t)} -\eta g^{(t)} \, .
 \end{equation}
 
-Notice that these definitions are well-posed because of the causal structure of the gradient descent upgrades, and by extension of \eqref{eq:def_processes_main}: the distribution of $(\boldsymbol \theta^{(t+1)}, \vec h^{(t+1)})$ is completely determined by $\{ (\boldsymbol\theta^{(\tau)}, \vec h^{(\tau)})\}_{\tau \in [t]}$ and the auxiliary quantities in eqs.~(\ref{eq:lambda_def},~\ref{eq:R_def}). Iterating backwards we reach the initial condition $\boldsymbol \theta^{(0)}$, which is a simple function of the data distribution and the initial conditions of the weights. For additional details we refer to App. \ref{sec:app:proofs}. Notice that it is also possible to write this set of equations as a function of a single stochastic process on $\vec h$, as in App. \ref{sec:app:hyperparams}.\looseness=-1
+Notice that these definitions are well-posed because of the causal structure of the gradient descent upgrades, and by extension of \eqref{2402:eq:def_processes_main}: the distribution of $(\boldsymbol \theta^{(t+1)}, \vec h^{(t+1)})$ is completely determined by $\{ (\boldsymbol\theta^{(\tau)}, \vec h^{(\tau)})\}_{\tau \in [t]}$ and the auxiliary quantities in eqs.~(\ref{2402:eq:lambda_def},~\ref{2402:eq:R_def}). Iterating backwards we reach the initial condition $\boldsymbol \theta^{(0)}$, which is a simple function of the data distribution and the initial conditions of the weights. For additional details we refer to App. \ref{2402:sec:app:proofs}. Notice that it is also possible to write this set of equations as a function of a single stochastic process on $\vec h$, as in App. \ref{2402:sec:app:hyperparams}.\looseness=-1
 
-\paragraph{Sketch of proof of the hidden progress ---} Finally, we explain how the DMFT equations relate to the phenomenon in Sec. \ref{sec:hidden_prog} and allow us to prove Th. \ref{thm:main:2step_learning}.
-The term $\nabla_{\vec h^{(1)}}\mathcal{L}\left( \vec h^{(1)}\right)$ in (\ref{eq:def_processes_main_2}) precisely corresponds to the contribution to pre-activation of a point $\vec{z}^\nu$ (App. \ref{sec:app:proof_hidden_prog})
-from the gradient at the same point $\vec{z}^\nu$. As we discussed in Section \ref{sec:hidden_prog}, this term induces a dependence between $\vec h^{(1)}_\nu$ and $\vec h^\star_\nu$ even when the overlaps $M^{(t)}$ are $0$. At time $T=1$, the response term simplifies to $R_\theta^{(1,0)}=\mathbf{I_d}$ and the pre-activations can be expressed as the random variable $\nabla_{\vec h^{(t)}}\mathcal{L}\left( \vec h^{(t)}\right)$ with added Gaussian noise.
-Analogous to section \ref{sec:hidden_prog}, we denote by $M_{\vec{v}^*}^{(t)}$ the limiting value of the overlaps $\frac{1}{d}W^{(t)}\vec{v}^*$ for some $\vec{v}^* = (\vec{u}^*)^\top W^*$ with $\vec{u}^* \in \R^p$.
-Propagating the equations over the first two steps, and using Equation \eqref{eq:M_update}, we show that $M_{\vec{v}^*}^{(2)}$ can be expressed as an expectation w.r.t the pre-activations $\vec{h^\star}$ of a function dependent on the target $g^\star$, the second layer $\vec{a}$, and the activation function $\sigma$:
-\begin{equation}\label{eq:overlap_}
+\paragraph{Sketch of proof of the hidden progress ---} Finally, we explain how the DMFT equations relate to the phenomenon in Sec. \ref{2402:sec:hidden_prog} and allow us to prove Th. \ref{2402:thm:main:2step_learning}.
+The term $\nabla_{\vec h^{(1)}}\mathcal{L}\left( \vec h^{(1)}\right)$ in (\ref{2402:eq:def_processes_main_2}) precisely corresponds to the contribution to pre-activation of a point $\vec{z}^\nu$ (App. \ref{2402:sec:app:proof_hidden_prog})
+from the gradient at the same point $\vec{z}^\nu$. As we discussed in Section \ref{2402:sec:hidden_prog}, this term induces a dependence between $\vec h^{(1)}_\nu$ and $\vec h^\star_\nu$ even when the overlaps $M^{(t)}$ are $0$. At time $T=1$, the response term simplifies to $R_\theta^{(1,0)}=\mathbf{I_d}$ and the pre-activations can be expressed as the random variable $\nabla_{\vec h^{(t)}}\mathcal{L}\left( \vec h^{(t)}\right)$ with added Gaussian noise.
+Analogous to section \ref{2402:sec:hidden_prog}, we denote by $M_{\vec{v}^*}^{(t)}$ the limiting value of the overlaps $\frac{1}{d}W^{(t)}\vec{v}^*$ for some $\vec{v}^* = (\vec{u}^*)^\top W^*$ with $\vec{u}^* \in \R^p$.
+Propagating the equations over the first two steps, and using Equation \eqref{2402:eq:M_update}, we show that $M_{\vec{v}^*}^{(2)}$ can be expressed as an expectation w.r.t the pre-activations $\vec{h^\star}$ of a function dependent on the target $g^\star$, the second layer $\vec{a}$, and the activation function $\sigma$:
+\begin{equation}\label{2402:eq:overlap_}
     M_{\vec{v}^*}^{(2)} \!=\! (1 \!-\! \eta\lambda) M_{\vec{v}^*}^{(1)} + \eta \alpha \Eb{\vec{h^\star}}{F_{\sigma, a}(g^\star(\vec{h^\star}))\vec{h^\star}^\top}\vec{u}^\star\,.
 \end{equation} 
-The function $F_{\sigma, a}$ is described in App.\ref{app:sec:main_thm_proof},  Eq.(\ref{eq:F_def}).  Finally, we show an equivalence between the condition $\Eb{\vec{h^\star}}{F_{\sigma, a}(g^\star(\vec{h^\star}))\vec{h^\star}^\top}\vec{u}^\star = 0$ to the condition $\Eb{\vec{z}}{F(f^\star(\vec{z}))\langle \vec{v}^\star, \vec{z}\rangle}=0$ for general $F$ in definition \ref{def:two_step_hard}.
+The function $F_{\sigma, a}$ is described in App.\ref{2402:app:sec:main_thm_proof},  Eq.(\ref{2402:eq:F_def}).  Finally, we show an equivalence between the condition $\Eb{\vec{h^\star}}{F_{\sigma, a}(g^\star(\vec{h^\star}))\vec{h^\star}^\top}\vec{u}^\star = 0$ to the condition $\Eb{\vec{z}}{F(f^\star(\vec{z}))\langle \vec{v}^\star, \vec{z}\rangle}=0$ for general $F$ in definition \ref{2402:def:two_step_hard}.
 
 
 \paragraph{General multi-pass schemes ---}
-\label{sec:main:extensions}
-While Theorem \ref{thm:main:2step_learning} considers finite number of updates with the same batch of data for each step, it can be naturally generalized to other setups involving multiple-passes over a finite-number of mini-batches of size $\mathcal{O}(d)$. For instance, one can cycle over distinct minibatches with each cycle constituting one epoch or pass through the dataset. Theorem \ref{thm:main:2step_learning} remains valid under such a setup with the onset of weak-recovery shifting to the start of the second epoch instead of the second gradient step. We provide a sketch of this extension in Appendix \ref{sec:app:repeat}. On the other hand, if the minibatches are sampled with replacement from the dataset, the weak recovery still starts at the second gradient step. We illustrate this in Fig.\ref{fig:overlaps_batch} (in appendix). Furthermore, we empirically observe that the phenomenon holds even when considering the limit of mini-batch size $1$ (Figure \ref{fig:overlaps_minibatch} Appendix). Proving this,  however, 
+\label{2402:sec:main:extensions}
+While Theorem \ref{2402:thm:main:2step_learning} considers finite number of updates with the same batch of data for each step, it can be naturally generalized to other setups involving multiple-passes over a finite-number of mini-batches of size $\mathcal{O}(d)$. For instance, one can cycle over distinct minibatches with each cycle constituting one epoch or pass through the dataset. Theorem \ref{2402:thm:main:2step_learning} remains valid under such a setup with the onset of weak-recovery shifting to the start of the second epoch instead of the second gradient step. We provide a sketch of this extension in Appendix \ref{2402:sec:app:repeat}. On the other hand, if the minibatches are sampled with replacement from the dataset, the weak recovery still starts at the second gradient step. We illustrate this in Fig.\ref{2402:fig:overlaps_batch} (in appendix). Furthermore, we empirically observe that the phenomenon holds even when considering the limit of mini-batch size $1$ (Figure \ref{2402:fig:overlaps_minibatch} Appendix). Proving this,  however, 
 remains out of the reach of the present technique.

@@ -22,7 +22,7 @@ No thesis LaTeX source or build config (`latexmkrc`, document class) exists yet.
 
 ## `arxiv-papers/` layout
 
-Each included paper has up to eight artefacts, all keyed by **YYMM prefix** (so paper `arXiv-2302.05882v1` shares `arXiv-2302.bib`, `arXiv-2302-macros.tex`, etc.):
+Each included paper has up to nine artefacts, all keyed by **YYMM prefix** (so paper `arXiv-2302.05882v1` shares `arXiv-2302.bib`, `arXiv-2302-macros.tex`, etc.):
 
 | Artefact | Tracked? | Owner / source |
 | --- | --- | --- |
@@ -34,6 +34,7 @@ Each included paper has up to eight artefacts, all keyed by **YYMM prefix** (so 
 | `arXiv-YYMM-macros.tex` | tracked | extracted macro / environment / theorem defs, managed by `parse-paper` |
 | `arXiv-YYMM-metadata.json` | tracked | plain-text title + `Surname Name` author list — **hand-curated** via `parse-paper`, not script-written |
 | `arXiv-YYMM-macro-map.json` | tracked | local-macro → global-name mapping (for prose-folding later), managed by `merge-preambles` |
+| `arXiv-YYMM-patches.json` | tracked, optional | hand-authored `find_replace` substitutions applied as the last step of `extract-paper`; for upstream-source defects that can't be repaired in any other sidecar |
 
 A sidecar `.bib` is typically a superset of what its paper actually cites — extra entries are fine.
 
@@ -59,6 +60,15 @@ latexmk -pdf -jobname=2302 -outdir=build/2302 papers/stand-alone-paper.tex
 ```
 
 The driver loads the thesis-wide preamble (`papers-dependencies.tex` + `papers-macros.tex`) and bib (`papers-bibliography.bib`), picks the paper via `\jobname`, and uses biblatex (`authoryear-comp` style) with biber. `cleveref` is loaded by the driver itself rather than by `papers-dependencies.tex`, because it must load after `hyperref`.
+
+In addition to the bib/macro/figure-path rewrites driven by the sidecar maps, `extract-paper` applies a body-cleanup pass to every unit/asset/abstract before writing:
+
+- Every `\label{X}` and `\ref|cref|Cref|eqref|autoref|pageref|nameref|vref|Vref|cpageref|Cpageref|hyperref` key is prefixed with `YYMM:`, so the same label name across papers is unambiguous when the thesis is later assembled (`\label{eq:foo}` in paper 2302 becomes `\label{2302:eq:foo}`, and every reference to it is rewritten in lock-step).
+- Spacing and page-layout commands are stripped: `\vspace`/`\hspace`/`\addvspace{...}`, `\bigskip`/`\medskip`/`\smallskip`, `\hfill`/`\vfill`/`\hfil`/`\vfil`, `\noindent`/`\indent`, `\newpage`/`\clearpage`/`\cleardoublepage`, `\linebreak`/`\pagebreak`/`\nolinebreak`/`\nopagebreak`, `\enlargethispage{...}`, `\samepage`/`\sloppy`/`\fussy`, and the optional `[X]` of `\\[X]`. Math-layout commands (`\phantom`/`\smash`/`\strut`/`\centering`) are kept.
+- Float placement specifiers are stripped: `\begin{figure}[ht!]` → `\begin{figure}` (same for `figure*`/`table`/`table*`/`longtable`/`sidewaystable`/`sidewaysfigure`).
+- `wrapfigure` is converted to `figure`: `\begin{wrapfigure}[N]{r}{w}` → `\begin{figure}`, `\end{wrapfigure}` → `\end{figure}`.
+- In-body `\newcommand`/`\renewcommand`/`\providecommand`/`\DeclareMathOperator` whose target name is already defined in `papers-macros.tex` are dropped (auto-fixes paper-body redefs that collide with the merged global macros).
+- Finally, the optional `arxiv-papers/arXiv-YYMM-patches.json` sidecar (`{"find_replace": [{"find": "...", "replace": "..."}, ...]}`) is applied as a last-step literal substitution, for upstream defects that can't be expressed in any other sidecar.
 
 ## Working with the user
 

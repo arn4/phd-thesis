@@ -1,9 +1,9 @@
 \section{Proofs for the high-dimensional mean-field approximation}
 
-\label{sec:app:hd_mean_field}
+\label{2302:sec:app:hd_mean_field}
 \subsection{Preliminaries}
 We first provide several bounds on expectations of functions of Gaussians, that will be used throughout this section. We begin by recalling the classical Gaussian Poincaré inequality (see e.g. \cite{boucheron2013concentration}, Theorem 3.20):
-\begin{lemma}\label{lem:gauss_poincare}
+\begin{lemma}\label{2302:lem:gauss_poincare}
     Let $f: \mathbb{R}^d \to \mathbb{R}$ be a differentiable function, and $X \sim \mathcal N(0, I)$. Then
     \[ \mathrm{Var}(f(X)) \leq \mathbb E\left[\lVert\nabla f(X) \rVert^2 \right]. \]
     If $X \sim \mathcal{N}(0, \Sigma)$, the following bounds hold instead:
@@ -13,7 +13,7 @@ We first provide several bounds on expectations of functions of Gaussians, that 
 Now, we provide some concentration bounds for expectations of random variables. Let $h:\mathbb{R}\to\mathbb{R}$ be a function, and $z$ a random variable; our goal is to bound
 \[ \left|\mathbb{E}[h(z)] - h(\mathbb{E}[z])\right| \]
 under different assumptions on $f, z$.
-\begin{lemma}\label{lem:average_lipschitz_function}
+\begin{lemma}\label{2302:lem:average_lipschitz_function}
     Assume that $h$ is $L$-Lipschitz, and that $z$ has a second moment. Then
 \begin{equation}
         \left|\mathbb{E}[h(z)] - h(\mathbb{E}[z])\right| \leq L\sqrt{\Var(z)}
@@ -29,7 +29,7 @@ under different assumptions on $f, z$.
     where the last line uses the Cauchy-Schwarz inequality.
 \end{proof}
 
-\begin{lemma}\label{lem:average_twice_diff_function}
+\begin{lemma}\label{2302:lem:average_twice_diff_function}
     Assume that $h$ is twice differentiable, with $\norm{h^{(k)}}_\infty \leq K$, and that $z$ has a fourth moment. Then
     \begin{equation}
         \left|\mathbb{E}[h(z)] - h(\mathbb{E}[z])\right| \leq \frac K2 \sqrt{\mathbb{E}\left[(z-s)^4 \right]} 
@@ -48,15 +48,15 @@ under different assumptions on $f, z$.
     via the Cauchy-Schwarz inequality, and the result ensues.
 \end{proof}
 
-\subsection{Proof of Lemma \ref{lem:Psi_lipschitz}}
+\subsection{Proof of Lemma \ref{2302:lem:Psi_lipschitz}}
 
-We only show the result for $\Psi^{(M)}$; the one for $\Psi^\bot$ ensues from similar methods. Recalling the expansion  in \eqref{eq:app:ss_ode_expansion} as a sum of 3-point correlation functions, we define the following function of $3 \times 3$ matrices:
+We only show the result for $\Psi^{(M)}$; the one for $\Psi^\bot$ ensues from similar methods. Recalling the expansion  in \eqref{2302:eq:app:ss_ode_expansion} as a sum of 3-point correlation functions, we define the following function of $3 \times 3$ matrices:
 \begin{equation}
     f(\Sigma) = \mathbb{E}_{\vec{z} \sim \mathcal N(\vec{0}, \Sigma)}\left[ \sigma'(z_1)z_2\sigma(z_3). \right]
 \end{equation}
 Then $\Psi^{(M)}(\Omega)$ is simply an average of $f(\Sigma)$ for $\Sigma$ submatrices of $\Omega$. We first show the following bound:
-\begin{lemma}\label{lem:psi_reduced_lipschitz}
-    Under Assumption \ref{assump:activation}, the function $f$ satisfies the following inequality: for any $\Sigma$, $\Sigma'$ such that $\norm{\Sigma' - \Sigma}_\infty \leq K$,
+\begin{lemma}\label{2302:lem:psi_reduced_lipschitz}
+    Under Assumption \ref{2302:assump:activation}, the function $f$ satisfies the following inequality: for any $\Sigma$, $\Sigma'$ such that $\norm{\Sigma' - \Sigma}_\infty \leq K$,
     \begin{equation}
         \left|f(\Sigma') - f(\Sigma)\right| \leq C(1 + \sqrt{\Sigma_{22}})\norm{\Sigma' - \Sigma}_\infty
     \end{equation}
@@ -74,7 +74,7 @@ Then $\Psi^{(M)}(\Omega)$ is simply an average of $f(\Sigma)$ for $\Sigma$ subma
         + \ &\mathbb{E}\left[ \delta\sigma'\delta z_2 \sigma(z_3) + \delta\sigma' z_2 \delta\sigma + \sigma'(z_1)\delta z_2 \delta \sigma \right] \\
         + \ & \mathbb{E}[\delta\sigma' \delta z_2 \delta \sigma]
     \end{align*}
-    Since $\delta z$ is independent from $z$, and $\sigma$ satisfies Assumption \ref{assump:activation}, we can apply Lemma \ref{lem:average_twice_diff_function} to get
+    Since $\delta z$ is independent from $z$, and $\sigma$ satisfies Assumption \ref{2302:assump:activation}, we can apply Lemma \ref{2302:lem:average_twice_diff_function} to get
     \[ |\mathbb{E}_{\delta z_3}[\delta\sigma]| \leq C\delta\Sigma_{33}, \]
     and hence by the Cauchy-Schwarz inequality
     \[ \left|\mathbb{E}\left[ \sigma'(z_1)z_2\delta\sigma \right]\right| \leq C' \sqrt{\Sigma_{22}}\, \delta\Sigma_{33}.  \]
@@ -83,42 +83,42 @@ Then $\Psi^{(M)}(\Omega)$ is simply an average of $f(\Sigma)$ for $\Sigma$ subma
         \mathbb{E}_{\delta z}\left[\delta\sigma' z_2 \delta\sigma\right] &\leq z_2 \sqrt{\mathbb{E}[(\delta\sigma)^2]}\sqrt{\mathbb{E}[(\delta\sigma')^2]} \\
         &\leq z_2 \sqrt{\delta\Sigma_{11}\delta\Sigma_{33}}
     \end{align*}
-    by a combination of Lemmas \ref{lem:gauss_poincare} and \ref{lem:average_lipschitz_function}. A similar bound holds for the third line, and it is easily checked that all of the obtained bounds are lower than the one of Lemma \ref{lem:psi_reduced_lipschitz}.
+    by a combination of Lemmas \ref{2302:lem:gauss_poincare} and \ref{2302:lem:average_lipschitz_function}. A similar bound holds for the third line, and it is easily checked that all of the obtained bounds are lower than the one of Lemma \ref{2302:lem:psi_reduced_lipschitz}.
 \end{proof}
 
-Now, the expansion of $\Psi^{(M)}(\tilde\Omega) - \Psi^{(M)}(\bar\Omega)$ is an average of terms of the form $f(\tilde\Sigma) - f(\bar\Sigma)$, where $(\tilde\Sigma - \bar\Sigma)_{ij}$ is either $0$ or $\sqrt{q_{ii}^\bot q_{jj}^\bot} \xi_{ij}$. Hence, we can write each of those terms as $h(\xi_{ij}) - h(0)$, and by Assumption \ref{assump:boundedness} and Lemma \ref{lem:psi_reduced_lipschitz}, the function $h$ is Lipschitz. Lemma \ref{lem:Psi_lipschitz} then ensues from an application of Lemma \ref{lem:average_lipschitz_function}.
+Now, the expansion of $\Psi^{(M)}(\tilde\Omega) - \Psi^{(M)}(\bar\Omega)$ is an average of terms of the form $f(\tilde\Sigma) - f(\bar\Sigma)$, where $(\tilde\Sigma - \bar\Sigma)_{ij}$ is either $0$ or $\sqrt{q_{ii}^\bot q_{jj}^\bot} \xi_{ij}$. Hence, we can write each of those terms as $h(\xi_{ij}) - h(0)$, and by Assumption \ref{2302:assump:boundedness} and Lemma \ref{2302:lem:psi_reduced_lipschitz}, the function $h$ is Lipschitz. Lemma \ref{2302:lem:Psi_lipschitz} then ensues from an application of Lemma \ref{2302:lem:average_lipschitz_function}.
 
-\subsection{Proof of Eq. \eqref{eq:mf:concentration}}
+\subsection{Proof of Eq. \eqref{2302:eq:mf:concentration}}
 We begin by showing the following lemma. Recall the definition of $\mathcal{E}$:
-\begin{equation}\label{eq:app:def_error}
+\begin{equation}\label{2302:eq:app:def_error}
     \mathcal E = \frac1k\sum_{r=1}^k \sigma(\lambda_r^\star) - \frac1p \sum_{i=1}^p \sigma(\lambda_i)
 \end{equation}
 
-\begin{lemma}\label{lem:app:gauss_poincare}
+\begin{lemma}\label{2302:lem:app:gauss_poincare}
     There exists a constant $c \geq 0$ such that for any choice of $\vec{\lambda}^\star$,
     \[ \mathrm{Var}_{\vec{\lambda^\bot}}\left( \mathcal E \right) \leq \frac{c\, \lVert Q^\bot \rVert_{\mathrm{op}}}{p} \]
 \end{lemma}
 
 \begin{proof}
-    We apply the Gauss-Poincaré inequality of Lemma \ref{lem:gauss_poincare} to
+    We apply the Gauss-Poincaré inequality of Lemma \ref{2302:lem:gauss_poincare} to
     \[ f(\vec{\lambda}^\bot) = \sum_{i=1}^p \sigma([M\vec{\lambda}^\star]_i + \lambda_i^\bot), \quad \text{which implies} \quad [\nabla f]_i = \sigma'(\lambda_i)\]
     Whenever $\sigma$ is Lipschitz, we thus have $\lVert\nabla f(\vec{\lambda}^\bot) \rVert^2 \leq c p$, and the lemma ensues.
 \end{proof}
 
-We are now in a position to show Eq. \eqref{eq:mf:concentration}. For brevity, we denote by $\mathbb E$ (resp. $\mathbb E_{\text{MF}}$) the expectations with respect to $\vec\lambda^\bot \sim \mathcal N(\vec{0}, Q^\bot)$ (resp. $\vec\lambda^\bot \sim \mathcal N(\vec{0}, \mathrm{diag}(Q^\bot))$). Since the marginals of both distributions are the same, and by linearity,
+We are now in a position to show Eq. \eqref{2302:eq:mf:concentration}. For brevity, we denote by $\mathbb E$ (resp. $\mathbb E_{\text{MF}}$) the expectations with respect to $\vec\lambda^\bot \sim \mathcal N(\vec{0}, Q^\bot)$ (resp. $\vec\lambda^\bot \sim \mathcal N(\vec{0}, \mathrm{diag}(Q^\bot))$). Since the marginals of both distributions are the same, and by linearity,
 \[ \mathbb E\left[f(\lambda^\bot_i)\right] =  \mathbb E_{\text{MF}}\left[f(\lambda^\bot_i)\right] \quad \text{and} \quad  \mathbb E\left[\mathcal E\right] =  \mathbb E_{\text{MF}}\left[\mathcal E\right]. \]
 Under the distribution $\mathcal N(\vec{0}, \mathrm{diag}(Q^\bot))$, $\lambda_i^\bot$ is almost independent from $\mathcal E$, except for the term containing $\sigma(\lambda_i)$. We can thus write, for any $\vec{\lambda}^\star$
 \[ \mathbb E_{\text{MF}}\left[\mathcal E_i \lambda_i^\bot \right] = \mathbb E \left[ \sigma'(\lambda_i)\lambda_i^\bot \right] \mathbb E\left[ \mathcal E \right] - \frac1p\mathbb E_{\text{MF}}\left[ \sigma'(\lambda_i)\lambda_i^\bot \sigma(\lambda_i) \right] + \frac1p \mathbb E\left[\sigma'(\lambda_i)\lambda_i^\bot \right] \mathbb E\left[\sigma(\lambda_i) \right]  \]
 Hence,
-\begin{equation}\label{eq:app:expectation_difference}
+\begin{equation}\label{2302:eq:app:expectation_difference}
 \mathbb E\left[\mathcal E_i \lambda_i^\bot \right] - \mathbb E_{\text{MF}}\left[\mathcal E_i \lambda_i^\bot \right] = \mathbb E \left[ \sigma'(\lambda_i)\lambda_i^\bot \left(\mathcal E - \mathbb E\left[ \mathcal E \right]\right)\right]  - \frac1p\mathbb E\left[ \sigma'(\lambda_i)\lambda_i^\bot \left(\sigma(\lambda_i) - \mathbb E[\sigma(\lambda_i)] \right)\right] 
 \end{equation} 
 Now, using the Cauchy-Schwarz inequality,
 \[  \left|\mathbb E \left[ \sigma'(\lambda_i)\lambda_i^\bot \left(\mathcal E - \mathbb E\left[ \mathcal E \right]\right)\right]\right| \leq \sqrt{\mathbb E \left[ \left(\sigma'(\lambda_i)\lambda_i^\bot\right)^2\right]\mathbb E \left[\left(\mathcal E - \mathbb E\left[ \mathcal E \right]\right)^2\right]}.\]
-For Lipschitz $\sigma$, the first term is easily bounded by $c\, Q_{ii}^\bot$, and the second is exactly the variance computed in Lemma \ref{lem:app:gauss_poincare}. The second term in \eqref{eq:app:expectation_difference} being clearly negligible before the first, we finally get
+For Lipschitz $\sigma$, the first term is easily bounded by $c\, Q_{ii}^\bot$, and the second is exactly the variance computed in Lemma \ref{2302:lem:app:gauss_poincare}. The second term in \eqref{2302:eq:app:expectation_difference} being clearly negligible before the first, we finally get
 \begin{equation}
     \left|\mathbb E\left[\mathcal E_i \lambda_i^\bot \right] - \mathbb E_{\text{MF}}\left[\mathcal E_i \lambda_i^\bot \right]\right| \leq c\, \sqrt{Q_{ii}^\bot \cdot \frac{\lVert Q^\bot \rVert_{\mathrm{op}}}{p}},
 \end{equation}
-and Eq. \eqref{eq:mf:concentration} ensues by taking the expectation w.r.t $\vec{\lambda}^\star$ on both sides.
+and Eq. \eqref{2302:eq:mf:concentration} ensues by taking the expectation w.r.t $\vec{\lambda}^\star$ on both sides.
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

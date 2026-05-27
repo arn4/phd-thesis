@@ -27,6 +27,10 @@ Both renaming maps must exist for the paper (they are produced by the upstream `
 
 If a prerequisite is missing, surface the error and tell the user to run the upstream skill (`merge-bibs` / `merge-preambles`) first.
 
+One sidecar is optional:
+
+- `arxiv-papers/arXiv-YYMM-patches.json` — hand-authored `{"find_replace": [{"find": "...", "replace": "..."}]}` substitutions applied as the LAST step of extraction. Use only for upstream-source defects that can't be repaired in any other sidecar (e.g. arXiv-2305 has a Unicode `ˆ` instead of `^` in one equation).
+
 ## Procedure
 
 Treat `arxiv-papers/arXiv-<id>/` as **strictly read-only**. The script writes only under `papers/` and `build/` (plus a single-line append to `.gitignore` if `build/` isn't ignored yet).
@@ -54,6 +58,17 @@ Treat `arxiv-papers/arXiv-<id>/` as **strictly read-only**. The script writes on
    ```
 
    For modular papers (e.g. 2302/2305/2402/2405/2406/2506), section files mirror the source's `sections/` / `section/` layout. For monolithic papers (2602/2605), the script splits at `\section` boundaries and slugs file names from titles.
+
+   In addition to citation-key, macro-rename, and figure-path rewrites, the body-cleanup pass runs on every unit before the file is written:
+
+   - **Labels/refs prefixed with `YYMM:`** — `\label{eq:foo}` → `\label{2302:eq:foo}` in paper 2302, and every `\ref`/`\cref`/`\Cref`/`\eqref`/`\autoref`/`\pageref`/`\nameref`/`\vref`/`\Vref`/`\cpageref`/`\Cpageref`/`\crefrange`/`\Crefrange`/`\hyperref[...]` is rewritten in lock-step. Comma-separated key lists supported.
+   - **Spacing/layout commands stripped** — `\vspace`/`\hspace`/`\addvspace`, `\bigskip`/`\medskip`/`\smallskip`, `\hfill`/`\vfill`/`\hfil`/`\vfil`, `\noindent`/`\indent`, `\newpage`/`\clearpage`/`\cleardoublepage`, `\linebreak`/`\pagebreak`/`\nolinebreak`/`\nopagebreak`, `\enlargethispage{...}`, `\samepage`/`\sloppy`/`\fussy`, and the optional `[X]` of `\\[X]`. Math-layout commands like `\phantom`/`\smash`/`\strut`/`\centering` are kept.
+   - **Float placement dropped** — `\begin{figure}[ht!]` → `\begin{figure}` (same for `figure*`/`table`/`table*`/`longtable`/`sidewaystable`/`sidewaysfigure`).
+   - **wrapfigure → figure** — `\begin{wrapfigure}[N]{r}{w}` → `\begin{figure}`; `\end{wrapfigure}` → `\end{figure}`.
+   - **Redundant `\newcommand`s dropped** — any in-body `\newcommand`/`\renewcommand`/`\providecommand`/`\DeclareMathOperator` whose name is already in `papers-macros.tex` is removed (auto-fixes the collision that previously needed manual cleanup, e.g. 2602's in-body `\cmark`/`\xmark` redefs).
+   - **Per-paper patches** — `arxiv-papers/arXiv-YYMM-patches.json`, if present, is applied as the LAST step (literal `find` → `replace`).
+
+   The report surfaces a one-line count for each of these stages.
 
 3. **Verification compile** (unless `--no-compile`):
 

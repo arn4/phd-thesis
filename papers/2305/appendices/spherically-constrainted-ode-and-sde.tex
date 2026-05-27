@@ -1,6 +1,6 @@
 \section{Spherically constrainted ODE and SDE}
 
-\label{app:spherical_constraint}
+\label{2305:app:spherical_constraint}
 \subsection{Spherical constraint for ODE}
 Let's recall the update rule for the weights
 \begin{equation}
@@ -34,7 +34,7 @@ We can now plug the expansion back into the original update rule
 We are ready to go over the steps that take us from the update rule on vector weights
 to those on order parameters. We report by way of example the steps performed for \(\M\);
 the accounts for \(\Q\) are similar, just a bit more tedious.
-\begin{equation}\label{eq:app:m_update_process}
+\begin{equation}\label{2305:eq:app:m_update_process}
 \begin{split}
   \M^{\nu+1}_{j} &= \frac{\w^{\nu+1}_j\cdot\w^*}{d} \\
     &= \left(\M^{\nu}_{j} - \frac{\gamma\w^*\cdot\nabla_{\w_l}{\loss}}{d}\right)\left[1+ \frac{1}{2d}\left(2\gamma\w^{\nu}_j\cdot \nabla_{\w_j}{\loss}-\gamma^2\left\|\nabla_{\w_j}{\loss}\right\|^2\right)+\smallo{d^{-1}}\right]\\
@@ -46,20 +46,20 @@ the accounts for \(\Q\) are similar, just a bit more tedious.
 \end{split}
 \end{equation}
 % TODO: adjust this part here because probably the Theorem does not hold even in the unconstrainted case...
-We can now take the limit \(d\to+\infty\), claiming that the theorem~\cite{veiga2022phase,goldt2019dynamics} proving ODE convergence is still valid. Indeed, the error term $o(d^{-1})$ in Eq. \eqref{eq:app:m_update_process} has an average order of $O(d^{-2})$, which can be absorbed in the term $\Gamma^\nu$ of Theorem A.1 in \cite{veiga2022phase}. The rest of the proof proceeds the same way, noting that the square function can be assumed to be Lipschitz since the dynamics take place on the sphere.
+We can now take the limit \(d\to+\infty\), claiming that the theorem~\cite{veiga2022phase,goldt2019dynamics} proving ODE convergence is still valid. Indeed, the error term $o(d^{-1})$ in Eq. \eqref{2305:eq:app:m_update_process} has an average order of $O(d^{-2})$, which can be absorbed in the term $\Gamma^\nu$ of Theorem A.1 in \cite{veiga2022phase}. The rest of the proof proceeds the same way, noting that the square function can be assumed to be Lipschitz since the dynamics take place on the sphere.
 
 The differential equation that describes the evolution of \(\M\) is
 \[
   \dod{\bar\M_j{\left(t\right)}}{t} =\mathbb E_{\vec{\lf},\vec{\lf^* \sim \gauss{(0,\vec{\Omega}{(t)})}}}{\left[ 2\dsp\lf_j \lf_\star - \frac{\bar\M_j{\left(t\right)}}{2}\left(4\dsp\lf_j\lf_j + 4\frac{\gamma}{p} {\dsp}^2\lf_j^2\right)\right]};
 \]
-Using the definitions introduced in Equations~\eqref{eq:overlapping_spherical_ODE} we can write the equation in a nicer form
-\begin{equation} \label{eq:genericsphericalM}
+Using the definitions introduced in Equations~\eqref{2305:eq:overlapping_spherical_ODE} we can write the equation in a nicer form
+\begin{equation} \label{2305:eq:genericsphericalM}
   \dod{\bar\M_j{\left(t\right)}}{t} = \Psi_{j}{(\vec{\Omega})} - \frac{\bar\M_j{\left(t\right)}}{2}\Phi_{jj}{(\vec{\Omega})}.
 \end{equation}
 Essentially, the spherical constraint can be imposed by using a term proportional to the unconstrained \(\Q\) update.
 
 Without reporting all the calculations, we can write an analogous differential equation for \(\Q\) evolution
-\begin{equation} \label{eq:genericsphericalQ}
+\begin{equation} \label{2305:eq:genericsphericalQ}
   \dod{\bar\Q_{jl}{\left(t\right)}}{t} = \Phi_{jl}{(\vec{\Omega})} - \frac{\bar\Q_{jl}{\left(t\right)}}{2}\left(\Phi_{jj}{(\vec{\Omega})}+\Phi_{ll}{(\vec{\Omega})}\right).
 \end{equation}
 Note that \(\dod{\bar\Q_{jj}{\left(t\right)}}{t}=0\) if \(\Q_{jj}{\left(t\right)}=1\),
@@ -71,20 +71,20 @@ as it should be since the norm of spherical vectors must not change.
     \includegraphics[width=0.49\textwidth]{figs/ode_example-p20}
     \caption{comparison of ODE integration and many SGD runs for \(p=5\) (left) and \(p=20\) (right).
             Both the experiments have \(d=5000\).}
-    \label{fig:ODE_prove}
+    \label{2305:fig:ODE_prove}
 \end{figure}
-In Figure~\ref{fig:ODE_prove} we show two examples of integration of ODEs, for different values of \(p\).
+In Figure~\ref{2305:fig:ODE_prove} we show two examples of integration of ODEs, for different values of \(p\).
 Simulating for large but finite \(d\) does not kills the stochasticity in the SGD runs, but we can clearly see how the ODE well describe the dynamics on average.
 
 \subsection{Spherical constraint for SDE}
 This subsection we derive the spherical constraint for the SDE, with \(p=1\). We assume that the stochastic process is given
-\begin{equation} \label{eq:app:sde_p1}
+\begin{equation} \label{2305:eq:app:sde_p1}
     \begin{split}
     \dif \M &= \Psi_{1}{(\Omega)}\dif t + \sqrt{\frac{\gamma}{d}} \, \vec{\sigma}_\M{(\Omega)} \cdot \dif \b_t \\
     \dif \Q &= \Phi_{11}{(\Omega)}\dif t + \sqrt{\frac{\gamma}{d}} \, \vec{\sigma}_\Q{(\Omega)} \cdot \dif \b_t,
     \end{split}
 \end{equation}
-without providing explicit expressions for \(\vec{\sigma}_\M{(\Omega)}\) and \(\vec{\sigma}_\Q{(\Omega)}\); see Appendix~\ref{app:SDE_with_generic_width} for that.
+without providing explicit expressions for \(\vec{\sigma}_\M{(\Omega)}\) and \(\vec{\sigma}_\Q{(\Omega)}\); see Appendix~\ref{2305:app:SDE_with_generic_width} for that.
 
 The derivation is basically following the steps of the previous Section.
 Starting from the unconstrainted update rule for the weights
@@ -124,7 +124,7 @@ and expanding up to leading orders we get
   \dif m_S =& (m +\dif m)(1 +\dif q)^{-\frac12} - m = (m +\dif m)\left(1 -\frac12\dif q + \frac38\dif q^2\right)-m \\
            =& \dif m - \frac{m}{2}\dif q -\frac12 \dif m \dif q + \frac38 m \dif q^2
 \end{split}\]
-In principle, we can now use the Itô Lemma on differentials Equations~\eqref{eq:app:sde_p1},
+In principle, we can now use the Itô Lemma on differentials Equations~\eqref{2305:eq:app:sde_p1},
 obtaining 
 \[
   \dif m^2 =    \frac{\gamma}{d}\vec{\sigma}_\M^2{(\Omega)}\dif t, \quad
@@ -133,7 +133,7 @@ obtaining
 \]
 It's interesting to note that these lead to a drift correction (and not just stochastic), but it's of second order. As expected, in numerical simulations we can't see the effect for these corrections, hence we neglet them in what follows.
 Finally, we write the explicit Brownian motion for the constrained dynamic
-\begin{equation} \label{eq:constrained_brownian_motion_p1}
+\begin{equation} \label{2305:eq:constrained_brownian_motion_p1}
   \dif m_S = \left(\Psi_{1}{(\Omega)} - \frac{m_S}{2}\Phi_{11}{(\Omega)}\right)\dif t
             + \sqrt{\frac{\gamma}{d}}\left(\vec{\sigma}_\M{(\Omega)}-\frac{m_S}{2}\vec{\sigma}_\Q{(\Omega)}\right)\cdot \dif \b_t.
 \end{equation}

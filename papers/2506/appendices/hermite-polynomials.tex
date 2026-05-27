@@ -1,4 +1,4 @@
-\section{Mathematical preliminaries and notations}\label{app:hermite-polynomials}
+\section{Mathematical preliminaries and notations}\label{2506:app:hermite-polynomials}
 
 \subsection{Tensors}
 
@@ -55,7 +55,7 @@ When $p = 1$, all Hermite tensors are scalars, and we get the usual Hermite poly
 \paragraph{Hermite expansion} The orthogonality properties of the Hermite tensors imply the following theorem:
 \begin{theorem}
     Let $f \in \ell^2(\omega_p)$. There exist a unique sequence of coefficients $\left(C_k(f)\right)_{k \geq 0}$ such that $C_k(f)$ is a tensor of order $k$ and
-    \begin{equation}\label{eq:app:hermite_expansion}
+    \begin{equation}\label{2506:eq:app:hermite_expansion}
         f = \sum_{k \geq 0} \langle C_k(f), \cH_k \rangle.
     \end{equation} 
     Those coefficients are given by the following formula:
@@ -63,11 +63,11 @@ When $p = 1$, all Hermite tensors are scalars, and we get the usual Hermite poly
     Further, the scalar product $\langle \cdot, \cdot \rangle_\omega$ can be written as 
     \[ \langle f, g \rangle_\omega = \sum_{k \geq 0} \frac1{k!}\langle C_k(f), C_k(g) \rangle \]
 \end{theorem}
-The proof of this theorem can be found in \cite{grad1949note}. The identity \eqref{eq:app:hermite_expansion} is called the \emph{Hermite expansion} of $f$, and the $C_k(f)$ are its \emph{Hermite coefficients}. 
+The proof of this theorem can be found in \cite{grad1949note}. The identity \eqref{2506:eq:app:hermite_expansion} is called the \emph{Hermite expansion} of $f$, and the $C_k(f)$ are its \emph{Hermite coefficients}. 
 % Whenever $f$ is differentiable and $\nabla f \in \ell^2(\vec{w}_p)$, an integration by parts implies that 
 % \[ \int \nabla f(\vx) \otimes \cH_k(\vx) \dd\omega_p(\vx) = \int f(\vx) \cH_{k+1}(\vx) \dd\omega_p(\vx) = (k+1)! C_{k+1}(f). \]
 % As a result, for any vector $\vw$, we have
-% \begin{equation}\label{eq:hermite_coeff_derivative}
+% \begin{equation}\label{2506:eq:hermite_coeff_derivative}
 %     C_k(\langle \vw, \nabla f \rangle) = (k+1)C_{k+1}(f) \times_1 \vw.
 % \end{equation}
 

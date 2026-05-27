@@ -1,11 +1,11 @@
-\section{Numerical experiments details} \label{app:numerical-details}
+\section{Numerical experiments details} \label{2506:app:numerical-details}
 All the codes used to run the experiments are available at \href{https://github.com/IdePHICS/Sequence-Single-Index}{this GitHub repository}; where details for reproducing figures are not available in the paper, we provide the code to reproduce them in the repository.
 
 The experiments run on a Mac Studio M2 Ultra, within at most few hours for the largest ones. The code is written in Python, using the libraries \texttt{numpy}, \texttt{scipy}, \texttt{torch} and \texttt{matplotlib}. \texttt{hydra} is used to manage the configuration files.
 
 
 \subsection{Details on the integration method of squared loss}
-All the plot of population loss we showed are a numerical integration of the loss function. As showed in Section~\ref{sec:setting}, the population loss is given by a multivariate Gaussian integral of \(2L\) dimensions, where the mean and the covariance are determined by the sufficient statistics. The integral can't be computed analytically, so we use a custom numerical procedure based on the Gauss-Hermite quadrature.
+All the plot of population loss we showed are a numerical integration of the loss function. As showed in Section~\ref{2506:sec:setting}, the population loss is given by a multivariate Gaussian integral of \(2L\) dimensions, where the mean and the covariance are determined by the sufficient statistics. The integral can't be computed analytically, so we use a custom numerical procedure based on the Gauss-Hermite quadrature.
 
 Let \(f\colon \mathbb{R}^{2L} \to \mathbb{R}\) be a function of \(2L\) variables to be integrated, and let \(\mu\in\mathbb{R}^{2L}\) and \(\Sigma\in\mathbb{R}^{2L\times 2L}\) be the mean and covariance of the multivariate Gaussian distribution. The integral we want to compute is
 \begin{equation}
@@ -34,5 +34,5 @@ The numerical procedure is as follows:
             I \approx \sum_{i=1}^{N_\mathrm{int}^{2L}} \left(\prod_{l=1}^{2L}W_{i,l}\right) f(TX_i + \mu)
           \]
 \end{enumerate}
-The precision of the integral is obviously regulated by the number of points \(N_\mathrm{int}\) we use. In our experiments, we used \(N_\mathrm{int} = 17\), while for the phase diagram in Figure~\ref{fig:phase-diagram-postional-semantic} we used \(N_\mathrm{int} = 19\). Some effects of this integration error are visible in Figure~\ref{fig:app:phase-diagram-yellow-region}.
+The precision of the integral is obviously regulated by the number of points \(N_\mathrm{int}\) we use. In our experiments, we used \(N_\mathrm{int} = 17\), while for the phase diagram in Figure~\ref{2506:fig:phase-diagram-postional-semantic} we used \(N_\mathrm{int} = 19\). Some effects of this integration error are visible in Figure~\ref{2506:fig:app:phase-diagram-yellow-region}.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

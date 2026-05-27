@@ -1,9 +1,9 @@
 \section{High-dimensional limit of SGD}
 
-\label{sec:odes}
-In this section we introduce our key theoretical tool, which consists in low-dimensional reduction of the projected SGD dynamics \eqref{eq:sgd} in the high-dimensional limit $d\to\infty$ of interest. 
+\label{2305:sec:odes}
+In this section we introduce our key theoretical tool, which consists in low-dimensional reduction of the projected SGD dynamics \eqref{2305:eq:sgd} in the high-dimensional limit $d\to\infty$ of interest. 
 \paragraph{Sufficient statistics ---}The key observation is to notice that the population risk only depends on the hidden-layer weights $W\in\mathbb{R}^{p\times d}$ through the the second layer weights \(a\in\mathbb{R}^p\) and the weights correlation matrices:
-\begin{equation}\label{eq:def:overlaps}
+\begin{equation}\label{2305:eq:def:overlaps}
 \begin{split}
 \Omega\coloneqq
 \begin{pmatrix}
@@ -19,14 +19,14 @@ In this section we introduce our key theoretical tool, which consists in low-dim
 \end{equation}
 The explicit expression of the population risk is:
 \begin{align}
-    \label{eq:def:risk}
+    \label{2305:eq:def:risk}
     \mathcal{R}(\Theta) &= \mathbb{E}\left[\ell(y,f_{\Theta}(x))\right] = 
     \frac{\Delta+3}{2}- \frac{1}{p}\sum\limits_{j=1}^{p}a_{j}\left(Q_{jj}+2m_{j}^2\right)+\frac{1}{2p^2}\sum\limits_{j,l=1}^{p}a_{j}a_{l}(Q_{jj}Q_{ll}+2Q_{jl}^2)
 \end{align}
 
-Notice that the matrices $M, Q$ are precisely the second moments of the pre-activations $(\lambda_{\star},\lambda) = (w_{\star}^{\top}x, Wx)\in\mathbb{R}^{p+1}$. Therefore, to characterize the evolution of the risk throughout SGD, it is sufficient to track the evolution of the first layer weights $a_{i}$ and the correlation matrices $m, Q$, which consists of $p(p+1)$ parameters. As shown in Appendix \ref{app:square_equations}, starting from Eq. \eqref{eq:sgd} we can derive a set of self-consistent stochastic processes describing the evolution of $(a,m,Q)$:
+Notice that the matrices $M, Q$ are precisely the second moments of the pre-activations $(\lambda_{\star},\lambda) = (w_{\star}^{\top}x, Wx)\in\mathbb{R}^{p+1}$. Therefore, to characterize the evolution of the risk throughout SGD, it is sufficient to track the evolution of the first layer weights $a_{i}$ and the correlation matrices $m, Q$, which consists of $p(p+1)$ parameters. As shown in Appendix \ref{2305:app:square_equations}, starting from Eq. \eqref{2305:eq:sgd} we can derive a set of self-consistent stochastic processes describing the evolution of $(a,m,Q)$:
 \begin{align}
-\label{eq:def:overlap_process}
+\label{2305:eq:def:overlap_process}
     a_{j}^{\nu+1}-a_{j}^{\nu} &= \frac{\gamma}{pd}\mathcal{E}^{\nu}\lambda_{j}^2 \\
     m_{j}^{\nu+1}-m_{j}^{\nu} &= 2\frac{\gamma}{pd}\mathcal{E}^{\nu}a_{j}\lambda_{j}\lambda_{\star} \eqqcolon \mathcal M_ j(a,\lambda_{\star},\lambda)\\
     Q_{jl}^{\nu+1} - Q^{\nu}_{jl} &=2\frac{\gamma}{pd}\mathcal{E}^{\nu}\left(a_{j}+a_{l}\right)\lambda_{j}\lambda_{l}+4\frac{\gamma^2}{p^2d}{\mathcal{E}^{\nu}}^{2}||x^{\nu}||^2 a_{j}a_{l}\lambda_{j}\lambda_{l} \eqqcolon \mathcal Q_{jl}(a,\lambda_{\star},\lambda)
@@ -36,8 +36,8 @@ where we have defined the displacement vector
 \mathcal{E}^{\i} \coloneqq \frac{1}{p}\sum_{j=1}^{\hids}a_{j}(\lambda_{j}^{\nu})^2 - (\lambda^{\star\i})^2 + \sqrt{\noise} z^{\i},
 \end{equation}
 and we used \(\sfrac{\lr}{d}\) as the learning rate of the second layer, in order to have the same high-dimensional scaling.
-\paragraph{High-dimensional limit --- } As of now we have not made any assumptions on the dimension of the problem; the stochastic processes defined in \eqref{eq:def:overlap_process} are exact, with the right-hand side depending implicitly on $(m,Q)$ through the moments of $(\lambda_{\star}, \lambda)$. However, our goal is to study this process in the high-dimensional limit $d\to\infty$ where learning is hard and simulating \eqref{eq:sgd} can be computationally demanding. Defining a step-size $\delta t = \sfrac{\gamma}{pd}$ and a continuous extension of $(a^{\nu},m^{\nu},Q^{\nu})$ to continuous time $(a(\nu\delta t),m(\nu\delta t),Q(\nu\delta t))$ by linear interpolation, it can be shown that in the high-dimensional limit $d\to\infty$ the sufficient statistics $(a(t),m(t),Q(t))$ concentrate in their expectation $(\bar{a}(t),\bar{m}(t),\bar{Q}(t))$, which satisfies the following system of ordinary differential equations (ODEs):
-\begin{equation}\label{eq:overlapping_ODE}
+\paragraph{High-dimensional limit --- } As of now we have not made any assumptions on the dimension of the problem; the stochastic processes defined in \eqref{2305:eq:def:overlap_process} are exact, with the right-hand side depending implicitly on $(m,Q)$ through the moments of $(\lambda_{\star}, \lambda)$. However, our goal is to study this process in the high-dimensional limit $d\to\infty$ where learning is hard and simulating \eqref{2305:eq:sgd} can be computationally demanding. Defining a step-size $\delta t = \sfrac{\gamma}{pd}$ and a continuous extension of $(a^{\nu},m^{\nu},Q^{\nu})$ to continuous time $(a(\nu\delta t),m(\nu\delta t),Q(\nu\delta t))$ by linear interpolation, it can be shown that in the high-dimensional limit $d\to\infty$ the sufficient statistics $(a(t),m(t),Q(t))$ concentrate in their expectation $(\bar{a}(t),\bar{m}(t),\bar{Q}(t))$, which satisfies the following system of ordinary differential equations (ODEs):
+\begin{equation}\label{2305:eq:overlapping_ODE}
 \begin{split}
     \dod{\bar{a}_j}{t} &= \mathbb E_{(\lf,\lf_\star)\sim\mathcal{N}(0_{\hids+1}, \Omega)}\left[\mathcal{E}\lambda_{j}^2\right] \\
     \dod{\bar{m}_j}{t} &= \mathbb E_{(\lf,\lf_\star)\sim\mathcal{N}(0_{\hids+1}, \Omega)}\left[\mathcal M_j(a,\lambda_{\star},\lambda)\right] \eqqcolon \Psi_j\left(\Omega\right) \\
@@ -45,29 +45,29 @@ and we used \(\sfrac{\lr}{d}\) as the learning rate of the second layer, in orde
 \end{split}
 \end{equation}
 with initial conditions given by $(\bar{a}(0), \bar{m}(0), \bar{Q}(0))=(a^{0}, \sfrac{1}{d}W^{0}w_{\star}, \sfrac{1}{d}W^{0}{W^{0}}^{\top})$.
-The explicit expression of these expected values can be found in Appendix~\ref{app:square_equations}.
+The explicit expression of these expected values can be found in Appendix~\ref{2305:app:square_equations}.
 As discussed in the related works, the high-dimensional limit of one-pass SGD for two-layer neural networks have been studied under different settings in the literature \citep{saad1996dynamics,goldt2019dynamics,reents1998self,tan2018phase,veiga2022phase,arnaboldi2023high,arous2022high,berthier2023learning}. However, to our best knowledge our work is the first to derive and study these equations for the squared activation in the high-dimensional limit. 
 
-\paragraph{Initialization and mediocrity ---}In the noiseless case $\Delta=0$, it is easy to check that $a_{j}=1$ and $w_{j}=\pm w_{\star}$ ($m_{j}=\pm 1$ and $Q_{jl} = 1$) is indeed a stationary point of \eqref{eq:overlapping_ODE} that corresponds to two degenerated global minima of the population risk \eqref{eq:def:risk}. Adding a noise $\Delta>0$ only shift these values. Similarly, it is easy to check that $m_{i}=0$ and $\Q_{ij}=0$ for $i\neq j$ are also stationary points. These correspond to taking $w_{j}\perp w_{l} \perp w_{\star}$ for all $j\neq l$ in \eqref{eq:overlapping_ODE}, and is a global maximum of \eqref{eq:def:risk}. This stationary point plays an important role in the dynamics. Indeed, in the absence of knowledge on the process that generated the data \eqref{eq:def:teacher:quadratic}, it is customary to initialize the weights randomly:
-\begin{align}\label{eq:initial_conditions_unconstrainted}
+\paragraph{Initialization and mediocrity ---}In the noiseless case $\Delta=0$, it is easy to check that $a_{j}=1$ and $w_{j}=\pm w_{\star}$ ($m_{j}=\pm 1$ and $Q_{jl} = 1$) is indeed a stationary point of \eqref{2305:eq:overlapping_ODE} that corresponds to two degenerated global minima of the population risk \eqref{2305:eq:def:risk}. Adding a noise $\Delta>0$ only shift these values. Similarly, it is easy to check that $m_{i}=0$ and $\Q_{ij}=0$ for $i\neq j$ are also stationary points. These correspond to taking $w_{j}\perp w_{l} \perp w_{\star}$ for all $j\neq l$ in \eqref{2305:eq:overlapping_ODE}, and is a global maximum of \eqref{2305:eq:def:risk}. This stationary point plays an important role in the dynamics. Indeed, in the absence of knowledge on the process that generated the data \eqref{2305:eq:def:teacher:quadratic}, it is customary to initialize the weights randomly:
+\begin{align}\label{2305:eq:initial_conditions_unconstrainted}
     w^{0}_{j}\sim \mathcal{N}(0,I_{d}), && j=1,\cdots, p.
 \end{align}
 When $d\to\infty$, the weights are be orthogonal with high probability. In terms of the sufficient statistics: 
-\begin{equation}\label{eq:initial_distribution_QM}
+\begin{equation}\label{2305:eq:initial_distribution_QM}
     \Q_{jj} \sim \text{Dirac}(1), \qquad
     j\neq l:\;
     \sqrt{d}\,\Q^{0}_{jl} \xrightarrow{d\to+\infty} \gauss(0,1)
     \quad\text{and}\quad
     \sqrt{d}\,\M^{0}_{j} \xrightarrow{d\to+\infty} \gauss(0,1).
 \end{equation}
-Therefore, since the variance of $(m^{0},Q^{0})$ decays as $\sfrac{1}{d}$, the higher the dimension, the closer a random initialization is to a stationary point of the dynamics. Moreover, of all the $d$ directions, there exists $d-p-1$ directions orthogonal to $w_{\star}$ and $\{w^{0}_{j}\}_{j\in[p]}$ along which the population risk \eqref{eq:def:risk} remains constant. The proliferation of flat directions close to initialization severely slows down the SGD dynamics at high-dimensions, which typically requires $n=O(d\log{d})$ steps to develop a significant correlation with the signal in order to escape this region. This scenario, which we refer to as \emph{escaping mediocrity}, is common to many hard learning problems \citep{arous2021online}. In the following, we leverage the exact description \eqref{eq:overlapping_ODE} derived in this section to estimate precisely how much data is required for SGD to escape mediocrity in the prototypical phase retrieval problem \eqref{eq:def:teacher}. 
+Therefore, since the variance of $(m^{0},Q^{0})$ decays as $\sfrac{1}{d}$, the higher the dimension, the closer a random initialization is to a stationary point of the dynamics. Moreover, of all the $d$ directions, there exists $d-p-1$ directions orthogonal to $w_{\star}$ and $\{w^{0}_{j}\}_{j\in[p]}$ along which the population risk \eqref{2305:eq:def:risk} remains constant. The proliferation of flat directions close to initialization severely slows down the SGD dynamics at high-dimensions, which typically requires $n=O(d\log{d})$ steps to develop a significant correlation with the signal in order to escape this region. This scenario, which we refer to as \emph{escaping mediocrity}, is common to many hard learning problems \citep{arous2021online}. In the following, we leverage the exact description \eqref{2305:eq:overlapping_ODE} derived in this section to estimate precisely how much data is required for SGD to escape mediocrity in the prototypical phase retrieval problem \eqref{2305:eq:def:teacher}. 
 
 \paragraph{Spherical constraint ---} A phenomenon that is observed when starting from the initial conditions above is a change in the norms of the weights $w_{i}$ without effectively correlating with $\w_\star$. In this phase, sometimes referred as \emph{norm learning}, $m\approx Q_{jl} \approx 0$ for $j\neq l$, while $Q_{jj}$ changes considerably, resulting in a slightly decrease in the population risk towards a plateau that reflects mediocrity. Since the focus of this study is precisely on escaping mediocrity (i.e. developing non-zero correlation with the signal), in the following we will fix the norm of the weights $w^{\nu}_{i}\in\mathbb{S}^{d-1}(\sqrt{d})$ at initialization and throughout the dynamics $\nu\in[n]$. This assumption, which was also the focus of \cite{arous2021online}, amounts to imposing a spherical constraint at every step of SGD, also known as \emph{projected SGD}:
 \begin{equation}
     \w_j^{\i+1} = \frac{\w_j^{\i}-\lr\nabla_{\w_j}\ell(y^{\nu},f_{\Theta^{\nu}}(x^{\nu}))}{\left\lVert\w_j^{\i}-\lr\nabla_{\w_j}\ell(y^{\nu},f_{\Theta^{\nu}}(x^{\nu}))\right\rVert}\sqrt{d}.
 \end{equation}
 The high-dimensional limit of these equations lead to the following ODEs for the evolution of the sufficient statistics $(M, Q)$: 
-\begin{align}\label{eq:overlapping_spherical_ODE}
+\begin{align}\label{2305:eq:overlapping_spherical_ODE}
     \dod{\bar{m}_j}{t} = \Psi_{j}{(\Omega)} - \frac{\bar{m}_j}{2}\Phi_{jj}{(\Omega)}, &&
     \dod{\bar{\Q}_{jl}}{t} = \Phi_{jl}{(\Omega)} - \frac{\bar{\Q}_{jl}}{2}\left(\Phi_{jj}{(\Omega)}+\Phi_{ll}{(\Omega)}\right).
 \end{align}

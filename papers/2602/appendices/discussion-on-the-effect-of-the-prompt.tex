@@ -1,8 +1,8 @@
 \section{Discussion on the Effect of the Prompt}
 
-\label{appendix:prompts}
-In this appendix, we provide a detailed analysis of the impact of prompts on model performance and the secondary effects of increased sequence lengths for queries and documents. We investigate whether the performance gains observed in the main text are merely a \emph{structural effect} of processing additional tokens, or if the prompts trigger more complex behaviors such as \emph{query expansion} as discussed in Section~\ref{sec:prompts}. To isolate these variables, we conducted a series of ablations by fine-tuning different models with and without the prompts (\textbf{+Prompt} setting) as well as with and without accounting for token-length parity (\textbf{+Length} setting), that is, increasing the query/document lengths by the length of the prompts, 7 tokens. All the results are reported in Table~\ref{tab:full-ablation-results} and a synthesis of the effect of each parameter for different base model on the BEIR average is presented in Table~\ref{tab:delta-heatmap}.
-As discussed in the main body, matching the pre-training setup is crucial for downstream performance. Incorporating prompts during the fine-tuning of pre-trained models with prompts enhances results, while including them for models pre-trained without prompts leads to a decline. Notably, the most significant relative gains occur when performing only the KD phase, further underscoring the pivotal role of alignment. We observe that in the supervised + KD scenario, the model has more opportunity to adapt to initial misalignment, whereas the \emph{KD-only} setting is far more sensitive to the pre-training configuration. Crucially, however, alignment alone does not account for all the observed gains. As detailed in Section~\ref{sec:prompts}, comparing full ColBERT pre-training with and without prompts isolates the effect of prompts from any alignment confound, since both models are evaluated after end-to-end training in their respective settings. \textbf{This confirms that prompts provide an intrinsic benefit beyond simply matching the fine-tuning setup to the pre-training one}. 
+\label{2602:appendix:prompts}
+In this appendix, we provide a detailed analysis of the impact of prompts on model performance and the secondary effects of increased sequence lengths for queries and documents. We investigate whether the performance gains observed in the main text are merely a \emph{structural effect} of processing additional tokens, or if the prompts trigger more complex behaviors such as \emph{query expansion} as discussed in Section~\ref{2602:sec:prompts}. To isolate these variables, we conducted a series of ablations by fine-tuning different models with and without the prompts (\textbf{+Prompt} setting) as well as with and without accounting for token-length parity (\textbf{+Length} setting), that is, increasing the query/document lengths by the length of the prompts, 7 tokens. All the results are reported in Table~\ref{2602:tab:full-ablation-results} and a synthesis of the effect of each parameter for different base model on the BEIR average is presented in Table~\ref{2602:tab:delta-heatmap}.
+As discussed in the main body, matching the pre-training setup is crucial for downstream performance. Incorporating prompts during the fine-tuning of pre-trained models with prompts enhances results, while including them for models pre-trained without prompts leads to a decline. Notably, the most significant relative gains occur when performing only the KD phase, further underscoring the pivotal role of alignment. We observe that in the supervised + KD scenario, the model has more opportunity to adapt to initial misalignment, whereas the \emph{KD-only} setting is far more sensitive to the pre-training configuration. Crucially, however, alignment alone does not account for all the observed gains. As detailed in Section~\ref{2602:sec:prompts}, comparing full ColBERT pre-training with and without prompts isolates the effect of prompts from any alignment confound, since both models are evaluated after end-to-end training in their respective settings. \textbf{This confirms that prompts provide an intrinsic benefit beyond simply matching the fine-tuning setup to the pre-training one}. 
 
 When trying to disentangle the effect of the prompts ``content" and the increased length, we observe gains by adding the prompts even when not accounting for the additional tokens during the training of the models. While changing the length during evaluation only does not change the results (we cover the lengths of the BEIR benchmark), we conducted additional testing to determine the impact of increasing the query/document length during training. It appears that increasing the length is beneficial, even without incorporating the prompts. Again, in this case, the most significant gains are achieved by focusing solely on the KD. This phenomenon can be attributed to the fact that supplementary tokens offer extra training signals, a feature that is particularly advantageous for brief training. 
 
@@ -12,10 +12,10 @@ Our running theory is that the observed performance boost stems from a synergy b
 
 % using the ColBERT-Zero architecture, comparing the standard prompt-based approach against configurations that account for token-length parity. Our findings suggests that the influence of prompts extends beyond simple sequence padding, though as we discuss below, the underlying mechanisms remain multifaceted.
 
-% \begin{table*}[t]
+% \begin{table*}
 % \centering
 % \caption{Retrieval performance (nDCG@10) across BEIR benchmark datasets.}
-% \label{tab:original-results}
+% \label{2602:tab:original-results}
 % \resizebox{\textwidth}{!}{%
 % \begin{tabular}{l c ccccccccccccccc}
 % \toprule
@@ -48,10 +48,14 @@ Our running theory is that the observed performance boost stems from a synergy b
 % \end{table*}
 
 
-\begin{table*}[htbp]
+% Define checkmark and crossmark
+  % checkmark
+  % crossmark
+
+\begin{table*}
 \centering
 \caption{Retrieval performance on the BEIR benchmark studying the impact of adding prompts and increasing query/document lengths.}
-\label{tab:full-ablation-results}
+\label{2602:tab:full-ablation-results}
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{l cc | c | ccccccccccccccc}
 \toprule
@@ -115,10 +119,10 @@ Our running theory is that the observed performance boost stems from a synergy b
 
 
 
-\begin{table}[htbp]
+\begin{table}
 \centering
 \caption{Average BEIR nDCG@10 with delta ($\Delta$) for adding prompts and increasing lengths vs. baseline (no prompt, no length)}
-\label{tab:delta-heatmap}
+\label{2602:tab:delta-heatmap}
 
 \definecolor{pos3}{RGB}{80,200,80}   % Strong positive
 \definecolor{pos2}{RGB}{144,238,144} % Medium positive
@@ -154,7 +158,7 @@ Distilled & \cellcolor{baseline}\textbf{54.61} & \multicolumn{2}{c}{--} & \cellc
 \bottomrule
 \end{tabular}
 
-% t\vspace{1em}
+% t
 % \footnotesize
 % \textcolor{pos3}{$\blacksquare$} $\Delta > 1.0$ \quad
 % \textcolor{pos2}{$\blacksquare$} $0.5 < \Delta \leq 1.0$ \quad

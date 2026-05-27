@@ -1,6 +1,6 @@
 \section{Stochastic correction from \cite{arous2022high}}
 
-\label{app:match_with_GBA}
+\label{2305:app:match_with_GBA}
 In this Appendix we compute the diffusion correction term of the deterministic dynamic using the formalism introduced in \cite{arous2022high}; we use the notation of that paper to make the comparison easier.
 
 We are going to analyze the plain phase retrieval problem (\(k=p=1\), no spherical constraint), using a slightly different scaling as the one we introduced in the main, in accordance with the hypothesis required by \cite{arous2022high}. Our goal is to to show that our formalism contains the one presented in the paper we are analyzing here. We want to learn a predictor of the form \(f(x)=(w\cdot x)^2\), using online SGD on the data
@@ -73,7 +73,7 @@ Let's compute the two terms separately
 \end{split}\]
 
 We finally get the expression for  the matrix \(V=\mathbb E_{x,\xi} \left[\nabla_wL\otimes\nabla_wL\right]-\nabla_w\Phi\otimes\nabla_w\Phi\)
-\begin{equation}\label{eq:matrixV}\begin{split}
+\begin{equation}\label{2305:eq:matrixV}\begin{split}
    V =& 4(15q^3+\Delta q+3\rho^2q+12\rho m^2-6q^2\rho-24qm^2)I_d + 4(90q^2+2\Delta+6\rho^2-24\rho q -48m^2-9q^2+6\rho q-\rho^2)ww^\top \\
       & +4(12\rho q + 24m^2-12q^2-4m^2)w^\star(w^\star)^\top
         +4(24\rho m-48qm+6qm-2\rho m)(w^\star w+ ww^\star)
@@ -89,17 +89,17 @@ We now have all the ingredients needed for computing the dynamics
         =& 4\gamma(15q^3+\Delta q+3\rho^2q+12\rho m^2-6q^2\rho-24qm^2)
 \end{split}\]
 In the last one we used the fact that the only term that can survive the \(\Tr{\cdot}/d\) are the ones proportional to the identity. For the same reason \(\Sigma = 0\) in this case. The full equations read as
-\begin{equation}\label{eq:phaseretrievalGBA}\begin{split}
+\begin{equation}\label{2305:eq:phaseretrievalGBA}\begin{split}
  \dif m &= 6m(\rho-q) \dif t \\
  \dif q &= 4\left[2m^2+\rho q-3q^2 +\gamma(15q^3+\Delta q+3\rho^2q+12\rho m^2-6q^2\rho-24qm^2)\right] \dif t
 \end{split}\end{equation}
-Note that this equations are exactly the same as \eqref{eq:quadraticODE_M} and \eqref{eq:quadraticODE_Q}, as expected. What is not trivial is proving that the diffusion term will also be equivalent.
+Note that this equations are exactly the same as \eqref{2305:eq:quadraticODE_M} and \eqref{2305:eq:quadraticODE_Q}, as expected. What is not trivial is proving that the diffusion term will also be equivalent.
 
 \subsection{Diffusion at generic point}
 In principle diffusion terms are expected to appear when the sufficient statistic are zoom around a fixed point of the equations.
 Imagine now we want to find the diffusion term around a generic point \((m,q) = (\bar m, \bar q)\) that is not necessarily a fixed point of the equations. We have to zoom the sufficient statistics in the usual way 
 \[(\tilde m, \tilde q) = \left(\sqrt{d}(m-\bar m), \sqrt{d}(q-\bar q)\right)\].
-The drift terms diverge, but diffusion term will appear; this diffusion is the first stochastic correction to the deterministic dynamic of the sufficient statistics, and can be added to the equations \eqref{eq:phaseretrievalGBA}, paying attention to multiply it by \(\sfrac1{\sqrt{d}}\) to compensate the zoom factor.
+The drift terms diverge, but diffusion term will appear; this diffusion is the first stochastic correction to the deterministic dynamic of the sufficient statistics, and can be added to the equations \eqref{2305:eq:phaseretrievalGBA}, paying attention to multiply it by \(\sfrac1{\sqrt{d}}\) to compensate the zoom factor.
 
 Let's express loss and its gradients respect to the new sufficient statistics
 \[\Phi(\tilde m, \tilde q) = \frac{3\rho^2+\Delta}{2} + \frac{3}{2} \left(\frac{\tilde q}{\sqrt{d}}+\bar q\right)^2 - \rho \left(\frac{\tilde q}{\sqrt{d}}+\bar q\right) - 2\left(\frac{\tilde m}{\sqrt{d}}+\bar m\right)^2\]
@@ -112,7 +112,7 @@ Let's express loss and its gradients respect to the new sufficient statistics
 \[
     \nabla^2_w \tilde m = 0 \qquad \nabla^2_w \tilde q = 2\sqrt{d}I_d \qquad
 \]
-The expression of matrix \(V\) is the same as the one in equation \eqref{eq:matrixV} with the following substitutions
+The expression of matrix \(V\) is the same as the one in equation \eqref{2305:eq:matrixV} with the following substitutions
 \[\begin{split}
     q = \frac{\tilde q}{\sqrt{d}} + \bar q \qquad
     m = \frac{\tilde m}{\sqrt{d}} + \bar m.
@@ -167,6 +167,6 @@ Let's dive into the computation of the diffusion matrix
  %
  =& 1536 \bar q^4+48\Delta \bar q^2 + 128\rho^2\bar q^2+1088\rho \bar m^2 \bar q-384\rho \bar q^3-2688\bar q^2 \bar m^2 +320 \bar m^4
 \end{split}\]
-The expressions we just computed match the one we obtained in Equation~\eqref{eq:generic_p_variance}, if we set \(\gamma=0\). This difference arise from the \(\delta\)-localizability condition, that essentially force us to work with a vanishing learning rate. Remark 2 in \cite{arous2022high} explains how to generalize the formula for \(\Sigma\) to match exactly our expression.
+The expressions we just computed match the one we obtained in Equation~\eqref{2305:eq:generic_p_variance}, if we set \(\gamma=0\). This difference arise from the \(\delta\)-localizability condition, that essentially force us to work with a vanishing learning rate. Remark 2 in \cite{arous2022high} explains how to generalize the formula for \(\Sigma\) to match exactly our expression.
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

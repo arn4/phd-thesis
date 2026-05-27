@@ -1,9 +1,9 @@
 \section{Derivation of explicit expression for the squared activation}
 
-\label{sec:app:squared}
+\label{2302:sec:app:squared}
 In this appendix we show how to derive the differential equations for the dynamics when both \(\sigma\) and \(\sigma^*\) are the square function. We will not present the \(\Psi^{(\mathrm{Var})}\) term since we never use the square activation in the high-dimensional regime.
 
-The starting points are Equations~\eqref{eq:def:Psi} and the fact that \(\mathcal{R}=\sfrac{\mathcal{E}^2}{2}\). 
+The starting points are Equations~\eqref{2302:eq:def:Psi} and the fact that \(\mathcal{R}=\sfrac{\mathcal{E}^2}{2}\). 
 Due to the linearity of the expected value, we can reduce the expectation on products of \(\dsp\) and \(\lf\).
 Let's start with the population risk. The expected values we need can be expanded to 
 \[\begin{split}
@@ -28,7 +28,7 @@ Before specializing in \(\act(x)=x^2\), we introduce a shorthand in the notation
 We will use \[\omega_{\alpha\beta} \coloneqq \left[\mat{\Omega}\right]_{\alpha\beta},\]
 where the indices \(\alpha\) and \(\beta\) can discriminate between teacher and student local fields, as well as the numerical index.
 % maybe expand the discussion on how \alpha and \beta work
-Actually, this notation allow us to compute also \(\Psi^\bot(\Omega)\) by expanding Equation~\eqref{eq:def:mf_orthogonal} as above, and using the matrix in Equation~\eqref{eq:def:new_covariance} as covariance for the normal distribution.
+Actually, this notation allow us to compute also \(\Psi^\bot(\Omega)\) by expanding Equation~\eqref{2302:eq:def:mf_orthogonal} as above, and using the matrix in Equation~\eqref{2302:eq:def:new_covariance} as covariance for the normal distribution.
 
 With this consideration, there are only 2 types of expected values to be computed.
 Let us write them explicitly, using our specific activation function
@@ -49,8 +49,8 @@ We are left with some expected values of polynomials of Gaussian variables. Sinc
   &= 2 \omega_{\alpha\beta}\omega_{\gamma\gamma} + 4 \omega_{\alpha\gamma}\omega_{\beta\gamma}.\\
 \end{align*}
 By retracing all steps backward and making the necessary substitutions,
-we can arrive at an explicit form of the Equations~\eqref{eq:def:gf_ode}. In order
-to obtain a matrix form such as in the Equations~\eqref{eq:squared_ODE}, 
+we can arrive at an explicit form of the Equations~\eqref{2302:eq:def:gf_ode}. In order
+to obtain a matrix form such as in the Equations~\eqref{2302:eq:squared_ODE}, 
 we have to write in a closed form all the summations appeared during the derivation
 and use the fact that \(\Q\) and \(\P\) are symmetric matrices.
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

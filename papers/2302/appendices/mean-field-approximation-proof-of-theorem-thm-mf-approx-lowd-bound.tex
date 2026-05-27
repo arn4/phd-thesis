@@ -1,13 +1,13 @@
-\section{Mean-field approximation: proof of Theorem \ref{thm:mf_approx_lowd_bound}}
+\section{Mean-field approximation: proof of Theorem \ref{2302:thm:mf_approx_lowd_bound}}
 
-\label{sec:app:mf}
+\label{2302:sec:app:mf}
 \paragraph{Preliminaries} We begin by recalling the results of \cite{mei2019mean}. For any distribution $\mu$ on $\mathbb R^d$, we define the network function
 \begin{equation}
     \hat f_{\mu}(\vec{x}) = \int \sigma(\vec{w}^\top \vec{x}) d\mu(\vec{w}).
 \end{equation}
 It is easy to check that when
 \[ \mu = \mu_p(W) := \frac1p \sum_{i = 1}^p \delta_{\vec{w}_i}, \]
-then $\hat f_\mu = f_\Theta$, where $f_\Theta$ was defined in \eqref{eq:def:model}. The associated network risk is then given by
+then $\hat f_\mu = f_\Theta$, where $f_\Theta$ was defined in \eqref{2302:eq:def:model}. The associated network risk is then given by
 \begin{equation}
     \hat{\mathcal{R}}(\mu) = \mathbb E_{\vec{x} \sim \mathcal N(\vec{0}, \sfrac{1}{d} I_d)} \left[\frac12\left( f_{\Theta^\star}(\vec{x}) - \hat f_\mu(\vec{x}) \right)^2 \right].
 \end{equation}
@@ -15,33 +15,33 @@ Similarly, we can consider the continuous equivalent of the gradient flow equati
 \begin{equation}
     \varphi(\vec{w}, \mu) = \mathbb E_{\vec{x} \sim \mathcal N(\vec{0}, \sfrac{1}{d} I_d)} \left[\sigma'(\vec{w}^\top \vec{x}) \vec{x} \left( f_{\Theta^\star}(\vec{x}) - \hat f_\mu(\vec{x}) \right) \right].
 \end{equation}
-Through conservation of matter arguments, the evolution of the empirical measure for particles following the gradient flow equation \eqref{eq:gf} obeys the following partial differential equation:
+Through conservation of matter arguments, the evolution of the empirical measure for particles following the gradient flow equation \eqref{2302:eq:gf} obeys the following partial differential equation:
 \begin{equation}
-    \label{eq:def:gf_pde}\tag{GF-PDE}
+    \label{2302:eq:def:gf_pde}\tag{GF-PDE}
     \partial_t \mu_t = \nabla_{\vec{w}} \cdot \left( \mu_t\,\varphi(\,\cdot\,, \mu_t) \right) 
 \end{equation}
 
-\begin{theorem}[\cite{mei2019mean}, Propositions 13-16]\label{thm:mei_mf_bound}
+\begin{theorem}[\cite{mei2019mean}, Propositions 13-16]\label{2302:thm:mei_mf_bound}
     Let $\mu_0$ be a $K^2/d$-subgaussian distribution, and consider the following two processes:
     \begin{itemize}
-        \item the solution $\mu_t$ of \eqref{eq:def:gf_pde} with initial value $\mu_0$,
-        \item the solution $W(t)$ of the gradient flow ODE \eqref{eq:gf}, with initial conditions $\vec{w_i}(0) \sim \mu_0$ i.i.d.
+        \item the solution $\mu_t$ of \eqref{2302:eq:def:gf_pde} with initial value $\mu_0$,
+        \item the solution $W(t)$ of the gradient flow ODE \eqref{2302:eq:gf}, with initial conditions $\vec{w_i}(0) \sim \mu_0$ i.i.d.
     \end{itemize}
     Then for any $T \geq 0$ we have
-    \begin{equation}\label{eq:app:mei_mf_bound}
+    \begin{equation}\label{2302:eq:app:mei_mf_bound}
         \sup_{t \in [0, T]} \left|\mathcal{R}(W(t)) - \hat{\mathcal{R}}(\mu_t) \right| \leq \frac{Ce^{CT} \left(\sqrt{\log(pT)} + z \right)}{\sqrt{p}}
     \end{equation}
     with probability at least $1 - e^{-z^2}$.
 \end{theorem}
 
-As we have already mentioned in the section devoted to the gradient flow regime, the solution $\Omega(t)$ of \eqref{eq:def:gf_ode} is exactly the overlap matrix of $W(t)$, and hence the term $\mathcal{R}(W(t))$ can be replaced by $\mathcal{R}(\Omega(t))$ in \eqref{eq:app:mei_mf_bound}.
+As we have already mentioned in the section devoted to the gradient flow regime, the solution $\Omega(t)$ of \eqref{2302:eq:def:gf_ode} is exactly the overlap matrix of $W(t)$, and hence the term $\mathcal{R}(W(t))$ can be replaced by $\mathcal{R}(\Omega(t))$ in \eqref{2302:eq:app:mei_mf_bound}.
 
-\paragraph{Rotation invariance} The crux of Theorem \ref{thm:mf_approx_lowd_bound} lies in the rotation invariance of $\mu_0$. Indeed, as noticed in \cite{abbe2022merged,hajjar2022symmetries}, such symmetries are conserved throughout the mean-field dynamics.
-\begin{proposition}[\cite{hajjar2022symmetries}, Proposition 2.1]\label{prop:app:chizat_symmetry}
-Let $U$ be a linear transformation, and assume that the initial measure $\mu_0$, the teacher function $f_\star$ and the data measure $\rho$ are all invariant under $U$. Let $\mu_t$ be the solution to \eqref{eq:def:gf_pde} with initial condition $\mu_0$. Then $\mu_t$ is $U$-invariant for all $t \geq 0$.
+\paragraph{Rotation invariance} The crux of Theorem \ref{2302:thm:mf_approx_lowd_bound} lies in the rotation invariance of $\mu_0$. Indeed, as noticed in \cite{abbe2022merged,hajjar2022symmetries}, such symmetries are conserved throughout the mean-field dynamics.
+\begin{proposition}[\cite{hajjar2022symmetries}, Proposition 2.1]\label{2302:prop:app:chizat_symmetry}
+Let $U$ be a linear transformation, and assume that the initial measure $\mu_0$, the teacher function $f_\star$ and the data measure $\rho$ are all invariant under $U$. Let $\mu_t$ be the solution to \eqref{2302:eq:def:gf_pde} with initial condition $\mu_0$. Then $\mu_t$ is $U$-invariant for all $t \geq 0$.
 \end{proposition}
 
-Write $\mathbb R^d = V^\star \oplus V^\bot$, where $V^\star$ is the span of $W^\star$ and $V^\bot$ is its orthogonal subspace. Proposition \ref{prop:app:chizat_symmetry} then implies immediately that $\mu_t$ is rotation-invariant on $V^\bot$. Hence, if we define the following function:
+Write $\mathbb R^d = V^\star \oplus V^\bot$, where $V^\star$ is the span of $W^\star$ and $V^\bot$ is its orthogonal subspace. Proposition \ref{2302:prop:app:chizat_symmetry} then implies immediately that $\mu_t$ is rotation-invariant on $V^\bot$. Hence, if we define the following function:
 \begin{equation}
 h(\vec{w}) =  \left(\frac{W^\star \vec{w}}d, \lVert \vec{w}^\bot \rVert^2\right)
 \end{equation}
@@ -52,7 +52,7 @@ Conversely, for a set of reduced parameters $(\vec{m}, q)\in\mathbb{R}^d$, and $
 \end{equation}
 where $\vec{g}$ is a uniform unit vector in $V^\bot$. Then $\mu_t$ is the measure of $\tilde{\vec{w}}$ when $(\vec{m}, q) \sim \tilde \mu_t$ and $\vec{g}\sim \mathrm{Unif}(\mathbb{S}^{d-k-1})$. This allows us to write the reduced equations for $\tilde{\mu_t}$:
 \begin{equation}
-\label{eq:app:df_pde}\tag{DF-PDE}
+\label{2302:eq:app:df_pde}\tag{DF-PDE}
     \begin{split}
         \partial_t \tilde\mu_t &= \nabla_{(\vec{m}, q)} \cdot \left( \tilde \mu_t \tilde \varphi(\,\cdot\,, \tilde \mu_t) \right) \\
         \tilde \varphi_{\vec{m}}((\vec{m}, q), \tilde \mu) &= \mathbb{E}_{\vec{x}, \vec{g}}\left[ \sigma'(\tilde{\vec{w}}^\top \vec{x}) W^\star \vec{x} \left( f_{\Theta^\star}(\vec{x}) - \tilde f_{\tilde \mu}(\vec{x}) \right) \right] \\
@@ -72,8 +72,8 @@ We have therefore shown the following proposition:
 \begin{proposition}
     Assume that $\mu_0$ is rotation-invariant on $V^\bot$. Consider these two processes:
     \begin{itemize}
-        \item the solution $\mu_t$ of \eqref{eq:def:gf_pde} with initial value $\mu_0$,
-        \item the solution $\tilde\mu_t$ of \eqref{eq:app:df_pde} with initial value $h_{\#}\mu_0$. 
+        \item the solution $\mu_t$ of \eqref{2302:eq:def:gf_pde} with initial value $\mu_0$,
+        \item the solution $\tilde\mu_t$ of \eqref{2302:eq:app:df_pde} with initial value $h_{\#}\mu_0$. 
     \end{itemize}
     Then, for all $t \geq 0$, we have
     \begin{equation}
@@ -83,7 +83,7 @@ We have therefore shown the following proposition:
 
 \paragraph{Back to ODEs} Consider a population of $p$ particles $(\vec{m}, q)$ that evolve according to the following equations:
 \begin{equation}
-    \label{eq:app:df_ode}\tag{DF-ODE}
+    \label{2302:eq:app:df_ode}\tag{DF-ODE}
     \begin{split}
         \frac{d\vec{m_i}}{dt} &= \tilde \varphi_{\vec{m}}(\vec{m_i}(t), \tilde\mu_{p}(t)) \\
         \frac{dq_i}{dt}& = \tilde \varphi_{q}(q_i(t), \tilde\mu_{p}(t))
@@ -91,12 +91,12 @@ We have therefore shown the following proposition:
 \end{equation}
 where $\tilde\mu_p(t)$ is the empirical distribution of the population:
 \[ \tilde \mu_p(t) = \frac1p \sum_{i=1}^p \delta_{\vec{m}_i(t), q_i(t)}. \]
-Then, by the same arguments as Theorem \ref{thm:mei_mf_bound}, we have:
-\begin{proposition}\label{prop:mf_approx_reduced}
+Then, by the same arguments as Theorem \ref{2302:thm:mei_mf_bound}, we have:
+\begin{proposition}\label{2302:prop:mf_approx_reduced}
     Assume that $\tilde\mu_0$ is a $K^2/d$-subgaussian distribution, and consider the two processes:
     \begin{itemize}
-        \item the solution $\tilde\mu_t$ of \eqref{eq:def:gf_pde} with initial value $\tilde\mu_0$,
-        \item the solution $\tilde\Theta(t) = (\vec{m_i}(t), q_i(t))_i$ of \eqref{eq:app:df_ode} with initial conditions $\vec{m}_i(0), q_i(0) \sim \tilde \mu_0$ i.i.d.
+        \item the solution $\tilde\mu_t$ of \eqref{2302:eq:def:gf_pde} with initial value $\tilde\mu_0$,
+        \item the solution $\tilde\Theta(t) = (\vec{m_i}(t), q_i(t))_i$ of \eqref{2302:eq:app:df_ode} with initial conditions $\vec{m}_i(0), q_i(0) \sim \tilde \mu_0$ i.i.d.
     \end{itemize}
     Then for all $T \geq 0$, we have
     \begin{equation}
@@ -106,15 +106,15 @@ Then, by the same arguments as Theorem \ref{thm:mei_mf_bound}, we have:
 \end{proposition}
 
 In conclusion, we have shown the following:
-\begin{theorem}\label{thm:app:mf_approx_bound}
-    Assume that conditions \ref{assump:activation} and \ref{assump:init} are both satisfied, and define
+\begin{theorem}\label{2302:thm:app:mf_approx_bound}
+    Assume that conditions \ref{2302:assump:activation} and \ref{2302:assump:init} are both satisfied, and define
     \begin{equation}
        \mat{M^0} = \frac{\mat{W}^{0}{\mat{W}^{\star}}^{\top}}{d},\quad  \mat{Q^0} = \frac{\mat{W}^{0}{\mat{W}^{0}}^{\top}}{d},\quad  \vec{q}^0 = \diagarg{Q^0 - M^0 P^{-1} M^{0\top}}.
     \end{equation}
     Consider the two following processes:
     \begin{itemize}
-        \item the solution $\Omega(t)$ of \eqref{eq:def:gf_ode} with initial value $\Omega^0$,
-        \item the solution $\tilde\Theta(t)$ of \eqref{eq:app:df_ode} with initial value $(M^0, \vec{q}^0)$.
+        \item the solution $\Omega(t)$ of \eqref{2302:eq:def:gf_ode} with initial value $\Omega^0$,
+        \item the solution $\tilde\Theta(t)$ of \eqref{2302:eq:app:df_ode} with initial value $(M^0, \vec{q}^0)$.
     \end{itemize}
     Then for any $T \geq 0$, we have
     \begin{equation}
@@ -123,20 +123,20 @@ In conclusion, we have shown the following:
      with probability at least $1 - e^{-z^2}$.
 \end{theorem}
 
-\paragraph{Matching the equations} To show that Theorem \ref{thm:app:mf_approx_bound} implies Theorem \ref{thm:mf_approx_lowd_bound}, we need to show the following:
+\paragraph{Matching the equations} To show that Theorem \ref{2302:thm:app:mf_approx_bound} implies Theorem \ref{2302:thm:mf_approx_lowd_bound}, we need to show the following:
 \begin{itemize}
-    \item the update equations for \eqref{eq:def:mf_ode} and \eqref{eq:app:df_ode} are the same
-    \item the risk definitions for $\tilde{\mathcal{R}}(\tilde\Theta)$ matches the one from \eqref{eq:def:mf_risk}.
+    \item the update equations for \eqref{2302:eq:def:mf_ode} and \eqref{2302:eq:app:df_ode} are the same
+    \item the risk definitions for $\tilde{\mathcal{R}}(\tilde\Theta)$ matches the one from \eqref{2302:eq:def:mf_risk}.
 \end{itemize}
 We will only show it for $\tilde\varphi_{\vec{m}}$; the rest is done similarly. Expanding the definition, we have
-\begin{equation}\label{eq:app:mf_ode_expansion}
+\begin{equation}\label{2302:eq:app:mf_ode_expansion}
     \tilde \varphi_{\vec{m}}((\vec{m}_i, q_i), \tilde \mu_p)_r = \frac1k \sum_{s = 1}^k \langle  \sigma'(\tilde\lambda_i) \lambda^\star_r \sigma(\lambda^\star_s) \rangle - \frac1p \sum_{j=1}^p \langle  \sigma'(\tilde\lambda_i) \lambda^\star_r \sigma(\tilde\lambda_j) \rangle
 \end{equation}
 where $\tilde \lambda_i = \tilde{\vec{w}}_i^\top \vec{x}$ and $\langle \cdot \rangle$ denotes the expectation with respect to $\vec{x}, \vec{g}$. On the other hand,
-\begin{equation}\label{eq:app:ss_ode_expansion}
+\begin{equation}\label{2302:eq:app:ss_ode_expansion}
     \Psi^{(M)}(\Omega) = \frac1k \sum_{s = 1}^k \langle  \sigma'(\lambda_i) \lambda^\star_r \sigma(\lambda^\star_s) \rangle - \frac1p \sum_{j=1}^p \langle  \sigma'(\lambda_i) \lambda^\star_r \sigma(\lambda_j) \rangle,
 \end{equation}
-without any expectation on $\vec{g}$; hence we only need to match the expressions term by term. The first sums of \eqref{eq:app:mf_ode_expansion} and \eqref{eq:app:ss_ode_expansion} are actually identical (since the marginal distribution of $\lambda_i^\star$ is independent from $\vec{g}$), so we look at the second ones:
+without any expectation on $\vec{g}$; hence we only need to match the expressions term by term. The first sums of \eqref{2302:eq:app:mf_ode_expansion} and \eqref{2302:eq:app:ss_ode_expansion} are actually identical (since the marginal distribution of $\lambda_i^\star$ is independent from $\vec{g}$), so we look at the second ones:
 \begin{equation}
     \langle  \sigma'(\tilde\lambda_i) \lambda^\star_r \sigma(\tilde\lambda_j) \rangle = \int \mathbb{E}_{x \sim \mathcal{N}(\vec{0}, \sfrac{1}{d}I_d)}\left[ \sigma'(\tilde\lambda_i) \lambda^\star_r \sigma(\tilde\lambda_j) \right] d\nu(\vec{g}_i) d\nu(\vec{g}_j)
 \end{equation}
@@ -146,5 +146,5 @@ For $i \neq j$ and a given realization of $\vec{g}_i, \vec{g}_j$, the covariance
     \vec{m}_i^\top P^{-1} \vec{m_j} + \sqrt{q_i q_j} \xi_{ij} & \vec{m}_i^\top P^{-1} \vec{m_i} + q_i &  m_{jr} \\
     m_{ir} & m_{jr} & p_{rr}
 \end{pmatrix} \]
-where $\xi_{ij} = \langle \vec{g_i}, \vec{g_j} \rangle$. It is easy to check that this is exactly equal to $\tilde\Omega^{ijr}$, where $\tilde\Omega$ is defined in \eqref{eq:def:overlaps_mf}. Finally, by linearity of expectation, since we never have a three-way correlation term between $\vec{g}_i, \vec{g}_j, \vec{g}_\ell$, we can consider all the $\xi_{ij}$ to be independent. This ends the proof of Theorem \ref{thm:mf_approx_lowd_bound}.
+where $\xi_{ij} = \langle \vec{g_i}, \vec{g_j} \rangle$. It is easy to check that this is exactly equal to $\tilde\Omega^{ijr}$, where $\tilde\Omega$ is defined in \eqref{2302:eq:def:overlaps_mf}. Finally, by linearity of expectation, since we never have a three-way correlation term between $\vec{g}_i, \vec{g}_j, \vec{g}_\ell$, we can consider all the $\xi_{ij}$ to be independent. This ends the proof of Theorem \ref{2302:thm:mf_approx_lowd_bound}.
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

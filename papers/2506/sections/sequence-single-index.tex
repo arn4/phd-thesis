@@ -2,7 +2,7 @@
 In this section, we focus on understanding the complexity of the SGD algorithm, i.e., how the number of total gradient steps \(n\) scales with the dimension \(d\) of the token embeddings, in the high-dimensional limit \(d\gg 1\); for simplicity of exposition, we focus on the case \(k=1\), but the same arguments can be repeated for each of the components of the output.  
 
 \paragraph{No positional encoding ---} We first focus on the case without positional encoding: \(P=0\) implies that the only relevant sufficient statistic is \(m\). An analogy with single-index models for networks can be done: For single-index models, the \emph{information exponent} fully characterizes the sample complexity of the SGD algorithm \cite{arous2021online}. The definition can be generalized for sequential data.
-\begin{definition}[Sequence Information Exponent (SIE)] \label{def:sie}
+\begin{definition}[Sequence Information Exponent (SIE)] \label{2506:def:sie}
     Given \(\vec{f}^\mathrm{SSI}_{\vec w_{\star}}(X)\) a sequence single-index model, let \(g\) be the function that acts on the local field \(\vec{z}_\star\), we define the \emph{sequence information exponent} as
     \[
         \text{SIE}(\vec{f}^\mathrm{SSI}_{\vec w_{\star}}(X)) \coloneqq
@@ -16,7 +16,7 @@ In this section, we focus on understanding the complexity of the SGD algorithm, 
     \]
     where \(\mathrm{He}_k\) is the \(k\)-th order Hermite polynomial.
 \end{definition}
-In Appendix~\ref{app:hermite-polynomials} we provide more details on Hermite polynomials.
+In Appendix~\ref{2506:app:hermite-polynomials} we provide more details on Hermite polynomials.
 Let us give some examples of SIE for different SSI models:
 \begin{itemize}
     \item \(g(\vec{z}_\star) = z_{\star,1} + z_{\star,2} + \dots + z_{\star,L}\) has \(\text{SIE} = 1\);
@@ -25,7 +25,7 @@ Let us give some examples of SIE for different SSI models:
     \item \(g(\vec{z}_\star) = \prod_{l=1}^L \mathrm{He}_{k_l}(z_{\star,l})\) has \(\text{SIE} = \sum_{l=1}^L k_l\).
 \end{itemize}
 The main feature of the information exponent is that it can be connected to the sample complexity of the SGD algorithm; we prove an equivalent result for the sequence information exponent.
-\begin{theorem}[Informal] \label{thm:sie}
+\begin{theorem}[Informal] \label{2506:thm:sie}
     Let \(\vec{f}^\mathrm{SSI}_{\vec w_{\star}}(X)\) be a sequence single-index model, and let \(\text{SIE}\) be its sequence information exponent. If the model \(f_{\vec{w}}\) has a rich enough Hermite expansion, then the sample complexity of the SGD algorithm is
     \[
         t^+_\eta = \begin{cases}
@@ -35,16 +35,16 @@ The main feature of the information exponent is that it can be connected to the 
         \end{cases}.
     \]
 \end{theorem}
-A formal statement of the Theorem and the proof are given in the Appendix~\ref{app:proofs}. 
+A formal statement of the Theorem and the proof are given in the Appendix~\ref{2506:app:proofs}. 
 
 \begin{figure}
     \centering
     \includegraphics[width=0.26\textwidth]{figs/plot_surface/loss_surface_SIE2_peFalse}
-    \hspace{-.4cm}
+    
     \includegraphics[width=0.26\textwidth]{figs/plot_surface/loss_surface_SIE4_peFalse}
-    \hspace{-.4cm}
+    
     \includegraphics[width=0.26\textwidth]{figs/plot_surface/loss_surface_SIE2_peTrue}
-    \hspace{-.4cm}
+    
     \includegraphics[width=0.26\textwidth]{figs/plot_surface/loss_surface_SIE4_peTrue}
     \caption{the landscape of the population risk, together with the hessian at initialization, for different values of the SIE and positional encoding.
     (left) \(g(\vec{z}_\star) = \mathrm{He}_2(\vec{z}_{\star,1}) + \mathrm{He}_2(\vec{z}_{\star,2})\): SIE=2, no positional encoding: null gradient, but non-null hessian;
@@ -53,9 +53,9 @@ A formal statement of the Theorem and the proof are given in the Appendix~\ref{a
     (right) SIE=4, with positional encoding: hessian is positive semidefinite, and the dynamic is again at 4th order in direction of \(e\).
     In all the examples \(L=2, P_1=-P_2, R = \Tr\).
     }
-    \label{fig:loss_surface}
+    \label{2506:fig:loss_surface}
 \end{figure}
-In Figure~\ref{fig:loss_surface}, we show some examples of the population loss landscape for different values of the SIE. The SIE can also be interpreted as the first non-null order in Taylor expansion of the loss at the initialization point, and consequently the number of gradient steps needed to build up a weak correlation is higher. Figure~\ref{fig:loss_surface} focuses on even SIE because the symmetry of Equation~\eqref{eq:model-definition} restricts the possible targets to even functions; in the Appendix~\ref{app:sie-extra} we discuss how to surpass this limitation, and we present settings with odd SIE. 
+In Figure~\ref{2506:fig:loss_surface}, we show some examples of the population loss landscape for different values of the SIE. The SIE can also be interpreted as the first non-null order in Taylor expansion of the loss at the initialization point, and consequently the number of gradient steps needed to build up a weak correlation is higher. Figure~\ref{2506:fig:loss_surface} focuses on even SIE because the symmetry of Equation~\eqref{2506:eq:model-definition} restricts the possible targets to even functions; in the Appendix~\ref{2506:app:sie-extra} we discuss how to surpass this limitation, and we present settings with odd SIE. 
 
 
 \paragraph{The effect of positional encoding ---}
@@ -67,18 +67,18 @@ In particular, adding  positional encoding increase the expressivity of the mode
         \mathrm{SIE}_\mathrm{positional} \le \mathrm{SIE}.
     \]
 \end{lemma}
-In other words, the positional encoding can only decrease the SIE of the model, thus the sample complexity of the SGD algorithm could be reduced. The proof of this lemma is given in the Appendix~\ref{app:proofs}.
-\begin{wrapfigure}{r}{0.5\textwidth}
-    \vspace{-0.4cm}
+In other words, the positional encoding can only decrease the SIE of the model, thus the sample complexity of the SGD algorithm could be reduced. The proof of this lemma is given in the Appendix~\ref{2506:app:proofs}.
+\begin{figure}
+    
     \centering
     \includegraphics[width=0.25\textwidth]{figs/plot_surface/loss_surface_SIEPE_peFalse}
-    \hspace{-.4cm}
+    
     \includegraphics[width=0.25\textwidth]{figs/plot_surface/loss_surface_SIEPE_peTrue}
     \caption{Population loss landscape for \(P=0\) (left) and \(P\neq 0\) (right). Example of a case where \({\rm SIE}=4\), while \({\rm SIE}_\mathrm{positional}=2\). Target: \(g(\vec{z}_\star) = \sfrac43 + \mathrm{He}_4(z_1) + 2\mathrm{He}_4(z_{\star,2})\), \(P_1=-P_2\), \(R = \Tr\). 
     }
-    \label{fig:loss_surface_pe}
-    % \vspace{-.5cm}
-\end{wrapfigure}
-In the right part of Figure~\ref{fig:loss_surface_pe}, we present an example  where adding the positional encoding can improve the sample complexity of the SGD algorithm. The left part of Figure~\ref{fig:loss_surface_pe} shows that the population loss landscape at initialization is flat, and the hessian is null: the first non-null term in the Taylor expansion is at order 4, hence the SIE is 4. The right part of Figure~\ref{fig:loss_surface_pe} shows instead that when we add the positional encoding, a non-null term appears at order 2, and \(\mathrm{SIE}_\mathrm{positional} = 2\). 
-Note that the position of the global minima is not affected by the positional encoding, but SGD can converge to the new local minima; more discussion on this point is given in Section~\ref{sec:positional_encoding}.
-In contrast, the right part of Figure~\ref{fig:loss_surface} shows that the positional encoding is not necessarily beneficial: there are cases for which the loss landscape changes, but not the sample complexity.
+    \label{2506:fig:loss_surface_pe}
+    % 
+\end{figure}
+In the right part of Figure~\ref{2506:fig:loss_surface_pe}, we present an example  where adding the positional encoding can improve the sample complexity of the SGD algorithm. The left part of Figure~\ref{2506:fig:loss_surface_pe} shows that the population loss landscape at initialization is flat, and the hessian is null: the first non-null term in the Taylor expansion is at order 4, hence the SIE is 4. The right part of Figure~\ref{2506:fig:loss_surface_pe} shows instead that when we add the positional encoding, a non-null term appears at order 2, and \(\mathrm{SIE}_\mathrm{positional} = 2\). 
+Note that the position of the global minima is not affected by the positional encoding, but SGD can converge to the new local minima; more discussion on this point is given in Section~\ref{2506:sec:positional_encoding}.
+In contrast, the right part of Figure~\ref{2506:fig:loss_surface} shows that the positional encoding is not necessarily beneficial: there are cases for which the loss landscape changes, but not the sample complexity.

@@ -1,18 +1,18 @@
-\newpage 
+ 
 
 \section{Theoretical framework}
-\label{sec:app:framework}
+\label{2405:sec:app:framework}
 
 \subsection{Difference inequalities for vector-valued processes}
 
 We begin with a lemma that generalizes \cite[Proposition 4.1]{arous2021online}. Let $\Phi: \R^d \to \R^d$ be a random function, and consider the process $(\vec{u}_t)_{t \geq 0} \in \mathbb{S}^{d-1}$ given by
 \[ \vec{u}_{t+1} = \frac{\vec{u}_t + \gamma \Phi(\vec{u}_t)}{\norm{\vec{u}_t + \gamma \Phi(\vec{u}_t)}}. \]
 We make the following assumptions:
-\begin{assumption}\label{assump:app:initialization}
+\begin{assumption}\label{2405:assump:app:initialization}
   The initial value of $\vec{u_0} \in \mathbb{S}^{d-1}$ is approximately isotropic, in the sense that there exists a constant $c > 0$ such that
   \[ \Ea{\vec{u_0}\vec{u_0}^\top} \succ \frac{c}d I\]
 \end{assumption}
-\begin{assumption}\label{assump:app:concentration}
+\begin{assumption}\label{2405:assump:app:concentration}
   There exist constants $C, \iota > 0$ such that
   \begin{align}
     \sup_{\vec{u} \in \mathbb{S}^{d-1}}\, \norm{\Ea{\Phi(\vec u)\Phi(\vec u)^\top}} &\leq C \\
@@ -23,9 +23,9 @@ We make the following assumptions:
 
 We fix a vector $\vec{v}$ and consider the random process $m_t(\vec{v}) := \langle \vec{u}_t, \vec{v} \rangle$. For any $s \geq 0$, we define the stopping times
 \[ \tau_\theta^+(\vec{v}) = \inf \{t \geq 0 : m_t(\vec{v}) \geq \theta \} \quad \text{and} \quad \tau_\theta^-(\vec{v}) = \inf \{t \geq 0 : m_t(\vec{v}) \leq \theta \}  \]
-\begin{proposition}\label{prop:app:diff_equation}
+\begin{proposition}\label{2405:prop:app:diff_equation}
   Fix an $\alpha > 0$. There exist constants $c(\delta, \alpha), \kappa(\delta) > 0$ such that if
-  \begin{equation}\label{eq:app:bound_gamma_T}
+  \begin{equation}\label{2405:eq:app:bound_gamma_T}
     \gamma \leq c(\delta, \alpha)d^{-1} \quad \text{and} \quad T \leq c(\delta, \alpha) \gamma^{-2} d^{-1},
   \end{equation}
   then, with probability $1 - \delta$, the following holds. The initialization $m_0(\vec{v})$ satisfies
@@ -35,11 +35,11 @@ We fix a vector $\vec{v}$ and consider the random process $m_t(\vec{v}) := \lang
   and:
   \begin{itemize}
     \item if $m_0(v) > 0$, for any $t \leq T \wedge \tau_0^-(\vec{v})$,
-      \begin{equation}\label{eq:app:diff_equation_positive}
+      \begin{equation}\label{2405:eq:app:diff_equation_positive}
         (1 - \alpha) m_0(\vec{v}) + \gamma\sum_{s=0}^{t-1} \langle \Psi^+(\vec{u}_s), \vec{v} \rangle \leq m_t(\vec{v}) \leq (1 + \alpha) m_0(\vec{v}) + \gamma\sum_{s=0}^{t-1} \langle \Psi(\vec{u}_s), \vec{v} \rangle,
       \end{equation}
     \item if $m_0(v) < 0$, for any $t \leq T \wedge \tau_0^+(\vec{v})$,
-      \begin{equation}\label{eq:app:diff_equation_negative}
+      \begin{equation}\label{2405:eq:app:diff_equation_negative}
         (1 + \alpha) m_0(\vec{v}) + \gamma\sum_{s=0}^{t-1} \langle \Psi(\vec{u}_s), \vec{v} \rangle \leq m_t(\vec{v}) \leq (1 - \alpha) m_0(\vec{v}) + \gamma\sum_{s=0}^{t-1} \langle \Psi^-(\vec{u}_s), \vec{v} \rangle,
       \end{equation}
   \end{itemize}
@@ -48,8 +48,8 @@ We fix a vector $\vec{v}$ and consider the random process $m_t(\vec{v}) := \lang
 \end{proposition}
 
 \begin{proof}
-  We assume for simplicity that $m_0(\vec{v}) > 0$; the case where $m_0(\vec{v}) > 0$ is treated identically. From Assumption~\ref{assump:app:initialization}, by a simple Markov inequality, there exists a constant $\kappa(\delta) > 0$ such that
-  \begin{equation} \label{eq:app:large_init_event}
+  We assume for simplicity that $m_0(\vec{v}) > 0$; the case where $m_0(\vec{v}) > 0$ is treated identically. From Assumption~\ref{2405:assump:app:initialization}, by a simple Markov inequality, there exists a constant $\kappa(\delta) > 0$ such that
+  \begin{equation} \label{2405:eq:app:large_init_event}
     \dP\left(|m_0(\vec{v})| \geq \frac{\kappa}{\sqrt{d}}\right) \geq 1 - \frac{\delta}3.
   \end{equation}
   The update equation for $m_t(\vec{v})$  reads
@@ -66,44 +66,44 @@ We fix a vector $\vec{v}$ and consider the random process $m_t(\vec{v}) := \lang
   By recursion, deterministically,
   \[ m_t(\vec{v}) \geq m_0(\vec{v}) + \gamma\sum_{s = 0}^{t-1} \left(\langle \Phi(\vec{u}_s), \vec{v} \rangle - \gamma\norm{\Phi(\vec{u}_s)}^2\langle \vec{u}_s, \vec{v} \rangle\right) - \sum_{s=0}^{t-1}\gamma^3 \left|\langle \Phi(\vec{u}_s), \vec{v} \rangle\right|\norm{\Phi(\vec{u}_s)}^2 \]
 
-  Since Assumption~\ref{assump:app:concentration} implies Assumption B in \cite{arous2021online}, for a small enough choice of $c(\delta, \alpha)$, one has
+  Since Assumption~\ref{2405:assump:app:concentration} implies Assumption B in \cite{arous2021online}, for a small enough choice of $c(\delta, \alpha)$, one has
   \[ \dP\left( \sum_{t=0}^T\gamma^3 \left|\langle \Phi(\vec{u}_t), \vec{v} \rangle\right| \norm{\Phi(\vec{u}_s)}^2 \leq \frac{\alpha\kappa}{2\sqrt{d}} \right) \geq 1 - \frac\delta6. \]
 
   Additionnally, the same assumption implies that
   \[ \operatorname{Var}(\langle \Phi(\vec{u}_s), \vec{v} \rangle)  \leq \Ea{\langle \Phi(\vec{u}_s), \vec{v} \rangle^2} \leq C_1 \quad \text{and} \quad \operatorname{Var}(\gamma\norm{\Phi(\vec{u}_s)}^2) \leq \gamma^2\Ea{\norm{\Phi(\vec{u}_s)}^4} \leq c(\delta)^2 C_1.\]
   We can then apply Doob's martingale inequality: there exists a constant $C(\delta)$ such that with probability at least $1 - \frac\delta6$
   \[ \sup_{t \leq T} \left| \gamma\sum_{s = 0}^t  \left( \langle \Phi(\vec{u}_s), \vec{v} \rangle - \gamma\norm{\Phi(\vec{u}_s)}^2\langle \vec{u}_s, \vec{v} \rangle - \Ea{\langle \Phi(\vec{u}_s), \vec{v} \rangle - \gamma\norm{\Phi(\vec{u}_s)}^2\langle \vec{u}_s, \vec{v} \rangle} \right) \right| \leq C(\delta)\gamma\sqrt{T}. \]
-  The bound~\eqref{eq:app:bound_gamma_T} on $T$ implies that we can choose $c(\delta, \alpha)$ small enough so that
+  The bound~\eqref{2405:eq:app:bound_gamma_T} on $T$ implies that we can choose $c(\delta, \alpha)$ small enough so that
   \[ C(\delta)\gamma\sqrt{T} \leq \frac{C(\delta) \sqrt{c(\delta, \alpha)}}{\sqrt{d}} \leq \frac{\alpha\kappa}{2\sqrt{d}}.\]
-  Combining all those inequalities with a union bound, under the event of Eq.~\eqref{eq:app:large_init_event},
-  \begin{equation}\label{eq:app:diff_equation_lower}
+  Combining all those inequalities with a union bound, under the event of Eq.~\eqref{2405:eq:app:large_init_event},
+  \begin{equation}\label{2405:eq:app:diff_equation_lower}
     \dP\left( m_t(\vec{v}) \geq (1 - \alpha) m_0(\vec{v}) + \gamma\sum_{s=0}^{t-1} \langle \Psi^+(\vec{u}_s), \vec{v} \rangle \quad \forall t < T \wedge \tau_0^-(\vec{v})\right) \geq 1 - \frac\delta3,
   \end{equation}
   having used that $\langle \Psi^+(\vec{u}), \vec{v} \rangle = \Ea{\langle \Phi(\vec{u}), \vec{v} \rangle - \gamma\norm{\Phi(\vec{u})}^2\langle \vec{u}, \vec{v} \rangle}$.
 
-  The upper bound follows similarly:  using this time the fact that for $x > 0$ we have $\frac1{\sqrt{1+x}} \leq 1$, we have under \eqref{eq:app:large_init_event}
-  \begin{equation}\label{eq:app:diff_equation_upper}
+  The upper bound follows similarly:  using this time the fact that for $x > 0$ we have $\frac1{\sqrt{1+x}} \leq 1$, we have under \eqref{2405:eq:app:large_init_event}
+  \begin{equation}\label{2405:eq:app:diff_equation_upper}
     \dP\left( m_t(\vec{v}) \leq (1 + \alpha) m_0(\vec{v}) + \gamma\sum_{s=0}^{t-1} \langle \Psi(\vec{u}_s), \vec{v} \rangle \quad \forall t < T \wedge \tau_0^-(\vec{v})\right) \geq 1 - \frac\delta3.
   \end{equation}
-  A union bound between the events of Eqs.~\eqref{eq:app:large_init_event}, \eqref{eq:app:diff_equation_lower}, \eqref{eq:app:diff_equation_upper} concludes the proof.
+  A union bound between the events of Eqs.~\eqref{2405:eq:app:large_init_event}, \eqref{2405:eq:app:diff_equation_lower}, \eqref{2405:eq:app:diff_equation_upper} concludes the proof.
 \end{proof}
 
 \subsection{Low-dimensional sufficient statistics}
 
-In \cite{arous2021online}, the function $\Psi(\vec{u})$ can be written as $\Psi(\vec{u}) = \phi(\langle \vec{u}, \vec{v} \rangle)\vec{v}$. As a result, the bounds of Proposition~\ref{prop:app:diff_equation} are actually a closed function of $m_t(\vec{v})$. We generalize this phenomenon to a larger class:
+In \cite{arous2021online}, the function $\Psi(\vec{u})$ can be written as $\Psi(\vec{u}) = \phi(\langle \vec{u}, \vec{v} \rangle)\vec{v}$. As a result, the bounds of Proposition~\ref{2405:prop:app:diff_equation} are actually a closed function of $m_t(\vec{v})$. We generalize this phenomenon to a larger class:
 
-\begin{assumption}\label{assump:app:low_dim}
+\begin{assumption}\label{2405:assump:app:low_dim}
   There exists a $q > 0$ such that the function $\Psi$ is $q$-approximately $k$-dimensional, in the sense that there exist a function $\psi: \R^k \to \R^k$ and an orthonormal matrix $W^\star \in \R^{k \times d}$ such that for any $\vec{u}\in\R^d$,
   \[ \norm{ W^\star \Psi(\vec{u}) - \psi(W^\star \vec{u})} \leq \left( \norm{W^\star \vec{u}} \vee \frac1{\sqrt{d}} \right) \cdot q. \]
 \end{assumption}
 
-By an abuse of notation, we shall sometimes view $\psi$ as a function from $V^\star$ to itself, where $V^\star$ is the span of the columns of $W^\star$. However, Assumption~\ref{assump:app:low_dim} ensures that all quantities related to $\psi$ are only depending on the (oftentimes fixed) dimension $k$ instead of $d$.
+By an abuse of notation, we shall sometimes view $\psi$ as a function from $V^\star$ to itself, where $V^\star$ is the span of the columns of $W^\star$. However, Assumption~\ref{2405:assump:app:low_dim} ensures that all quantities related to $\psi$ are only depending on the (oftentimes fixed) dimension $k$ instead of $d$.
 
 It turns out that in this case, we can control accurately the trajectory of $W^\star \vec{u}$, at least when $f$ is not too flat around $\vec{0}$. Let $\Pi^\star = (W^{\star})^{\top}W^\star$ be the projection operator on $V^\star$, and define the stopping time
 \[ \tau_\theta = \min \{t \geq 0 : \norm{\Pi^\star \vec{u}} \geq \theta \}. \]
 
-\begin{proposition}\label{prop:app:low_dim_linear}
-  Assume that Condition \ref{assump:app:low_dim} holds with $q$ small enough, and that $\langle \vec{u}_0, \psi(\vec{0}) \rangle > 0$ (in particular, $\psi(\vec{0}) \neq 0$). For any $\delta, \epsilon > 0$, there exist constants $c(\delta, \epsilon), \eta(\epsilon)$ such that if
+\begin{proposition}\label{2405:prop:app:low_dim_linear}
+  Assume that Condition \ref{2405:assump:app:low_dim} holds with $q$ small enough, and that $\langle \vec{u}_0, \psi(\vec{0}) \rangle > 0$ (in particular, $\psi(\vec{0}) \neq 0$). For any $\delta, \epsilon > 0$, there exist constants $c(\delta, \epsilon), \eta(\epsilon)$ such that if
   \begin{equation}
     \gamma \leq c d^{-1} \quad \text{and} \quad T \leq c  \gamma^{-2} d^{-1},
   \end{equation}
@@ -114,16 +114,16 @@ It turns out that in this case, we can control accurately the trajectory of $W^\
 \end{proposition}
 
 \begin{proof}
-  Let $\vec{v}_1, \dots, \vec{v}_k$ be an orthonormal basis of $V^\star$, with $\vec{v}_1$ aligned with $\psi(\vec{0})$. By applying Proposition~\ref{prop:app:diff_equation} to $\delta' = \frac{\delta}{2k}$ and $\alpha = \frac12$, with probability $1 - \frac\delta2$, for any $i \in [k]$ and $t \leq T \wedge \tau^{\pm}(\vec{v}_i)$, $m_t(\vec{v}_i)$ satisfies the inequality~\eqref{eq:app:diff_equation_positive} or \eqref{eq:app:diff_equation_negative} (depending on the sign of $m_0(\vec{v_i}))$. In particular, for $\vec{v}_1 = \psi(\vec{0})$, since we assumed that the initial sign is positive, we have
-  \begin{equation}\label{eq:app:u_psi_ineq}
+  Let $\vec{v}_1, \dots, \vec{v}_k$ be an orthonormal basis of $V^\star$, with $\vec{v}_1$ aligned with $\psi(\vec{0})$. By applying Proposition~\ref{2405:prop:app:diff_equation} to $\delta' = \frac{\delta}{2k}$ and $\alpha = \frac12$, with probability $1 - \frac\delta2$, for any $i \in [k]$ and $t \leq T \wedge \tau^{\pm}(\vec{v}_i)$, $m_t(\vec{v}_i)$ satisfies the inequality~\eqref{2405:eq:app:diff_equation_positive} or \eqref{2405:eq:app:diff_equation_negative} (depending on the sign of $m_0(\vec{v_i}))$. In particular, for $\vec{v}_1 = \psi(\vec{0})$, since we assumed that the initial sign is positive, we have
+  \begin{equation}\label{2405:eq:app:u_psi_ineq}
     \frac12 \langle \vec{u}_0, \psi(\vec{0}) \rangle + \gamma\sum_{s=0}^{t-1} \langle \Psi^+(\vec{u}_s), \psi(\vec{0}) \rangle \leq \langle \vec{u}_t, \psi(\vec{0}) \rangle \leq  \frac32 \langle \vec{u}_0, \psi(\vec{0}) \rangle + \gamma\sum_{s=0}^{t-1} \langle \Psi(\vec{u}_s), \psi(\vec{0}) \rangle.
   \end{equation}
 
-  Define $C(\delta)$ such that  $\langle \vec{u}_t, \psi(\vec{0}) \rangle \leq C(\delta)d^{-1/2}$ with probability at least $1 - \frac{\delta}{2k}$. By a Taylor expansion, there exists an $\eta(\epsilon) > 0$ such that for any $\vec{v} \in \R^d$ with $\norm{\vec{v}} \leq \eta$, $\norm{\psi(\vec{v}) - \psi(\vec{0})} \leq \epsilon'$, where $\epsilon'$ will be fixed later. With Assumption~\ref{assump:app:low_dim}, this implies that for any $\vec{u} \in \R^d$,
+  Define $C(\delta)$ such that  $\langle \vec{u}_t, \psi(\vec{0}) \rangle \leq C(\delta)d^{-1/2}$ with probability at least $1 - \frac{\delta}{2k}$. By a Taylor expansion, there exists an $\eta(\epsilon) > 0$ such that for any $\vec{v} \in \R^d$ with $\norm{\vec{v}} \leq \eta$, $\norm{\psi(\vec{v}) - \psi(\vec{0})} \leq \epsilon'$, where $\epsilon'$ will be fixed later. With Assumption~\ref{2405:assump:app:low_dim}, this implies that for any $\vec{u} \in \R^d$,
   \[ \norm{\psi(\vec{0})}^2 - (\epsilon' + \eta q) \norm{\psi(\vec{0})} \leq \langle \Psi(\vec{u}), \psi(\vec{0}) \rangle \leq \norm{\psi(\vec{0})}^2 + (\epsilon' + \eta q) \norm{\psi(\vec{0})}. \]
   Further, by Jensen's inequality, $\Ea{\norm{\Phi(\vec{u})}^2} \leq C_1 d$ so by choosing $c(\delta, \epsilon)$ small enough, we can ensure that
   \[ \langle \Psi^+(\vec{u}), \psi(\vec{0}) \rangle \geq \norm{\psi(\vec{0})}^2 - (2\epsilon + \eta q) \norm{\psi(\vec{0})} \]
-  Plugging those estimates in \eqref{eq:app:u_psi_ineq}, we find that for $t \leq T \wedge \tau_0^-(\vec{v_1}) \wedge \tau_\eta$, and $d$ large enough so that
+  Plugging those estimates in \eqref{2405:eq:app:u_psi_ineq}, we find that for $t \leq T \wedge \tau_0^-(\vec{v_1}) \wedge \tau_\eta$, and $d$ large enough so that
   \[ C(\delta)d^{-1/2}\leq \frac{\eta\epsilon}{3} \norm{\psi(\vec{0})}, \]
   we have
   \begin{equation}
@@ -131,7 +131,7 @@ It turns out that in this case, we can control accurately the trajectory of $W^\
   \end{equation}
 
   For small enough $\epsilon$ and $q$, the LHS of the above inequality is always at least $\gamma t \norm{\psi(0)}^2 / 2$, which implies that
-  \begin{equation}\label{eq:app:bound_tau_eta}
+  \begin{equation}\label{2405:eq:app:bound_tau_eta}
     \tau_0^-(\vec{v}_1) \geq \tau_\eta \quad \text{and} \quad T \wedge \tau_\eta \leq \frac{2 \eta}{\gamma \norm{\psi(\vec{0})}}
   \end{equation}
   Choosing $\epsilon'$ and $\eta$ small enough so that
@@ -141,16 +141,16 @@ It turns out that in this case, we can control accurately the trajectory of $W^\
     \left| \langle \vec{u_t} - \gamma t \psi(\vec{0}), \psi(\vec{0}) \rangle \right| \leq \epsilon \eta \norm{\psi(\vec{0})}.
   \end{equation}
 
-  We now move on to the other $\vec{v}_i$. For $i \geq 2$, $\vec{v}_i$ is orthogonal to $\psi(\vec{0})$, and this time Assumption~\ref{assump:app:low_dim} implies
+  We now move on to the other $\vec{v}_i$. For $i \geq 2$, $\vec{v}_i$ is orthogonal to $\psi(\vec{0})$, and this time Assumption~\ref{2405:assump:app:low_dim} implies
   \[ \left| \langle \Psi(\vec{u}), \vec{v}_i \rangle \right| \leq \epsilon + \eta q. \]
   Regardless of the sign of $m_0(\vec{v}_i)$, this implies that for $t \leq T \wedge \tau_\eta$,
   \[ |\langle \vec{u_t}, \vec{v}_i \rangle| \leq \frac32|\langle \vec{u}_0, \vec{v}_i \rangle| + \gamma t (\epsilon' + \eta q) \leq \frac{\eta\epsilon}{2} + \frac{2\eta(2\epsilon' + \eta q)}{\norm{\psi(\vec{0})}}, \]
-  having used the bound~\eqref{eq:app:bound_tau_eta} on $\tau_\eta$ and bounding the initial value as above with probability $1- \frac\delta{2k}$. We can always choose $\eta, \epsilon'$ such that the above bound is at most $\epsilon$; since
+  having used the bound~\eqref{2405:eq:app:bound_tau_eta} on $\tau_\eta$ and bounding the initial value as above with probability $1- \frac\delta{2k}$. We can always choose $\eta, \epsilon'$ such that the above bound is at most $\epsilon$; since
   \[ \norm{\Pi_V \vec{u}_t - \gamma t \psi(\vec{0})}^2 = \frac{\langle \vec{u_t} - \gamma t \psi(\vec{0}), \psi(\vec{0}) \rangle^2}{\norm{\psi(\vec{0})}^2} + \sum_{i=2}^k \langle \vec{u_t}, \vec{v}_i \rangle^2 \leq k\epsilon^2, \]
   this concludes the proof.
 \end{proof}
 
-\begin{proposition}\label{prop:app:low_dim_exp}
+\begin{proposition}\label{2405:prop:app:low_dim_exp}
   Assume that $\psi(\vec{0}) = \vec{0}$, and $H_\psi := d\psi(\vec{0}) \neq 0$ is symmetric. Let $\bar\lambda$ be the largest eigenvalue of $H_\psi$, and assume that $\bar\lambda > 0$.
   For any $\delta, \epsilon > 0$, there exist constants $c(\delta, \epsilon), \eta(\epsilon), c'(\delta, \epsilon), C(\delta, \epsilon)$ such that if
   \begin{equation}
@@ -172,7 +172,7 @@ It turns out that in this case, we can control accurately the trajectory of $W^\
   \[ \norm{\psi(\vec{v}) - H_\psi \vec{v}} \leq \epsilon \norm{\vec{v}}. \]
   In particular, for any $i \in [k]$ and any vector $\vec{u}$, we have for small enough choice of $c(\delta, \epsilon)$
   \[ \langle \Psi^+(\vec{u}), \vec{v}_i \rangle \geq \lambda_i \langle \vec{v}_i, \vec{u} \rangle - (2\epsilon + q)\norm{\Pi^\star\vec{u}} \quad \langle \Psi(\vec{u}), \vec{v}_i \rangle \leq \lambda_i \langle \vec{v}_i, \vec{u} \rangle + (\epsilon + q)\norm{\Pi^\star\vec{u}} \]
-  Applying Proposition~\ref{prop:app:diff_equation} to $\alpha = \epsilon$, and assuming that $m_0(\vec{v}_i) > 0$, we find that on an event with probability $1 - \delta/(2k)$, for $t \leq T \wedge \tau_0^+(\vec{v_i}) \wedge \tau_\eta$,
+  Applying Proposition~\ref{2405:prop:app:diff_equation} to $\alpha = \epsilon$, and assuming that $m_0(\vec{v}_i) > 0$, we find that on an event with probability $1 - \delta/(2k)$, for $t \leq T \wedge \tau_0^+(\vec{v_i}) \wedge \tau_\eta$,
   \begin{align*}
      \langle \vec{v}_i, \vec{u}_t \rangle &\geq (1 - \epsilon)m_0(\vec{v}_i) + \gamma \sum_{s=0}^{t-1} \left(\lambda_i\langle \vec{v}_i, \vec{u}_s \rangle  - (2\epsilon + q)\norm{\Pi^\star\vec{u}_s}\right) \\ 
      \langle \vec{v}_i, \vec{u}_t \rangle &\leq (1 + \epsilon)m_0(\vec{v}_i) + \gamma \sum_{s=0}^{t-1} \left(\lambda_i\langle \vec{v}_i, \vec{u}_s \rangle + (\epsilon + q)\norm{\Pi^\star\vec{u}_s}\right)
@@ -180,22 +180,22 @@ It turns out that in this case, we can control accurately the trajectory of $W^\
   The same argument when $m_0(\vec{v}_i) < 0$, we obtain
   that with probability $1 - \delta/2$, for any $t \leq T \wedge \tau_\eta$ and $i \in [k]$:
   \begin{align}
-    |\langle \vec{v}_i, \vec{u}_t \rangle| &\geq (1 - \epsilon)|\langle \vec{v}_i, \vec{u}_0 \rangle| + \gamma \sum_{s=0}^{t-1} \left(\lambda_i|\langle \vec{v}_i, \vec{u}_s \rangle|  - (2\epsilon + q)\norm{\Pi^\star\vec{u}_s}\right) \label{eq:app:lower_bound_exp}\\
-    |\langle \vec{v}_i, \vec{u}_t \rangle| &\leq (1 + \epsilon)|\langle \vec{v}_i, \vec{u}_0 \rangle| + \gamma \sum_{s=0}^{t-1} \left(\lambda_i|\langle \vec{v}_i, \vec{u}_s \rangle| + (\epsilon + q)\norm{\Pi^\star\vec{u}_s}\right)\label{eq:app:upper_bound_exp}
+    |\langle \vec{v}_i, \vec{u}_t \rangle| &\geq (1 - \epsilon)|\langle \vec{v}_i, \vec{u}_0 \rangle| + \gamma \sum_{s=0}^{t-1} \left(\lambda_i|\langle \vec{v}_i, \vec{u}_s \rangle|  - (2\epsilon + q)\norm{\Pi^\star\vec{u}_s}\right) \label{2405:eq:app:lower_bound_exp}\\
+    |\langle \vec{v}_i, \vec{u}_t \rangle| &\leq (1 + \epsilon)|\langle \vec{v}_i, \vec{u}_0 \rangle| + \gamma \sum_{s=0}^{t-1} \left(\lambda_i|\langle \vec{v}_i, \vec{u}_s \rangle| + (\epsilon + q)\norm{\Pi^\star\vec{u}_s}\right)\label{2405:eq:app:upper_bound_exp}
   \end{align}
-Define $\bar\Pi^\star$ the projection on the eigenspace associated to $\bar\lambda$, and $\underline\Pi^\star$ its orthogonal projection. Summing the upper bound of \eqref{eq:app:upper_bound_exp} on all $v_i$ with $\lambda_i \leq \underline\lambda$,
+Define $\bar\Pi^\star$ the projection on the eigenspace associated to $\bar\lambda$, and $\underline\Pi^\star$ its orthogonal projection. Summing the upper bound of \eqref{2405:eq:app:upper_bound_exp} on all $v_i$ with $\lambda_i \leq \underline\lambda$,
 \[ \norm{\underline\Pi^\star \vec{u}_t}_1 \leq (1 + \epsilon)\norm{\underline\Pi^\star \vec{u}_0}_1 + \gamma (\underline\lambda + k(\epsilon + q)) \sum_{s=0}^{t-1} \norm{\Pi^\star \vec{u}_s}_1, \]
   where the $\ell^1$ norm $\norm{\:\cdot\:}_1$ in $V^\star$ is computed w.r.t the basis $(\vec{v}_1, \dots, \vec{v}_k)$, and we used the norm bound $\norm{\Pi^\star \vec{u}_s} \leq \norm{\Pi^\star \vec{u}_s}_1$.
 
   Call $\cP(t_0)$ the following condition:
-  \begin{equation}\label{eq:app:rec_condition}
+  \begin{equation}\label{2405:eq:app:rec_condition}
       \norm{\underline\Pi^\star \vec{u}_t}_1 \leq C\norm{\bar\Pi^\star \vec{u}_t}_1 \quad \text{for all} \  t < t_0, ,
   \end{equation} where $C$ will be fixed later, and assume that $\cP(t_0)$ holds for some $t_0 > 0$.
   Using the discrete Grönwall inequality, the following holds: for any $t \leq T \wedge \tau_\eta \wedge t_0$,
-  \begin{equation}\label{eq:app:bad_upper_bound}
+  \begin{equation}\label{2405:eq:app:bad_upper_bound}
       \norm{\underline\Pi^\star \vec{u}_t}_1 \leq (1 + \epsilon)\norm{\underline\Pi^\star \vec{u}_0}_1 e^{\gamma (\underline\lambda + (1+C)k(\epsilon + q))t}.
   \end{equation} 
-   We now sum the lower bound of \eqref{eq:app:lower_bound_exp} on all $v_i$ with $\lambda_i = \bar\lambda$, to obtain
+   We now sum the lower bound of \eqref{2405:eq:app:lower_bound_exp} on all $v_i$ with $\lambda_i = \bar\lambda$, to obtain
     \[ \norm{\bar\Pi^\star\vec{u}_t}_1 \geq (1 - \epsilon) \norm{\bar\Pi^\star \vec{u}_0}_1 + \gamma \sum_{s=0}^{t-1} (\bar\lambda - k(2\epsilon + q)) \norm{\bar\Pi^\star \vec{u}_s}_1 - k(2\epsilon + q)\norm{\underline\Pi^\star \vec{u}_s}_1. \]
       above bound implies that for all $t \leq t_0$,
      \[ \norm{\bar\Pi^\star\vec{u}_t}_1 \geq (1 - \epsilon) \norm{\bar\Pi^\star \vec{u}_0}_1 + \gamma \sum_{s=0}^{t-1} (\bar\lambda - (1+C)k(2\epsilon + q)) \norm{\bar\Pi^\star \vec{u}_s}_1. \]
@@ -203,10 +203,10 @@ Define $\bar\Pi^\star$ the projection on the eigenspace associated to $\bar\lamb
      \begin{align} 
         \norm{\bar\Pi^\star\vec{u}_t}_1 &\geq (1 - \epsilon) \norm{\bar\Pi^\star \vec{u}_0}_1 \left(1 +  \gamma(\bar\lambda - (1+C)k(2\epsilon + q)) \right)^t \nonumber\\ 
         &\geq (1 - \epsilon) \norm{\bar\Pi^\star \vec{u}_0}_1 \exp\left(\gamma(\bar\lambda - (1+C)k(2\epsilon + q))t - O(\gamma^2 T) \right) \nonumber\\
-        &\geq (1 - 2\epsilon) \norm{\bar\Pi^\star \vec{u}_0}_1 \exp\left(\gamma(\bar\lambda - (1+C)k(2\epsilon + q))t\right), \label{eq:app:good_lower_bound}
+        &\geq (1 - 2\epsilon) \norm{\bar\Pi^\star \vec{u}_0}_1 \exp\left(\gamma(\bar\lambda - (1+C)k(2\epsilon + q))t\right), \label{2405:eq:app:good_lower_bound}
      \end{align}
-     where the last inequality holds for large enough $d$ because of the bound \eqref{eq:app:bound_gamma_T}.
-     Now, fix a constant $r(\delta)$ such that with probability $1 - \delta/2$, $\norm{\bar\Pi^\star \vec{u}_0}_1 \leq r(\delta)\norm{\underline\Pi^\star \vec{u}_0}_1$. Then condition $\cP(1)$ holds as long as $C > r(\delta)$, and $\cP(t_0)$ implies $\cP(t_0+1)$ whenever the lower bound of eq. \eqref{eq:app:good_lower_bound} is higher than the upper bound of eq. \eqref{eq:app:bad_upper_bound} for $t \leq t_0$. In particular, this holds whenever
+     where the last inequality holds for large enough $d$ because of the bound \eqref{2405:eq:app:bound_gamma_T}.
+     Now, fix a constant $r(\delta)$ such that with probability $1 - \delta/2$, $\norm{\bar\Pi^\star \vec{u}_0}_1 \leq r(\delta)\norm{\underline\Pi^\star \vec{u}_0}_1$. Then condition $\cP(1)$ holds as long as $C > r(\delta)$, and $\cP(t_0)$ implies $\cP(t_0+1)$ whenever the lower bound of eq. \eqref{2405:eq:app:good_lower_bound} is higher than the upper bound of eq. \eqref{2405:eq:app:bad_upper_bound} for $t \leq t_0$. In particular, this holds whenever
      \[ C \geq \frac{1 + \epsilon}{1 - 2\epsilon}r(\delta) \quad \text{and} \quad \bar\lambda - (1+C)k(2\epsilon + q) \geq  \underline\lambda + (1+C)k(\epsilon + q).\]
      The above condition can be satisfied if and only if
      \[ \frac{1 + \epsilon}{1 - 2\epsilon}r(\delta) < \frac{\bar\lambda - \underline\lambda}{3\epsilon + 2q} - 1, \]
@@ -215,9 +215,9 @@ Define $\bar\Pi^\star$ the projection on the eigenspace associated to $\bar\lamb
 
 \subsection{Bounding the hitting times}
 
-It finally remains to show how the bounds of Propositions \ref{prop:app:low_dim_linear} and \ref{prop:app:low_dim_exp} allow us to bound the hitting times $\tau_\eta$. We summarize those in the following proposition:
-\begin{proposition}\label{prop:app:hitting_times}
-    Let $\vec{u}$ be a process that satisfies Assumptions \ref{assump:app:initialization}-\ref{assump:app:low_dim} for low enough $q$. Then for any $\delta, \epsilon > 0$, there exist constants $\gamma_0(\delta, \epsilon), \eta(\epsilon), \kappa(\delta), K(\delta), C(\delta, \epsilon)$ such that, with probability $1 - \delta$:
+It finally remains to show how the bounds of Propositions \ref{2405:prop:app:low_dim_linear} and \ref{2405:prop:app:low_dim_exp} allow us to bound the hitting times $\tau_\eta$. We summarize those in the following proposition:
+\begin{proposition}\label{2405:prop:app:hitting_times}
+    Let $\vec{u}$ be a process that satisfies Assumptions \ref{2405:assump:app:initialization}-\ref{2405:assump:app:low_dim} for low enough $q$. Then for any $\delta, \epsilon > 0$, there exist constants $\gamma_0(\delta, \epsilon), \eta(\epsilon), \kappa(\delta), K(\delta), C(\delta, \epsilon)$ such that, with probability $1 - \delta$:
     \begin{enumerate}
         \item if $\psi(\vec{0}) \neq \vec{0}$ and $\langle \vec{u}_0, \psi(\vec{0}) \rangle > 0$, letting $\gamma = \gamma_0 d^{-1}$,
         \[ \frac{\eta(1 - \sqrt{k}\epsilon)}{\gamma \norm{\psi(\vec{0})}} \leq \tau_\eta \leq \frac{\eta(1 + \sqrt{k}\epsilon)}{\gamma \norm{\psi(\vec{0})}} \]
@@ -235,11 +235,11 @@ It finally remains to show how the bounds of Propositions \ref{prop:app:low_dim_
 \end{proposition}
 
 \begin{proof}
-    The proof for the linear case is almost immediate. From Proposition \ref{prop:app:low_dim_linear}, with probability $1 - \delta$, we have for all $t \leq T \wedge \tau_\eta$
+    The proof for the linear case is almost immediate. From Proposition \ref{2405:prop:app:low_dim_linear}, with probability $1 - \delta$, we have for all $t \leq T \wedge \tau_\eta$
     \[ \gamma t \norm{\psi(\vec{0})} - \sqrt{k}\eta\epsilon \leq \norm{\Pi^\star\vec{u}_t} \leq \gamma t \norm{\psi(\vec{0})} + \sqrt{k}\eta\epsilon \]
     Define
     \[ \bar t_\epsilon = \frac{\eta(1 + \sqrt{k}\epsilon)}{\gamma \norm{\psi(\vec{0})}} \quad \text{and} \quad \underline t_\epsilon = \frac{\eta(1 - \sqrt{k}\epsilon)}{\gamma \norm{\psi(\vec{0})}}. \]
-    For $t \leq \underline t_\epsilon$, the upper bound on $\norm{\Pi^\star \vec{u}_t}$ is lower than $\eta$, which directly means that $\tau_\eta \geq \underline t_\epsilon$. The lower bound is higher than $\eta$ for $t = \bar t_\epsilon$, which implies that $\tau_\eta \leq \bar t_\epsilon$ as long as $T \geq \bar t_\epsilon$. Such a $T$ satisfies the bound \eqref{eq:app:bound_gamma_T} as long as
+    For $t \leq \underline t_\epsilon$, the upper bound on $\norm{\Pi^\star \vec{u}_t}$ is lower than $\eta$, which directly means that $\tau_\eta \geq \underline t_\epsilon$. The lower bound is higher than $\eta$ for $t = \bar t_\epsilon$, which implies that $\tau_\eta \leq \bar t_\epsilon$ as long as $T \geq \bar t_\epsilon$. Such a $T$ satisfies the bound \eqref{2405:eq:app:bound_gamma_T} as long as
     \[ \frac{\eta(1 + \sqrt{k}\epsilon)}{\gamma \norm{\psi(\vec{0})}} \leq c(\delta, \epsilon) \gamma^{-2}d^{-1}, \]
     which is equivalent to
     \[ \gamma \leq \frac{c(\delta,\epsilon)\norm{\psi(\vec{0})}}{\eta(1 + \sqrt{k}\epsilon)}\, d^{-1},\]
@@ -248,7 +248,7 @@ It finally remains to show how the bounds of Propositions \ref{prop:app:low_dim_
     to conclude that
     \[ \norm{\frac{\Pi^\star \vec{u}_{\tau_\eta}}{\eta} - \frac{\psi(\vec{0})}{\norm{\psi(\vec{0})}}} \leq 2\sqrt{k}\epsilon. \]
 
-    We now move on to the quadratic case. By Proposition \ref{prop:app:low_dim_exp} and the same reasoning as in the proof of \eqref{eq:app:bad_upper_bound}, we have with probability $1 - \delta$, for all $t \leq T \wedge \tau_\eta$,
+    We now move on to the quadratic case. By Proposition \ref{2405:prop:app:low_dim_exp} and the same reasoning as in the proof of \eqref{2405:eq:app:bad_upper_bound}, we have with probability $1 - \delta$, for all $t \leq T \wedge \tau_\eta$,
     \[ c' \norm{\Pi^\star \vec{u}_0} e^{\gamma(\bar\lambda - Ck(\epsilon + q))t} \leq \norm{\Pi^\star \vec{u}_t} \leq (1 + \epsilon)\norm{\Pi^\star \vec{u}_0} e^{\gamma(\bar\lambda + k(\epsilon + q))t} \]
     Upon redefining $\delta$, we can assume that the ``good'' event implies that
     \[ \frac{\kappa(\delta)}{\sqrt{d}} \leq \norm{\Pi^\star \vec{u}_0} \leq \frac{K(\delta)}{\sqrt{d}} \]
@@ -260,32 +260,32 @@ It finally remains to show how the bounds of Propositions \ref{prop:app:low_dim_
     \[ C'(\delta, \epsilon) \gamma^{-1} \log(d) \leq c\gamma^{-2}d^{-1} \Leftrightarrow \gamma \leq c(C' d \log(d))^{-1}.\]
     This condition can again be ensured by decreasing $\gamma_0(\delta, \epsilon)$ as needed. Finally, let 
     \[ \beta = \frac{\tilde\lambda}{\bar\lambda - Ck(\epsilon+q)}, \]
-    where $\tilde \lambda$ is the one of Proposition~\ref{prop:app:low_dim_exp}. Then $\beta < 1$ and we have at $t = \tau_\eta$
+    where $\tilde \lambda$ is the one of Proposition~\ref{2405:prop:app:low_dim_exp}. Then $\beta < 1$ and we have at $t = \tau_\eta$
     \[ \norm{\vec{u}_{\tau_\eta} - \bar\Pi^\star \vec{u}_{\tau_\eta}} \leq \frac{K}{\sqrt{d}} \exp\left(\beta \log\left(\frac{\eta\sqrt{d}}{\kappa c'}\right)\right) \leq C''(\delta, \epsilon) d^{\frac{1 - \beta}{2}}. \]
 \end{proof}
 
 \section{Proof of the Main Results}
-\label{sec:app:proofs}
+\label{2405:sec:app:proofs}
 
-\subsection{Proof of Theorem \ref{thm:single_index_recovery}}
+\subsection{Proof of Theorem \ref{2405:thm:single_index_recovery}}
 
-We formalize here the proof sketch of Theorem \ref{thm:single_index_recovery}.  We track the dynamics of $\vec{w}_t$ through the following sufficient statistic:
+We formalize here the proof sketch of Theorem \ref{2405:thm:single_index_recovery}.  We track the dynamics of $\vec{w}_t$ through the following sufficient statistic:
 \begin{equation}
   m_t := \langle \vec{w}_t, \vec{w}^\star \rangle.
 \end{equation}
-The dynamics of $m_t$ fall under the framework of Section~\ref{sec:app:framework}, by letting
+The dynamics of $m_t$ fall under the framework of Section~\ref{2405:sec:app:framework}, by letting
 \[ \Phi(\vec{w}) = -\nabla_{\vec w}^\bot\cL\left(f(\vec z; \tilde{\vec{w}}(\rho), a_0),  y \right). \]
 Indeed, for the spherical gradient,
 \begin{align*}
   \nabla_{\vec{w}}^\bot \cL(f(\vec{z}; \vec{w}, a_0), y) = a_0 y \sigma'(\langle \vec{w}, z \rangle) \cdot \left(\vec{z} - \langle \vec{z}, \vec{w} \rangle \vec{w} \right).
 \end{align*},
 hence plugging in the expression for $\tilde{\vec{w}}(\rho)$
-\begin{equation}\label{eq:app:phi_expression}
+\begin{equation}\label{2405:eq:app:phi_expression}
     \Phi(\vec{w}) = h^\star(\langle \vec{w}^\star, \vec{z} \rangle) \sigma'\left(\langle \vec{w}, \vec{z} \rangle + \rho h^\star(\langle \vec{w}^\star, \vec{z} \rangle) \sigma'(\langle \vec{w}, \vec{z} \rangle) \cdot \norm{\vec{z}}^2\right) \left(\vec{z} - \langle \vec{z}, \vec{w} \rangle \vec{w} \right).
 \end{equation} 
-Assumptions  \ref{assump:poly_growth} and \ref{assump:init} on $\sigma$ and $h^\star$ then directly imply Assumptions \ref{assump:app:initialization} and \ref{assump:app:concentration} in the Appendix. As a result, we only need to study the quantity $\Psi(\vec{w}) = \Ea{\Phi(\vec{w})}$.
+Assumptions  \ref{2405:assump:poly_growth} and \ref{2405:assump:init} on $\sigma$ and $h^\star$ then directly imply Assumptions \ref{2405:assump:app:initialization} and \ref{2405:assump:app:concentration} in the Appendix. As a result, we only need to study the quantity $\Psi(\vec{w}) = \Ea{\Phi(\vec{w})}$.
 We show the following:
-\begin{lemma}\label{lem:app:psi_low_rank}
+\begin{lemma}\label{2405:lem:app:psi_low_rank}
     The function $\Psi$ is approximately one-dimensional: there exists a function $\phi$ such that for any $\vec{w} \in \mathbb{S}^{d-1}$, we have
     \[ |\langle \vec{w}^\star, \Psi(\vec{w}) \rangle- a_0 \phi(\vec{w}, \vec{w}^\star)| \leq \frac{C}d \]
 \end{lemma}
@@ -298,7 +298,7 @@ Define the following quantities:
     \begin{pmatrix}
       1 & m \\
       m & 1
-  \end{pmatrix} \right) \  \text{and} \  x^\bot = x^\star - m x.\label{eq:app:def_phi}
+  \end{pmatrix} \right) \  \text{and} \  x^\bot = x^\star - m x.\label{2405:eq:app:def_phi}
 \end{align}
 
   For simplicity, we let $u = \langle \vec{w}, \vec{z} \rangle + a_0\rho_0 h^\star(\langle \vec{w}^\star, \vec{z} \rangle)$. Doing a Taylor expansion of $\sigma'$ in the second order, we have
@@ -318,7 +318,7 @@ Define the following quantities:
   \begin{align*}
     (2) &\leq \rho^2 \Ea{R(u)^8}^{\frac18}\Ea{h^\star(x^\star)^8}^{\frac18}\Ea{\sigma'(x)^8}^{\frac18}\Ea{\langle \vec{w}^\star, \vec{z}^\bot \rangle^8}^{\frac18}\Ea{\left(\norm{\vec{z}}^2 - d \right)^4}^{\frac12}
   \end{align*}
-  Since $\sigma$ is three times differentiable almost everywhere, and from the polynomial bounds of Assumption~\ref{assump:derivatives}, the first four expectations are bounded by an absolute constant. The last term is the centered fourth moment of a $\chi^2(d)$ distribution, which is equal to $12d(d+4)$. As a result, using that $\rho^2 = O(d^{-2})$,
+  Since $\sigma$ is three times differentiable almost everywhere, and from the polynomial bounds of Assumption~\ref{2405:assump:derivatives}, the first four expectations are bounded by an absolute constant. The last term is the centered fourth moment of a $\chi^2(d)$ distribution, which is equal to $12d(d+4)$. As a result, using that $\rho^2 = O(d^{-2})$,
   \[ (2) \leq Cd^{-1}. \]
   For the first term, we let $\vec{z} = \vec{z}_\parallel + \vec{z}'$, where $\vec{z}_\parallel$ is the projection of $\vec{z}$ on the span of $\vec{w}$ and $\vec{w}^\star$. We can then write
   \begin{align*} 
@@ -335,8 +335,8 @@ Define the following quantities:
   where we used that $\vec{z}'$ is a $(d-2)$-dimensional Gaussian variable. This concludes the proof.
 \end{proof}
 
-Lemma \ref{lem:app:psi_low_rank} implies that Assumption~\ref{assump:app:low_dim} holds for $\Psi$ and any choice of $q$, as long as $d$ is large enough.  As a result, the proof of Theorem~\ref{thm:single_index_recovery} hinges on the following facts about $\phi$:
-\begin{proposition}\label{prop:app:phi_phip_nnz}
+Lemma \ref{2405:lem:app:psi_low_rank} implies that Assumption~\ref{2405:assump:app:low_dim} holds for $\Psi$ and any choice of $q$, as long as $d$ is large enough.  As a result, the proof of Theorem~\ref{2405:thm:single_index_recovery} hinges on the following facts about $\phi$:
+\begin{proposition}\label{2405:prop:app:phi_phip_nnz}
   For almost any choice of $\rho_0$ (w.r.t to the Lebesgue measure),
   \begin{itemize}
     \item if $\ell_p^\star = 1$, then $\phi(0) \neq 0$;
@@ -344,20 +344,20 @@ Lemma \ref{lem:app:psi_low_rank} implies that Assumption~\ref{assump:app:low_dim
   \end{itemize}
 \end{proposition}
 
-\begin{proof}[of Theorem \ref{thm:single_index_recovery}]
-    Our goal is to apply Proposition~\ref{prop:app:hitting_times} to the function $\phi$. If $\ell_p^\star = 1$, then $\phi(0) \neq 0$ by the previous lemma, and with a uniform initialization of $\vec{w}^\star$ we have $m_0 \phi(0) > 0$ with probability $1/2$.  Combining this with the $(1- \delta)$ probability event of Proposition \ref{prop:app:hitting_times} for small enough $\epsilon$, with probability $1 - \delta$, we have $t_\eta \leq C(\delta)d^{-1}$ with probability $1/2 - \delta$.
-    We now move to the proof of the case where $\ell_p^\star =1$. In this case, Proposition~\ref{prop:app:hitting_times} implies the desired result as soon as $\phi'(0) > 0$ (which corresponds in the $k = 1$ setting to the only eigenvalue of $d\phi(0)$ being positive). Since the Lebesgue measure is invariant w.r.t multiplication by $\pm 1$, the factor $a_0 \rho_0$ in the definition of $\phi'(0)$ has the same distribution as $\rho_0$, hence we can write $\phi'(0) = a'_0 |\phi'(0)|$ where $a'_0$ is also uniform in $\{-1, 1\}$. The event $\phi'(0) > 0$ therefore also has probability $1/2$, and we conclude as before.
+\begin{proof}[of Theorem \ref{2405:thm:single_index_recovery}]
+    Our goal is to apply Proposition~\ref{2405:prop:app:hitting_times} to the function $\phi$. If $\ell_p^\star = 1$, then $\phi(0) \neq 0$ by the previous lemma, and with a uniform initialization of $\vec{w}^\star$ we have $m_0 \phi(0) > 0$ with probability $1/2$.  Combining this with the $(1- \delta)$ probability event of Proposition \ref{2405:prop:app:hitting_times} for small enough $\epsilon$, with probability $1 - \delta$, we have $t_\eta \leq C(\delta)d^{-1}$ with probability $1/2 - \delta$.
+    We now move to the proof of the case where $\ell_p^\star =1$. In this case, Proposition~\ref{2405:prop:app:hitting_times} implies the desired result as soon as $\phi'(0) > 0$ (which corresponds in the $k = 1$ setting to the only eigenvalue of $d\phi(0)$ being positive). Since the Lebesgue measure is invariant w.r.t multiplication by $\pm 1$, the factor $a_0 \rho_0$ in the definition of $\phi'(0)$ has the same distribution as $\rho_0$, hence we can write $\phi'(0) = a'_0 |\phi'(0)|$ where $a'_0$ is also uniform in $\{-1, 1\}$. The event $\phi'(0) > 0$ therefore also has probability $1/2$, and we conclude as before.
 \end{proof}
 
-\subsubsection*{Analysis of $\phi$: proof of Proposition~\ref{prop:app:phi_phip_nnz}}
+\subsubsection*{Analysis of $\phi$: proof of Proposition~\ref{2405:prop:app:phi_phip_nnz}}
 
 The main ingredient here is to write $\phi(m) = \phi(m; \rho_0)$ and differentiate w.r.t $\rho_0$. For simplicity, we take $a_0 = 1$ in the definition of $\phi$. We show the following:
-\begin{lemma}\label{lem:app:phi_diff}
-  Under Assumption \ref{assump:derivatives}, the function $\phi(m; \rho_0)$ is analytic in $\rho_0$. Further, we have
+\begin{lemma}\label{2405:lem:app:phi_diff}
+  Under Assumption \ref{2405:assump:derivatives}, the function $\phi(m; \rho_0)$ is analytic in $\rho_0$. Further, we have
   \begin{equation}
     \left.\frac{\partial^k \phi(m; \rho_0)}{\partial \rho_0^k}\right|_{\rho_0 = 0} = \Ea{h^\star(x^\star)^{k+1} x^\bot \sigma^{(k+1)}(x) \sigma'(x)^k}
   \end{equation}
-  where $x, x^\star$ follow the same distribution as in eq.~\eqref{eq:app:def_phi}.
+  where $x, x^\star$ follow the same distribution as in eq.~\eqref{2405:eq:app:def_phi}.
 \end{lemma}
 
 \begin{proof}
@@ -366,7 +366,7 @@ The main ingredient here is to write $\phi(m) = \phi(m; \rho_0)$ and differentia
   the result follows by induction and taking $\rho_0 = 0$ at the end.
 \end{proof}
 
-We define the following quantities related to Assumption~\ref{assump:init}:
+We define the following quantities related to Assumption~\ref{2405:assump:init}:
 \begin{align*}
   u_{0}^{(k)} &= \Ea{\sigma^{(k)}(x) \sigma'(x)^{k-1}}  &u_{1}^{(k)} &= \Ea{x \sigma^{(k)}(x) \sigma'(x)^{k-1}} \\
   v_{0}^{(k)} &= \Ea{x^\star h^\star(x^\star)^k} & v_{1}^{(k)} &= \Ea{[(x^\star)^2-1] h^\star(x^\star)^k} \\
@@ -378,39 +378,39 @@ Then, by Proposition 11.37 from \cite{odonnell2014analysis}, and using $x^\bot =
   &= \left(u_{0}^{(k)}v_{0}^{(k)} + u_{1}^{(k)}(v_{1}^{(k)} + \Delta^{(k)})\cdot m + o(m)\right) - m \left(u_1^{(k)} \Delta^{(k)} + o(1)\right) \\
   &= u_{0}^{(k)}v_{0}^{(k)} + u_{1}^{(k)}v_{1}^{(k)}\cdot m + o(m)
 \end{align*}
-This allows us to show Proposition \ref{prop:app:phi_phip_nnz}:
+This allows us to show Proposition \ref{2405:prop:app:phi_phip_nnz}:
 \begin{proof}
   Assume first that $\ell_p^\star = 1$. Then $\phi(0; \rho_0)$ is an analytic function of $\rho_0$ with
   \[ \left.\frac{\partial^k \phi(0; \rho_0)}{\partial \rho_0^k}\right|_{\rho_0 = 0} = u_{0}^{(k)}v_{0}^{(k)}. \]
-  Since $\ell_p^\star = 1$, there exists a $k \in \mathbb{N}$ such that $v_{0}^{(k)} \neq 0$, and by Assumption~\ref{assump:derivatives} the coefficient $u_{0}^{(k)}$ is nonzero for every $k$. As a result, $\phi(0;\rho_0)$ is an analytic and non-identically zero function of $\rho_0$, so it is non-zero for almost every choice of $\rho_0$, as requested. The case $k_p = 2$ is done in a similar way, noting that this time
+  Since $\ell_p^\star = 1$, there exists a $k \in \mathbb{N}$ such that $v_{0}^{(k)} \neq 0$, and by Assumption~\ref{2405:assump:derivatives} the coefficient $u_{0}^{(k)}$ is nonzero for every $k$. As a result, $\phi(0;\rho_0)$ is an analytic and non-identically zero function of $\rho_0$, so it is non-zero for almost every choice of $\rho_0$, as requested. The case $k_p = 2$ is done in a similar way, noting that this time
   \[ \left.\frac{\partial^k \phi'(0; \rho_0)}{\partial \rho_0^k}\right|_{\rho_0 = 0} = u_{1}^{(k)}v_{1}^{(k)}. \]
 \end{proof}
 
-\subsection{Proof of Theorem \ref{thm:multi_index_recovery}}
+\subsection{Proof of Theorem \ref{2405:thm:multi_index_recovery}}
 
-The proof of Theorem~\ref{thm:multi_index_recovery} follows in the same way as the one of Theorem~\ref{thm:single_index_recovery}. Recall the definition of $\Phi$ in eq.~\eqref{eq:app:phi_expression}, and define
+The proof of Theorem~\ref{2405:thm:multi_index_recovery} follows in the same way as the one of Theorem~\ref{2405:thm:single_index_recovery}. Recall the definition of $\Phi$ in eq.~\eqref{2405:eq:app:phi_expression}, and define
 \begin{align}
     &\Xi(z, \vec{z}^\star, \vec{z}^\bot) = h^\star(\vec{z}^\star) \sigma'(z + a_0\rho_0\sigma'(z)h^\star(\vec{z}^\star)) \vec{z}^\bot \\
     &\psi(\vec{p}) = \Ea{\Xi(z, \vec{z}^\star, \vec{z}^\bot)} \  \text{for} \  \dbinom{z}{\vec{z}^\star} \sim  \cN\left( \vec{0},
     \begin{pmatrix}
       1 & \vec{p} \\
       \vec{p} & I_k
-  \end{pmatrix} \right) \  \text{and} \  \vec{z}^\bot = \vec{z}^\star - z\vec{p}.\label{eq:app:def_psi}
+  \end{pmatrix} \right) \  \text{and} \  \vec{z}^\bot = \vec{z}^\star - z\vec{p}.\label{2405:eq:app:def_psi}
 \end{align}
-Again, the variables $(z, \vec{z}^\star)$ correspond to $\langle \vec{w}, \vec{z} \rangle, W^\star\vec{z}$, and the vector $\vec{p}$ to $W^\star\vec{w}$. As before, the only difference between $\Ea{\Phi(\vec{w})}$ and $\psi(W^\star \vec{w})$ lies in replacing $\norm{\vec{z}}$ with $d$, and the proof of Lemma~\ref{lem:app:psi_low_rank} implies the following: for any $\vec{w}\in \mathbb{S}^{d-1}$,
+Again, the variables $(z, \vec{z}^\star)$ correspond to $\langle \vec{w}, \vec{z} \rangle, W^\star\vec{z}$, and the vector $\vec{p}$ to $W^\star\vec{w}$. As before, the only difference between $\Ea{\Phi(\vec{w})}$ and $\psi(W^\star \vec{w})$ lies in replacing $\norm{\vec{z}}$ with $d$, and the proof of Lemma~\ref{2405:lem:app:psi_low_rank} implies the following: for any $\vec{w}\in \mathbb{S}^{d-1}$,
 \[ \norm{W^\star\Psi(\vec{w}) - \psi(W^\star \vec{w})} \leq \frac Cd. \]
 As a result, the function $\Psi$ is approximately $k$-dimensional for any choice of $q$ as $d \to \infty$. 
 
 We can view the vector $\psi(\vec{p})$ as a random variable depending on the choice of $a_0, \rho_0$. Since $a_0$ is a sign, we will only consider the dependency of $\psi$ in $\rho_0$. As before, let $u_i^{(k)}$ be the $i$-th Hermite coefficient of $z \mapsto \sigma^{(k+1)}(z) \sigma'(z)^k$, and $C_i^{(k)}$ the $i$-th Hermite tensor of $h^\star$ \citep{grad1949note} -- in particular, $C_i^{(k)}$ is a tensor of order $i$.
-We have the analogous result to Lemma~\ref{lem:app:phi_diff}:
+We have the analogous result to Lemma~\ref{2405:lem:app:phi_diff}:
 
 \begin{lemma}
-    Under Assumption~\ref{assump:derivatives}, the function $\psi(\vec{p}; \rho_0)$ is analytic in $\rho_0$, with
+    Under Assumption~\ref{2405:assump:derivatives}, the function $\psi(\vec{p}; \rho_0)$ is analytic in $\rho_0$, with
     \[  \left.\frac{\partial^k \psi(\vec{p}; \rho_0)}{\partial \rho_0^k}\right|_{\rho_0 = 0} = u_0^{(k)}C_1^{(k)} + u_1^{(k)}C_2^{(k)} \vec{p} + o(\norm{\vec{p}}). \]
 \end{lemma}
 
 \begin{proof}
-    As in Lemma~\ref{lem:app:phi_diff}, we can write $\psi(\vec{0}) = \psi(\vec{0}, \rho_0)$, with
+    As in Lemma~\ref{2405:lem:app:phi_diff}, we can write $\psi(\vec{0}) = \psi(\vec{0}, \rho_0)$, with
     \[  \left.\frac{\partial^k \psi(\vec{p}; \rho_0)}{\partial \rho_0^k}\right|_{\rho_0 = 0} = \Ea{h^\star(\vec{z}^\star)^{k+1} \vec{z}^\bot \sigma^{(k+1)}(z) \sigma'(z)^k}. \]
      From \cite[Lemma 19]{dandi2023how}, we have
     \[ \Ea{h^\star(\vec{z}^\star)^{k+1} \vec{z}^\star \sigma^{(k+1)}(z) \sigma'(z)^k} = \sum_{i=0}^\infty u_{i+1}^{(k)} \langle \vec{p}^{\otimes i}, C_i^{(k)} \rangle \vec{p} + \sum_{i = 0}^\infty u_{i}^{(k)} C_{i+1}^{(k)} \times_{1, \dots, i} \vec{p}^{\otimes i}. \]
@@ -421,7 +421,7 @@ We have the analogous result to Lemma~\ref{lem:app:phi_diff}:
     For $i \geq 0$, we have $\norm{C_{i+1}^{(k)} \times_{1, \dots, i} \vec{p}^{\otimes i}} = O\left(\norm{\vec{p}}^i\right)$ and $\langle C_{i}^{(k)}, \vec{p}^{\otimes (i)} \rangle = O\left(\norm{\vec{p}}^i\right)$. The only terms in the sum which are not of order $\norm{\vec{p}}^2$ are the first two terms in the left sum, which yields the statement of the Lemma.
 \end{proof}
 
-We are now ready to show the first part of Theorem~\ref{thm:multi_index_recovery}. We begin with a characterization of $U^\star$ whenever $\ell_p^\star = 1$:
+We are now ready to show the first part of Theorem~\ref{2405:thm:multi_index_recovery}. We begin with a characterization of $U^\star$ whenever $\ell_p^\star = 1$:
 \begin{lemma}
     If $\ell_p^\star = 1$, then
     \[ U^\star = \operatorname{span}\left(\left\{C_1^{(k)}\right\}_{k \geq 1}\right). \]
@@ -441,7 +441,7 @@ We are now ready to show the first part of Theorem~\ref{thm:multi_index_recovery
     As a result, for fixed $k$, the largest vector space $U_k$ such that $\Ea{y^k H_2(\langle \vec{v}, \vec{z} \rangle)}$ for all $\vec{v}\in U_k$ is $\ker(C_2^{(k)}) = \mathrm{Im}(C_2^{(k)})^\bot$. The result ensues from $U^\star = \bigcap_{k \geq 1} U_k^\bot$.
 \end{proof}
 
-Using Assumption~\ref{assump:derivatives}, the following corollary ensues:
+Using Assumption~\ref{2405:assump:derivatives}, the following corollary ensues:
 \begin{corollary}
     If $\ell_p^\star = 1$, then for any $\vec{v}\in U^\star$ and almost every $\rho_0$,
     \[ \langle \vec{v}, \psi(\vec{0}) \rangle \neq 0. \]
@@ -462,36 +462,36 @@ Using Assumption~\ref{assump:derivatives}, the following corollary ensues:
     we can see that $d\psi(\vec{0})$ is a symmetric matrix, which is non-zero with probability one on $\rho'$. Since either $d\psi(\vec{0})$ or $-d\psi(\vec{0})$ has a positive eigenvalue, $a_0d\psi(\vec{0})$ does with probability $1/2$.
 \end{proof}
 
-We are now ready to prove Theorem~\ref{thm:multi_index_recovery}. 
-\begin{proof}[of Theorem~\ref{thm:multi_index_recovery}]
+We are now ready to prove Theorem~\ref{2405:thm:multi_index_recovery}. 
+\begin{proof}[of Theorem~\ref{2405:thm:multi_index_recovery}]
     We begin with the case $\ell_p^\star = 1$. Fix a $p = p(\delta)$ to be chosen later, and let $\psi_i(\vec{p}) = \psi(\vec{p}; a_{0, i}, \rho_{0, i})$ for $i \in [p]$. With probability $1/2$ on $\vec{w}_{0, i}$, we have $\langle \vec{w}_{0, i}, \psi_i(\vec{0}) \rangle$; let $p_+$ be the number of such neurons. For $p = O(\log(1/\delta))$, we have $p_+ > \max(p/4, k)$ with probability at least $1 - \frac\delta2$.
 
-    In particular, with probability one, the set $\{ \psi_i(\vec{0}) \}_{i\in [p_+]}$ spans $U^\star$. Let $\epsilon > 0$ to be chosen later, $\eta_i(\epsilon)$ adapted to $\psi_i$ in Proposition~\ref{prop:app:hitting_times}, $\tau_i$ the hitting time for $\eta_i$ in the $i$-th neuron. Consider the time $\tau = \min_i \tau_i$; applying Proposition \ref{prop:app:hitting_times} to $\delta' = \delta/p$, we have
+    In particular, with probability one, the set $\{ \psi_i(\vec{0}) \}_{i\in [p_+]}$ spans $U^\star$. Let $\epsilon > 0$ to be chosen later, $\eta_i(\epsilon)$ adapted to $\psi_i$ in Proposition~\ref{2405:prop:app:hitting_times}, $\tau_i$ the hitting time for $\eta_i$ in the $i$-th neuron. Consider the time $\tau = \min_i \tau_i$; applying Proposition \ref{2405:prop:app:hitting_times} to $\delta' = \delta/p$, we have
     \[ \tau \leq \max_{i \in [p_+]} \frac{\eta_i(1 + \sqrt{k}\epsilon)}{\gamma_0 \norm{\psi_i(\vec{0})}} d \leq C(\delta) d. \]
-    However, we also have $\tau > c(\delta) \gamma^{-1}$, and hence from Proposition~\ref{prop:app:low_dim_linear}, for any $i \in [p_+]$
+    However, we also have $\tau > c(\delta) \gamma^{-1}$, and hence from Proposition~\ref{2405:prop:app:low_dim_linear}, for any $i \in [p_+]$
     \[ \norm{\vec{w}_{t, i}} \geq \gamma \tau \norm{\psi_i(\vec{0})} - \sqrt{k}\eta_i\epsilon \geq c'(\delta) \]
     for small enough $\epsilon$. This proves the first part of the theorem. Now, consider the vectors
     \[ \vec{u}_i = \frac{\Pi^\star \vec{w}_{\tau, i}}{\norm{\Pi^\star \vec{w}_{\tau, i}}}; \]
-    by the same argument as in Proposition~\ref{prop:app:hitting_times}, for any $i \in [p_+]$,
+    by the same argument as in Proposition~\ref{2405:prop:app:hitting_times}, for any $i \in [p_+]$,
     \[ \norm{\vec{u}_i - \frac{\psi_i(\vec{0})}{\norm{\psi_i(\vec{0})}}} \leq \sqrt{k}\epsilon. \]
     Since the $\{\psi_i(\vec{0})\}_{i\in[p_+]}$ span $U^\star$ with probability one, so do the $\{\vec{u}_i\}_{i \in [p_+]}$ for a small enough choice of $\epsilon$.
 
     For the case $\ell_p^\star = 2$, we define the $p_+$ ``good'' neurons as those with $d\psi_i(\vec{0})$ having a positive eigenvalue. Since this happens with probability at least $1/2$ independently for each neuron, the bounds on $p(\delta)$ from earlier still apply.
-    For those neurons, and small enough $\epsilon$, we define the $\eta_i(\epsilon)$ as those in Proposition~\ref{prop:app:hitting_times}, and $\tau = \max_i \tau_i$. Then by Proposition~\ref{prop:app:hitting_times}, we have $\tau \leq C(\delta)d\log(d)^2$ for some constant $C(\delta)$.
+    For those neurons, and small enough $\epsilon$, we define the $\eta_i(\epsilon)$ as those in Proposition~\ref{2405:prop:app:hitting_times}, and $\tau = \max_i \tau_i$. Then by Proposition~\ref{2405:prop:app:hitting_times}, we have $\tau \leq C(\delta)d\log(d)^2$ for some constant $C(\delta)$.
 
     Now, fix a vector $i \in [p_+]$. We define the $j$-th ``excursion'' to be the $j$-th sequence of times $\tau_i^{(j)}, \dots, \tau_i^{(j)} + e_i^{(j)}$ such that $\norm{\Pi^\star\vec{w}_{t, i}} \geq \eta_i$. Then:
     \begin{itemize}
         \item  With probability at least $1 - e^{-c\gamma}$, we have $\norm{\vec{w}_{t+1, i} - \vec{w}_{t, i}} \leq C \sqrt{\gamma}$, and thus for any excursion $j$ we have $\norm{\Pi^\star\vec{w}_{\tau_i^{(j)} + e_i^{(j)} +1, i}} \geq \eta_i/2$.
-        \item between two excursions, the results of Proposition~\ref{prop:app:low_dim_exp} apply, and thus the norm of $\norm{\Pi^\star \vec{w}_{t, i}}$ increases exponentially.
+        \item between two excursions, the results of Proposition~\ref{2405:prop:app:low_dim_exp} apply, and thus the norm of $\norm{\Pi^\star \vec{w}_{t, i}}$ increases exponentially.
     \end{itemize}
-   As a result, for $\tau_i \leq t \leq \tau$, we have $\norm{\Pi^\star \vec{w}_{t, i}} > \eta_i / 2$, which finishes the proof of Theorem~\ref{thm:multi_index_recovery}.
+   As a result, for $\tau_i \leq t \leq \tau$, we have $\norm{\Pi^\star \vec{w}_{t, i}} > \eta_i / 2$, which finishes the proof of Theorem~\ref{2405:thm:multi_index_recovery}.
 \end{proof}
 
 \section{Additional proofs}
 
-\subsection{Proof of Lemma~\ref{lem:bias_activation}}
+\subsection{Proof of Lemma~\ref{2405:lem:bias_activation}}
 
-Let $\sigma$ be an analytic function which is not a polynomial. Then for any $k \geq 0$, the function $\sigma^{(k)}$ is also analytic and non-identically zero, and hence so is the function $f_n = \sigma^{(k)} \cdot (\sigma')^k$. Lemma \ref{lem:bias_activation} thus ensues from the following result:
+Let $\sigma$ be an analytic function which is not a polynomial. Then for any $k \geq 0$, the function $\sigma^{(k)}$ is also analytic and non-identically zero, and hence so is the function $f_n = \sigma^{(k)} \cdot (\sigma')^k$. Lemma \ref{2405:lem:bias_activation} thus ensues from the following result:
 \begin{lemma}
   Let $f$ be an analytic and non-identically zero function. Then
   \[ \Ea{f(x+b)} \neq 0 \quad \text{and} \quad \Ea{x f(x+b)} \neq 0 \]
@@ -509,9 +509,9 @@ The above shows that for fixed $n \in \mathbb{N}$, the set
 \[ \mathcal{B}_n = \left\{ b \in \R \ : \ \Ea{\sigma^{(n)}(x+b) \sigma'(x+b)^{n-1}} = 0 \quad \text{or} \quad \Ea{x \sigma^{(n)}(x+b) \sigma'(x+b)^{n-1}} = 0  \right\} \]
 has measure $0$. Since there is a countable number of such subsets, the set
 \[ \mathcal{B} = \bigcup_{n \in \mathbb{N}} \mathcal{B}_n \]
-also has measure zero, which is equivalent to the statement of Lemma~\ref{lem:bias_activation}.
+also has measure zero, which is equivalent to the statement of Lemma~\ref{2405:lem:bias_activation}.
 
-\subsection{Proof of Theorem~\ref{thm:poly_pge}}
+\subsection{Proof of Theorem~\ref{2405:thm:poly_pge}}
 
 We decompose the polynomial $h^\star$ as an even and odd part $e(x)$ and $o(x)$, with degrees $d_o$ and $d_e$. We first assume that $o$ is non-zero, and that the leading coefficient of $o$ is positive. Then, for odd $m \geq 0$, we have
 \[ \Ea{xh^\star(x)^m} = \sum_{k = 0}^m \dbinom{m}{k} \Ea{x e(x)^k o(x)^{m-k}} \]
@@ -541,13 +541,13 @@ and we conclude as before.
 
 \subsection{Hardness of sign functions}
 We show in the appendix the following statement:
-\begin{proposition}\label{prop:app:sign_hard}
+\begin{proposition}\label{2405:prop:app:sign_hard}
   Let $m \in \mathbb{N}$, and
   \[ h^\star(\vec{x}) = \mathrm{sign}(x_1\dots x_m) \]
   Then the function $h^\star$ has Information and Generative Exponents $\ell = \ell^\star = m$.
 \end{proposition}
 
-We first show the lower bound. For any vector $\vec{v}\in \R^m$, and $k < m$, $H_k(\langle \vec{v}, \vec{x} \rangle)$ is a polynomial in $z$ of degree $k$, and therefore each monomial term is missing at least one variable. We show that this implies the lower bound of Proposition~\ref{prop:app:sign_hard} through the following lemma:
+We first show the lower bound. For any vector $\vec{v}\in \R^m$, and $k < m$, $H_k(\langle \vec{v}, \vec{x} \rangle)$ is a polynomial in $z$ of degree $k$, and therefore each monomial term is missing at least one variable. We show that this implies the lower bound of Proposition~\ref{2405:prop:app:sign_hard} through the following lemma:
 \begin{lemma}
   Let $f: \{-1, 1\} \to \R$ be an arbitrary function, and $g: \R^m \to \R$ a function which is independent from $x_m$. Then
   \[ \Ea{f(h^\star(\vec{x})) g(\vec{x})} = \frac{f(1)+f(-1)}{2}\Ea{g(\vec{x})}\]

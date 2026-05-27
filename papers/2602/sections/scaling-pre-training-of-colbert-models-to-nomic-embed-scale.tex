@@ -3,25 +3,25 @@
 In order to establish whether pre-training ColBERT models is beneficial over a simple distillation, we propose to pre-train a ColBERT model on the widely-known datasets used by Nomic Embed~\cite{nussbaum2025nomic}. 
 This approach has several advantages: first, it is a robust choice of public data that is easily accessible through the Hugging Face dataset library, which also facilitates implementation. Secondly, a ModernBERT dense model has been trained on this mixture, allowing for easy comparison.
 
-We thus train various models to explore the effect of each training phase: unsupervised contrastive, supervised contrastive, and knowledge distillation. All the different settings are illustrated in Figure~\ref{fig:pipelines}.
+We thus train various models to explore the effect of each training phase: unsupervised contrastive, supervised contrastive, and knowledge distillation. All the different settings are illustrated in Figure~\ref{2602:fig:pipelines}.
 The baseline is a simple knowledge distillation step performed on top of the ModernBERT-embed model that has undergone both unsupervised and supervised contrastive phases in the dense setting and thus only a KD phase in the ColBERT setting (setting (a)). It is the most usual ColBERT training setup.
 This model is compared to ColBERT-Zero, for which both the unsupervised and supervised steps are also performed in the multi-vector setting, i.e, the whole pre-training is run in the multi-vector setting (setting (c)). This allows for a fair comparison as both models use the same original base model and the exact same data, the only difference being whether the contrastive phases are performed in the dense or late interaction setting.
-As the authors also released the dense model obtained after the unsupervised phase only, we study additionally the impact of skipping the unsupervised ColBERT pre-training but still performing the supervised contrastive phase in the ColBERT setting before KD, allowing to study whether the large-scale unsupervised phase is required or simply adding the supervised phase is enough (setting (b)). As the unsupervised phase is, by far, the most expensive step (almost ten times more than supervised + KD, see Table~\ref{tab:hyperparams}), being able to leverage the one already performed by the dense model would be very interesting. 
+As the authors also released the dense model obtained after the unsupervised phase only, we study additionally the impact of skipping the unsupervised ColBERT pre-training but still performing the supervised contrastive phase in the ColBERT setting before KD, allowing to study whether the large-scale unsupervised phase is required or simply adding the supervised phase is enough (setting (b)). As the unsupervised phase is, by far, the most expensive step (almost ten times more than supervised + KD, see Table~\ref{2602:tab:hyperparams}), being able to leverage the one already performed by the dense model would be very interesting. 
 
-%An illustration of the different training phases can be found in Figure~\ref{fig:training_phase} and one of the three different training pipeline compared can be found in Figure~\ref{fig:pipelines}.
+%An illustration of the different training phases can be found in Figure~\ref{2602:fig:training_phase} and one of the three different training pipeline compared can be found in Figure~\ref{2602:fig:pipelines}.
 
-\begin{figure}[t]
+\begin{figure}
   \centering
   \resizebox{\textwidth}{!}{\input{figs/training_phases}}
   \caption{An illustration of the three training phases. Unsupervised contrastive pre-training is a very large scale training relying exclusively on large batch sizes to use in-batch negatives. Supervised contrastive fine-tuning is a refinement step that leverages mined hard negative to provide a stronger signal. The knowledge distillation step use a strong teacher to scores various documents and use KL divergence to make the student distribution fits the teachers'. }
-  \label{fig:training_phase}
+  \label{2602:fig:training_phase}
 \end{figure}
 
-\begin{figure}[t]
+\begin{figure}
   \centering
   \resizebox{\textwidth}{!}{\input{figs/pipelines_figure}}
   \caption{The different training pipelines compared in this work. KD only is the most common setup, while ColBERT-Zero is the most expensive. Supervised + KD is an in-between much cheaper than the full pre-training.}
-  \label{fig:pipelines}
+  \label{2602:fig:pipelines}
 \end{figure}
 
 
@@ -29,17 +29,17 @@ As the authors also released the dense model obtained after the unsupervised pha
 We use standard setups for each phase, training for only one epoch each time.
 For the unsupervised pre-training, we use the large dataset from Nomic Embed and rely on in-batch negatives. The InfoNCE loss temperature was designated as a learnable parameter with the objective of ascertaining the optimal value for the dataset, and later fixed during training. 
 For the supervised phase, we leverage smaller and higher quality datasets with negatives mined by Nomic, while the optimal temperature was determined similarly to the unsupervised phase.
-The knowledge distillation setup follows the one of GTE-ModernColBERT, using the MS-MARCO dataset with mined samples scored by \href{https://huggingface.co/BAAI/bge-reranker-v2-gemma}{bge-reranker-v2-gemma}. All the hyperparameters are summarized in Table~\ref{tab:hyperparams}, including the learning rate sweep ranges used for each phase. We use the NanoBEIR evaluator to choose the best values for temperature and learning rate as running the full BEIR~\cite{thakur2021beir} is expensive.
+The knowledge distillation setup follows the one of GTE-ModernColBERT, using the MS-MARCO dataset with mined samples scored by \href{https://huggingface.co/BAAI/bge-reranker-v2-gemma}{bge-reranker-v2-gemma}. All the hyperparameters are summarized in Table~\ref{2602:tab:hyperparams}, including the learning rate sweep ranges used for each phase. We use the NanoBEIR evaluator to choose the best values for temperature and learning rate as running the full BEIR~\cite{thakur2021beir} is expensive.
 %The query and document lenghts are the same as the supervised phase. Unsupervised pre-training is done on 8 nodes of 4 GH200, while supervised fine-tuning and knowledge distillation use only one node.
 \begin{table*}
 \centering
 \caption{
   Training hyperparameters of the 3 different phases of learning. \\ 
   The learning rates are swept logarithmically in the given ranges, testing 10 values for each phase.
-  The query and document lengths include the tokens of the prompts (see Section~\ref{sec:prompts}).
+  The query and document lengths include the tokens of the prompts (see Section~\ref{2602:sec:prompts}).
   GPU hours are measured on a cluster of GH200 GPUs, where nodes have 4 GPU each; unsupervised is done on 8 nodes, while supervised and KD on 1 node.
 }
-\label{tab:hyperparams}
+\label{2602:tab:hyperparams}
 \begin{tabular}{l c c c c c c}
 \toprule
 \textbf{Phase} & \textbf{LR sweep range} & \textbf{Batch size} & \textbf{Temp.} & \textbf{Query length} & \textbf{Doc. length} & \textbf{GPU hours}\\

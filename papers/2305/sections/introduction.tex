@@ -1,9 +1,9 @@
 \section{Introduction}
 
-\label{sec:intro}
+\label{2305:sec:intro}
 In this manuscript we are interested in the supervised task of learning the following target function:
 \begin{align}
-\label{eq:def:teacher}
+\label{2305:eq:def:teacher}
     y = \sigma_{\star}\left(w_{\star}^{\top}x\right) + \sqrt{\Delta}z, && x\sim\mathcal{N}(0,\sfrac{1}{d} I_{d}), \qquad z\sim\mathcal{N}(0,1).
 \end{align}
 This target belongs to a general class of models known as \emph{single-index} or \emph{generalised linear} models, where the labels depend on the covariates $x\in\mathbb{R}^{d}$ only through its projection on a fixed direction $w_{\star}\in\mathbb{R}^{d}$, followed by a non-linear real-valued function $\sigma_{\star}:\mathbb{R}\to\mathbb{R}$. Despite its apparent simplicity, the study of single-index models with Gaussian i.i.d. covariates has been at the core of the recent theoretical progress in machine learning \citep{tan2019online,arous2021online,bietti2022learning,damian2022neural,berthier2023learning}. Note that if $\sigma(x)=x$, learning could be achieved efficiently by linear methods such as ridge regression or PCA. The presence of a non-linearity $\sigma_{\star}$ makes it perhaps the simplest target for which a non-linear hypothesis class is required. Moreover, the choice of isotropic covariates $x\sim\mathcal{N}(0,\sfrac{1}{d}I_{d})$ means that all structure in the target is in learning a representation of $\sigma$ and a particular direction $w_{\star}$. The popularity of this model is that different separation results can be shown in the high-dimensional limit where $d\gg 1$:
@@ -11,26 +11,26 @@ This target belongs to a general class of models known as \emph{single-index} or
     \item In the well-specified setting where we fit an isotropic single-index model with the same hypothesis class (i.e. $f_{\theta}(x) = \sigma_{\star}(w^{\top}x)$), it has been shown that the sample complexity of one-pass SGD\footnote{Which we recall the reader is equivalent to the convergence rate.}  is determined by the first non-zero Hermite coefficient of the target $\sigma_{\star}$, also known as the \emph{information exponent} \citep{arous2021online}. Problems with non-zero first Hermite have information exponent $k=1$, and $w_{\star}$ can be learned at linear sample complexity $n=O(d)$. Instead, problems with zero first and non-zero second Hermite coefficient have information exponent $k=2$, requiring instead $n = O(d\log{d})$ samples \citep{tan2019online,arous2021online}. Note that this is a factor $\log{d}$ higher than the Bayes-optimal sample complexity of $n=O(d)$ \citep{barbier2019optimal,maillard2020phase}, hence defining a class of \emph{hard} problems for SGD. 
     \item For fully-connected two-layer neural networks $f_{\theta}(x) = a^{\top}\sigma(Wx)$, several results are known under different assumptions. For fixed first layer weights $W\in\mathbb{R}^{p\times d}$ (a.k.a. random features model) and large enough width $p$, learning the $k$-th order Hermite coefficient $\sigma_{\star}$ requires $n=O(d^{k})$ samples \citep{mei2022generalizationerror}, implying a sample complexity of $n=O(d^2)$ for a quadratic problem, e.g. $\sigma_{\star}(x)=x^2$. Recently, it was shown that wide networks ($p\to\infty$) can achieve the well-specified sample complexity of $n=O(d)$ under one-pass SGD, \emph{provided that all Hermite coefficients of both $\sigma_{\star}, \sigma$ are non-zero} \citep{berthier2023learning}. In particular, this assumption cover only problems with information exponent $k=1$, excluding hard cases such as quadratic problems. Finally, for $\sigma(x) = \sigma_{\star}(x) = x^2$, \cite{saraomannelli2020optimization} has shown that for $p$  large enough, full-batch gradient flow achieves sample complexity $n=2d$, although at a running time of $t=O(\log{d})$. 
 \end{itemize}
-With the exception of \cite{berthier2023learning}, the works mentioned above cover the scaling of the sample complexity in the high-dimensional limit. Our goal is, instead, to derive sharp results for the sample complexity of learning \eqref{eq:def:teacher} with a fully-connected two-layer neural network in the challenging case where $\sigma_{\star}$ has a vanishing first Hermite coefficient. As discussed above, this case violates the ``standard learning scenario'' of \cite{berthier2023learning}, and can be seen as a proxy for hard learning problems for descent-based algorithms. For concreteness, in the following we focus on the purely quadratic case:
+With the exception of \cite{berthier2023learning}, the works mentioned above cover the scaling of the sample complexity in the high-dimensional limit. Our goal is, instead, to derive sharp results for the sample complexity of learning \eqref{2305:eq:def:teacher} with a fully-connected two-layer neural network in the challenging case where $\sigma_{\star}$ has a vanishing first Hermite coefficient. As discussed above, this case violates the ``standard learning scenario'' of \cite{berthier2023learning}, and can be seen as a proxy for hard learning problems for descent-based algorithms. For concreteness, in the following we focus on the purely quadratic case:
 \begin{align}
-\label{eq:def:teacher:quadratic}
+\label{2305:eq:def:teacher:quadratic}
  y = \left(w_{\star}^{\top}x\right)^2  + \sqrt{\Delta}z, && w_{\star}\in\mathbb{S}^{d-1}(\sqrt{d})
 \end{align}
-%The key challenge is that the quadratic target \eqref{eq:def:teacher} has zero leading Hermite coefficient, violating the "standard learning scenario" of \cite{berthier2023learning}. It therefore can be seen as a proxy model for a hard learning task for descent-based algorithms. 
-Learning the target \eqref{eq:def:teacher:quadratic} consists of learning the non-linearity $\sigma_{\star}(x)=x^2$ and the direction $w_{\star}$. In this work, we focus our attention in the second part, considering the following architecture with squared-activation: 
+%The key challenge is that the quadratic target \eqref{2305:eq:def:teacher} has zero leading Hermite coefficient, violating the "standard learning scenario" of \cite{berthier2023learning}. It therefore can be seen as a proxy model for a hard learning task for descent-based algorithms. 
+Learning the target \eqref{2305:eq:def:teacher:quadratic} consists of learning the non-linearity $\sigma_{\star}(x)=x^2$ and the direction $w_{\star}$. In this work, we focus our attention in the second part, considering the following architecture with squared-activation: 
 \begin{align}
-\label{eq:student}
+\label{2305:eq:student}
     f_{\Theta}(x) = \frac{1}{p}\sum\limits_{i=1}^{p}a_{i}(w_{i}^{\top}x)^2.
 \end{align}
 where $\Theta = (a,W)$ is the set of trainable weights, which are trained with one-pass stochastic gradient descent (SGD):
 %Since our focus is on learning the direction $w_{\star}\in\mathbb{S}^{d-1}(\sqrt{d})$, we normalize the weights $w_{i}\in\mathbb{S}^{d-1}(\sqrt{d})$, 
 \begin{align}
-\label{eq:sgd}
+\label{2305:eq:sgd}
     % a_{i}^{\nu+1} &= a^{\nu}_{i} - \gamma_{a} \nabla_{a_{i}}\ell(y^{\nu}, f_{\Theta}(x^{\nu}))\notag\\
     % w_{i}^{\nu+1} &= {\rm Proj}_{\mathbb{S}^{d-1}(\sqrt{d})}\left(w_{i}^{\nu} - \gamma \nabla_{w_{i}}\ell(y^{\nu}, f_{\Theta}(x^{\nu}))\right),
     \Theta^{\nu+1} = \Theta^{\nu} -\gamma \nabla_{\Theta}\ell(y^{\nu},f_{\Theta^{\nu}}(x^{\nu}))
 \end{align}
-with square loss $\ell(y,x)=\sfrac{1}{2}(y-x)^2$ and initial condition $\Theta^{0} = (a^{0}, W^{0})$. Note that at each step $\nu$, the gradient is evaluated at a fresh pair of data $(x^{\nu}, y^{\nu})\in\mathbb{R}^{d+1}$ drawn from the model \eqref{eq:def:teacher:quadratic}.
+with square loss $\ell(y,x)=\sfrac{1}{2}(y-x)^2$ and initial condition $\Theta^{0} = (a^{0}, W^{0})$. Note that at each step $\nu$, the gradient is evaluated at a fresh pair of data $(x^{\nu}, y^{\nu})\in\mathbb{R}^{d+1}$ drawn from the model \eqref{2305:eq:def:teacher:quadratic}.
 %and the projection in the sphere ensures the weights $w_{i}^{\nu}\in\mathbb{S}^{d-1}$ remain normalized throughout training. 
 In particular, this implies that after $\nu\in[n]$ steps, the algorithm has seen $n$ data points. 
 

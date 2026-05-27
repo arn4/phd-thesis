@@ -1,6 +1,6 @@
 \section{Explicit ODEs derivation}
 
-\label{app:square_equations}
+\label{2305:app:square_equations}
 \subsection{Derivation of the process}
 Let's start by reminding the definition of \emph{displacement} at step \(\i\)
 \begin{equation}
@@ -20,7 +20,7 @@ Using \(\gamma\) as learning rate for the weights \(\w_j\) and \(\sfrac{\gamma}{
     a^{\i+1}_j &= a^{\i}_j - \frac{\gamma}{pd} \mathcal{E}^{\i} (\lambda_{j}^{\nu})^2 \\
     \w_j^{\i+1} &= \w_j^{\i} - \frac{\gamma}{p} \mathcal{E}^{\i} 2 a^\i_j \lambda_{j}^{\nu} x^\i
 \end{split}\end{equation}
-Applying the definition of the sufficient statistics, \(m_j = \sfrac{\w_j\w_\star}{d}\) and \(\Q_{jl} = \sfrac{\w_j\w_l}{d}\), we can recover Eqs.~\eqref{eq:def:overlap_process}.
+Applying the definition of the sufficient statistics, \(m_j = \sfrac{\w_j\w_\star}{d}\) and \(\Q_{jl} = \sfrac{\w_j\w_l}{d}\), we can recover Eqs.~\eqref{2305:eq:def:overlap_process}.
 
 \subsection{Explicit ODE}
 To get the explicit form of our ODEs we need to compute some expected value over the preactivations \((\lambda_\star,\lambda)\).
@@ -73,14 +73,14 @@ where the indices \(\alpha\) and \(\beta\) can discriminate between local fields
 \end{align*}
 By retracing all steps backward and making the necessary substitutions,
 we can arrive at an explicit form of the ODEs and population risk. 
-While the full risk expression can be found in Eq.~\eqref{eq:def:risk}, we report here just the case \(a_j=1\) for the ODEs since they have a compact matrix form
-\begin{subequations}\label{eq:full_squared_ode}\begin{align}
-    \label{eq:quadraticODE_M}
+While the full risk expression can be found in Eq.~\eqref{2305:eq:def:risk}, we report here just the case \(a_j=1\) for the ODEs since they have a compact matrix form
+\begin{subequations}\label{2305:eq:full_squared_ode}\begin{align}
+    \label{2305:eq:quadraticODE_M}
     \dod{\M}{t} &=
         2\left(\rho - \frac{\Tr{\Q}}p\right)\M +
         4\left(\rho\M - \frac{\Q\M}{p}\right) \\
     %
-    \label{eq:quadraticODE_Q}
+    \label{2305:eq:quadraticODE_Q}
     \begin{split}
         \dod{\Q}{t} &= 
             4\left(\rho - \frac{\Tr{\Q}}p\right)\Q +
@@ -98,8 +98,8 @@ While the full risk expression can be found in Eq.~\eqref{eq:def:risk}, we repor
     \end{split}
 \end{align}\end{subequations}
 where \(\rho \coloneqq \sfrac{\w_\star^2}{d}\). 
-For completeness, this is Eq.~\eqref{eq:def:risk} for the case \(a_j=1\)
-\begin{equation} \label{eq:risk_square}\begin{split}
+For completeness, this is Eq.~\eqref{2305:eq:def:risk} for the case \(a_j=1\)
+\begin{equation} \label{2305:eq:risk_square}\begin{split}
   \mathcal{R}(\Omega)
      \! =\! \frac{3+\Delta}{2}
           \!-\!\frac{\rho\Tr{\Q}+2\Tr{\M\M^\top}}{p}

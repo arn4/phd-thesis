@@ -1,17 +1,17 @@
-\section{Formalization and proofs} \label{app:proofs}
+\section{Formalization and proofs} \label{2506:app:proofs}
 
 \subsection{Preliminaries}
 
 We consider the following approximation of the SGD dynamics:
 
-\begin{equation}\label{eq:app:ode_approx}
+\begin{equation}\label{2506:eq:app:ode_approx}
     \frac{d\vw}{dt} = -\E*{\nabla_{\vw}^\bot \cL(X, y, f_{\vw})} - \gamma\, \E*{\norm{\nabla_{\vw}^\bot \cL(X, y, f_{\vw})}^2} \vw
 \end{equation}
 
 The results of \cite{arous2021online} (when $m$ is a scalar) and \cite{arnaboldi2024repetita} (when $\vec{m}$ is a vector) imply the following:
-\begin{theorem}\label{thm:app:ben_arous_meta}
-    Let $\tau_\eta$ be the weak recovery time of the ODE \eqref{eq:app:ode_approx}, with the same initial conditions as the process \eqref{eq:normalized-SGD-w}. Then for small enough $\eta$ and any $\delta > 0$, there exist constants $c(\delta), C(\delta)$ such that if
-    \begin{equation}\label{eq:app:gamma_optimal_value}
+\begin{theorem}\label{2506:thm:app:ben_arous_meta}
+    Let $\tau_\eta$ be the weak recovery time of the ODE \eqref{2506:eq:app:ode_approx}, with the same initial conditions as the process \eqref{2506:eq:normalized-SGD-w}. Then for small enough $\eta$ and any $\delta > 0$, there exist constants $c(\delta), C(\delta)$ such that if
+    \begin{equation}\label{2506:eq:app:gamma_optimal_value}
         \gamma = c(\delta)(d\tau_\eta)^{-1},
     \end{equation}
     then with probability at least $1 - \delta$
@@ -20,19 +20,19 @@ The results of \cite{arous2021online} (when $m$ is a scalar) and \cite{arnaboldi
     \[ t_\eta^+ \geq c(\delta)t \]
 \end{theorem}
 
-When $\gamma$ does not satisfy the bound~\eqref{eq:app:gamma_optimal_value}, we cannot show a strong enough concentration around the deterministic ODE dynamics, and hence directly showing non-convergence of \eqref{eq:normalized-SGD-w} is difficult. However, as we shall see in the proof, above this value of $\gamma$ the inhibitive term in \eqref{eq:app:ode_approx} dominates at initialization, and hence the ODE dynamics stay trapped around zero overlap with the target subspace. For this reason, we shall consider (in line with \cite{arous2021online}) that the sample complexity cannot be improved by increasing $\gamma$ above the bound~\eqref{eq:app:gamma_optimal_value}.
+When $\gamma$ does not satisfy the bound~\eqref{2506:eq:app:gamma_optimal_value}, we cannot show a strong enough concentration around the deterministic ODE dynamics, and hence directly showing non-convergence of \eqref{2506:eq:normalized-SGD-w} is difficult. However, as we shall see in the proof, above this value of $\gamma$ the inhibitive term in \eqref{2506:eq:app:ode_approx} dominates at initialization, and hence the ODE dynamics stay trapped around zero overlap with the target subspace. For this reason, we shall consider (in line with \cite{arous2021online}) that the sample complexity cannot be improved by increasing $\gamma$ above the bound~\eqref{2506:eq:app:gamma_optimal_value}.
 
 \begin{remark}
-    When $\gamma$ is instead fixed below the value \eqref{eq:app:gamma_optimal_value}, the hitting time of the dynamics~\ref{eq:normalized-SGD-w} is instead given by
+    When $\gamma$ is instead fixed below the value \eqref{2506:eq:app:gamma_optimal_value}, the hitting time of the dynamics~\ref{2506:eq:normalized-SGD-w} is instead given by
     \[ t_\eta^+(\gamma) \asymp \gamma^{-1}\tau_\eta. \]
 \end{remark}
 
-We shall also assume that $m_0 > 0$, and that the coefficients appearing in the gain expression in Theorem~\ref{thm:sequencelength-gain} are all non-negative. As mentioned in \cite{arous2021online,arnaboldi2024online,arnaboldi2024repetita}, this condition can be ensured with probability $1/2$ by randomly setting the learning rate to $\pm \gamma$ with equal probability.
+We shall also assume that $m_0 > 0$, and that the coefficients appearing in the gain expression in Theorem~\ref{2506:thm:sequencelength-gain} are all non-negative. As mentioned in \cite{arous2021online,arnaboldi2024online,arnaboldi2024repetita}, this condition can be ensured with probability $1/2$ by randomly setting the learning rate to $\pm \gamma$ with equal probability.
 
 \subsection{An ODE for overlap evolution}
 
 We begin by computing the expectation of the gradient term:
-\begin{lemma}\label{lem:app:pop_loss}
+\begin{lemma}\label{2506:lem:app:pop_loss}
     In the tied case, we have when $\norm{\vw} = 1$
     \[ \E*{\cL(X, y, f_{\text{tied}})} = \E{y^2} -2\sum_{k \geq 0} c_k(\sigma) C_k(g) \times (\ind_L, \dots, \ind_L) m^k + \norm{\sigma}_\omega. \]
     In the untied case, we have instead
@@ -63,7 +63,7 @@ For the last term, we have in both cases $\frac{\langle \tilde\vw_\square, \Flat
 This ends the proof.
 \end{proof}
 
-When $\norm{\vec{w}}$ (resp. $\norm{\vec{w}_i}$ is different from one, the expressions of Lemma \ref{lem:app:pop_loss} depend on $q = \norm{\vw}^2$ (resp. $q_i = \norm{\vw_i}^2$). However, we can write
+When $\norm{\vec{w}}$ (resp. $\norm{\vec{w}_i}$ is different from one, the expressions of Lemma \ref{2506:lem:app:pop_loss} depend on $q = \norm{\vw}^2$ (resp. $q_i = \norm{\vw_i}^2$). However, we can write
 \[ \nabla_{\vw}\E{\cL(X, y, f_{\text{tied}})} = \frac{\partial}{\partial m}\E{\cL(X, y, f_{\text{tied}})} \vw^\star + 2\frac{\partial}{\partial q}\E{\cL(X, y, f_{\text{tied}})} \vec{w}. \]
 As a result, we have
 \[ \nabla_{\vw}^\bot\E{\cL(X, y, f_{\text{tied}})} = \left(\frac{\partial}{\partial m}\E{\cL(X, y, f_{\text{tied}})}\right) (\vw^\star - m \vw). \]
@@ -71,7 +71,7 @@ The same holds for the untied case:
 \[ \nabla_{\vw}^\bot\E{\cL(X, y, f_{\text{tied}})} = \left(\frac{\partial}{\partial m_i}\E{\cL(X, y, f_{\text{tied}})}\right) (\vw^\star - m_i \vw_i)\]
 
 We arrive at the following result:
-\begin{proposition}\label{prop:app:overlap_ode}
+\begin{proposition}\label{2506:prop:app:overlap_ode}
     Define the drift functions
     \begin{align*} 
     \phi_{\text{tied}}(m) &= 2(1 - m^2)\sum_{k \geq 0} k c_k(\sigma)C_k(g) \times (\ind_L, \dots, \ind_L) m^{k-1} \\ 
@@ -79,15 +79,15 @@ We arrive at the following result:
     \end{align*}
     Then the tied and untied overlaps satisfy the following ODEs:
     \begin{align}
-        \frac{dm}{dt} &= \phi_{\text{tied}}(m) - \gamma\, \E*{\norm{\nabla_{\vw}^\bot \cL(X, y, f_{\vw})}^2} m \label{eq:app:tied_dynamics} \\
-         \frac{dm}{dt} &= \phi_{\text{untied}}(\vec{m}) - \gamma\, \E*{\norm{\nabla_{\vw}^\bot \cL(X, y, f_{\vw})}^2} \vec{m} \label{eq:app:untied_dynamics}
+        \frac{dm}{dt} &= \phi_{\text{tied}}(m) - \gamma\, \E*{\norm{\nabla_{\vw}^\bot \cL(X, y, f_{\vw})}^2} m \label{2506:eq:app:tied_dynamics} \\
+         \frac{dm}{dt} &= \phi_{\text{untied}}(\vec{m}) - \gamma\, \E*{\norm{\nabla_{\vw}^\bot \cL(X, y, f_{\vw})}^2} \vec{m} \label{2506:eq:app:untied_dynamics}
     \end{align}
 \end{proposition}
 
 \subsection{Controlling the gradient norm}
 
-We turn our attention to the inhibitive terms in Proposition~\ref{prop:app:overlap_ode}. We show the following:
-\begin{lemma}\label{lem:app:grad_norm}
+We turn our attention to the inhibitive terms in Proposition~\ref{2506:prop:app:overlap_ode}. We show the following:
+\begin{lemma}\label{2506:lem:app:grad_norm}
     There exist an $\eta > 0$ and two constants $c, C$ such that if  $m < \eta$ (resp. $\norm{m} \leq \eta$),
     \[ cd \leq \E*{\norm{\nabla_{\vw}^\bot \cL(X, y, f_{\vw})}^2} \leq Cd \]
 \end{lemma}
@@ -109,10 +109,10 @@ which ends the proof.
 
 \subsection{Hitting time for the tied dynamics}
 
-We are now ready to prove Theorem~\ref{thm:sie} (as well as part of Theorem~\ref{thm:sequencelength-gain}). In light of Theorem~\ref{thm:app:ben_arous_meta}, it suffices to compute the hitting time $\tau_\eta$ of the tied dynamics \eqref{eq:app:tied_dynamics}.
+We are now ready to prove Theorem~\ref{2506:thm:sie} (as well as part of Theorem~\ref{2506:thm:sequencelength-gain}). In light of Theorem~\ref{2506:thm:app:ben_arous_meta}, it suffices to compute the hitting time $\tau_\eta$ of the tied dynamics \eqref{2506:eq:app:tied_dynamics}.
 Since $\phi_{\text{tied}}(m) = 2 C_{\sie} \times (\ind_L, \dots, \ind_L) m^{\sie-1} + O(m^{\sie})$, there exists an $\eta_{\text{tied}} > 0$ such that if $m < \eta_{\text{tied}}$,
 \[ c_\sie(\sigma) C_{\sie} \times (\ind_L, \dots, \ind_L) m^{\sie-1} < \phi_{\text{tied}}(m) < 3c_\sie(\sigma) C_{\sie} \times (\ind_L, \dots, \ind_L) m^{\sie-1} \]
-Combining this with the bound of Lemma~\ref{lem:app:grad_norm}, we find that whenever $m(t) \leq \eta$ for some constant $c > 0$,
+Combining this with the bound of Lemma~\ref{2506:lem:app:grad_norm}, we find that whenever $m(t) \leq \eta$ for some constant $c > 0$,
 \[ \frac{dm}{dt} \geq c \cdot C_{\sie} \times (\ind_L, \dots, \ind_L) m^{\sie-1} - C\gamma dm \]
 For any $\delta > 0$, there exists a constant $\kappa(\delta)$ such that with  probability at least $1 - \delta$,
 \[ m(0) \geq \frac{\kappa(\delta)}{\sqrt{d}}. \]
@@ -127,9 +127,9 @@ This implies:
     \item when $\sie \geq 2$,
     \[ m(t) \geq \left(m(0)^{2-\sie} - \frac{C_{\sie} \times (\ind_L, \dots, \ind_L)}{2}t^{\sie-2}\right)^{-\frac1{\sie-2}}, \quad \text{hence} \quad \tau_\eta \leq \frac{C'd^{\frac\sie2-1}}{C_{\sie} \times (\ind_L, \dots, \ind_L)}. \]
 \end{itemize}
-The bound on $\gamma$ above is always weaker (up to constant factors) than the bound $\gamma \leq C(d\tau_d)^{-1}$ of Theorem~\ref{thm:app:ben_arous_meta}, and hence we always have
+The bound on $\gamma$ above is always weaker (up to constant factors) than the bound $\gamma \leq C(d\tau_d)^{-1}$ of Theorem~\ref{2506:thm:app:ben_arous_meta}, and hence we always have
 \[ t_\eta^+ \leq Cd\tau_\eta^2,\]
-which corresponds to the statement of Theorem~\ref{thm:sie}.
+which corresponds to the statement of Theorem~\ref{2506:thm:sie}.
 
 On the other hand, for any $t \geq 0$ we have
 \[ \frac{dm}{dt} \leq  3C_{\sie} \times (\ind_L, \dots, \ind_L) m^{\sie-1}, \]
@@ -137,7 +137,7 @@ which by the same reasoning implies that the bounds on $\tau_\eta$ that we obtai
 
 \subsection{Hitting time for untied dynamics}
 
-We are now ready to finish the proof of Theorem~\ref{thm:sequencelength-gain}. Since
+We are now ready to finish the proof of Theorem~\ref{2506:thm:sequencelength-gain}. Since
 \[ \phi_{\text{untied}}(\vec{m}) = 2 c_\sie(\sigma) C_{\sie} \times (I_L, \vec{m}, \dots, \vec{m}) + O(\norm{\vec{m}}^\sie), \]
 for small enough $\eta > 0$ we have for $t \leq \tau_\eta$
 \[ \frac{d\norm{\vec{m}}}{dt} \leq C \cdot C_\sie \times (\vec{m}, \dots, \vec{m}) + \norm{C_\sie} \norm{m}^{\sie-1} \leq (C+1)\norm{C_\sie}\cdot \norm{\vec{m}}^{\sie-1}.\]
@@ -149,7 +149,7 @@ Recall that the hitting time $\tau_{\eta, \text{untied}}$ corresponds to $\norm{
 \end{cases} \]
 Since the gain satisfies 
 \[ \mathrm{gain} \asymp  \left(\frac{\tau_{\eta, \text{untied}}}{\tau_\eta}\right)^2, \]
-this proves the first part of Theorem~\ref{thm:sequencelength-gain}.
+this proves the first part of Theorem~\ref{2506:thm:sequencelength-gain}.
 
 For the second part, assume that $C_\sie$ is \emph{odeco}, hence there exists $\lambda_1, \dots, \lambda_L$ and orthogonal vectors $\vec{v}_1, \dots, \vec{v}_L$ such that
 \[C_\sie = \sum_{i=1}^L \lambda_i \vec{v}_i^{\otimes \sie}.\]
@@ -165,4 +165,4 @@ Since $\norm{m} \geq m^{(1)}$ by the Cauchy-Schwarz inequality, the hitting time
     d^{\frac\sie2-1} & \textif \sie \geq 3
     \end{cases}
 \]
-This closes the upper bound of Theorem~\ref{thm:sequencelength-gain}.
+This closes the upper bound of Theorem~\ref{2506:thm:sequencelength-gain}.

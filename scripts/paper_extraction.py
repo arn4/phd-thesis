@@ -215,6 +215,14 @@ class ExtractionPlan:
     macro_rewrites: dict[str, int] = field(default_factory=dict)
     macro_unknown: list[str] = field(default_factory=list)
     vendored_warnings: list[str] = field(default_factory=list)
+    # Populated by the body-cleanup pass (run inside finalize_text):
+    spacing_dropped: dict[str, int] = field(default_factory=dict)
+    float_specs_dropped: int = 0
+    wrapfigs_converted: int = 0
+    labels_prefixed: int = 0
+    refs_prefixed: int = 0
+    newcommands_stripped: list[str] = field(default_factory=list)
+    patches_applied: dict[str, int] = field(default_factory=dict)
 
 
 # ---------------------------------------------------------------------------
@@ -1180,6 +1188,265 @@ def _run_verification_compile(yymm: str) -> dict[str, object]:
 
 
 # ---------------------------------------------------------------------------
+# Body cleanups — run on every unit/asset/abstract inside finalize_text.
+#
+# These passes apply to the FULL extracted body, including content brought in
+# by \input. The top-level body walker only sees the main .tex; modular papers
+# have most of their prose in input files that the walker appends verbatim,
+# so cleanups have to happen here, not in the walker.
+# ---------------------------------------------------------------------------
+
+# Spacing/layout commands that take one required brace arg. Greedy {[^{}]*}
+# is fine here — these arguments are always plain lengths (e.g. 2em, \baselineskip).
+_SPACING_BRACE_CMDS = ("vspace", "hspace", "addvspace", "enlargethispage")
+_SPACING_BRACE_RE = re.compile(
+    rf"\\(?:{'|'.join(_SPACING_BRACE_CMDS)})\*?\s*\{{[^{{}}]*\}}"
+)
+
+# Bare spacing commands (no args, or optional [n] only). Word-boundary on
+# letters/@ to avoid eating \hfilllonger.
+_SPACING_BARE_CMDS = (
+    "bigskip", "medskip", "smallskip",
+    "hfill", "vfill", "hfil", "vfil",
+    "noindent", "indent",
+    "newpage", "clearpage", "cleardoublepage",
+    "samepage", "sloppy", "fussy",
+)
+_SPACING_BARE_RE = re.compile(
+    rf"\\(?:{'|'.join(_SPACING_BARE_CMDS)})(?![A-Za-z@])"
+)
+
+# Page/line break suggestions: \pagebreak[3], \linebreak[2], etc.
+_BREAK_OPTARG_RE = re.compile(
+    r"\\(?:pagebreak|linebreak|nopagebreak|nolinebreak)(?:\[[^\]]*\])?(?![A-Za-z@])"
+)
+
+# Linebreak optional spacing arg: \\[2em] -> \\, \\*[2em] -> \\*
+_LINEBREAK_OPT_RE = re.compile(r"(\\\\\*?)\s*\[[^\]]*\]")
+
+# Float environments whose optional [ht!] placement arg we strip.
+_FLOAT_ENVS = (
+    "figure", r"figure\*",
+    "table", r"table\*",
+    "longtable", "sidewaystable", "sidewaysfigure",
+)
+_FLOAT_PLACEMENT_RE = re.compile(
+    rf"\\begin\s*\{{(?P<env>{'|'.join(_FLOAT_ENVS)})\}}\s*\[[^\]]*\]"
+)
+
+# wrapfigure: \begin{wrapfigure}[N]{r}{0.5\textwidth} -> \begin{figure}.
+# Optional first arg (line count) then two required args.
+_WRAPFIG_BEGIN_RE = re.compile(
+    r"\\begin\s*\{wrapfigure\}\s*(?:\[[^\]]*\])?\s*\{[^{}]*\}\s*\{[^{}]*\}"
+)
+_WRAPFIG_END_RE = re.compile(r"\\end\s*\{wrapfigure\}")
+
+# Label/ref family. Comma-separated lists supported via inner split.
+_LABEL_REF_CMDS = (
+    "label",
+    "ref", "eqref", "pageref", "nameref",
+    "cref", "Cref", "crefrange", "Crefrange",
+    "cpageref", "Cpageref",
+    "autoref", "vref", "Vref",
+)
+_LABEL_REF_RE = re.compile(
+    rf"\\(?P<cmd>{'|'.join(_LABEL_REF_CMDS)})(?P<star>\*?)\s*\{{(?P<keys>[^{{}}]*)\}}"
+)
+_HYPERREF_RE = re.compile(r"\\hyperref\s*\[(?P<key>[^\]]+)\]")
+
+# \newcommand-family that we'll try to strip when the name collides with the
+# globally-merged macros file. Use balanced-brace skipping for the body.
+_NEWCMD_HEAD_RE = re.compile(
+    r"\\(?P<kind>newcommand|renewcommand|providecommand|DeclareMathOperator)"
+    r"(?P<star>\*?)\s*\{?\s*\\(?P<name>[A-Za-z@]+)\}?"
+)
+
+
+def _strip_spacing_and_layout(text: str, counts: dict[str, int]) -> str:
+    def count_and_drop(pat: re.Pattern[str], key: str, s: str) -> str:
+        new_s, n = pat.subn("", s)
+        if n:
+            counts[key] = counts.get(key, 0) + n
+        return new_s
+
+    text = count_and_drop(_SPACING_BRACE_RE, "vspace/hspace/addvspace", text)
+    text = count_and_drop(_SPACING_BARE_RE, "bigskip/hfill/noindent/...", text)
+    text = count_and_drop(_BREAK_OPTARG_RE, "pagebreak/linebreak", text)
+    # \\[2em] -> \\
+    def lb_repl(m: re.Match) -> str:
+        counts["\\\\[len]"] = counts.get("\\\\[len]", 0) + 1
+        return m.group(1)
+    text = _LINEBREAK_OPT_RE.sub(lb_repl, text)
+    return text
+
+
+def _strip_float_placement(text: str, counter: list[int]) -> str:
+    def repl(m: re.Match) -> str:
+        counter[0] += 1
+        return f"\\begin{{{m.group('env')}}}"
+    return _FLOAT_PLACEMENT_RE.sub(repl, text)
+
+
+def _convert_wrapfigure(text: str, counter: list[int]) -> str:
+    def begin_repl(m: re.Match) -> str:
+        counter[0] += 1
+        return r"\begin{figure}"
+    text = _WRAPFIG_BEGIN_RE.sub(begin_repl, text)
+    text = _WRAPFIG_END_RE.sub(r"\\end{figure}", text)
+    return text
+
+
+def _rewrite_labels_and_refs(
+    text: str,
+    prefix: str,
+    counters: dict[str, int],
+) -> str:
+    """Prefix every \\label{X}/\\ref{X}/... with `<prefix>:`. Comma-separated
+    lists in cref-style commands are handled per-key. Already-prefixed keys
+    are left alone (idempotent — protects against re-runs on already-rewritten
+    files even though normal flow always starts from arxiv-papers/)."""
+    pfx = f"{prefix}:"
+
+    def prefix_key(k: str) -> str:
+        k = k.strip()
+        if not k or k.startswith(pfx):
+            return k
+        return pfx + k
+
+    def repl(m: re.Match) -> str:
+        cmd = m.group("cmd")
+        star = m.group("star")
+        keys = m.group("keys")
+        bucket = "labels" if cmd == "label" else "refs"
+        new_keys: list[str] = []
+        for k in keys.split(","):
+            new_k = prefix_key(k)
+            if new_k != k.strip():
+                counters[bucket] = counters.get(bucket, 0) + 1
+            new_keys.append(new_k)
+        return f"\\{cmd}{star}{{{','.join(new_keys)}}}"
+
+    text = _LABEL_REF_RE.sub(repl, text)
+
+    def hyper_repl(m: re.Match) -> str:
+        k = m.group("key").strip()
+        if not k or k.startswith(pfx):
+            return m.group(0)
+        counters["refs"] = counters.get("refs", 0) + 1
+        return f"\\hyperref[{pfx}{k}]"
+    text = _HYPERREF_RE.sub(hyper_repl, text)
+
+    return text
+
+
+def _load_global_macro_names() -> set[str]:
+    """Names defined in papers-macros.tex (newcommand/DeclareMathOperator/let/
+    def/newtheorem/newenvironment etc.). Used by _strip_redundant_newcommands
+    to detect when an in-body \\newcommand collides with a global definition."""
+    if not GLOBAL_MACROS_TEX.is_file():
+        return set()
+    try:
+        result = scan_sidecar_full(REPO_ROOT, GLOBAL_MACROS_TEX)
+    except Exception:
+        return set()
+    return {d.name for d in result.macros if d.name}
+
+
+def _strip_redundant_newcommands(
+    text: str,
+    global_names: set[str],
+    stripped: list[str],
+) -> str:
+    """Find every \\newcommand|\\renewcommand|\\providecommand|\\DeclareMathOperator
+    in the body whose target name is already defined in papers-macros.tex.
+    Drop the entire definition (head + optional [n][default] + body brace group).
+    This catches the 2602 \\cmark/\\xmark case where an in-body redef collides
+    with the global definition."""
+    if not global_names:
+        return text
+    out_parts: list[str] = []
+    i = 0
+    n = len(text)
+    while i < n:
+        m = _NEWCMD_HEAD_RE.search(text, i)
+        if m is None:
+            out_parts.append(text[i:])
+            break
+        name = m.group("name")
+        if name not in global_names:
+            out_parts.append(text[i:m.end()])
+            i = m.end()
+            continue
+        # Match — skip the entire definition.
+        out_parts.append(text[i:m.start()])
+        j = m.end()
+        # Optional [nargs][default] for newcommand-family. DeclareMathOperator
+        # has no optionals, but the loop below is a no-op if none are present.
+        while True:
+            k = skip_ws_and_comments(text, j)
+            if k < n and text[k] == "[":
+                j = skip_balanced_brackets(text, k)
+            else:
+                break
+        # Required body brace group.
+        k = skip_ws_and_comments(text, j)
+        if k < n and text[k] == "{":
+            j = skip_balanced_braces(text, k)
+        else:
+            # Malformed — fall back to keeping the head.
+            out_parts.append(text[m.start():m.end()])
+            i = m.end()
+            continue
+        stripped.append(name)
+        # Also swallow a trailing newline so we don't leave a blank line.
+        if j < n and text[j] == "\n":
+            j += 1
+        i = j
+    return "".join(out_parts)
+
+
+def _load_patches(yymm: str) -> list[dict[str, str]]:
+    """Optional per-paper find/replace patches. Sidecar:
+        arxiv-papers/arXiv-YYMM-patches.json
+    Schema:
+        {"find_replace": [{"find": "...", "replace": "...", "comment": "..."}]}
+    Missing file → []. Patches run LAST inside finalize_text, so they override
+    every other rewrite."""
+    path = ARXIV_DIR / f"arXiv-{yymm}-patches.json"
+    if not path.is_file():
+        return []
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except Exception as e:
+        die(f"could not parse {path.relative_to(REPO_ROOT)}: {e}")
+    out: list[dict[str, str]] = []
+    for entry in data.get("find_replace", []):
+        if not isinstance(entry, dict):
+            continue
+        find = entry.get("find")
+        replace = entry.get("replace")
+        if isinstance(find, str) and isinstance(replace, str):
+            out.append({"find": find, "replace": replace})
+    return out
+
+
+def _apply_patches(
+    text: str,
+    patches: list[dict[str, str]],
+    counts: dict[str, int],
+) -> str:
+    for p in patches:
+        find, replace = p["find"], p["replace"]
+        if not find:
+            continue
+        n = text.count(find)
+        if n:
+            counts[find] = counts.get(find, 0) + n
+            text = text.replace(find, replace)
+    return text
+
+
+# ---------------------------------------------------------------------------
 # Output writing
 # ---------------------------------------------------------------------------
 
@@ -1205,17 +1472,32 @@ def _write_plan_to_disk(
     cmap: dict[str, str],
     mmap: dict[str, str],
     global_bib_keys: set[str],
+    global_macro_names: set[str],
+    yymm: str,
+    patches: list[dict[str, str]],
 ) -> None:
     """Apply final rewrites and write all files under out_dir."""
     cite_counters: dict[str, int] = {}
     unknown_cites: set[str] = set()
     macro_counts: dict[str, int] = {}
+    spacing_counts: dict[str, int] = {}
+    float_counter = [0]
+    wrapfig_counter = [0]
+    refloc_counters: dict[str, int] = {}
+    stripped_newcommands: list[str] = []
+    patch_counts: dict[str, int] = {}
 
     def finalize_text(text: str) -> str:
         text = _strip_bib_commands(text)
         text = _rewrite_figure_paths(text, fig_map)
         text = _rewrite_citations(text, cmap, global_bib_keys, cite_counters, unknown_cites)
         text = _rewrite_macros(text, mmap, macro_counts)
+        text = _strip_redundant_newcommands(text, global_macro_names, stripped_newcommands)
+        text = _strip_spacing_and_layout(text, spacing_counts)
+        text = _strip_float_placement(text, float_counter)
+        text = _convert_wrapfigure(text, wrapfig_counter)
+        text = _rewrite_labels_and_refs(text, yymm, refloc_counters)
+        text = _apply_patches(text, patches, patch_counts)
         return text
 
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -1266,6 +1548,13 @@ def _write_plan_to_disk(
     plan.cite_unchanged = cite_counters.get("unchanged", 0)
     plan.cite_unknown = sorted(unknown_cites)
     plan.macro_rewrites = macro_counts
+    plan.spacing_dropped = spacing_counts
+    plan.float_specs_dropped = float_counter[0]
+    plan.wrapfigs_converted = wrapfig_counter[0]
+    plan.labels_prefixed = refloc_counters.get("labels", 0)
+    plan.refs_prefixed = refloc_counters.get("refs", 0)
+    plan.newcommands_stripped = stripped_newcommands
+    plan.patches_applied = patch_counts
 
 
 # ---------------------------------------------------------------------------
@@ -1310,6 +1599,25 @@ def _print_report(
         print(f"- Macros rewritten: {items}")
     else:
         print("- Macros rewritten: (none)")
+    print(
+        f"- Labels prefixed: {plan.labels_prefixed} label(s), "
+        f"{plan.refs_prefixed} ref(s) -> {yymm}:*"
+    )
+    if plan.spacing_dropped:
+        items = ", ".join(f"{k}({v})" for k, v in plan.spacing_dropped.items())
+        print(f"- Spacing dropped: {items}")
+    if plan.float_specs_dropped or plan.wrapfigs_converted:
+        print(
+            f"- Floats: {plan.float_specs_dropped} placement spec(s) dropped, "
+            f"{plan.wrapfigs_converted} wrapfigure -> figure"
+        )
+    if plan.newcommands_stripped:
+        preview = ", ".join(f"\\{n}" for n in plan.newcommands_stripped[:5])
+        more = "" if len(plan.newcommands_stripped) <= 5 else f" (+{len(plan.newcommands_stripped) - 5})"
+        print(f"- Redundant \\newcommands dropped: {preview}{more}")
+    if plan.patches_applied:
+        n_subs = sum(plan.patches_applied.values())
+        print(f"- Patches applied: {n_subs} substitution(s) from arXiv-{yymm}-patches.json")
     if plan.vendored_warnings:
         print(f"- Vendored ({len(plan.vendored_warnings)} warning(s)):")
         for w in plan.vendored_warnings:
@@ -1420,6 +1728,8 @@ def main() -> int:
     cmap = _load_citation_map(yymm)
     mmap = _load_macro_map(yymm)
     global_bib_keys = _load_global_bib_keys()
+    global_macro_names = _load_global_macro_names()
+    patches = _load_patches(yymm)
 
     # Discover figures (after units exist; needs graphicspath).
     fig_map = _discover_figures(paper_dir, plan)
@@ -1440,22 +1750,44 @@ def main() -> int:
     if not args.dry_run:
         if out_dir.exists() and args.force:
             shutil.rmtree(out_dir)
-        _write_plan_to_disk(plan, out_dir, fig_map, cmap, mmap, global_bib_keys)
+        _write_plan_to_disk(
+            plan, out_dir, fig_map, cmap, mmap, global_bib_keys,
+            global_macro_names, yymm, patches,
+        )
         print(f"[write]   {out_dir.relative_to(REPO_ROOT)}/", file=sys.stderr)
     else:
         # Still apply rewrites to populate counters for the report.
         cite_counters: dict[str, int] = {}
         unknown_cites: set[str] = set()
         macro_counts: dict[str, int] = {}
+        spacing_counts: dict[str, int] = {}
+        float_counter = [0]
+        wrapfig_counter = [0]
+        refloc_counters: dict[str, int] = {}
+        stripped_newcommands: list[str] = []
+        patch_counts: dict[str, int] = {}
         for u in plan.units:
             t = _strip_bib_commands(u.text)
             t = _rewrite_figure_paths(t, fig_map)
             t = _rewrite_citations(t, cmap, global_bib_keys, cite_counters, unknown_cites)
-            _rewrite_macros(t, mmap, macro_counts)
+            t = _rewrite_macros(t, mmap, macro_counts)
+            t = _strip_redundant_newcommands(t, global_macro_names, stripped_newcommands)
+            t = _strip_spacing_and_layout(t, spacing_counts)
+            t = _strip_float_placement(t, float_counter)
+            t = _convert_wrapfigure(t, wrapfig_counter)
+            t = _rewrite_labels_and_refs(t, yymm, refloc_counters)
+            _apply_patches(t, patches, patch_counts)
         plan.cite_rewrites = cite_counters.get("rewritten", 0)
         plan.cite_unchanged = cite_counters.get("unchanged", 0)
         plan.cite_unknown = sorted(unknown_cites)
         plan.macro_rewrites = macro_counts
+        plan.spacing_dropped = spacing_counts
+        plan.float_specs_dropped = float_counter[0]
+        plan.wrapfigs_converted = wrapfig_counter[0]
+        plan.labels_prefixed = refloc_counters.get("labels", 0)
+        plan.refs_prefixed = refloc_counters.get("refs", 0)
+        plan.newcommands_stripped = stripped_newcommands
+        plan.patches_applied = patch_counts
 
     # Verify compile (unless skipped).
     compile_result: dict[str, object] | None = None

@@ -1,21 +1,21 @@
 \section{Setting and definitions}
-\label{sec:setting}
+\label{2506:sec:setting}
 
-Let $(X^{\tau},\vec{y}^{\tau})\in\mathbb{R}^{L\times d}\times \mathbb{R}^{k}$ denote $\tau=1,\dots,n$ samples drawn from the Gaussian sequence single-index model with weights $\vec{w}_{\star}\in\mathbb{R}^{d}$ and link function $\vec{g}$, defined in \cref{eq:gssim}. As motivated in the introduction, our goal in this work is to characterize the sample complexity of learning the sequence task $(X^{\tau},\vec{y}^{\tau})$ with a tied single-layer attention trained under one-pass (spherical) SGD defined in \cref{eq:normalized-SGD-w}. Note that while the model might appear as too simplified because of the lack of correlation between the tokens, we will show that it is sufficient to capture the main features of sequence models. 
+Let $(X^{\tau},\vec{y}^{\tau})\in\mathbb{R}^{L\times d}\times \mathbb{R}^{k}$ denote $\tau=1,\dots,n$ samples drawn from the Gaussian sequence single-index model with weights $\vec{w}_{\star}\in\mathbb{R}^{d}$ and link function $\vec{g}$, defined in \cref{2506:eq:gssim}. As motivated in the introduction, our goal in this work is to characterize the sample complexity of learning the sequence task $(X^{\tau},\vec{y}^{\tau})$ with a tied single-layer attention trained under one-pass (spherical) SGD defined in \cref{2506:eq:normalized-SGD-w}. Note that while the model might appear as too simplified because of the lack of correlation between the tokens, we will show that it is sufficient to capture the main features of sequence models. 
 
 As shown in the classical result by \cite{chung1954stochastic}, one-pass SGD can be understood as a noisy discretization of gradient flow on the \emph{population risk} (often refereed also as \emph{population loss}):
 \begin{equation}
     R(\vec{w}) =
         \mathbb{E}_{X\sim\mathcal{N}(0,\sfrac{I_d}{d})}\left[\ell(X, \vec{f}^\mathrm{SSI}_{\vec w_\star}(X); \vec{f}_{\vec{w}})\right].
 \end{equation}
-Therefore, in order to understand the dynamics in \cref{eq:normalized-SGD-w} it is important to understand the landscape of the risk above. The key property of single-index models underlying the convergence rate analysis of \cite{arous2021online} is that rotation invariance of the population risk implies that it only depends on a single parameter: the correlation between the target weights and the predictor weight, also known as an \emph{order parameter} or \emph{sufficient statistic}. A similar property holds for the family of SSI models defined by Assumption \ref{def:gsim}. Indeed, conditionally on the weights, the following projections
+Therefore, in order to understand the dynamics in \cref{2506:eq:normalized-SGD-w} it is important to understand the landscape of the risk above. The key property of single-index models underlying the convergence rate analysis of \cite{arous2021online} is that rotation invariance of the population risk implies that it only depends on a single parameter: the correlation between the target weights and the predictor weight, also known as an \emph{order parameter} or \emph{sufficient statistic}. A similar property holds for the family of SSI models defined by Assumption \ref{2506:def:gsim}. Indeed, conditionally on the weights, the following projections
 \begin{equation}
     \vec{z}_\star = X\cdot \vec{w}_\star \in \mathbb{R}^L
     \quad \text{and} \quad
     \vec{z} = \left(X+\frac{P}{\sqrt{d}}\right)\vec{w} \in \mathbb{R}^L,
 \end{equation}
 define joint Gaussian variables, which can be fully characterized by their means and covariances:
-\begin{equation}\begin{split}\label{eq:localfields_joint_distribution}
+\begin{equation}\begin{split}\label{2506:eq:localfields_joint_distribution}
     &\mathbb{E}\left[z_{\star,i}\right] = 0, \quad \mathbb{E}\left[z_{i}\right] = e_i \\
     \Cov\left(z_{\star,i}, z_{\star,j}\right) = \delta_{ij}, &\quad
     \Cov\left(z_{i}, z_{j}\right) = \delta_{ij}, \quad
@@ -28,7 +28,7 @@ where we have introduced the \emph{sufficient statistics}:
     \vec{e} = \frac{P\vec{w}}{\sqrt{d}}.
 \end{equation}
 These play exactly the same role as the overlap between target and predictor weights in the standard single-index model. Therefore, the population risk can be written as a function of these statistics:
-\begin{equation} \label{eq:population-loss_sufficient-statistic}
+\begin{equation} \label{2506:eq:population-loss_sufficient-statistic}
     R(\vec{w}) \equiv R(\vec{e}, m) =
         \mathbb{E}_{(\vec{z}_\star, \vec{z})}\left[
             \left\lVert \vec{g}(\vec{z}_\star) - \vec{R}\left[\SoftMax{\left(\vec{z}\vec{z}^\top\right)}\right]\right\rVert^2_{\rm F}
@@ -44,22 +44,22 @@ In the high-dimensional scenario where $d$ is large, the initial weight \(\vec{w
 \begin{equation}
     \lim_{d\to+\infty}\sqrt{d}(\vec{e}^0, m^0) \sim \mathcal{N}(0, I_{L+1}).
 \end{equation}
-Namely, the initial value of the sufficient statistic is \((\vec{e}^0, m^0)\approx (\vec{0}, 0)\), with fluctuations of order $O(\sfrac{1}{\sqrt{d}})$. For the model in \cref{eq:model-definition}, $(\vec{e},m)=(\vec{0}, 0)$ is a saddle-point of risk, and the dynamics is divided in two phases:
+Namely, the initial value of the sufficient statistic is \((\vec{e}^0, m^0)\approx (\vec{0}, 0)\), with fluctuations of order $O(\sfrac{1}{\sqrt{d}})$. For the model in \cref{2506:eq:model-definition}, $(\vec{e},m)=(\vec{0}, 0)$ is a saddle-point of risk, and the dynamics is divided in two phases:
 \begin{itemize}
     \item The escape from the initial condition, where the model develops a weak correlation with the target direction \(\vec{w}_\star\) and/or the positional embedding \(P\);
     \item Full recovery where it reaches a complete overlap with either the target direction \(\vec{w}_\star\) and/or the positional embedding \(P\): \(\norm{(\vec{e}, m)}\approx 1\). 
 \end{itemize}
 As previously discussed, the first phase is the one that requires the most number of gradient steps \cite{arous2021online,arnaboldi2024escaping}: the sample complexity required for the first phase is always greater or equal to the one required for the second phase; after having reached a small correlation with the target, the attention decay exponentially fast to a complete overlapped state.
-\begin{definition}[Weak recovery] \label{def:weak-recovery}
+\begin{definition}[Weak recovery] \label{2506:def:weak-recovery}
     Let \(\eta\in(0,1)\) a parameter independent from \(d\). We say that the model has \emph{weakly recovered} the target when \(\norm{(\vec{e}, m)}\geq \eta\). The weak recovery time is then
     \[ \tau^\mathrm{weak}_\eta = \min\left\{\tau\ge0\colon \norm{(\vec{e}^\tau, m^\tau)}\geq \eta\right\}.\]
 \end{definition}
-We use this definition of weak recovery as a proxy for identifying the learning has happened, since the subsequent \emph{strong recovery} will be faster. Figure~\ref{fig:loss_surface} shows some examples of population loss surface: apart from initialization, there are no other critical points where the dynamic can get slowed down. 
+We use this definition of weak recovery as a proxy for identifying the learning has happened, since the subsequent \emph{strong recovery} will be faster. Figure~\ref{2506:fig:loss_surface} shows some examples of population loss surface: apart from initialization, there are no other critical points where the dynamic can get slowed down. 
 
-Finally, for simplicity of the discussion we will make the following assumption on the spherical one-pass SGD dynamics in \cref{eq:normalized-SGD-w}.
+Finally, for simplicity of the discussion we will make the following assumption on the spherical one-pass SGD dynamics in \cref{2506:eq:normalized-SGD-w}.
 \begin{assumption}[Gradient flow approximation]
-    We approximate the training dynamics of eq.\eqref{eq:normalized-SGD-w} via the following ODE, which corresponds to an order-2 Taylor expansion in $\gamma$:
-\begin{equation}\label{eq:ode_approx}
+    We approximate the training dynamics of eq.\eqref{2506:eq:normalized-SGD-w} via the following ODE, which corresponds to an order-2 Taylor expansion in $\gamma$:
+\begin{equation}\label{2506:eq:ode_approx}
     \frac{d\vw}{dt} = \E*{\nabla_{\vw}^\bot \ell(X, y, f_{\vw})} - \frac{\gamma}2\, \E*{\norm{\nabla_{\vw}^\bot \ell(X, y, f_{\vw})}^2} \vw,
 \end{equation}
 where $\nabla_{\vw}^\bot = (I - \vw\vw^\top)\nabla_{\vw}$ is the spherical gradient. The time scaling corresponds to $t = \tau/\gamma$.

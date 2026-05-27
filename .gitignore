@@ -23,3 +23,5 @@ build/
 *.nav
 *.snm
 *.vrb
+
+.vscode/

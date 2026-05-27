@@ -1,8 +1,8 @@
 \section{Effective dimension and sample complexity of emergence}
 
-\label{app:effective-dimension}
+\label{2605:app:effective-dimension}
 
-As discussed in the main text,  training dynamics is found in practice to often display long plateaus followed by abrupt transitions, with new directions in representation space \emph{emerging} sequentially \cite{wei2022emergent,raventos2023pretraining,arora2023theory,schaeffer2023are}. We return in this section to the emergence of learned features at each layer, and in particular, we now make the noise level \(\tau^k_\ell(n)\) in \eqref{eq:lofi-emergence-threshold} explicit.  Throughout the section our results apply conditioned on a fixed kernel $K_{\ell-1}(\bm x,\bm x')$ defined by the features $\bz_{\ell-1}$ of the previous layers.
+As discussed in the main text,  training dynamics is found in practice to often display long plateaus followed by abrupt transitions, with new directions in representation space \emph{emerging} sequentially \cite{wei2022emergent,raventos2023pretraining,arora2023theory,schaeffer2023are}. We return in this section to the emergence of learned features at each layer, and in particular, we now make the noise level \(\tau^k_\ell(n)\) in \eqref{2605:eq:lofi-emergence-threshold} explicit.  Throughout the section our results apply conditioned on a fixed kernel $K_{\ell-1}(\bm x,\bm x')$ defined by the features $\bz_{\ell-1}$ of the previous layers.
 
 Recall the residual candidate class
 \[
@@ -28,7 +28,7 @@ and let \(\Pi^\perp_k\) denote the projection orthogonal to the selected feature
 \]
 For a resolution parameter \(r>0\), define the {\it residual effective dimension}:
 \begin{definition}[Residual effective dimension]
-    \label{def:lofi-effective-dimension}
+    \label{2605:def:lofi-effective-dimension}
 Let  \(\{\lambda^{\ell,k}_j\}_{j\geq 1}\) denote the eigenvalues of \(T_{\ell,k}\). The \emph{effective residual dimension} at scale \(r\) is defined as
     \begin{equation}
     D^\ell_k(r)
@@ -39,7 +39,7 @@ Let  \(\{\lambda^{\ell,k}_j\}_{j\geq 1}\) denote the eigenvalues of \(T_{\ell,k}
     =
     \sum_{j\geq 1}
     \frac{\lambda^{\ell,k}_j}{\lambda^{\ell,k}_j+r},
-    \label{eq:lofi-effective-dimension}
+    \label{2605:eq:lofi-effective-dimension}
 \end{equation}
 \end{definition}
 The above notion of effective dimension is standard in kernel regression
@@ -50,7 +50,7 @@ interpreted as counting the number of residual directions whose variance is
 above the resolution \(r\).
 
 \begin{assumption}[Residual eigenfunction hypercontractivity]
-\label{ass:residual-eigenfunction-hypercontractivity}
+\label{2605:ass:residual-eigenfunction-hypercontractivity}
 Let \(\mathcal E_{\ell,k}\) denote the
 \(L^2(P_x)\)-closed span of the residual eigenfunctions
 \(\{\phi_j^{\ell,k}\}_{j\ge1}\). There exists \(H_\ell<\infty\) such that every
@@ -70,8 +70,8 @@ appear in random-feature kernels such as Hermite polynomials and spherical harmo
 
 
 \begin{theorem}[Emergence sample complexity]
-\label{prop:emergence}
-Suppose that Assumption~\ref{ass:residual-eigenfunction-hypercontractivity}
+\label{2605:prop:emergence}
+Suppose that Assumption~\ref{2605:ass:residual-eigenfunction-hypercontractivity}
 holds and the kernel \(K_{\ell-1}\) and labels \(y\) are uniformly bounded. Let
 \[
     r_\ell^{k,\star}
@@ -110,7 +110,7 @@ scale
 for recovery of $\varphi_k$ conditional on the recovery of previous features $\varphi_1,\cdots,\varphi_{k-1}$.
 \end{theorem}
 
-\begin{remark}\label{rem:order}
+\begin{remark}\label{2605:rem:order}
 The order of maximizers of the noise scale $r\sqrt{D^\ell_k(r)}$ may not perfectly match the order of maximizers of the population correlation $\abs{\mathbb{E}[y \varphi(\bx)^2]}$. Hence, the next emergent feature after recovering $\varphi_1,\cdots,\varphi_{k-1}$ may not be $\varphi_{k}$. For simplicity, we neglect the correction in sample complexity due to such order switches.
 \end{remark}
 \begin{proof}
@@ -135,7 +135,7 @@ We will show that:
     \lesssim
     \widetilde C_{\ell,H}\,
     r\sqrt{\frac{D^\ell_k(r)}{n}}
-    \label{eq:lofi-noise-floor}
+    \label{2605:eq:lofi-noise-floor}
 \end{equation}
 
 The above bound follows through an extension of Theorem~2.1 in
@@ -160,7 +160,7 @@ eigenvalue \(\lambda_j\),
     \le
     \min\{r,\lambda_j\},
 \]
-the same bound holds for $D^\ell_k(r)$ defined in Definition \ref{def:lofi-effective-dimension}.
+the same bound holds for $D^\ell_k(r)$ defined in Definition \ref{2605:def:lofi-effective-dimension}.
 
 We now adapt the proof of Theorem~2.1 of
 \cite{mendelson2003performance} to the quadratic process. By the boundedness of the labels $y$, $\tau^k_\ell(r,n)$ can be bounded up to constants by the rademacher complexity of $\varphi^2$ over $S^\ell_k(r)$, defined as:
@@ -230,7 +230,7 @@ The decomposition $\varphi_\beta(\bm x)
             \theta_j\sqrt{a_j(r)}\phi_j^{\ell,k}(\bm x)
     \end{align*}
 
-\begin{equation}\label{eq:radbound}
+\begin{equation}\label{2605:eq:radbound}
     \sup_{\beta\in I_r}
     \left|
         \sum_{i=1}^n
@@ -253,8 +253,8 @@ Define:
     :=
     \left(\sqrt{a_j(r)}\,\phi_j^{\ell,k}(\bm x)\right)_{j\ge1},
 \]
-then the RHS in Equation \ref{eq:radbound} can be expressed as:
-\begin{equation}\label{eq:matconc}
+then the RHS in Equation \ref{2605:eq:radbound} can be expressed as:
+\begin{equation}\label{2605:eq:matconc}
     \left\|
         \sum_{i=1}^n
         \epsilon_i
@@ -271,7 +271,7 @@ Let
     \asymp rD^\ell_k(r).
 \]
 
-We now bound Equation \ref{eq:matconc} through a matrix concentration argument which requires bounding the operator norm of the following fourth-moment matrix:
+We now bound Equation \ref{2605:eq:matconc} through a matrix concentration argument which requires bounding the operator norm of the following fourth-moment matrix:
 \[
     M_{\ell,k}(r)
     :=
@@ -282,7 +282,7 @@ We now bound Equation \ref{eq:matconc} through a matrix concentration argument w
             v_{\ell,k,r}(\bm X)
         \right].
 \]
-We bound $\norm{M_{\ell,k}(r)}$ through Assumption \ref{ass:residual-eigenfunction-hypercontractivity}. For every \(\norm{u}_2=1\),
+We bound $\norm{M_{\ell,k}(r)}$ through Assumption \ref{2605:ass:residual-eigenfunction-hypercontractivity}. For every \(\norm{u}_2=1\),
 write \(g_u(\bm x)=\langle u,v_{\ell,k,r}(\bm x)\rangle\). Then
 \[
     \E[g_u(\bm X)^2]
@@ -290,7 +290,7 @@ write \(g_u(\bm x)=\langle u,v_{\ell,k,r}(\bm x)\rangle\). Then
     \sum_j u_j^2a_j(r)
     \le r,
 \]
-since $a_j(r) \leq r$. Subsequently by Cauchy--Schwarz and hypercontractivity (Assumption \ref{ass:residual-eigenfunction-hypercontractivity}), we obtain:
+since $a_j(r) \leq r$. Subsequently by Cauchy--Schwarz and hypercontractivity (Assumption \ref{2605:ass:residual-eigenfunction-hypercontractivity}), we obtain:
 \[
     \begin{aligned}
     \left\langle u,M_{\ell,k}(r)u\right\rangle
@@ -333,7 +333,7 @@ factors:
     H_\ell^2 n r\sqrt{\frac{D^\ell_k(r)}{n}}.
 \]
 By symmetrization and the boundedness of labels, this
-yields \eqref{eq:lofi-noise-floor}. Taking the maximum over shells gives
+yields \eqref{2605:eq:lofi-noise-floor}. Taking the maximum over shells gives
 the stated bound with \(r_\ell^{k,\star}\).
 \end{proof}
 
@@ -372,7 +372,7 @@ To estimate the cutoff $n^k_\ell$ for the number of samples required for the rec
     
     \item Set $r^k_\ell{=}\argmax_{r \leq \lambda_1^{\ell,k}} r \sqrt{D^k_{\ell}(r)}$.
     We predict the emergence of $\bv_{k}$ with samples $n^k_{\ell}$ satisfying:
-    \begin{equation}\label{eq:real-data-emergence-estimate}
+    \begin{equation}\label{2605:eq:real-data-emergence-estimate}
         n^k_{\ell} \sim  \left(\frac{r^k_\ell}{\rho^{(k)}_\ell}\right)^2 D^k_{\ell},
     \end{equation}
     where $\rho^{(k)}_\ell$ is the $k_{th}$ eigenvalue of $\bm C^{(\ell)}$.
@@ -381,9 +381,9 @@ To estimate the cutoff $n^k_\ell$ for the number of samples required for the rec
 
 
 \subsection{Effective dimension in the Hermite toy model}
-\label{app:effective-dimension-hermite}
+\label{2605:app:effective-dimension-hermite}
 
-The abstract quantity \(D^\ell_k(r)\) becomes concrete in the toy model Appendix~\ref{app:th_rf}. In this paragraph, \(k\) denotes the
+The abstract quantity \(D^\ell_k(r)\) becomes concrete in the toy model Appendix~\ref{2605:app:th_rf}. In this paragraph, \(k\) denotes the
 Hermite degree used to define the first hidden representation \(h^{(1)}\), not
 the index of the sequentially selected feature. Write the flattened degree-\(k\)
 Hermite tensor as
@@ -429,7 +429,7 @@ has integral operator
 This is the orthogonal projector onto the degree-\(k\) Hermite chaos. Its only
 nonzero eigenvalue is \(1\), with multiplicity \(D_k\). If the same block is
 reached through a random-feature activation, as in the construction of
-Subsection~\ref{gif:rf_maths}, the eigenvalue is multiplied by the squared
+Subsection~\ref{2605:gif:rf_maths}, the eigenvalue is multiplied by the squared
 Hermite coefficient and by normalization constants, but the multiplicity is
 still at most \(D_k\).
 
@@ -453,7 +453,7 @@ and for resolutions \(\lambda\lesssim a_k\) this is
 feature recovery, the statistical fluctuation is governed by the ambient
 degree-\(k\) Hermite space.
 
-The planted first-level variables in Appendix~\ref{app:th_rf},
+The planted first-level variables in Appendix~\ref{2605:app:th_rf},
 \[
     h_i^{(1)}(\bm x)
     =
@@ -470,15 +470,15 @@ Concretely, by the definition of $y$, we have that:
 \end{equation}
 
 
-Substituting the above scaling into the sample complexity prediction prescribed by Theorem \ref{prop:emergence} gives the
+Substituting the above scaling into the sample complexity prediction prescribed by Theorem \ref{2605:prop:emergence} gives the
 \(d^{k+\epsilon}\) first-stage sample scale stated in
-Appendix~\ref{app:th_rf}.
+Appendix~\ref{2605:app:th_rf}.
 
 
 
 \subsection{Effective dimension in the multi-index models}
 
 
-We now discuss how the sample complexity prediction in Proposition \ref{prop:emergence} recovers the rates in the setting of multi-index models with power-law dependence on the label. 
+We now discuss how the sample complexity prediction in Proposition \ref{2605:prop:emergence} recovers the rates in the setting of multi-index models with power-law dependence on the label. 
 
-We follow here \cite{defilippis2026scaling,defilippis2026optimal} and consider hierarchical multi-index target \(y = f^*(\langle\bm{w}_1^*,\bm{x}\rangle,\dots,\langle\bm{w}_r^*,\bm{x}\rangle) + \xi\) with isotropic Gaussian inputs \(\bm{x}\sim\mathcal{N}(0,\bm{I}_d)\) and orthonormal teacher directions \(\{\bm{w}_i^*\}_{i=1}^r\). Because the input covariance is the identity \(D^\ell \asymp d\), at the slice-wise scale used in Proposition~\ref{prop:emergence}. The features at layer \(\ell\) along each candidate direction have unit variance under the Gaussian input, so the variance scale is order one, \(\tau = r_\ell^{(k)} = O(1)\). Finally, the power-law dependence of the label on the teacher coefficients translates into a power-law decay of the population correlations across the planted directions: the \(i\)-th spike satisfies \(\rho_\ell^{(i)} = O(i^{-\gamma})\), where \(\gamma>0\) is the exponent governing the label spectrum. Plugging \(D_k^\ell \asymp d\), \(\tau = O(1)\) and \(\rho^{(i)} = O(i^{-\gamma})\) into the recovery condition \(n \gg (r_\ell^{(k)})^2 D_k^\ell / (\rho_\ell^{(k)})^2\) of Proposition~\ref{prop:emergence} yields the sample-complexity threshold \(n_i \gtrsim d\, i^{2\gamma}\) for resolving the \(i\)-th spike, which matches the optimal scaling laws derived in~\cite{defilippis2026scaling,defilippis2026optimal}.
+We follow here \cite{defilippis2026scaling,defilippis2026optimal} and consider hierarchical multi-index target \(y = f^*(\langle\bm{w}_1^*,\bm{x}\rangle,\dots,\langle\bm{w}_r^*,\bm{x}\rangle) + \xi\) with isotropic Gaussian inputs \(\bm{x}\sim\mathcal{N}(0,\bm{I}_d)\) and orthonormal teacher directions \(\{\bm{w}_i^*\}_{i=1}^r\). Because the input covariance is the identity \(D^\ell \asymp d\), at the slice-wise scale used in Proposition~\ref{2605:prop:emergence}. The features at layer \(\ell\) along each candidate direction have unit variance under the Gaussian input, so the variance scale is order one, \(\tau = r_\ell^{(k)} = O(1)\). Finally, the power-law dependence of the label on the teacher coefficients translates into a power-law decay of the population correlations across the planted directions: the \(i\)-th spike satisfies \(\rho_\ell^{(i)} = O(i^{-\gamma})\), where \(\gamma>0\) is the exponent governing the label spectrum. Plugging \(D_k^\ell \asymp d\), \(\tau = O(1)\) and \(\rho^{(i)} = O(i^{-\gamma})\) into the recovery condition \(n \gg (r_\ell^{(k)})^2 D_k^\ell / (\rho_\ell^{(k)})^2\) of Proposition~\ref{2605:prop:emergence} yields the sample-complexity threshold \(n_i \gtrsim d\, i^{2\gamma}\) for resolving the \(i\)-th spike, which matches the optimal scaling laws derived in~\cite{defilippis2026scaling,defilippis2026optimal}.
