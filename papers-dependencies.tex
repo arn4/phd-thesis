@@ -81,8 +81,9 @@
 \usepackage{hyperref}
 % picked from arXiv-2302, arXiv-2305, arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \usepackage[colorlinks=true,citecolor=blue,linkcolor=blue,urlcolor=blue]{hyperref} in arXiv-2605; \usepackage[pdftex,colorlinks=true,citecolor=blue]{hyperref} in arXiv-2506
 
-\usepackage[utf8]{inputenc}
-% auto: identical in arXiv-2302, arXiv-2305, arXiv-2406, arXiv-2506, arXiv-2605
+% [skip:package] inputenc
+% Engine is lualatex (see latexmkrc); inputenc with utf8 is a no-op and only
+% emits the "inputenc package ignored with utf8 based engines" warning.
 
 % [skip:package] libertine
 

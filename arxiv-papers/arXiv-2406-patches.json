@@ -1,0 +1,10 @@
+{
+  "_doc": "Per-paper find/replace patches applied as the LAST step of paper_extraction.py. Use only when the upstream arxiv source has a defect that cannot be repaired in any tracked sidecar (citation-map / macro-map / packages / macros).",
+  "find_replace": [
+    {
+      "find": "\\cite{{dandi2023twolayer}}",
+      "replace": "\\cite{dandi2023how}",
+      "comment": "Upstream typo in sections/appendix/glm_expansion.tex: \\cite{{...}} with double braces slipped past the citation-key rewriter (which only matches single-brace \\cite{key}). After rewrite, dandi2023twolayer maps to dandi2023how per arXiv-2406-citation-map.json (legitimate dedup of the same paper, arXiv:2305.18270)."
+    }
+  ]
+}

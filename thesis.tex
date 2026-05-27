@@ -6,6 +6,11 @@
 \input{papers-dependencies.tex}
 \input{papers-macros.tex}
 
+% Engine is lualatex (latexmkrc): fontspec switches the font interface from
+% T1-encoded ec-lmr10 (no č/ğ/curly-quote glyphs) to OpenType Latin Modern,
+% which covers the full Unicode repertoire used in the bibliography.
+\usepackage{fontspec}
+
 % cleveref must load after hyperref (same constraint as papers/stand-alone-paper.tex).
 \usepackage[capitalize,noabbrev]{cleveref}
 
