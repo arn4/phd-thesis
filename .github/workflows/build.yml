@@ -40,6 +40,8 @@ jobs:
           latexmk_use_lualatex: true
           latexmk_shell_escape: false
           args: ${{ matrix.target.args }}
+          # Pin to match the local toolchain (TL2023). Bump in lockstep with local upgrades.
+          docker_image: texlive/texlive:TL2023-historic
 
       - name: Upload ${{ matrix.target.id }} PDF
         uses: actions/upload-artifact@v4
