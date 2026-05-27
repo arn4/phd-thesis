@@ -15,56 +15,186 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # Compute which targets actually need rebuilding. Path-based filter against
+  # the previous commit on this ref. Both main pushes and tag pushes are
+  # incremental — on a tag, the deploy job carries over unchanged PDFs from
+  # the currently-published Pages site instead of forcing a full rebuild.
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      targets: ${{ steps.compute.outputs.targets }}
+      any: ${{ steps.compute.outputs.any }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: filter
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            '2302':
+              - 'papers/2302/**'
+              - 'papers/stand-alone-paper.tex'
+              - 'papers-bibliography.bib'
+              - 'papers-dependencies.tex'
+              - 'papers-macros.tex'
+              - '.github/workflows/build.yml'
+            '2305':
+              - 'papers/2305/**'
+              - 'papers/stand-alone-paper.tex'
+              - 'papers-bibliography.bib'
+              - 'papers-dependencies.tex'
+              - 'papers-macros.tex'
+              - '.github/workflows/build.yml'
+            '2402':
+              - 'papers/2402/**'
+              - 'papers/stand-alone-paper.tex'
+              - 'papers-bibliography.bib'
+              - 'papers-dependencies.tex'
+              - 'papers-macros.tex'
+              - '.github/workflows/build.yml'
+            '2405':
+              - 'papers/2405/**'
+              - 'papers/stand-alone-paper.tex'
+              - 'papers-bibliography.bib'
+              - 'papers-dependencies.tex'
+              - 'papers-macros.tex'
+              - '.github/workflows/build.yml'
+            '2406':
+              - 'papers/2406/**'
+              - 'papers/stand-alone-paper.tex'
+              - 'papers-bibliography.bib'
+              - 'papers-dependencies.tex'
+              - 'papers-macros.tex'
+              - '.github/workflows/build.yml'
+            '2506':
+              - 'papers/2506/**'
+              - 'papers/stand-alone-paper.tex'
+              - 'papers-bibliography.bib'
+              - 'papers-dependencies.tex'
+              - 'papers-macros.tex'
+              - '.github/workflows/build.yml'
+            '2602':
+              - 'papers/2602/**'
+              - 'papers/stand-alone-paper.tex'
+              - 'papers-bibliography.bib'
+              - 'papers-dependencies.tex'
+              - 'papers-macros.tex'
+              - '.github/workflows/build.yml'
+            '2605':
+              - 'papers/2605/**'
+              - 'papers/stand-alone-paper.tex'
+              - 'papers-bibliography.bib'
+              - 'papers-dependencies.tex'
+              - 'papers-macros.tex'
+              - '.github/workflows/build.yml'
+            'thesis':
+              - 'thesis.tex'
+              - 'papers/**'
+              - 'papers-bibliography.bib'
+              - 'papers-dependencies.tex'
+              - 'papers-macros.tex'
+              - '.github/workflows/build.yml'
+
+      - id: compute
+        run: |
+          TARGETS='${{ steps.filter.outputs.changes }}'
+          echo "targets=$TARGETS" >> "$GITHUB_OUTPUT"
+          if [ "$TARGETS" = "[]" ] || [ -z "$TARGETS" ]; then
+            echo "any=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "any=true" >> "$GITHUB_OUTPUT"
+          fi
+
   build:
+    needs: changes
+    if: needs.changes.outputs.any == 'true'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        target:
-          - { id: "2302",   root: "papers/stand-alone-paper.tex", args: "-pdf -jobname=2302 -outdir=build/2302",   pdf: "build/2302/2302.pdf" }
-          - { id: "2305",   root: "papers/stand-alone-paper.tex", args: "-pdf -jobname=2305 -outdir=build/2305",   pdf: "build/2305/2305.pdf" }
-          - { id: "2402",   root: "papers/stand-alone-paper.tex", args: "-pdf -jobname=2402 -outdir=build/2402",   pdf: "build/2402/2402.pdf" }
-          - { id: "2405",   root: "papers/stand-alone-paper.tex", args: "-pdf -jobname=2405 -outdir=build/2405",   pdf: "build/2405/2405.pdf" }
-          - { id: "2406",   root: "papers/stand-alone-paper.tex", args: "-pdf -jobname=2406 -outdir=build/2406",   pdf: "build/2406/2406.pdf" }
-          - { id: "2506",   root: "papers/stand-alone-paper.tex", args: "-pdf -jobname=2506 -outdir=build/2506",   pdf: "build/2506/2506.pdf" }
-          - { id: "2602",   root: "papers/stand-alone-paper.tex", args: "-pdf -jobname=2602 -outdir=build/2602",   pdf: "build/2602/2602.pdf" }
-          - { id: "2605",   root: "papers/stand-alone-paper.tex", args: "-pdf -jobname=2605 -outdir=build/2605",   pdf: "build/2605/2605.pdf" }
-          - { id: "thesis", root: "thesis.tex",                   args: "-pdf",                                     pdf: "build/thesis.pdf"    }
+        target: ${{ fromJSON(needs.changes.outputs.targets) }}
     steps:
       - uses: actions/checkout@v4
 
-      - name: Compile ${{ matrix.target.id }}
+      - id: params
+        name: Compute build params
+        run: |
+          if [ "${{ matrix.target }}" = "thesis" ]; then
+            echo "root=thesis.tex" >> "$GITHUB_OUTPUT"
+            echo "args=-pdf" >> "$GITHUB_OUTPUT"
+            echo "pdf=build/thesis.pdf" >> "$GITHUB_OUTPUT"
+          else
+            echo "root=papers/stand-alone-paper.tex" >> "$GITHUB_OUTPUT"
+            echo "args=-pdf -jobname=${{ matrix.target }} -outdir=build/${{ matrix.target }}" >> "$GITHUB_OUTPUT"
+            echo "pdf=build/${{ matrix.target }}/${{ matrix.target }}.pdf" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Compile ${{ matrix.target }}
         uses: xu-cheng/latex-action@v3
         with:
-          root_file: ${{ matrix.target.root }}
+          root_file: ${{ steps.params.outputs.root }}
           latexmk_use_lualatex: true
           latexmk_shell_escape: false
-          args: ${{ matrix.target.args }}
+          args: ${{ steps.params.outputs.args }}
           # Pin to match the local toolchain (TL2023). Bump in lockstep with local upgrades.
           docker_image: texlive/texlive:TL2023-historic
 
-      - name: Upload ${{ matrix.target.id }} PDF
+      - name: Upload ${{ matrix.target }} PDF
         uses: actions/upload-artifact@v4
         with:
-          name: pdf-${{ matrix.target.id }}
-          path: ${{ matrix.target.pdf }}
+          name: pdf-${{ matrix.target }}
+          path: ${{ steps.params.outputs.pdf }}
           if-no-files-found: error
           retention-days: 30
 
   deploy:
-    needs: build
-    if: startsWith(github.ref, 'refs/tags/')
+    # Run if build either succeeded or was skipped (no targets to rebuild).
+    # `needs.build.result` is 'success' / 'skipped' / 'failure' / 'cancelled'.
+    needs: [changes, build]
+    if: |
+      always() &&
+      startsWith(github.ref, 'refs/tags/') &&
+      (needs.build.result == 'success' || needs.build.result == 'skipped') &&
+      needs.changes.result == 'success'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Collect PDFs
+      - name: Download newly-built PDFs
+        if: needs.build.result == 'success'
         uses: actions/download-artifact@v4
         with:
           path: site
           pattern: pdf-*
           merge-multiple: true
+
+      - name: Carry over unchanged PDFs from the live Pages site
+        # For every target not rebuilt this run, fetch its currently-deployed
+        # PDF and keep it. The published page is the source of truth for
+        # "the last good version of paper X". Missing PDFs (never deployed)
+        # produce a warning but don't fail the deploy.
+        run: |
+          mkdir -p site
+          REPO_NAME="${GITHUB_REPOSITORY#*/}"
+          SITE_URL="https://${{ github.repository_owner }}.github.io/$REPO_NAME"
+          missing=()
+          for paper in 2302 2305 2402 2405 2406 2506 2602 2605 thesis; do
+            if [ -f "site/$paper.pdf" ]; then
+              echo "$paper.pdf: built this run"
+            else
+              if curl -fsSL "$SITE_URL/$paper.pdf" -o "site/$paper.pdf"; then
+                echo "$paper.pdf: carried over from $SITE_URL"
+              else
+                rm -f "site/$paper.pdf"
+                missing+=("$paper")
+                echo "$paper.pdf: WARNING — not available from previous deploy"
+              fi
+            fi
+          done
+          if [ ${#missing[@]} -gt 0 ]; then
+            echo "::warning::Deploy missing PDFs: ${missing[*]} (never built or not yet published)"
+          fi
 
       - name: Generate index.html
         run: |
