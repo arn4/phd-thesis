@@ -1,0 +1,56 @@
+{
+    // --- LaTeX Workshop: thesis build pipeline ---
+    // Use the repo's latexmkrc (lualatex + biber + out_dir=build) as the single source of truth.
+    "latex-workshop.latex.recipe.default": "latexmk (thesis)",
+    "latex-workshop.latex.recipes": [
+        {
+            "name": "latexmk (thesis)",
+            "tools": ["latexmk-thesis"]
+        }
+    ],
+    "latex-workshop.latex.tools": [
+        {
+            "name": "latexmk-thesis",
+            "command": "latexmk",
+            "args": [
+                "-r", "%WORKSPACE_FOLDER%/latexmkrc",
+                "-pdflua",
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "%DOC%"
+            ],
+            "env": {}
+        }
+    ],
+
+    // Pin the root file so building from a chapter/section file still targets thesis.tex.
+    "latex-workshop.latex.rootFile.doNotPrompt": true,
+    "latex-workshop.latex.rootFile.useSubFile": false,
+    "latex-workshop.latex.root.detect.fromMagicComment.enabled": false,
+    "latex-workshop.latex.rootFile.indicator": "\\begin{document}",
+    "latex-workshop.latex.search.rootFiles.include": ["thesis.tex"],
+
+    // PDF lives in build/ (per latexmkrc $out_dir).
+    "latex-workshop.latex.outDir": "build",
+
+    // Build on save; debounce a bit so rapid saves don't queue multiple runs.
+    "latex-workshop.latex.autoBuild.run": "onSave",
+    "latex-workshop.latex.autoBuild.interval": 1000,
+
+    // Internal tab viewer — auto-reloads on rebuild, supports SyncTeX out of the box.
+    "latex-workshop.view.pdf.viewer": "tab",
+    "latex-workshop.view.pdf.invertMode.enabled": "auto",
+
+    // Forward search: jump from .tex (cursor) to PDF (Ctrl/Cmd+Alt+J).
+    "latex-workshop.synctex.afterBuild.enabled": true,
+    // Inverse search (PDF → .tex): in the internal viewer, Ctrl/Cmd+click on the PDF.
+
+    // Keep aux noise out of the explorer — they live in build/ anyway, but the root
+    // also accrues a few when chapter files are compiled standalone.
+    "latex-workshop.latex.autoClean.run": "never",
+    "latex-workshop.message.update.show": false,
+
+    // Don't auto-build on every chapter file open; only when the user actually saves.
+    "latex-workshop.latex.build.forceRecipeUsage": true
+}
