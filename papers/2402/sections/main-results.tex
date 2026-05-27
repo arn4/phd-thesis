@@ -2,9 +2,9 @@
 \includegraphics[width=0.95\textwidth]{figs/single_index_v2}
 
     \caption{\textbf{One-pass and multi-pass GD for single-index models --} The {\it overlap} $\left|\frac{\langle \vec w^\star,  \hat{\vec{w}}\rangle }{d}\right|$ between the learned weight and the target/teacher direction, is plotted as a function of the iteration time of both single-pass (red) and multi-pass (blue) GD.  Continuous lines are given theory,  dots are simulations. 
-    \textbf{Left: Easy finite-T learnable single-index target} $g^\star = \tanh$: both one-pass and multi-pass GD obtain positive correlation after a finite number of iterations as the information exponent of the target is $\ell=1$.  \textbf{Center: Multi-pass finite-T learnable single-index target}: $g^\star = \mathrm{He}_3$. Multi-pass GD achieves a non-zero correlation in just two steps, but the one-pass algorithm learns nothing. 
+    \textbf{Left: Easy finite-T learnable single-index target} $g^\star  =  \tanh$: both one-pass and multi-pass GD obtain positive correlation after a finite number of iterations as the information exponent of the target is $\ell = 1$.  \textbf{Center: Multi-pass finite-T learnable single-index target}: $g^\star  =  \mathrm{He}_3$. Multi-pass GD achieves a non-zero correlation in just two steps, but the one-pass algorithm learns nothing. 
     % Notice that the optimal overlap in this problem is negative as $\mathrm{He}_3$ has a negative coefficient in its linear term. 
-    \textbf{Right: Finite-time nonlearnable single-index targets} $ g^\star = \mathrm{He}_4$; the target function is even and thus, as stated in Thm.~\ref{2402:thm:main:2step_learning}, breaking this symmetry is hard in finite number of steps, resulting in a vanishing correlation with the teacher direction $\vec w^\star$ for both algorithms in any finite time. (Simulation are averaged over $32$ runs,     $d=5000$, with $\sigma = \rm relu$, $n=3d$, $p=1$, $\eta = 0.1$).
+    \textbf{Right: Finite-time nonlearnable single-index targets} $ g^\star  =  \mathrm{He}_4$; the target function is even and thus, as stated in Thm.~\ref{2402:thm:main:2step_learning}, breaking this symmetry is hard in finite number of steps, resulting in a vanishing correlation with the teacher direction $\vec w^\star$ for both algorithms in any finite time. (Simulation are averaged over $32$ runs,     $d=5000$, with $\sigma = \rm relu$, $n=3d$, $p=1$, $\eta = 0.1$).
     % See details in Appendix~\ref*{2402:sec:app:hyperparams}
     }
     \label{2402:fig:main:single_index}
@@ -20,7 +20,7 @@
 The \textit{overlaps} between the student weights along the first direction learned, namely \(\mathbf{C}[f^\star]\), and its orthogonal, is plotted versus the number of iterations for three different classes of functions.     \textbf{Left: Easy finite-T learnable multi-index target} both the algorithms learn all the relevant directions when an "easy" function is used as a target (here (\(p=8\))).
      \textbf{Center: Multi-pass finite-T learnable multi-index target} both the algorithms learn the first Hermite direction \(\mathbf{C}[f^\star]\) but only multi-pass SGD achieve a non-null correlation in the orthogonal. This illustrates how reusing samples allows us to surpass the staircase limitation of single-pass approaches (\(p=2\)).
      \textbf{Right: Finite-time non-learnable multi-index target} neither of the two algorithm can learn \(\mathbf{C}[f^\star]^\bot\) with this target (\(p=2\)).
-     (Simulation are averaged over $32$ runs,     $d=5000$, with $\sigma = \rm relu$, $n=3d$, $\eta = 0.1$).
+     (Simulation are averaged over $32$ runs,     $d = 5000$, with $\sigma  =  \rm relu$, $n=3d$, $\eta  =  0.1$).
     }
     \label{2402:fig:main:multiple_index}
 \end{figure*} 
@@ -29,7 +29,7 @@ The \textit{overlaps} between the student weights along the first direction lear
 
 \section{Statement of the results}
 \label{2402:sec:main:theory_results}
-Here, we introduce the main results covering the theoretical learning guarantees with gradient descent and contrast them with the known one-pass results. We exploit the rigorous DMFT construction to prove the first key result: two-layer networks efficiently learn a large class of multi-index targets in only $T=2$ iterations, breaking the curse of one-pass algorithms dictated by the information and leap exponents. 
+Here, we introduce the main results covering the theoretical learning guarantees with gradient descent and contrast them with the known one-pass results. We exploit the rigorous DMFT construction to prove the first key result: two-layer networks efficiently learn a large class of multi-index targets in only $T = 2$ iterations, breaking the curse of one-pass algorithms dictated by the information and leap exponents. 
 % \et{The iteration is also in Celentano, Montanari (although with a different proof)}
 
 
@@ -57,20 +57,20 @@ One part of our main result shows that directions in $A^\star$ cannot be learned
  Suppose that $n/d=\alpha>0$. Let $\vec{v}^\star\in P^\star_\perp$ denote an arbitrary direction in the orthogonal complement of the subspace $P^\star$ defined in definition \ref{2402:def:two_step_hard} with norm $\sqrt{d}$ and a fixed representation in the basis $W^\star$.
 Suppose further that the activation function $\sigma$ is analytic, with polynomially bounded derivatives satisfying $\Eb{z \sim \mathcal{N}(0,1)}{\sigma'(z)} \neq 0$ and $\sigma^k(0) \neq 0  \ \forall k \in \N$. Then, for any $g^\star$ with derivatives bounded by polynomials, there exist $\eta> 0, \lambda > 0$ such that almost surely over the choice of $\vec{a}$, we have:
 \begin{equation}
-    \norm{\frac{\vec{W}^{(2)}\vec v^\star}{d}} = \Theta_d(1) ,
+    \norm{\frac{\vec{W}^{(2)}\vec v^\star}{d}} = \Theta_d(1)  ,
 \end{equation}
 with high probability as $n,d \rightarrow \infty$. Furthermore, for large enough $p$, $\vec{W}^{(2)}$ asymptotically spans $P^\star_\perp$:
 \begin{equation}
-    \inf_{\vec v^\star \in P^\star_\perp}\norm{\frac{\vec{W}^{(2)}\vec v^\star}{d}} = \Theta_d(1),
+    \inf_{\vec v^\star \in P^\star_\perp}\norm{\frac{\vec{W}^{(2)}\vec v^\star}{d}} = \Theta_d(1) ,
 \end{equation}
 with high probability as $n,d \rightarrow \infty$.
 In other words, directions $\vec v^\star \in P^\star_\perp$ are learned in $T=2$ gradient steps.  
 
-Suppose, however that the teacher subspace $U^\star=A^\star$, then:
+Suppose, however that the teacher subspace $U^\star = A^\star$, then:
 \begin{equation}
-    \sup_{\vec v^\star \in U^\star} \norm{\frac{\vec{W}^{(t)} \vec v^\star}{d}} = o_d(1),
+    \sup_{\vec v^\star \in U^\star} \norm{\frac{\vec{W}^{(t)} \vec v^\star}{d}} = o_d(1) ,
 \end{equation}
-with high probability as $n,d \rightarrow \infty$, for any finite time $t$. Thus, none of the directions are learned in any finite number of GD steps.\looseness=-1
+with high probability as $n,d  \rightarrow  \infty$, for any finite time $t$. Thus, none of the directions are learned in any finite number of GD steps.\looseness=-1
 \end{theorem}
 The proof is based on the analysis of the DMFT equations discussed
 in Sec. \ref{2402:sec:main:asymptotics}, is given in App.~\ref{2402:sec:app:proofs}, and we provide an informal heuristic derivation in sec. \ref{2402:sec:hidden_prog}.
@@ -170,9 +170,9 @@ We emphasize however that unlike explicit SQ algorithms, our analysis shows that
 We illustrate the sharp contrast between one-pass and multiple-pass protocols with the examples depicted in Figure~\ref{2402:fig:main:single_index}, which shows the scalar product (called \textit{overlap}) between the learned weights and the teacher direction as a function of the time steps and compares simulation (dots) with theoretical predictions (continuous lines). There are $3$ cases:
 
 \begin{itemize}
-    \item \textbf{Easy finite-$T$ learnable single-index targets $\left(\rm{IE}=1\right)$:} The left panel of Fig.~\ref{2402:fig:main:single_index} show the learning curve for a problem with $\rm{IE} = 1$. {\it Both} single-pass and multiple-pass GD correlates with the target in finite time. The non-symmetric subspace coincides with the teacher one $E_\perp^\star = U^\star$ (Def.~\ref{2402:def:symmetric_subspace}).
-    \item \textbf{Multi-pass finite-$T$ learnable single-index targets $\left(\rm IE>1, \rm {non-even f^\star} \right)$: }  Fig.~\ref{2402:fig:main:single_index} (center) depicts the learning curve for a non-even target function, with $\rm{IE} = 3$. Here, one-pass GD is not able to achieve any significant correlation with the teacher $\vec w^\star$ (and it would require a number of iterations $T = \cO(d)$ to achieve weak recovery - see eq.~\eqref{2402:eq:main:time_complexity_IE}). However, multiple-pass GD performs weak recovery in only $T=2$ steps. As before, the non-symmetric subspace corresponds to the teacher one $E_\perp^\star = U^\star$ (Def.~\ref{2402:def:symmetric_subspace}).
-    \item \textbf{Finite-$T$ non-learnable single-index targets $\left(\rm{IE}>1,   even  f^\star\right)$:} Fig.~\ref{2402:fig:main:single_index} (right) considers an even problem, with $\rm IE = 4$. Neither of the training procedures achieve weak recovery  in finite time. The computational hardness of this problem is associated with the presence of symmetry in the teacher function that requires time to break. Indeed, following Definition~\ref{2402:def:symmetric_subspace}, the even-symmetric subspace $E^\star$ is equivalent to the teacher subspace $U^\star$. These results agree with the emergence of \textit{computational barriers } in symmetric single-index problems like the phase retrieval one \citep{maillard2020phase}. In fact, for such problems, regardless of the number of iterations, learnability requires $\alpha$ to be larger than critical values even for the most efficient known algorithms (see \citep{barbier2019optimal}, Sec. 3.1).
+    \item \textbf{Easy finite-$T$ learnable single-index targets $\left(\rm{IE} = 1\right)$:} The left panel of Fig.~\ref{2402:fig:main:single_index} show the learning curve for a problem with $\rm{IE}  =  1$. {\it Both} single-pass and multiple-pass GD correlates with the target in finite time. The non-symmetric subspace coincides with the teacher one $E_\perp^\star = U^\star$ (Def.~\ref{2402:def:symmetric_subspace}).
+    \item \textbf{Multi-pass finite-$T$ learnable single-index targets $\left(\rm IE > 1, \rm {non-even   f^\star} \right)$: }  Fig.~\ref{2402:fig:main:single_index} (center) depicts the learning curve for a non-even target function, with $\rm{IE} = 3$. Here, one-pass GD is not able to achieve any significant correlation with the teacher $\vec w^\star$ (and it would require a number of iterations $T = \cO(d)$ to achieve weak recovery - see eq.~\eqref{2402:eq:main:time_complexity_IE}). However, multiple-pass GD performs weak recovery in only $T=2$ steps. As before, the non-symmetric subspace corresponds to the teacher one $E_\perp^\star = U^\star$ (Def.~\ref{2402:def:symmetric_subspace}).
+    \item \textbf{Finite-$T$ non-learnable single-index targets $\left(\rm{IE} > 1,     even    f^\star\right)$:} Fig.~\ref{2402:fig:main:single_index} (right) considers an even problem, with $\rm IE = 4$. Neither of the training procedures achieve weak recovery  in finite time. The computational hardness of this problem is associated with the presence of symmetry in the teacher function that requires time to break. Indeed, following Definition~\ref{2402:def:symmetric_subspace}, the even-symmetric subspace $E^\star$ is equivalent to the teacher subspace $U^\star$. These results agree with the emergence of \textit{computational barriers } in symmetric single-index problems like the phase retrieval one \citep{maillard2020phase}. In fact, for such problems, regardless of the number of iterations, learnability requires $\alpha$ to be larger than critical values even for the most efficient known algorithms (see \citep{barbier2019optimal}, Sec. 3.1).
     % \item  \dots If the non-linearity $g_\star(\cdot)$ has a non-zero first Hermite coefficient, one-pass algorithms also learn to learn $\vec \theta_\star$ efficiently in finite time. Crucially, some non-symmetric functions are hard to learn for one-pass protocols; one simple example is $g(\cdot) = \mathrm{He}_3(\cdot)$ (information exponent equal to $3$) one-pass SGD will not recover the teacher direction $\theta_\star$ from $O(d)$ samples in a finite number of steps. It will only weakly recover it after processing $n_{\rm{tot}} = O(d^2)$ samples. 
     \end{itemize}
 
@@ -197,7 +197,7 @@ multi-index targets learning has been the subject of numerous recent studies for
 \begin{remark}
     To enhance the clarity of the presentation, we limit the definition of the $\rm LC$ to an informal one. We refer to Section~$\bf B.2$ (\textit{isoLeap}) in \citep{abbe2023sgd} and Definition~$\bf 3$ in \citep{dandi2023how} (\textit{leap index}) for details.  
 \end{remark}
-Informally, the learning dynamics of one-pass routines follow this behavior: initially, the network learns in the first step the first Hermite coefficient of the target $f^\star$. For every time $t\in [T]$ of the one-pass schedule, the network is bound to learn in finite time only features that are \textit{linearly connected} to the previously learned directions; functions possessing only such linearly connected features are leap $1$ functions ($\rm LC =1$), e.g. $f^\star(\vec z) = z_1 + z_1z_2$. Similarly, functions that are quadratically connected to the learned features are leap $2$  ($\rm LC = 2$), e.g. $f^\star (\vec z) = z_1 + z_1z_2z_3$.
+Informally, the learning dynamics of one-pass routines follow this behavior: initially, the network learns in the first step the first Hermite coefficient of the target $f^\star$. For every time $t \in  [T]$ of the one-pass schedule, the network is bound to learn in finite time only features that are \textit{linearly connected} to the previously learned directions; functions possessing only such linearly connected features are leap $1$ functions ($\rm LC =1$), e.g. $f^\star(\vec z)  =  z_1  +  z_1z_2$. Similarly, functions that are quadratically connected to the learned features are leap $2$  ($\rm LC  =  2$), e.g. $f^\star (\vec z)  =  z_1 + z_1z_2z_3$.
  Higher $\rm{LC}$ target functions correspond to harder learning problems for one-pass algorithms:  one-pass SGD, with one sample per batch, weakly recovers the teacher subspace $U^\star$ by iterating the training protocol for $T(\rm{LC})$ time steps, where the $\rm{LC}$ substitutes the $\rm{IE}$ in eq.~\eqref{2402:eq:main:time_complexity_IE} \citep{abbe2023sgd}.
 % has been recently characterized in different works to be \textit{staircase functions}. Informally, the networks learn in the first step  
 % \begin{definition}[Leap complexity] 
@@ -207,7 +207,7 @@ Informally, the learning dynamics of one-pass routines follow this behavior: ini
 
 We illustrate the behavior of one-pass and multiple-pass algorithms when learning multi-index functions in Fig.~\ref{2402:fig:main:multiple_index}. Using different two-index teachers ($k=2$), it shows the scalar product between the learned weights and two reference vectors: a) the first Hermite coefficient of the target $f^\star$, called in the following $\vec{C}_1[f^\star]$; b) the vector in the teacher subspace $U^\star$ orthogonal to $\vec{C}_1[f^\star]$, referred as $\vec{C}_1[f^\star]^\perp$. The figure exemplifies the correlations metrics as a function of time, labeled as \textit{overlap} (resp. \textit{orthogonal overlap}) in the upper (resp. lower) section. There are, again, 3 cases:
 \begin{itemize}
-    \item  \textbf{Finite-$T$ learnable multi-index targets:} Fig.~\ref{2402:fig:main:multiple_index} (left)  depicts a target with $\rm LC =1$.  The teacher subspace $U^\star$ spanned by the standard basis vectors $\{\vec e_1, \vec e_2\}$ is learned by both one-pass and multi-pass GD in finite time. At $T=1$, $\vec e_1=\vec{C}_1[f^\star]$ is learned; this enables the recovery of the direction $\vec e_2$ at $T=2$ as the target is linear in $z_2$ once $e_1$ has been learned. This hierarchical picture of learning is called \textit{staircase} mechanism. Using Def.~\ref{2402:def:symmetric_subspace} notations, the non-symmetric teacher subspace $E^\star_\perp$ is equivalent to the full teacher subspace $U^\star$.
+    \item  \textbf{Finite-$T$ learnable multi-index targets:} Fig.~\ref{2402:fig:main:multiple_index} (left)  depicts a target with $\rm LC  = 1$.  The teacher subspace $U^\star$ spanned by the standard basis vectors $\{\vec e_1, \vec e_2\}$ is learned by both one-pass and multi-pass GD in finite time. At $T = 1$, $\vec e_1 = \vec{C}_1[f^\star]$ is learned; this enables the recovery of the direction $\vec e_2$ at $T = 2$ as the target is linear in $z_2$ once $e_1$ has been learned. This hierarchical picture of learning is called \textit{staircase} mechanism. Using Def.~\ref{2402:def:symmetric_subspace} notations, the non-symmetric teacher subspace $E^\star_\perp$ is equivalent to the full teacher subspace $U^\star$.
     % At each time step of the training schedule, the network learns a new feature linearly connected with previously learned ones.
     \item \textbf{Multi-pass finite-$T$ learnable multi-index targets:}
     The central panel in Fig.~\ref{2402:fig:main:multiple_index} illustrates a teacher with $\rm LC =3$. Both algorithms are successful in weakly recovering the direction $\vec C_1[f^\star]$ in the first step. However, as the training continues, one-pass GD never recovers the full teacher subspace in finite time (exemplified by the zero orthogonal overlap in the lower panel). Conversely, multi-pass GD is able to perform weak recovery of the full teacher subspace $U^\star$ by achieving a non-vanishing correlation with $\vec C_1[f^\star]^\perp$ (non-zero orthogonal overlap in the lower section) in just $T=2$ steps. Again, the non-symmetric subspace $E_\perp^\star = U^\star$  is equivalent to the full teacher subspace $U^\star$ (Def.~\ref{2402:def:symmetric_subspace}).
@@ -231,8 +231,8 @@ While Th.~\ref{2402:thm:main:2step_learning} provides conditions for the {\it we
 \subsection{Learning by hidden progress: heuristic argument}\label{2402:sec:hidden_prog}
 While we give a rigorous proof of Thm. ~\ref{2402:thm:main:2step_learning} in App.~\ref{2402:sec:app:proofs}, we provide now an informal description of the \textit{hidden progress}  in the first step of gradient descent that allows subsequent development of overlaps in the second step, that is at the root of the difference between single and multi-pass algorithms.
 %The re-using of batch requires tracking both the overlaps of the weights with the target subspace as well as the distribution of the pre-activations of the neurons for different samples in the batch. The characterization of the distribution of the pre-activations is lacking in one-pass protocols (as a new fresh sample is assumed to be drawn at each step), and it is the origin of the intrinsic limitations of these algorithms.
-For simplicity, we focus on the case of a single hidden neuron ($p=1$). 
-We denote  $h^{(t)}_\mu=\langle \vec w^{(t)}, \vec z_\mu \rangle / \sqrt{d}$ the pre-activation for the $\nu_{th}$ training point along the neuron  with $\mu \in [n]$, and $\vec{v}^\star$ a vector in the span of $\vec{W}^\star$ with $\norm{\vec{v}^\star}=\sqrt{d}$.
+For simplicity, we focus on the case of a single hidden neuron ($p = 1$). 
+We denote  $h^{(t)}_\mu = \langle \vec w^{(t)}, \vec z_\mu \rangle / \sqrt{d}$ the pre-activation for the $\nu_{th}$ training point along the neuron  with $\mu \in [n]$, and $\vec{v}^\star$ a vector in the span of $\vec{W}^\star$ with $\norm{\vec{v}^\star} = \sqrt{d}$.
 
 
 %We denote by $\vec{h}^{\nu}_*=W^* \vec{z}^\nu /\sqrt{d} \in \R^p$
@@ -244,15 +244,15 @@ We denote  $h^{(t)}_\mu=\langle \vec w^{(t)}, \vec z_\mu \rangle / \sqrt{d}$ the
 From the gradient update in Eq.~(\ref{2402:eq:GD_update}), 
 the update lies in the span of the training inputs $\{ \vec{z}_\nu\}_{\nu=1}^n$, with the gradient of the $\nu_{th}$ training example given by $\vec{g}_\nu=a\mathcal{L}'\left(h^{(t)}_\nu,f^\star(\vec z_\nu)\right)\sigma'(h^{(t)}_\nu)\vec z_\nu/\sqrt{d}$. For squared loss, assuming that $f\left( \frac{W^{(t)}\vec z_\nu} {\sqrt{d}}\right) \approx 0$, the gradient reads:
 \begin{equation}\label{2402:eq:update_one_example}
-    \vec{g}^{(t)}_\nu \approx -a f^\star(\vec z_\nu)\sigma'(h^{(t)}_\nu)\vec z_\nu / \sqrt{d}.
+    \vec{g}^{(t)}_\nu \approx -a f^\star(\vec z_\nu)\sigma'(h^{(t)}_\nu)\vec z_\nu / \sqrt{d} .
 \end{equation}
 At initialization $h^{(0)}_\nu=\langle \vec w^{(0)}, \vec z_\nu \rangle / \sqrt{d}$ and the projections along the teacher subspace (which we denote $\vec{h}^\star_{\nu}=\frac{1}{\sqrt{d}} W^\star \vec{z}_\nu \in \R^k$) are approximately independent since $\vec w^{(0)}$ is approximately orthogonal to the teacher subspace as well as to the inputs  $\{ \vec{z}_\nu\}_{\nu=1}^n$. The projection of the gradient along the teacher subspace is given by:
 \begin{align}
-   W^\star\left(\sum_{\nu=1}^n \frac{\vec{g}^{(t)}_\nu}{\sqrt{d}} \right) \approx -\sum_{\nu=1}^n a f^\star(\vec z_\nu)\sigma'(h^{(t)}_\nu) \frac{\vec{h}^\star_{\nu}}{d} .
+   W^\star\left(\sum_{\nu=1}^n \frac{\vec{g}^{(t)}_\nu}{\sqrt{d}} \right)  \approx   - \sum_{\nu=1}^n a f^\star(\vec z_\nu)\sigma'(h^{(t)}_\nu) \frac{\vec{h}^\star_{\nu}}{d}  .
 \end{align}
 We do expect that, due to concentration, the component of the full-batch gradient update along the teacher subspace lies along the direction given by:
 \begin{equation}\label{2402:eq:update_first_step}
-    \Ea{f^\star(\vec z_\nu)\sigma'(h^{(0)}_\nu)\vec{h}^\star_{\nu}}\approx \Ea{\sigma'(h^{(0)}_\nu)}\Ea{f^\star(\vec z_\nu)\vec{h}^\star_{\nu}},
+    \Ea{f^\star(\vec z_\nu)\sigma'(h^{(0)}_\nu)\vec{h}^\star_{\nu}} \approx  \Ea{\sigma'(h^{(0)}_\nu)} \Ea{f^\star(\vec z_\nu)\vec{h}^\star_{\nu}},
 \end{equation}
 where we used the approximate independence of $h^{(0)}_\nu$ and  $\vec{h}^\star_{\nu}$ to factorize the expectation.
 Thus, the neuron parameters $\vec w^{(1)}$ at the first step are correlated with the teacher subspace only along the direction $\Ea{f^\star(\vec z_\nu)\vec{h}^\star_{\nu}}$. 
@@ -265,21 +265,21 @@ If $\Ea{f^\star(\vec z_\nu)\vec{h}^\star_{\nu}}=0$, the parameters remain orthog
     (i) By $\vec{w}^{(t)}$ directly gaining components along the teacher subspace $W^*$. Under online SGD, the data is used only once for the gradient updates, so only this mechanism is possible. It allows the directions learned by $\vec{w}^{(t)}$ at any step to depend on the directions already learned by $\vec{w}^{(t)}$. This underlies the ``staircase" phenomenon in online SGD \citep{abbe2021staircase,abbe2022merged,abbe2023sgd} as well as the notion of information exponent when applied to a single direction \citep{arous2021online}.
     
     %\item[(2)] 
-    (ii) By $\vec{w}^{(t)}$ gaining components along $\vec{z}_\nu$. Recall that the target is defined as $y_\nu=f^{\star}(\vec{z}_\nu),$ and thus $\vec{w}^{(t)}$ can correlate with $\vec{h}^\star_{\nu}$. This is what happens when using gradient descent with multi-pass in our setting. This implies that even when $\vec w^{(1)}$ does not learn a direction $\vec{v}_*$, the pre-activation $h^{(t)}_\nu$ can develop a dependence on $\vec{h}^\star_{\nu}$ through the component of the gradient update along $\vec{z}_\nu$. 
+    (ii) By $\vec{w}^{(t)}$ gaining components along $\vec{z}_\nu$. Recall that the target is defined as $y_\nu=f^{\star}(\vec{z}_\nu) ,$ and thus $\vec{w}^{(t)}$ can correlate with $\vec{h}^\star_{\nu}$. This is what happens when using gradient descent with multi-pass in our setting. This implies that even when $\vec w^{(1)}$ does not learn a direction $\vec{v}_*$, the pre-activation $h^{(t)}_\nu$ can develop a dependence on $\vec{h}^\star_{\nu}$ through the component of the gradient update along $\vec{z}_\nu$. 
 %\end{itemize}
  %To understand the emergence of such a dependence, we note that while each example $\vec{z}_\nu$ contributions only one out of $n$ terms in the gradient update (Equation \ref{2402:eq:GD_update}), when considering the component of the update along the direction $\vec{z}_\nu$, the effect of this term is of the same order as the combined effect of the remaining $n-1$ terms. And since this term is given by $\eta \frac{a}{d}f_\star(\vec z^\nu)\sigma'(h_t^\nu)\vec z^\nu$, it clearly induces a dependence on $f_\star(\vec z^\nu)$.
 
 Let us see how this phenomenon, which we call \textit{hidden progress},  happens in practice.  From (\ref{2402:eq:GD_update}), the update in the pre-activation $h^{(1)}_\nu$ due to the first gradient step reads:
 \begin{align}
-    h^{(1)}_\nu=(1&-\eta \lambda) h^{(0)}_\nu  -\eta  \frac{a}{d} \sum_{{\nu'}=1}^{n}\mathcal{L}'(h^{(0)}_{\nu'},f^\star(\vec z_{\nu'}))\sigma'(h^{(0)}_{\nu'})\langle \vec z_{\nu'}, \vec z_\nu \rangle. 
+    h^{(1)}_\nu = (1&-\eta \lambda) h^{(0)}_\nu  -\eta  \frac{a}{d} \sum_{{\nu'}=1}^{n}\mathcal{L}'(h^{(0)}_{\nu'},f^\star(\vec z_{\nu'}))\sigma'(h^{(0)}_{\nu'})\langle \vec z_{\nu'}, \vec z_\nu \rangle . 
 \end{align}
-In this sum there is one term of magnitude $\cO\left({\norm{\vec z_\nu}^2}/{d}\right)=O(1)$ corresponding to $\nu'=\nu$, and $d-1$ random terms of  order $\cO\left({\langle \vec z^\nu, \vec z^\nu \rangle}{/d}\right)=O\left(1/{\sqrt{d}}\right)$. This second group of terms contributes to an effective ``noise" of order $O(1)$. The first term however, since $\|{\vec z}_{\nu} \|_2^2 \approx d$, depends on $f^\star(\vec z_\nu)$ (and thus on all components of $\vec{h}^\star_{\nu}$):
+In this sum there is one term of magnitude $\cO\left({\norm{\vec z_\nu}^2}/{d}\right)=O(1)$ corresponding to $\nu' = \nu$, and $d-1$ random terms of  order $\cO\left({\langle \vec z^\nu, \vec z^\nu \rangle}{/d}\right)=O\left(1/{\sqrt{d}}\right)$. This second group of terms contributes to an effective ``noise" of order $O(1)$. The first term however, since $\|{\vec z}_{\nu} \|_2^2 \approx d$, depends on $f^\star(\vec z_\nu)$ (and thus on all components of $\vec{h}^\star_{\nu}$):
 \begin{equation}\label{2402:eq:hid_prog_term}
-    \mathcal{L}'(h^{(0)}_\nu,f^\star(\vec z_\nu))\sigma'({h^{(0)}_\nu}).
+    \mathcal{L}'(h^{(0)}_\nu,f^\star(\vec z_\nu))\sigma'({h^{(0)}_\nu}) .
 \end{equation}
-Due to this dependence between $h^{(1)}_\nu$ and $f^\star(\vec{z}_{\nu})$, in the subsequent steps i.e. $T=2$, the term $\sigma'(h^{(1)}_\nu)$ in the update (\ref{2402:eq:update_one_example}) can now influence the direction of the gradient along the teacher subspace, leading to $\vec{w}^{(2)}$ gaining correlations with new directions in $W^\star$.  It can be seen as follow: let $m_{\vec{v}_\star}^{(t)} =\langle \vec w^{(t)}, \vec{v}^\star \rangle / \sqrt{d}$, it follows from the GD updates that 
+Due to this dependence between $h^{(1)}_\nu$ and $f^\star(\vec{z}_{\nu})$, in the subsequent steps i.e. $T = 2$, the term $\sigma'(h^{(1)}_\nu)$ in the update (\ref{2402:eq:update_one_example}) can now influence the direction of the gradient along the teacher subspace, leading to $\vec{w}^{(2)}$ gaining correlations with new directions in $W^\star$.  It can be seen as follow: let $m_{\vec{v}_\star}^{(t)} =\langle \vec w^{(t)}, \vec{v}^\star \rangle / \sqrt{d}$, it follows from the GD updates that 
 \begin{align}
-    m_{\vec{v}^\star}^{(2)} = (1&-\eta\lambda)m_{\vec{v}^\star}^{(1)} -\eta  \frac{a_j}{d} \sum_{\nu=1}^{n}\mathcal{L}'(h^{(1)}_\nu,f^\star(\vec z_\nu))\sigma'(h^{(1)}_\nu)h^{\vec{v^\star}}_{\nu}
+    m_{\vec{v}^\star}^{(2)}  =  (1&-\eta\lambda)m_{\vec{v}^\star}^{(1)} -\eta  \frac{a_j}{d} \sum_{\nu=1}^{n}\mathcal{L}'(h^{(1)}_\nu,f^\star(\vec z_\nu))\sigma'(h^{(1)}_\nu)h^{\vec{v^\star}}_{\nu}
 \end{align}
 Now, suppose that $\vec{v^\star}$ is not learned in the first step.
 %Then from equation \ref{2402:eq:update_first_step}, we have $\Ea{f_\star(\vec z^\nu)h^{\nu}_{\vec{v^*}}}=0$.

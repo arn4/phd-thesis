@@ -24,7 +24,7 @@ We expect that, as long as the dynamics around the saddle at initialization is a
 In many theoretical work \cite{arous2021online,abbe2023sgd}, % TODO cite more
 the algorithm used during training uses the \emph{spherical gradient} instead of the simple one. The update rule used instead of Equation~\eqref{2406:eq:gd_update_weight} is
 \begin{align}
-    \vec w_{j,t+1} =  \frac{\vec{w}_{j,t} - \gamma \left(I_d-\vec{w}_{j,t}\vec{w}_{j,t}^\top\right)\nabla_{\vec w_{j,t}}\ell_t}{\norm{\vec{w}_{j,t} - \gamma \left(I_d-\vec{w}_{j,t}\vec{w}_{j,t}^\top\right)\nabla_{\vec w_{j,t}}\ell_t}} \qquad \forall t \in [T],  \forall j \in [p]
+    \vec w_{j,t+1} =  \frac{\vec{w}_{j,t} - \gamma \left(I_d-\vec{w}_{j,t}\vec{w}_{j,t}^\top\right)\nabla_{\vec w_{j,t}}\ell_t}{\norm{\vec{w}_{j,t} - \gamma \left(I_d-\vec{w}_{j,t}\vec{w}_{j,t}^\top\right)\nabla_{\vec w_{j,t}}\ell_t}} \qquad \forall t \in [T],   \forall j \in [p]
     \label{2406:eq:app:gd_update_weights}
 \end{align}
 In practice, only the gradient component orthogonal to the weights is taken into account. This algorithm is particularly convenient for theoretical analysis because it is easier to find a lower bound for the evolution of \(m_t\), since it is always true that 

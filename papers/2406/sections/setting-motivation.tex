@@ -18,7 +18,7 @@
 Consider a two-layer neural network with activation function $\sigma$ and first and second layer weights given by $W\in\mathbb{R}^{p\times d}$ and $\vec{a}\in\mathbb{R}^{p}$ respectively:
 \begin{align}
 \label{2406:eq:main:newtwork_def}
-    f(\vec z) = \frac{1}{p} \sum_{j=1}^p a_j \sigma{( \langle \vec z, \vec w_j \rangle)}.
+    f(\vec z) = \frac{1}{p} \sum_{j=1}^p a_j \sigma{( \langle \vec z, \vec w_j \rangle)} .
 \end{align}
  We are interested in studying the capacity of $f$ to learn from training data $\mathcal{D} = \{(\vec{z}^{\nu}, y^{\nu})_{\nu \in [N]}\in\mathbb{R}^{d+1}\}$. In the following, we work under the following setting.
 
@@ -43,7 +43,7 @@ Note that the setting above where we assume a generative model for the data and 
 \paragraph{Training algorithm --- } Given the training data $\mathcal{D}$, we consider the training of $(W,\vec{a})$ under a \emph{sample splitting} scheme: the data is partitioned $\mathcal{D} = \bigcup_{t=1}^{T}\mathcal{D}_{t}$ into $T =  \left \lfloor \sfrac{N}{n_{b}} \right \rfloor$ disjoint batches $\mathcal{D}_{t}$ of size $n_{b}$, which are used, one every iteration, to train the network. We consider a common assumption for the training algorithm that is to decouple the training of the hidden weights $W$ and the second layer weights $\vec a$.
 By keeping fixed the second layer weights at initialization $\vec a = \vec a_0$, the hidden layer weights $W$ are estimated using (projected) SGD: 
 \begin{align}
-    \vec w_{j,t+1} =  \frac{\vec{w}_{j,t} - \gamma \nabla_{\vec w_{j,t}}\ell_t}{\norm{\vec{w}_{j,t} - \gamma \nabla_{\vec w_{j,t}}\ell_t}} \qquad \forall t \in [T],  \forall j \in [p]
+    \vec w_{j,t+1} =  \frac{\vec{w}_{j,t} - \gamma \nabla_{\vec w_{j,t}}\ell_t}{\norm{\vec{w}_{j,t} - \gamma \nabla_{\vec w_{j,t}}\ell_t}} \qquad \forall t \in [T],   \forall j \in [p]
     \label{2406:eq:main:gd_update_weights}
 \end{align}
 where:
@@ -81,7 +81,7 @@ with \(\mu \ge 0\) and \(\delta\) could possibly be any real value. The exponent
 % Moreover, we consider a common assumption for the training algorithm that is to decouple the training of the hidden weights $W$ and the second layer weights $\vec a$.
 % By keeping fixed the second layer weights at initialization $\vec a = \vec a^{(0)}$, the hidden layer weights $W$ are estimated using gradient descent projected on the sphere \(\norm{\vec w_j}=1\): 
 % \begin{align}
-%     \vec w^j_{t+1} =  \frac{\vec{w}^j_t - \gamma \nabla_{\vec w^j_t}\ell^t}{\norm{\vec{w}^j_t - \gamma \nabla_{\vec w^j_t}\ell^t}} \qquad \forall t \in [T],  \forall j \in [p]
+%     \vec w^j_{t+1} =  \frac{\vec{w}^j_t - \gamma \nabla_{\vec w^j_t}\ell^t}{\norm{\vec{w}^j_t - \gamma \nabla_{\vec w^j_t}\ell^t}} \qquad \forall t \in [T],   \forall j \in [p]
 %     \label{2406:eq:main:gd_update_weights}
 % \end{align}
 % The spherical projection allow us to focus just on the direction learned by the network, putting aside the effect of the change of the norm of the weights. 

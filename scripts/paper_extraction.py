@@ -1121,7 +1121,15 @@ def _ensure_standalone_driver() -> bool:
 # ---------------------------------------------------------------------------
 
 LOG_CATEGORIES: list[tuple[str, re.Pattern[str]]] = [
-    ("hard_errors",     re.compile(r"^! |^LaTeX Error:|^Emergency stop|^Fatal error|^Runaway argument", re.MULTILINE)),
+    # Hard errors come in two formats depending on whether `-file-line-error`
+    # is in effect: plain `! Undefined control sequence.` or
+    # `./file.tex:57: Undefined control sequence.`. Match both. The
+    # `-file-line-error` form is what latexmkrc enables in this repo.
+    ("hard_errors",     re.compile(
+        r"^! |^LaTeX Error:|^Emergency stop|^Fatal error|^Runaway argument|"
+        r"^\.?/?[^\s:]+\.tex:\d+: ",
+        re.MULTILINE,
+    )),
     ("undefined_cs",    re.compile(r"Undefined control sequence")),
     ("undefined_refs",  re.compile(r"LaTeX Warning: Reference .* undefined")),
     ("undefined_cites", re.compile(r"(Citation .* undefined|Empty bibliography)")),
@@ -1259,6 +1267,22 @@ _MATH_KERN_NAMED_RE = re.compile(
     r"negthinspace|negmedspace|negthickspace)(?![A-Za-z@])"
 )
 
+# A line that contains nothing but one or more kerning macros (with optional
+# whitespace between/around). Drop the entire line: otherwise stripping the
+# macros leaves a blank line, which inside a math environment closes the
+# paragraph and triggers `Missing $ inserted`.
+_KERN_ONLY_LINE_RE = re.compile(
+    r"^[ \t]*"
+    r"(?:\\[,;:!>]|\\(?:thinspace|medspace|thickspace|enspace|hairspace|"
+    r"negthinspace|negmedspace|negthickspace)(?![A-Za-z@]))"
+    r"(?:[ \t]*"
+    r"(?:\\[,;:!>]|\\(?:thinspace|medspace|thickspace|enspace|hairspace|"
+    r"negthinspace|negmedspace|negthickspace)(?![A-Za-z@]))"
+    r")*"
+    r"[ \t]*\n",
+    re.MULTILINE,
+)
+
 # Float environments whose optional [ht!] placement arg we strip.
 _FLOAT_ENVS = (
     "figure", r"figure\*",
@@ -1310,8 +1334,24 @@ def _strip_spacing_and_layout(text: str, counts: dict[str, int]) -> str:
     text = count_and_drop(_BREAK_OPTARG_RE, "pagebreak/linebreak", text)
     text = count_and_drop(_SETLIST_RE, "setlist", text)
     text = count_and_drop(_SETLENGTH_SPACING_RE, "setlength spacing", text)
-    text = count_and_drop(_MATH_KERN_PUNCT_RE, "math-kern \\,/\\;/\\:/\\!/\\>", text)
-    text = count_and_drop(_MATH_KERN_NAMED_RE, "math-kern named", text)
+    # 1) Drop entire lines that contain only kerning macros (with optional
+    #    whitespace). Otherwise a `\,` on its own line becomes a blank line,
+    #    which inside math mode closes the paragraph and triggers `Missing $
+    #    inserted`. Counted under the punct/named keys below as a side-effect.
+    text = count_and_drop(_KERN_ONLY_LINE_RE, "math-kern (whole line)", text)
+    # 2) Math-kerning macros inline: replace with a SPACE, not empty.
+    #    Otherwise an adjacent letter merges into the preceding control word —
+    #    e.g. `\eta\,c_0` → `\etac_0` (undefined control sequence) instead of
+    #    the intended `\eta c_0`. In math mode the space is ignored
+    #    (atom-kerning rules take over); in text mode the space is a normal
+    #    interword space, acceptable since these macros are rare outside math.
+    def count_and_space(pat: re.Pattern[str], key: str, s: str) -> str:
+        new_s, n = pat.subn(" ", s)
+        if n:
+            counts[key] = counts.get(key, 0) + n
+        return new_s
+    text = count_and_space(_MATH_KERN_PUNCT_RE, "math-kern \\,/\\;/\\:/\\!/\\>", text)
+    text = count_and_space(_MATH_KERN_NAMED_RE, "math-kern named", text)
     # \\[2em] -> \\
     def lb_repl(m: re.Match) -> str:
         counts["\\\\[len]"] = counts.get("\\\\[len]", 0) + 1

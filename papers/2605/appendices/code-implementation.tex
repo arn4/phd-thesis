@@ -12,12 +12,12 @@ to keep pre-activations $O(1)$;
 $\mathbf{W}_\ell \in \mathbb{R}^{d_{\ell-1}\times p_\ell}$,
 $W_{\ell,ij}\sim\mathcal{N}(0,1)$,
 and forms
-$\mathbf{Z}_\ell = p_\ell^{-1/2}
-\sigma_\ell\bigl(\mathbf{H}_{\ell-1}\mathbf{W}_\ell / c_\ell\bigr)$;
+$\mathbf{Z}_\ell = p_\ell^{-1/2} 
+\sigma_\ell \bigl(\mathbf{H}_{\ell-1}\mathbf{W}_\ell / c_\ell\bigr)$;
 (iii) computes the top-$k_\ell$ eigenvectors $\mathbf{V}_\ell$ of the signed
 covariance
 $\mathbf{C}_\ell = \tfrac{1}{n}\mathbf{Z}_\ell^\top
-\operatorname{diag}(\mathbf{y})\mathbf{Z}_\ell$
+\operatorname{diag}(\mathbf{y}) \mathbf{Z}_\ell$
 ranked by $|\lambda|$; and
 (iv) sets $\mathbf{H}_\ell = \mathbf{Z}_\ell\mathbf{V}_\ell$.
 
@@ -30,7 +30,7 @@ the full LAPACK eigensolver is used when $k_\ell\ge p_\ell/4$ and Lanczos \\
 $k_\ell\le p_\ell/2$, a \texttt{LinearOperator} is passed to \texttt{eigsh}
 so that $\mathbf{C}_\ell$ is never materialised, requiring only $O(np_\ell)$
 memory and two passes per Lanczos iteration. A deterministic starting vector
-$\mathbf{v}_0=\mathbf{1}/\sqrt{p_\ell}$ ensures reproducibility, and when
+$\mathbf{v}_0=\mathbf{1}/ \sqrt{p_\ell}$ ensures reproducibility, and when
 $\mathbf{Z}_\ell$ does not fit in GPU memory, features are streamed in batches
 and $\mathbf{C}_\ell$ is accumulated via outer products before calling
 \texttt{eigsh}.

@@ -84,8 +84,8 @@ Stochastic corrections to the deterministic high-dimensional limit of one-pass S
 % Focusing on the unconstrained case with \(p=1\), we can evolve Eqs.~\eqref{2305:eq:overlapping_ODE} in a stochastic differential equation
 \begin{equation}\label{2305:eq:overlapping_SDE}
     \begin{split}
-    \dif \M_{1} &= \Psi_{1}{(\Omega)}\dif t + \sqrt{\frac{\gamma}{d}}  \vec{\sigma}_\M{(\Omega)} \cdot \dif \b_t \\
-    \dif \Q_{11} &= \Phi_{11}{(\Omega)}\dif t + \sqrt{\frac{\gamma}{d}}  \vec{\sigma}_\Q{(\Omega)} \cdot \dif \b_t 
+    \dif \M_{1} &= \Psi_{1}{(\Omega)}\dif t + \sqrt{\frac{\gamma}{d}}   \vec{\sigma}_\M{(\Omega)} \cdot \dif \b_t \\
+    \dif \Q_{11} &= \Phi_{11}{(\Omega)}\dif t + \sqrt{\frac{\gamma}{d}}   \vec{\sigma}_\Q{(\Omega)} \cdot \dif \b_t 
     \end{split}
 \end{equation}
 where \(\dif \b_t\) is a 2-dimensional Wiener process, and \(\vec{\sigma}_M\) and \(\vec{\sigma}_Q\) are defined as
@@ -118,7 +118,7 @@ Notice that the stochastic correction is proportional to \(\sqrt{\sfrac{\gamma}{
 \begin{equation}
 \label{2305:eq:sde:p1}
 \begin{split}
- \dod{\M_1}{t} &= \left(\Psi_{1}{(\mat{\Omega})} - \frac{\M_{1}}{2}\Phi_{11}{(\mat{\Omega})}\right)\dif t + \sqrt{\frac{\gamma}{d}}  \left(\vec{\sigma}_\M-\frac{m_1}{2}\vec{\sigma}_\Q\right)\cdot\dif\b_t 
+ \dod{\M_1}{t} &= \left(\Psi_{1}{(\mat{\Omega})} - \frac{\M_{1}}{2}\Phi_{11}{(\mat{\Omega})}\right)\dif t + \sqrt{\frac{\gamma}{d}}   \left(\vec{\sigma}_\M-\frac{m_1}{2}\vec{\sigma}_\Q\right)\cdot\dif\b_t 
 \end{split}
 \end{equation}
 Figure~\ref{2305:fig:sde_p1} compares different instances of finite size simulations with instances of the SDE \eqref{2305:eq:sde:p1} with the same initial condition. Although the stochastic correction offers a better description of the process at large but finite dimensions, we find that quite surprisingly they have a small impact in the exit time. Hence, the formulas \eqref{2305:eq:exit_time_p1} \& \eqref{2305:eq:exit:quenched} derived in the Section \ref{2305:sec:exit:deterministic} for random initialization provide a good approximation to the exit time. In Appendix ~\ref{2305:app:SDE_exit_time} we discuss how to derive an exit time formulae with the stochastic corrections, both annealed and quenched one. As just showed, the new formulas do not offer any improvements compared to the deterministic ones, nevertheless the stochastic process can describe the dynamic even when the initialization is exactly \(m=0\), that is a fixed point of the ODE.

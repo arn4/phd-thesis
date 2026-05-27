@@ -73,7 +73,7 @@ Proceeding similarly, one obtains low-dimensional effective processes for $\vec{
 % In particular, one can show that the components of the pre-activations orthogonal to the ``learned directions", denoted here by $\boldsymbol{r}_\perp$ can be replaced by independent samples from the following low-dimensional dynamics:
 
 % \begin{equation}\label{2402:eq:rec}
-% \boldsymbol{r}^{\tau+1}_\perp -  \boldsymbol{r}^\tau_\perp= -\alpha \eta\boldsymbol{r}^\tau_\perp \Lambda^\tau - \eta\nabla_{\boldsymbol{r}} \mathcal{L}(\boldsymbol{r}^{(t)}, \boldsymbol{r}^*) - \alpha\eta \sum_{t=0}^{\tau-1} \boldsymbol{r}^{(t)}_\perp R_\ell(\tau,t) + \sqrt{\alpha}\eta \boldsymbol{u}^\tau
+% \boldsymbol{r}^{\tau+1}_\perp -  \boldsymbol{r}^\tau_\perp= -\alpha  \eta \boldsymbol{r}^\tau_\perp \Lambda^\tau - \eta \nabla_{\boldsymbol{r}} \mathcal{L}(\boldsymbol{r}^{(t)}, \boldsymbol{r}^*) - \alpha \eta \sum_{t=0}^{\tau-1} \boldsymbol{r}^{(t)}_\perp R_\ell(\tau,t) + \sqrt{\alpha} \eta  \boldsymbol{u}^\tau
 % \end{equation}
 % We observe that $\boldsymbol{r}^{1}_\perp$ depends on $\boldsymbol{r}^*$
 
@@ -105,13 +105,13 @@ where $F:\R^q \rightarrow \R^q$ is pseudo-Lipshitz of finite-order and $\{z_\nu\
     % \begin{align}
     %         \label{2402:eq:the_dynamics1}
     %         \mathbf{v}^{t+1} &= \mathbf{f}_1^{t}\left(\left\{\mathbf{v}^{k}\right\}_{k=0}^{t}\right)+\mathbf{Z}^{\top}\mathbf{f}_2^{t}(\mathbf{r}^{t})  \\
-    %         \mathbf{r}^{t} &= \mathbf{Z}\sum_{k=0}^{t}\mathbf{v}^{k} .
+    %         \mathbf{r}^{t} &= \mathbf{Z}\sum_{k=0}^{t}\mathbf{v}^{k}  .
     %         \label{2402:eq:the_dynamics2}
     %     \end{align},
     % where $\mathbf{Z}$ is an $n \times d$ matrix with i.i.d Gaussian entries and $f_1,f_2,\mathbf{v}$ satisfy assumptions A1-A7 in \citep{gerbelot2022rigorous}.
     Then the empirical measure of the weights $ \vec w^{(t)}_i$ converges in distribution to the weight process $\vec \theta_i^{(t)}$ and the  empirical measure of the preactivations $\vec h^{(t)}_\nu$ converges in distribution to that of the  preactivation process $\vec h^{(t)}$, defined as    
     \begin{equation}\label{2402:eq:proc_theta}
-        \boldsymbol{\theta}^{(t+1)} -  \boldsymbol{\theta}^{(t)}= - \eta \left(\lambda + \Lambda^{(t)}\right)\boldsymbol{\theta}^{(t)} +\eta \sum_{\tau=0}^{t-1}  R_\ell^{(t,\tau)} \boldsymbol{\theta}^{(\tau)} + \eta \boldsymbol{u}^{(t)}
+        \boldsymbol{\theta}^{(t+1)} -  \boldsymbol{\theta}^{(t)}= -  \eta  \left(\lambda + \Lambda^{(t)}\right)\boldsymbol{\theta}^{(t)} + \eta \sum_{\tau=0}^{t-1}  R_\ell^{(t,\tau)} \boldsymbol{\theta}^{(\tau)} +  \eta \boldsymbol{u}^{(t)}
     \end{equation}
     \begin{equation}\label{2402:eq:proc_h}
         \boldsymbol{h}^{(t)} = -\eta\sum_{\tau=0}^{t-1} R_\theta^{(t,\tau)} F(\boldsymbol{h}^{(\tau)}) + \boldsymbol{\omega}^{(t)}
@@ -121,10 +121,10 @@ where $F:\R^q \rightarrow \R^q$ is pseudo-Lipshitz of finite-order and $\{z_\nu\
         \Lambda^{(t)} = \alpha\mathbb{E}\left[ \nabla_{\boldsymbol{h}} F (\boldsymbol{h}^{(t)})\right]
     \end{equation}
     \begin{align} 
-        R_\theta^{(t,\tau)} = \mathbb{E}\left[\frac{\partial \vec \theta^{(t)}}{\partial \vec \tau^{(\tau)}} \right]
+        R_\theta^{(t,\tau)} = \mathbb{E}\left[\frac{\partial  \vec \theta^{(t)}}{\partial  \vec \tau^{(\tau)}} \right]
     \end{align}
     \begin{align}
-        R_\ell^{(t,\tau)} = \alpha \mathbb{E}\left[\frac{\partial F(\vec h^{(t)})}{\partial \vec\omega^{(\tau)}} \right].
+        R_\ell^{(t,\tau)} = \alpha \mathbb{E}\left[\frac{\partial  F(\vec h^{(t)})}{\partial  \vec\omega^{(\tau)}} \right] .
     \end{align}
     Finally, $\boldsymbol{u}^{(t)}$ and $\boldsymbol{\omega}^{(t)}$ are zero-mean Gaussian processes respectively with covariances given by $C_\ell^{(t,\tau)}$ and $C_\theta^{(t,\tau)}$:
     
@@ -148,16 +148,16 @@ The above result follows directly by substituting $\frac{1}{\sqrt{d}} \vec{Z}$ a
 
 The definitions of $R_\theta$ and $R_\ell$ in Theorem \ref{2402:thm:Cedric_theorem} require differentiating through the non-markovian processes defined by Equations \ref{2402:eq:proc_h}, \ref{2402:eq:proc_theta}. Fortunately,  $R_\theta, R_\ell$ can be equivalently described through an explicit set of recursive updates, which we state below for convenience:
     \begin{equation}
-        R_\theta^{(t+1, \tau)} - R_\theta^{(t, \tau)} = - \eta \left(\lambda + \Lambda^{(t)}\right)R_\theta^{(t, \tau)} +\eta \sum_{s=\tau}^{t-1}  R_\ell^{(t,s)} R_\theta^{(\tau, s)} 
+        R_\theta^{(t+1, \tau)} - R_\theta^{(t, \tau)} = -  \eta  \left(\lambda + \Lambda^{(t)}\right)R_\theta^{(t, \tau)} + \eta \sum_{s=\tau}^{t-1}  R_\ell^{(t,s)} R_\theta^{(\tau, s)} 
     \end{equation}
     with boundary conditions
     \begin{align}
-        &R_\theta^{(t, t)} = 1, \\
-        &R_\theta^{(t+1, t)} = 1 - \eta \Lambda^{(t)},
+        &R_\theta^{(t, t)} = 1 , \\
+        &R_\theta^{(t+1, t)} = 1 -  \eta  \Lambda^{(t)} ,
     \end{align}
 while 
 \begin{equation}
-    R_\ell^{(t, \tau)} = \alpha\mathbb{E}\left[\nabla_{\boldsymbol{h}} F (\boldsymbol{h}^{(t)}) T_\ell^{(t, \tau)} \right],
+    R_\ell^{(t, \tau)} = \alpha\mathbb{E}\left[\nabla_{\boldsymbol{h}} F (\boldsymbol{h}^{(t)})  T_\ell^{(t, \tau)} \right],
 \end{equation}
 where $T_\ell^{(t, \tau)}$ is a collection of stochastic processes with distribution 
 \begin{equation}
@@ -165,8 +165,8 @@ where $T_\ell^{(t, \tau)}$ is a collection of stochastic processes with distribu
 \end{equation}
 and boundary conditions
 \begin{align}
-    &T_\ell^{(t, t)} = 0, \\
-    &T_\ell^{(t+1, t)} = 1 - \eta \Lambda^{(t)},
+    &T_\ell^{(t, t)} = 0 , \\
+    &T_\ell^{(t+1, t)} = 1 -  \eta  \Lambda^{(t)} ,
 \end{align}
 
     
@@ -174,13 +174,13 @@ To obtain the limiting equations under the setting of gradient descent with teac
 \begin{theorem}\label{2402:thm:DMFT_committee}
 Consider the distribution over data defined in section \ref{2402:sec:main:setting} and an update rule on the weights of the form \eqref{2402:eq:GD_update}, i.e:
     \begin{align} 
-    \vec w_i^{(t+1)} = \vec w^{(t)}_i - \eta \lambda \vec w^{(t)}_i - \eta \sum_{\nu=1}^n\nabla_{\vec w^{(t)}_i} \mathcal{L}\left(\frac{W^{(t)}\vec z_\nu} {\sqrt{d}}, \frac{W^\star\vec z_\nu} {\sqrt{d}} \right),
+    \vec w_i^{(t+1)} = \vec w^{(t)}_i - \eta \lambda \vec w^{(t)}_i - \eta \sum_{\nu=1}^n\nabla_{\vec w^{(t)}_i}  \mathcal{L}\left(\frac{W^{(t)}\vec z_\nu} {\sqrt{d}}, \frac{W^\star\vec z_\nu} {\sqrt{d}} \right) ,
     \end{align}
 Then under the assumptions of Theorem \ref{2402:thm:main:2step_learning}, as $d \rightarrow \infty$ with $n/d=\alpha >0$, the joint empirical measure of the coordinates of the student weights $\vec w_i^{(t)}$ and the teacher weights
 $W^\star$  converges in distribution to  the stochastic process $\vec{\theta}^{(t)}$ and the standard normal variable $\vec{\theta^\star}$, in the sense of Theorem \ref{2402:thm:Cedric_theorem}. Similarly, the joint empirical measure of the student and teacher preactivations $\frac{\vec w_i^{(t)}\vec z_\nu} {\sqrt{d}}$, $\frac{\vec w_i^\star\vec z_\nu} {\sqrt{d}}$ converge in distribution to the stochastic process
 $\vec{h}^{(t)}$ and the standard normal variable $\vec{h}^\star$. $\boldsymbol{\theta}^{(t)}$ and $\vec{h}^{(t)}$ are defined recursively through the following equations:
 \begin{equation} \label{2402:eq:def_theta_planted}
-    \boldsymbol{\theta}^{(t+1)} -  \boldsymbol{\theta}^{(t)}= - \eta\left(\lambda + \Lambda^{(t)}\right)\boldsymbol{\theta}^{(t)} +\eta \sum_{\tau=0}^{t-1}  R_\ell^{(t,\tau)}\boldsymbol{\theta}^{(\tau)} - \eta g^{(t)}\boldsymbol{\theta}^\star + \eta \sum_{\tau=0}^{t}  \tilde R_\ell^{(t,\tau)}\boldsymbol{\theta}^\star + \eta \boldsymbol{u}^{(t)}
+    \boldsymbol{\theta}^{(t+1)} -  \boldsymbol{\theta}^{(t)}= -  \eta \left(\lambda + \Lambda^{(t)}\right)\boldsymbol{\theta}^{(t)} + \eta \sum_{\tau=0}^{t-1}  R_\ell^{(t,\tau)}\boldsymbol{\theta}^{(\tau)} -  \eta g^{(t)}\boldsymbol{\theta}^\star +  \eta \sum_{\tau=0}^{t}  \tilde R_\ell^{(t,\tau)}\boldsymbol{\theta}^\star +  \eta \boldsymbol{u}^{(t)}
 \end{equation}
 \begin{equation} \label{2402:eq:def_h_planted}
     \boldsymbol{h}^{(t)} = -\eta\sum_{\tau=0}^{t-1}R_\theta^{(t,\tau)} \nabla_{\boldsymbol{h}} \ell(\boldsymbol{h}^{(\tau)}, \boldsymbol{h}^\star) + \boldsymbol{\omega}^{(t)}
@@ -188,13 +188,13 @@ $\vec{h}^{(t)}$ and the standard normal variable $\vec{h}^\star$. $\boldsymbol{\
 % where we $\Lambda^{(t)}$, $R_\ell^{(t, \tau)}$ and $R_\theta^{(t, \tau)}$ are defined as in \ref{2402:thm:Cedric_theorem}. 
 Here $\vec u^{(t)}, \boldsymbol \theta^\star$ and $(\boldsymbol \omega^{(t)},  \boldsymbol h^\star)$ are zero mean Gaussian Process with covariances $C_\ell^{(t,\tau)}$ and $\Omega^{(t,\tau)}$ respectively, given by:
 \begin{align} 
-    C_\ell^{(t, \tau)} =   \alpha\mathbb{E}\left[ \boldsymbol{u}^{(t)}\left(\boldsymbol{u}^{(\tau)}\right)^\top \right] =
-    \alpha \mathbb{E}_{\boldsymbol{h}^{(t)}, \boldsymbol{h}^\star}\left[ \nabla_{\boldsymbol{h}} \mathcal{L}(\boldsymbol{h}^{(t)}, \boldsymbol{h}^\star)\nabla_{\boldsymbol{h}} \mathcal{L}(\boldsymbol{h}^{(\tau)}, \boldsymbol{h}^\star)^\top\right] \label{2402:eq:def_C_l} \\
-    \Omega^{(t,\tau)} =   \mathbb{E}\left[ \begin{pmatrix}
-       \boldsymbol \omega^{(t)} \\   \boldsymbol h^\star
+    C_\ell^{(t, \tau)}   =   \alpha\mathbb{E}\left[ \boldsymbol{u}^{(t)}\left(\boldsymbol{u}^{(\tau)}\right)^\top \right] =
+    \alpha \mathbb{E}_{\boldsymbol{h}^{(t)}, \boldsymbol{h}^\star} \left[ \nabla_{\boldsymbol{h}} \mathcal{L}(\boldsymbol{h}^{(t)}, \boldsymbol{h}^\star)\nabla_{\boldsymbol{h}} \mathcal{L}(\boldsymbol{h}^{(\tau)}, \boldsymbol{h}^\star)^\top \right] \label{2402:eq:def_C_l} \\
+    \Omega^{(t,\tau)}   =     \mathbb{E} \left[ \begin{pmatrix}
+       \boldsymbol \omega^{(t)} \\     \boldsymbol h^\star
     \end{pmatrix} \begin{pmatrix}
-        \boldsymbol \omega^{(t)}   \\ \boldsymbol h^\star 
-    \end{pmatrix}^\top \right]= \begin{bmatrix}
+        \boldsymbol \omega^{(t)}    \\ \boldsymbol h^\star  
+    \end{pmatrix}^\top  \right]= \begin{bmatrix}
         C_\theta^{(t,\tau)} & M^{(t)} \\
         M^{(t)} & 1
     \end{bmatrix}\label{2402:eq:def_C_omega},
@@ -204,30 +204,30 @@ where $C_\theta^{(t,\tau)}, M^{(t)}$ are defined as:
 \begin{bmatrix}
         C_\theta^{(t,\tau)} & M^{(t)} \\
         M^{(t)} & 1
-    \end{bmatrix} =  \mathbb{E}_{\boldsymbol{\theta}^{(t)}, \boldsymbol{\theta}^\star}\left[ \begin{pmatrix}
-        \boldsymbol{\theta}^{(t)} \\  \boldsymbol{\theta}^\star
+    \end{bmatrix}   =   \mathbb{E}_{\boldsymbol{\theta}^{(t)}, \boldsymbol{\theta}^\star} \left[ \begin{pmatrix}
+        \boldsymbol{\theta}^{(t)} \\    \boldsymbol{\theta}^\star
     \end{pmatrix} \begin{pmatrix}
-        \boldsymbol{\theta}^{(\tau)}   \\ \boldsymbol{\theta}^\star 
-    \end{pmatrix}^\top \right]
+        \boldsymbol{\theta}^{(\tau)}    \\ \boldsymbol{\theta}^\star  
+    \end{pmatrix}^\top  \right]
 \end{align}
 The effective regularisation $\Lambda^{(t)}$ and the projected gradient $g^{(t)}$ concentrate to
 \begin{align}
-    \Lambda^{(t)} = \alpha\mathbb{E}_{\boldsymbol{h}^{(t)}, \boldsymbol{h}^\star}\left[\nabla^2_{\vec h}\mathcal{L}\left( \vec h^{(t)}, \boldsymbol{h}^\star\right)\right],\\ g^{(t)}=\alpha \mathbb{E}_{\boldsymbol{h}^{(t)}, \boldsymbol{h}^\star}\left[\nabla_{\vec h}\mathcal{L}\left( \vec h^{(t)}, \boldsymbol{h}^\star\right) \vec h^{\star\top}\right]
+    \Lambda^{(t)}  =  \alpha\mathbb{E}_{\boldsymbol{h}^{(t)}, \boldsymbol{h}^\star}\left[\nabla^2_{\vec h}\mathcal{L}\left( \vec h^{(t)}, \boldsymbol{h}^\star\right)\right] , \\ g^{(t)} = \alpha \mathbb{E}_{\boldsymbol{h}^{(t)}, \boldsymbol{h}^\star}\left[\nabla_{\vec h}\mathcal{L}\left( \vec h^{(t)}, \boldsymbol{h}^\star\right) \vec h^{\star\top}\right]
 \end{align}
 The memory kernels $R_\ell^{(t,\tau)}$, $\tilde R_\ell^{(t,\tau)}$, $R_\theta^{(t,\tau)}$ for $t > \tau$ are defined through the partial derivatives with respect to the noise:
 \begin{eqnarray}
-    &R_\theta^{(t,\tau)} = \mathbb{E}_{\boldsymbol{\theta}^{(t)}, \boldsymbol{\theta}^\star}\left[\frac{\partial \vec \theta^{(t)}}{\partial \vec \tau^{(\tau)}} \right], \nonumber  \\
-    &R_\ell^{(t,\tau)} = \alpha \mathbb{E}_{\boldsymbol{h}^{(t)}, \boldsymbol{h}^\star}\left[\frac{\partial \nabla_{\vec h}\mathcal{L}\left( \vec h^{(t)}, \boldsymbol{h}^\star\right)}{\partial \boldsymbol\omega^{(\tau)}} \right],\\
-    &\tilde R_\ell^{(t,\tau)} = \alpha \mathbb{E}_{\boldsymbol{h}^{(t)}, \boldsymbol{h}^\star}\left[\frac{\partial \nabla_{\vec h}\mathcal{L}\left( \vec h^{(t)}, \boldsymbol{h}^\star\right)}{\partial \left(\boldsymbol\omega^\star\right)^{(\tau)}} \right],\quad
+    &R_\theta^{(t,\tau)} = \mathbb{E}_{\boldsymbol{\theta}^{(t)}, \boldsymbol{\theta}^\star}\left[\frac{\partial  \vec \theta^{(t)}}{\partial  \vec \tau^{(\tau)}} \right] , \nonumber  \\
+    &R_\ell^{(t,\tau)} = \alpha \mathbb{E}_{\boldsymbol{h}^{(t)}, \boldsymbol{h}^\star}\left[\frac{\partial  \nabla_{\vec h}\mathcal{L}\left( \vec h^{(t)}, \boldsymbol{h}^\star\right)}{\partial  \boldsymbol\omega^{(\tau)}} \right] ,\\
+    &\tilde R_\ell^{(t,\tau)} = \alpha \mathbb{E}_{\boldsymbol{h}^{(t)}, \boldsymbol{h}^\star}\left[\frac{\partial  \nabla_{\vec h}\mathcal{L}\left( \vec h^{(t)}, \boldsymbol{h}^\star\right)}{\partial  \left(\boldsymbol\omega^\star\right)^{(\tau)}} \right] ,\quad
 \end{eqnarray}
 and $R_\ell^{(t,t)} = \tilde R_\ell^{(t,t)} = 0$, $R_\theta^{(t,t)}=1$.
 % The new memory kernel is $\tilde R_\ell^{(t,\tau)}$ is:
 % \begin{align}
-%     \tilde R_\ell^{(t,\tau)} = \alpha \mathbb{E}_{}\left[\frac{\partial \nabla_{\boldsymbol{h}} \ell(\boldsymbol{h}^{(t)}, \boldsymbol{h}^\star)}{\partial \left(\vec\omega^\star\right)^{(\tau)}} \right].
+%     \tilde R_\ell^{(t,\tau)} = \alpha \mathbb{E}_{}\left[\frac{\partial  \nabla_{\boldsymbol{h}} \ell(\boldsymbol{h}^{(t)}, \boldsymbol{h}^\star)}{\partial  \left(\vec\omega^\star\right)^{(\tau)}} \right] .
 % \end{align}
 Finally, $M^{(t)}$ satisfies the update equation    
 \begin{equation} \label{2402:eq:def_M_rec}
-    M^{(t+1)} =(1-\eta\lambda) M^{(t)} -\eta g^{(t)},
+    M^{(t+1)} =(1-\eta\lambda) M^{(t)} -\eta g^{(t)} ,
 \end{equation}
 where $g^{(t)}$ is defined as:
 \begin{equation}\label{2402:eq:def_gt}
@@ -240,8 +240,8 @@ where $g^{(t)}$ is defined as:
     
     \begin{align} \label{2402:eq:combined_GD}
         \begin{bmatrix} W^{(t+1)} \\ W^* \end{bmatrix} = \begin{bmatrix} W^{(t)} \\ W^* \end{bmatrix} -\eta \begin{bmatrix} \lambda W^{(t)} \\ 0 \end{bmatrix} - \eta \sum_{\nu=1}^n\begin{bmatrix}
-            \nabla_{W^{(t)}} \mathcal{L}\left(\frac{W^{(t)}\vec z^\nu} {\sqrt{d}}\right) \\0
-        \end{bmatrix},
+            \nabla_{W^{(t)}}  \mathcal{L}\left(\frac{W^{(t)}\vec z^\nu} {\sqrt{d}}\right) \\0
+        \end{bmatrix} ,
     \end{align}
    The above form of updates can be seen to be a special case of Theorem \ref{2402:thm:Cedric_theorem} with $q=p+k$ and $F: R^{p+k} \rightarrow \R^{p+k}$ given by:
    \begin{equation}
@@ -255,7 +255,7 @@ where $g^{(t)}$ is defined as:
    \end{equation}
 The assumptions on $g^*, \sigma$ imply that $F$ is pseudo-Lipschitz of finite-order while standard concentration results for sub-exponential random variables when applied to $W^{(0)},W^{*}$ imply that the overlap matrices at initialization converge almost surely. Therefore, Theorem \ref{2402:thm:Cedric_theorem} applies, with the effective process for the weights and the pre-activations being described by: 
     \begin{equation} \label{2402:eq:combined_theta}
-        \begin{bmatrix} \boldsymbol{\theta}^{(t+1)} \\ \boldsymbol{\theta}^* \end{bmatrix} -  \begin{bmatrix} \boldsymbol{\theta}^{(t)} \\ \boldsymbol{\theta}^* \end{bmatrix}= - \eta \begin{bmatrix}\lambda + \Lambda^{(t)} & \tilde\Lambda^{(t)}\\0 & 0\end{bmatrix}\begin{bmatrix} \boldsymbol{\theta}^{(t)} \\ \boldsymbol{\theta}^* \end{bmatrix} +\eta \sum_{\tau=0}^{t}  \begin{bmatrix} R_\ell^{(t,\tau)} & \tilde{R}_\ell^{(t,\tau)} \\ 0 & 0 \end{bmatrix}\begin{bmatrix} \boldsymbol{\theta}^{(\tau)} \\ \boldsymbol{\theta}^* \end{bmatrix} + \eta \begin{bmatrix} \boldsymbol{u}^{(t)} \\ 0 \end{bmatrix}
+        \begin{bmatrix} \boldsymbol{\theta}^{(t+1)} \\ \boldsymbol{\theta}^* \end{bmatrix} -  \begin{bmatrix} \boldsymbol{\theta}^{(t)} \\ \boldsymbol{\theta}^* \end{bmatrix}= -  \eta  \begin{bmatrix}\lambda + \Lambda^{(t)} & \tilde\Lambda^{(t)}\\0 & 0\end{bmatrix}\begin{bmatrix} \boldsymbol{\theta}^{(t)} \\ \boldsymbol{\theta}^* \end{bmatrix} + \eta \sum_{\tau=0}^{t}  \begin{bmatrix} R_\ell^{(t,\tau)} & \tilde{R}_\ell^{(t,\tau)} \\ 0 & 0 \end{bmatrix}\begin{bmatrix} \boldsymbol{\theta}^{(\tau)} \\ \boldsymbol{\theta}^* \end{bmatrix} +  \eta \begin{bmatrix} \boldsymbol{u}^{(t)} \\ 0 \end{bmatrix}
     \end{equation}
     \begin{equation} \label{2402:eq:combined_h}
         \begin{bmatrix} \boldsymbol{h}^{(t)} \\ \boldsymbol{h}^* \end{bmatrix} = -\eta\sum_{\tau=0}^{t-1} \begin{bmatrix}
@@ -268,7 +268,7 @@ The assumptions on $g^*, \sigma$ imply that $F$ is pseudo-Lipschitz of finite-or
     % \end{equation}
     Notice the redundancy in the above equations due to $W^*$ not being updated in \eqref{2402:eq:combined_GD}. This allows us to further simplify \eqref{2402:eq:combined_h} and \eqref{2402:eq:combined_theta}, obtaining:
     \begin{equation} \label{2402:eq:planted_theta_implicit}
-        \boldsymbol{\theta}^{(t+1)} -  \boldsymbol{\theta}^{(t)}= - \eta\left(\lambda + \Lambda^{(t)}\right)\boldsymbol{\theta}^{(t)} +\eta \sum_{\tau=0}^{t-1}  R_\ell^{(t,\tau)}\boldsymbol{\theta}^{(\tau)} - \eta\tilde\Lambda^{(t)}\boldsymbol{\theta}^* +\eta \sum_{\tau=0}^{t}  \tilde R_\ell^{(t,\tau)}\boldsymbol{\theta}^* + \eta \boldsymbol{u}^{(t)}
+        \boldsymbol{\theta}^{(t+1)} -  \boldsymbol{\theta}^{(t)}= -  \eta \left(\lambda + \Lambda^{(t)}\right)\boldsymbol{\theta}^{(t)} + \eta \sum_{\tau=0}^{t-1}  R_\ell^{(t,\tau)}\boldsymbol{\theta}^{(\tau)} -  \eta \tilde\Lambda^{(t)}\boldsymbol{\theta}^* + \eta \sum_{\tau=0}^{t}  \tilde R_\ell^{(t,\tau)}\boldsymbol{\theta}^* +  \eta \boldsymbol{u}^{(t)}
     \end{equation}
     \begin{equation}
         \boldsymbol{h}^{(t)} = -\eta\sum_{\tau=0}^{t-1}R_\theta^{(t,\tau)} \nabla_{\boldsymbol{h}} \mathcal{L}(\boldsymbol{h}^{(\tau)}, \boldsymbol{h}^\star) + \boldsymbol{\omega}^{(t)}
@@ -282,7 +282,7 @@ The assumptions on $g^*, \sigma$ imply that $F$ is pseudo-Lipschitz of finite-or
     \end{equation}
 
     % \begin{equation}
-    %     \tilde R_\ell^{(t, \tau)} = \alpha\mathbb{E}\left[ \nabla_{\boldsymbol{h}}^2 \mathcal{L} (\boldsymbol{h}^{(t)}) \tilde T_\ell^{(t, \tau)} \right]
+    %     \tilde R_\ell^{(t, \tau)} = \alpha\mathbb{E}\left[ \nabla_{\boldsymbol{h}}^2 \mathcal{L} (\boldsymbol{h}^{(t)})  \tilde T_\ell^{(t, \tau)} \right]
     % \end{equation}
     % By some elementary manipulations it's possible to show that this result is consistent.
 %     All that is left to do is showing that the additional definitions we used are consistent.
@@ -327,7 +327,7 @@ Under the assumptions of A.2 the covariance $C_\theta^{(t,\tau)}$
 \end{lemma}
 This is a consequence of linearity of expectation on \eqref{2402:eq:def_theta_planted}. Concretely, viewing $\theta^{(t)}$ as a function of the Gaussian random variables $\{u^{(\tau)}\}_{\tau=1}^t$, we apply the multi-variate Stein's Lemma to obtain:
 \begin{equation}
-    \mathbb{E}\left[ \vec\theta^{(t)} \vec u^{(\tau)}\right] = \sum_{s=\tau}^{t-1} R_\theta^{(t,s)}C_\ell^{(s,\tau)}.
+    \mathbb{E}\left[ \vec\theta^{(t)} \vec u^{(\tau)}\right] = \sum_{s=\tau}^{t-1} R_\theta^{(t,s)}C_\ell^{(s,\tau)} .
 \end{equation}
 % In particular we can derive an expression for the time dependent weight decay that will fix the norm of the weights to $\sqrt{d}$ by imposing $C_\theta^{(t,t)} = C_\theta^{(t+1,t+1)}$:
 % \begin{align}
@@ -391,7 +391,7 @@ Therefore, the rows of $M^{(1)}$ gains a rank-one spike along $\Ea{g^*(\vec{h}^*
 
 By Equation \eqref{2402:eq:def_C_omega}, $\boldsymbol{\omega}^{(1)}$ can be expressed as:
 \begin{equation}\label{2402:eq:overlap_staircase}
-    \boldsymbol{\omega}^{(1)} = \boldsymbol{\omega_\perp}^{(1)}+ M^{(1)}\boldsymbol{h}^*,
+    \boldsymbol{\omega}^{(1)} = \boldsymbol{\omega_\perp}^{(1)}+ M^{(1)}\boldsymbol{h}^* ,
 \end{equation}
 where $\omega_\perp$ is independent of $\boldsymbol{h}^*$.
 \end{itemize} 
@@ -498,7 +498,7 @@ Now, similar to  Equation \eqref{2402:eq:overlap}, we have that:
 \end{equation}
 Using Fubini's theorem, we may take expectation w.r.t to express each entry of $\mathbb{E}\left[ \nabla_{\boldsymbol{h}} \mathcal{L}(\boldsymbol{h}^{(t)},\vec{h}^*) \left( \boldsymbol{h}^\star \right)^\top\vec{u}^\star\right]$ as:
 \begin{equation}
-     \Eb{\vec{z}}{F_{t,\vec{a}}(f^\star(\vec{z}))\langle \vec{v}^\star, \vec{z}\rangle},
+     \Eb{\vec{z}}{F_{t,\vec{a}}(f^\star(\vec{z}))\langle \vec{v}^\star, \vec{z}\rangle} ,
 \end{equation}
 for some analytic $F_{t,\vec{a}}$
 This ensures that the expectation in \eqref{2402:eq:overlap_2} remains $0$ for all time $t$. This proves the second part of Theorem \ref{2402:thm:main:2step_learning}.
@@ -509,7 +509,7 @@ We now consider the case when $M^{(1)} \neq 0$, i.e when the first-layer develop
 
 From Equation \eqref{2402:eq:overlap_staircase}, we obtain:
 \begin{equation}
-    \boldsymbol{\omega}_j^{(1)} = \boldsymbol{{\omega_{\perp}}_j}^{(1)}+\eta C a_j h^*_1
+    \boldsymbol{\omega}_j^{(1)} = \boldsymbol{{\omega_{\perp}}_j}^{(1)}+\eta C a_j h^*_1 
 \end{equation}
 where $C$ denotes a constant dependent on $g^*$. Since $\boldsymbol{\omega}^{(1)}$ is now correlated with $h^*_1$, the condition in Equation \eqref{2402:eq:phi} is modified to:
 \begin{equation}
@@ -593,7 +593,7 @@ Furthermore, it is straightforward to see that  $\vec{v}^\star$ remains orthogon
     \centering
     \includegraphics{figs/bad_example} 
     \caption{
-    An illustration of a hard, non-even target $f^\star(\vec z) = z_1 z_2 z_3 + \mathrm{He}_3(z_4)$ being learned by a student with $p=4$ hidden units. We can see that, \textit{even when reusing the batch}, the teacher can only learn the direction associated with $z_4$, while keeping a zero overlap otherwise. The continuous lines are from the DMFT numerical integration, the dots are simulations with $d=10000$. In the legend the overlap with the $n$-th direction is the projection of the student weights in the subspace associated with $z_n$. For this figure we have $\sigma = \rm relu$, $n=5d$, $\eta = 0.2$.}
+    An illustration of a hard, non-even target $f^\star(\vec z)  =  z_1 z_2 z_3  +  \mathrm{He}_3(z_4)$ being learned by a student with $p=4$ hidden units. We can see that, \textit{even when reusing the batch}, the teacher can only learn the direction associated with $z_4$, while keeping a zero overlap otherwise. The continuous lines are from the DMFT numerical integration, the dots are simulations with $d = 10000$. In the legend the overlap with the $n$-th direction is the projection of the student weights in the subspace associated with $z_n$. For this figure we have $\sigma  =  \rm relu$, $n=5d$, $\eta  =  0.2$.}
     \label{2402:fig:bad_example}
 \end{figure}
 
@@ -671,7 +671,7 @@ The corollary implies that such target functions can be learned with $\cO(d)$ sa
 \begin{figure*}
     \centering
     \includegraphics{figs/overlaps_batch}
-    \caption{Comparison of theory and experiments for Gradient Descent on the target $z_1z_2z_3 + \mathrm{He}_3(z_4)$. Each gradient step uses a mini-batche of $n/5$ samples. On the {\bf left} we use the data sequentially, on the {\bf right} we sample the batch from the dataset with replacement. The continuous lines are from the DMFT numerical integration, the dots are simulations with $d=10000$ averaged over $32$ realisations. In the legend the overlap with the $n$-th direction is the projection of the student weights in the subspace associated with $z_n$. For this figure we have $\sigma = \rm relu$, $n=5d$, $\eta = 0.2$.}
+    \caption{Comparison of theory and experiments for Gradient Descent on the target $z_1z_2z_3 + \mathrm{He}_3(z_4)$. Each gradient step uses a mini-batche of $n/5$ samples. On the {\bf left} we use the data sequentially, on the {\bf right} we sample the batch from the dataset with replacement. The continuous lines are from the DMFT numerical integration, the dots are simulations with $d = 10000$ averaged over $32$ realisations. In the legend the overlap with the $n$-th direction is the projection of the student weights in the subspace associated with $z_n$. For this figure we have $\sigma  =  \rm relu$, $n=5d$, $\eta  =  0.2$.}
     \label{2402:fig:overlaps_batch}
 \end{figure*}
 
@@ -688,6 +688,6 @@ We believe a similar result would hold for $n_b = \mathcal{O}(1)$ samples in the
 \begin{figure}
     \centering
     \includegraphics{figs/overlaps_minibatch}
-    \caption{Experiments for Gradient Descent on the target $z_1z_2z_3 + \mathrm{He}_3(z_4)$. We use minibatches with $1$ sample each. On the {\bf left} we use the data sequentially, on the {\bf right} we sample the data point from the dataset with replacement. The dots are simulations with $d=10000$ averaged over $32$ realisations. In the legend the overlap with the $n$-th direction denotes the projection of the student weights in the subspace associated with $z_n$. For this figure we have $\sigma = \rm relu$, $n=5d$, $\eta = 0.2$.}
+    \caption{Experiments for Gradient Descent on the target $z_1z_2z_3 + \mathrm{He}_3(z_4)$. We use minibatches with $1$ sample each. On the {\bf left} we use the data sequentially, on the {\bf right} we sample the data point from the dataset with replacement. The dots are simulations with $d = 10000$ averaged over $32$ realisations. In the legend the overlap with the $n$-th direction denotes the projection of the student weights in the subspace associated with $z_n$. For this figure we have $\sigma  =  \rm relu$, $n=5d$, $\eta  =  0.2$.}
     \label{2402:fig:overlaps_minibatch}
 \end{figure}

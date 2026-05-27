@@ -19,7 +19,7 @@ A Hilbert space $\mathcal{H}$ of real-valued functions on $\mathcal{X}$ is a \em
   \begin{theorem}[Hilbert--Schmidt spectral theorem]\label{2605:thm:spectral}
   If $T$ is compact and self-adjoint on a separable Hilbert space $\mathcal{H}$, then there exist a (finite or countable) sequence of real eigenvalues $\{\lambda_i\}_{i\geq 1}$ with $|\lambda_1|\geq|\lambda_2|\geq\cdots\to 0$ and an orthonormal system $\{e_i\}_{i\geq 1}\subset\mathcal{H}$ of eigenvectors $Te_i=\lambda_i e_i$ such that
   \begin{equation}\label{2605:eq:spectral}
-    T f = \sum_{i\geq 1} \lambda_i\langle f,e_i\ranglee_i\qquad\text{for all }f\in\mathcal{H}.
+    T f  =  \sum_{i\geq 1} \lambda_i \langle f,e_i\rangle e_i\qquad\text{for all }f\in\mathcal{H}.
     \end{equation}
     \end{theorem}
   Trace-class and Hilbert--Schmidt operators are special cases of compact operators on which the spectrum is, respectively, absolutely summable ($\sum_i|\lambda_i|<\infty$) and square-summable ($\sum_i\lambda_i^2<\infty$).
@@ -27,23 +27,23 @@ A Hilbert space $\mathcal{H}$ of real-valued functions on $\mathcal{X}$ is a \em
     \paragraph{Kernel integral operator}
     Given a kernel $K$ and the measure $\mu$, the associated \emph{integral operator} $T_K:L^2(\mathcal{X},\mu)\to L^2(\mathcal{X},\mu)$ is defined by
     \begin{equation}\label{2605:eq:integral-op}
-      (T_K f)(\bx):=\int_{\mathcal{X}} K(\bx,\bx')f(\bx')d\mu(\bx').
+      (T_K f)(\bx) := \int_{\mathcal{X}} K(\bx,\bx') f(\bx') d\mu(\bx').
       \end{equation}
-      Under the standard assumptions that $K$ is symmetric, continuous (or merely measurable) and square-integrable in the sense that $\int_{\mathcal{X}\times\mathcal{X}} K(\bx,\bx')^2d\mu(\bx)d\mu(\bx')<\infty$, the operator $T_K$ is self-adjoint and Hilbert--Schmidt (in particular compact) on $L^2(\mathcal{X},\mu)$.
+      Under the standard assumptions that $K$ is symmetric, continuous (or merely measurable) and square-integrable in the sense that $\int_{\mathcal{X}\times\mathcal{X}} K(\bx,\bx')^2 d\mu(\bx)d\mu(\bx')<\infty$, the operator $T_K$ is self-adjoint and Hilbert--Schmidt (in particular compact) on $L^2(\mathcal{X},\mu)$.
 
       Applying Theorem~\ref{2605:thm:spectral} to $T_K$ yields eigenpairs $\{(\lambda_i,e_i)\}_{i\geq 1}$ with $\lambda_i\geq 0$, $\lambda_i\downarrow 0$, and $\{e_i\}$ orthonormal in $L^2(\mathcal{X},\mu)$. Mercer's theorem~\cite{mercer1909functions} then states that, under mild continuity assumptions on $\mathcal{X}$ and $K$ (e.g.\ $\mathcal{X}$ compact and $K$ continuous), the kernel itself admits the absolutely and uniformly convergent expansion
       \begin{equation}\label{2605:eq:mercer}
-        K(\bx,\bx')=\sum_{i\geq 1}\lambda_ie_i(\bx)e_i(\bx').
+        K(\bx,\bx') = \sum_{i\geq 1}\lambda_i e_i(\bx) e_i(\bx').
         \end{equation}
 
         \paragraph{Relation between the integral operator and the RKHS}
         The Mercer decomposition~\eqref{2605:eq:mercer} provides an explicit isometric description of the RKHS $\mathcal{H}_K$ in terms of the spectral data of $T_K$. Restricting to indices with $\lambda_i>0$,
         \begin{equation}\label{2605:eq:rkhs-mercer}
-          \mathcal{H}_K=\Bigl\{f=\sum_{i:\lambda_i>0}a_ie_i:\|f\|_{\mathcal{H}_K}^2:=\sum_{i:\lambda_i>0}\frac{a_i^2}{\lambda_i}<\infty\Bigr\},
+          \mathcal{H}_K = \Bigl\{ f=\sum_{i:\lambda_i>0}a_i e_i : \|f\|_{\mathcal{H}_K}^2 := \sum_{i:\lambda_i>0}\frac{a_i^2}{\lambda_i}<\infty \Bigr\},
           \end{equation}
           with inner product $\langle f,g\rangle_{\mathcal{H}_K}=\sum_i a_i b_i/\lambda_i$. Equivalently, $\mathcal{H}_K$ is the image of $L^2(\mathcal{X},\mu)$ under the square root $T_K^{1/2}$, with norm $\|T_K^{1/2}g\|_{\mathcal{H}_K}=\|g\|_{L^2(\mathcal{X},\mu)}$ (modulo $\ker T_K$); equivalently, $T_K^{1/2}:L^2(\mathcal{X},\mu)\to\mathcal{H}_K$ is a partial isometry. Two consequences will be used repeatedly below:
           \begin{itemize}
-            \item The eigenfunctions $\{\sqrt{\lambda_i}e_i\}_{i:\lambda_i>0}$ form an orthonormal basis of $\mathcal{H}_K$, while $\{e_i\}$ form an orthonormal basis of the closure of $\mathrm{range}(T_K)$ in $L^2(\mathcal{X},\mu)$.
+            \item The eigenfunctions $\{\sqrt{\lambda_i} e_i\}_{i:\lambda_i>0}$ form an orthonormal basis of $\mathcal{H}_K$, while $\{e_i\}$ form an orthonormal basis of the closure of $\mathrm{range}(T_K)$ in $L^2(\mathcal{X},\mu)$.
               \item Smoothness in $\mathcal{H}_K$ corresponds to spectral concentration: $f\in\mathcal{H}_K$ iff its $L^2$ coefficients $a_i=\langle f,e_i\rangle_{L^2}$ decay fast enough that $\sum_i a_i^2/\lambda_i<\infty$. In particular, functions in the top-$k$ eigenspace of $T_K$ are exactly the ``low-degree'' or ``low-frequency'' functions used throughout the main text.
               \end{itemize}
               This dictionary between the kernel $K$, the integral operator $T_K$ and the RKHS $\mathcal{H}_K$ is what allows us, in the rest of this appendix, to translate between function-space statements (norms, projections, low-degree truncation in $\mathcal{H}_K$) and operator-spectral statements (eigenvalues and eigenfunctions of $T_K$).
@@ -86,11 +86,11 @@ We prove each part of Theorem~\ref{2605:thm:variational-rkhs} in turn, using Lem
 
 By Lemma~\ref{2605:lem:rkhs-euclidean}, the objective equals
 \[
-    \left|\widehat{\mathbb E}_n\bigl[y\psi(\bm x)\bigr]\right|
+    \left|\widehat{\mathbb E}_n\bigl[y \psi(\bm x)\bigr]\right|
     =
     \left|\frac{1}{n}\sum_{\mu=1}^n y_\mu\langle \bm u, \bz_{\ell-1}(\bm x_\mu)\rangle\right|
     =
-    \left|\left\langle \bm u, \hat{\bm u}^\ell\right\rangle\right|,
+    \left|\left\langle \bm u,  \hat{\bm u}^\ell\right\rangle\right|,
 \]
 where $\hat{\bm u}^\ell = \tfrac{1}{n}\sum_{\mu=1}^n y_\mu \bm z_{\ell-1}(\bm x_\mu)$ is the empirical first-order moment computed in Algorithm~\ref{2605:alg:neural-lofi}. By the Cauchy--Schwarz inequality this is maximized at $\bm u = \hat{\bm u}^\ell/\|\hat{\bm u}^\ell\|_2$, giving $\psi^\ell(\bm x)=\langle \hat{\bm u}^\ell, \bm z_{\ell-1}(\bm x)\rangle$ as the unique maximizer (up to sign). \qed
 
@@ -98,13 +98,13 @@ where $\hat{\bm u}^\ell = \tfrac{1}{n}\sum_{\mu=1}^n y_\mu \bm z_{\ell-1}(\bm x_
 
 By Lemma~\ref{2605:lem:rkhs-euclidean}, the second-order objective equals
 \[
-    \left|\widehat{\mathbb E}_n\bigl[y\varphi(\bm x)^2\bigr]\right|
+    \left|\widehat{\mathbb E}_n\bigl[y \varphi(\bm x)^2\bigr]\right|
     =
     \left|\frac{1}{n}\sum_{\mu=1}^n y_\mu\langle \bm u,\bz_{\ell-1}(\bm x_\mu)\rangle^2\right|
     =
     \left|\bm u^\top \widehat{\bm C}^{(\ell)} \bm u\right|,
 \]
-where $\widehat{\bm C}^{(\ell)} = \tfrac{1}{n}\sum_{\mu=1}^n y_\mu\bz_{\ell-1}(\bm x_\mu)\bz_{\ell-1}(\bm x_\mu)^\top$ is the empirical second-order moment operator. By the Courant--Fischer minimax theorem, the unit-norm vector maximizing $|\bm u^\top \widehat{\bm C}^{(\ell)}\bm u|$ is the leading eigenvector $\hat{\bm v}^{(\ell)}_1$ of $\widehat{\bm C}^{(\ell)}$ (in absolute eigenvalue). Successive orthogonal maximizers are the subsequent eigenvectors $\hat{\bm v}^{(\ell)}_2,\dots,\hat{\bm v}^{(\ell)}_{k_\ell}$. Via $\bm u\mapsto\varphi_{\bm u}$, these correspond exactly to $\varphi_1,\dots,\varphi_{k_\ell}$ satisfying the stated variational recursion. \qed
+where $\widehat{\bm C}^{(\ell)} = \tfrac{1}{n}\sum_{\mu=1}^n y_\mu \bz_{\ell-1}(\bm x_\mu)\bz_{\ell-1}(\bm x_\mu)^\top$ is the empirical second-order moment operator. By the Courant--Fischer minimax theorem, the unit-norm vector maximizing $|\bm u^\top \widehat{\bm C}^{(\ell)}\bm u|$ is the leading eigenvector $\hat{\bm v}^{(\ell)}_1$ of $\widehat{\bm C}^{(\ell)}$ (in absolute eigenvalue). Successive orthogonal maximizers are the subsequent eigenvectors $\hat{\bm v}^{(\ell)}_2,\dots,\hat{\bm v}^{(\ell)}_{k_\ell}$. Via $\bm u\mapsto\varphi_{\bm u}$, these correspond exactly to $\varphi_1,\dots,\varphi_{k_\ell}$ satisfying the stated variational recursion. \qed
 
 \paragraph{Dual (kernel-space) form ---}
 
@@ -127,7 +127,7 @@ where $\widehat{\bm C}^{(\ell)} = \frac{1}{n}\sum_{\mu=1}^n y_\mu K_{\ell-1}(\bm
 \begin{proposition}[Generalized Eigenvector Problem]\label{2605:prop:generalized-eigenvector}
 The optimal dual coefficients $\{\hat{\bm\alpha}_j\}_{j=1}^{k_\ell}$ that sequentially maximize the above constrained objective satisfy the generalized eigenvector problem
 \begin{equation}
-G_{\ell-1}^{1/2}YG_{\ell-1}^{1/2}\bm\alpha_j = \lambda_j\bm\alpha_j, \quad j=1,\dots,k_\ell,
+G_{\ell-1}^{1/2} Y G_{\ell-1}^{1/2} \bm\alpha_j = \lambda_j \bm\alpha_j, \quad j=1,\dots,k_\ell,
 \label{2605:eq:gen-eigenproblem}
 \end{equation}
 where $Y = \mathrm{diag}(y_1, \dots, y_n)$ is the label matrix, and $\lambda_j$ are the generalized eigenvalues ordered by magnitude. The solutions $\{\hat{\bm\alpha}_j\}_{j=1}^{k_\ell}$ recover the dual coefficients of the second-order features, enabling a kernel implementation of Neural LoFi without explicit access to the feature vectors.
@@ -279,10 +279,10 @@ we have
 \begin{aligned}
     \|\widehat\varphi_{p,k}-\phi^\infty_k\|_{L^2(\rho_{\bm x})}
     &\leq
-    \|\bm k_p-\bm k_\infty\|_{L^2(\rho_{\bm x};\R^n)}
+    \|\bm k_p-\bm k_\infty\|_{L^2(\rho_{\bm x};\R^n)} 
     \|\balpha_{p,k}\|_2 \\
     &\quad+
-    \|\bm k_\infty\|_{L^2(\rho_{\bm x};\R^n)}
+    \|\bm k_\infty\|_{L^2(\rho_{\bm x};\R^n)} 
     \|\balpha_{p,k}-\balpha_{\infty,k}\|_2
     \xrightarrow[p\to\infty]{P}0.
 \end{aligned}

@@ -15,8 +15,8 @@ We make the following assumptions:
 \begin{assumption}\label{2405:assump:app:concentration}
   There exist constants $C, \iota > 0$ such that
   \begin{align}
-    \sup_{\vec{u} \in \mathbb{S}^{d-1}} \norm{\Ea{\Phi(\vec u)\Phi(\vec u)^\top}} &\leq C \\
-    \sup_{\vec{u} \in \mathbb{S}^{d-1}} \Ea{\norm{\Phi(\vec u)}^{4 + \iota}} &\leq C N^{\frac{4 + \iota}2}
+    \sup_{\vec{u} \in \mathbb{S}^{d-1}}  \norm{\Ea{\Phi(\vec u)\Phi(\vec u)^\top}} &\leq C \\
+    \sup_{\vec{u} \in \mathbb{S}^{d-1}}  \Ea{\norm{\Phi(\vec u)}^{4 + \iota}} &\leq C N^{\frac{4 + \iota}2}
   \end{align}
   Further, we have $\langle \vec{u}, \Phi(\vec{u}) \rangle = 0$ a.s. for any $\vec{u} \in \mathbb{S}^{d-1}$.
 \end{assumption}
@@ -185,7 +185,7 @@ It turns out that in this case, we can control accurately the trajectory of $W^\
   \end{align}
 Define $\bar\Pi^\star$ the projection on the eigenspace associated to $\bar\lambda$, and $\underline\Pi^\star$ its orthogonal projection. Summing the upper bound of \eqref{2405:eq:app:upper_bound_exp} on all $v_i$ with $\lambda_i \leq \underline\lambda$,
 \[ \norm{\underline\Pi^\star \vec{u}_t}_1 \leq (1 + \epsilon)\norm{\underline\Pi^\star \vec{u}_0}_1 + \gamma (\underline\lambda + k(\epsilon + q)) \sum_{s=0}^{t-1} \norm{\Pi^\star \vec{u}_s}_1, \]
-  where the $\ell^1$ norm $\norm{\cdot}_1$ in $V^\star$ is computed w.r.t the basis $(\vec{v}_1, \dots, \vec{v}_k)$, and we used the norm bound $\norm{\Pi^\star \vec{u}_s} \leq \norm{\Pi^\star \vec{u}_s}_1$.
+  where the $\ell^1$ norm $\norm{ \cdot }_1$ in $V^\star$ is computed w.r.t the basis $(\vec{v}_1, \dots, \vec{v}_k)$, and we used the norm bound $\norm{\Pi^\star \vec{u}_s} \leq \norm{\Pi^\star \vec{u}_s}_1$.
 
   Call $\cP(t_0)$ the following condition:
   \begin{equation}\label{2405:eq:app:rec_condition}
@@ -242,7 +242,7 @@ It finally remains to show how the bounds of Propositions \ref{2405:prop:app:low
     For $t \leq \underline t_\epsilon$, the upper bound on $\norm{\Pi^\star \vec{u}_t}$ is lower than $\eta$, which directly means that $\tau_\eta \geq \underline t_\epsilon$. The lower bound is higher than $\eta$ for $t = \bar t_\epsilon$, which implies that $\tau_\eta \leq \bar t_\epsilon$ as long as $T \geq \bar t_\epsilon$. Such a $T$ satisfies the bound \eqref{2405:eq:app:bound_gamma_T} as long as
     \[ \frac{\eta(1 + \sqrt{k}\epsilon)}{\gamma \norm{\psi(\vec{0})}} \leq c(\delta, \epsilon) \gamma^{-2}d^{-1}, \]
     which is equivalent to
-    \[ \gamma \leq \frac{c(\delta,\epsilon)\norm{\psi(\vec{0})}}{\eta(1 + \sqrt{k}\epsilon)} d^{-1},\]
+    \[ \gamma \leq \frac{c(\delta,\epsilon)\norm{\psi(\vec{0})}}{\eta(1 + \sqrt{k}\epsilon)}  d^{-1},\]
     which can always be ensured by decreasing $\gamma_0(\delta, \epsilon)$. Finally, we use the bound
     \[ \norm{\frac{\vec{x}}{\norm{\vec{x}}} - \frac{\vec{y}}{\norm{\vec{y}}}} \leq 2 \frac{\norm{\vec{x} - \vec{y}}}{\norm{\vec{x}}} \]
     to conclude that
@@ -571,11 +571,11 @@ Using this property on every monomial in $H_k(\langle \vec{v}, \vec{x} \rangle)$
 But the latter is zero when $k\geq 1$ by orthogonality of the Hermite polynomials. This shows that $\ell_{\vec{v}}^\star \geq m$ for all $\vec{v}\in\R^k$, and therefore $m \leq \ell^\star \leq \ell$.
 
 For the upper bound, let $\vec{v} = \vec{e}_1 + \dots + \vec{e_m}$. Then
-\[ H_k(\langle \vec{v}, \vec{x} \rangle) = m!  x_1\dots x_m + Q(\vec{x}), \]
+\[ H_k(\langle \vec{v}, \vec{x} \rangle) = m!   x_1\dots x_m + Q(\vec{x}), \]
 where $Q$ is a polynomial where each monomial has a missing variable. As a result,
 \begin{align*}
-  \Ea{h^\star(\vec{x}) H_k(\langle \vec{v}, \vec{x} \rangle)} &= m! \Ea{h^\star(\vec{x}) x_1\dots x_m} \\
-  &= m! \Ea{|x_1\dots x_m|} \\
+  \Ea{h^\star(\vec{x}) H_k(\langle \vec{v}, \vec{x} \rangle)} &= m!  \Ea{h^\star(\vec{x}) x_1\dots x_m} \\
+  &= m!  \Ea{|x_1\dots x_m|} \\
   &= m! \left( \sqrt{\frac2\pi} \right)^m
 \end{align*}
 which is a non-zero value, hence $\ell^\star \leq \ell \leq m$.

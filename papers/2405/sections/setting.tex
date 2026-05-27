@@ -41,7 +41,7 @@ This objective is non-convex, and we do not have direct access to the expectatio
 \label{2405:eq:algorithm}     
  \end{equation}
 \end{myalgorithm}
-This class of algorithms defined by the optimizer step $\mathcal{A}(\cdot, \gamma, \rho, n_b)$, in which we consider the final gradient update after taking a linear combination of the current iterate and its current gradient (noted as $\Tilde{W}_t(\rho)$ in the above), is broadly used in different contexts. Indeed, routines with positive $\rho$ parameters correspond to Extragradient methods (EgD) \citep{korpelevi1976extragradient}, while with negative $\rho$ have been recently used in the context of Sharpness Aware Minimization (SAM) \citep{foret2021sharpness}. For clarity, we present our theoretical results with the above, easily interpretable, Algorithm~\ref{2405:algo:optimizer_main_step}. However, our theoretical claims are valid in a more general setting; we refer to Appendices~(\ref{2405:sec:app:proofs}, \ref{2405:sec:app:numerics}) for additional results on more general optimizer steps. 
+This class of algorithms defined by the optimizer step $\mathcal{A}(\cdot , \gamma, \rho, n_b)$, in which we consider the final gradient update after taking a linear combination of the current iterate and its current gradient (noted as $\Tilde{W}_t(\rho)$ in the above), is broadly used in different contexts. Indeed, routines with positive $\rho$ parameters correspond to Extragradient methods (EgD) \citep{korpelevi1976extragradient}, while with negative $\rho$ have been recently used in the context of Sharpness Aware Minimization (SAM) \citep{foret2021sharpness}. For clarity, we present our theoretical results with the above, easily interpretable, Algorithm~\ref{2405:algo:optimizer_main_step}. However, our theoretical claims are valid in a more general setting; we refer to Appendices~(\ref{2405:sec:app:proofs}, \ref{2405:sec:app:numerics}) for additional results on more general optimizer steps. 
 % The complete description of the algorithmic routine is given in App.~\ref{2405:sec:app:numerics} (See Algorithm~\ref{2405:algo:full_algorithm}).
 
 As previously stated, the central object of our analysis is the efficiency of the network to adapt to the low-dimensional structure identified by $W^\star$. Therefore, we focus on the learned representations by the first layer weights $W_t$ while keeping the second layer weights $\vec a_t = \vec a_0$ fixed during training. This assumption is favorable to performing the theoretical analysis and is largely used in the theoretical community (e.g., \cite{damian2022neural,ba2022high,bietti2022learning}).
@@ -72,7 +72,7 @@ The essential object in our analysis is the evolution of the correlation between
 
 \paragraph{From Information Exponents to Generative Exponents --}Recent works have sharply theoretically characterized the weak recovery stopping time for a variety of multi-index targets learned with one-pass SGD. \cite{arous2021online} for the single-index case, then \cite{abbe2022merged} for the multi-index one have unveiled the presence of an Information Exponent $\ell$ characterizing the time complexity needed to weakly recover the target subspace $V^\star$, defined in the single-index case as
 \begin{equation}
-    \ell = \min \{ k \in \N : \Eb{x \sim \cN(0, 1)}{h^\star(x)H_k(x)} \neq 0 \}.
+    \ell = \min \{ k \in \N  :  \Eb{x \sim \cN(0, 1)}{h^\star(x)H_k(x)} \neq 0 \}.
 \end{equation}
 where $H_k$ is the $k$-th Hermite polynomial \citep{odonnell2014analysis}.
 Under this framework, the sample complexity required to achieve weak recovery when the link function has Information Exponent $\ell$ is \citep{arous2021online}
@@ -88,7 +88,7 @@ These bounds have been improved by \cite{damian2023smoothing} up to order $d^{\e
 
 However, this Information Exponent is not the right measure of complexity for low-dimensional weak recovery. Some iterative algorithms, for instance, are known to perform drastically better\citep{barbier2019optimal,celentano2021high,mondelli2018fundamental,luo2019optimal,maillard2020phase,troiani2024fundamental}. Recently \cite{damian2024computational} introduced a new Generative Exponent $\ell^\star$ (generative exponent) governing the weak recovery time scaling for algorithms in the Statistical Query (SQ) or Low Degree Polynomial (LDP) family. This exponent is defined as
 \begin{equation}
-    \ell^\star = \min \{ k \in \N : \Eb{x \sim \cN(0, 1)}{f(h^\star(x))H_k(x)} \neq 0 \ \text{for some} \ f: \R \to \R \},
+    \ell^\star = \min \{ k \in \N  :  \Eb{x \sim \cN(0, 1)}{f(h^\star(x))H_k(x)} \neq 0 \ \text{for some} \ f: \R \to \R \},
 \end{equation}
 which allows for the application of arbitrary transformations of the labels before performing the queries. Under this definition, the ``hard'' problems with $\ell^\star > 2$ are also impossible to learn for the best first-order algorithm, \emph{Approximate Message Passing} \citep{troiani2024fundamental}. 
 

@@ -7,13 +7,13 @@ In the main text we stated Theorem~\ref{2605:thm:neural-lofi} for scalar labels 
 
 \paragraph{Per-coordinate correlation operator ---} Given a feature $\psi:\mathcal{X}\to\mathbb{R}$ and a vector label $\by=(y_1,\dots,y_m)$, define the \emph{label-feature correlation vector}
 \begin{equation}\label{2605:eq:vec-corr}
-\bc_n[\psi]:=\bigl(\widehat{\mathbb{E}}_n[y_1\psi(\bx)],\dots,\widehat{\mathbb{E}}_n[y_m\psi(\bx)]\bigr)\in\mathbb{R}^m,
+\bc_n[\psi] := \bigl(\widehat{\mathbb{E}}_n[y_1 \psi(\bx)], \dots, \widehat{\mathbb{E}}_n[y_m \psi(\bx)]\bigr) \in \mathbb{R}^m,
 \end{equation}
-and analogously the second-order correlation vector $\bc_n^{(2)}[\varphi]:=\bigl(\widehat{\mathbb{E}}_n[y_a\varphi(\bx)^2]\bigr)_{a=1}^m$. The scalar quantities $\widehat{\mathbb{E}}_n[y\psi(\bx)]$ and $\widehat{\mathbb{E}}_n[y\varphi(\bx)^2]$ used in Theorem~\ref{2605:thm:neural-lofi} are recovered when $m=1$.
+and analogously the second-order correlation vector $\bc_n^{(2)}[\varphi]:=\bigl(\widehat{\mathbb{E}}_n[y_a \varphi(\bx)^2]\bigr)_{a=1}^m$. The scalar quantities $\widehat{\mathbb{E}}_n[y \psi(\bx)]$ and $\widehat{\mathbb{E}}_n[y \varphi(\bx)^2]$ used in Theorem~\ref{2605:thm:neural-lofi} are recovered when $m=1$.
 
 \paragraph{Natural scalarization ---} To obtain a variational principle one needs a scalar score on $\bc_n[\psi]$. A natural generalization is to use the squared Euclidean norm of the correlation vector,
 \begin{equation}\label{2605:eq:vec-l2}
-\mathcal{S}^{\ell_2}(\psi):=\|\bc_n[\psi]\|_2^2=\sum_{a=1}^d \bigl(\widehat{\mathbb{E}}_n[y_a\psi(\bx)]\bigr)^2,
+\mathcal{S}^{\ell_2}(\psi) := \|\bc_n[\psi]\|_2^2 = \sum_{a=1}^d \bigl(\widehat{\mathbb{E}}_n[y_a \psi(\bx)]\bigr)^2,
 \end{equation}
 which selects features that are simultaneously well aligned with as many label coordinates as possible.
 
@@ -22,14 +22,14 @@ which selects features that are simultaneously well aligned with as many label c
 \begin{itemize}
 \item[(i$'$)] \emph{Linear features.} The linear features are defined recursively as:
 \begin{equation}\label{2605:eq:vec-lin}
-\psi^\ell_k\in\arg\max_{\psi:\|\psi\|_{\mathcal{H}_{\ell-1}}=1,\psi \perp \psi^\ell_1,\cdot, \psi^\ell_{k-1}}\bigl\|\widehat{\mathbb{E}}_n[\by\psi(\bx)]\bigr\|_2^2,
+\psi^\ell_k \in \arg\max_{\psi: \|\psi\|_{\mathcal{H}_{\ell-1}}=1,\psi \perp \psi^\ell_1,\cdot, \psi^\ell_{k-1}} \bigl\|\widehat{\mathbb{E}}_n[\by \psi(\bx)]\bigr\|_2^2,
 \end{equation}
 
 Note that unlike the scalar label setting in Theorem \ref{2605:thm:neural-lofi}, the linear correlation criterion now produces $m$ features, corresponding to the $m$ singular vectors of the correlation matrix $\frac{1}{n}\sum_{\mu=1}^n y_\mu \bz^\top_{\ell-1}(\bx)$
 
 \item[(ii$'$)] \emph{Second-order features.} For each $k=1,\dots,k_\ell$,
 \begin{equation}\label{2605:eq:vec-quad}
-\varphi_k\in\arg\max_{\substack{\varphi:\|\varphi\|_{\mathcal{H}_{\ell-1}}=1\\ \varphi\perp \varphi_1,\dots,\varphi_{k-1}}}\bigl\|\widehat{\mathbb{E}}_n[\by\varphi(\bx)^2]\bigr\|_2^2,
+\varphi_k \in \arg\max_{\substack{\varphi: \|\varphi\|_{\mathcal{H}_{\ell-1}}=1\\ \varphi\perp \varphi_1,\dots,\varphi_{k-1}}} \bigl\|\widehat{\mathbb{E}}_n[\by \varphi(\bx)^2]\bigr\|_2^2,
 \end{equation}
 successively orthogonalized to the previously selected features. 
 \end{itemize}
