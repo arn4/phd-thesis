@@ -1,0 +1,11 @@
+\paperchapter
+  {From high-dimensional \& mean-field dynamics to dimensionless ODEs:
+   A unifying approach to SGD in two-layers networks}
+  {Luca Arnaboldi, Ludovic Stephan, Florent Krzakala, and Bruno Loureiro}
+  {papers/2302/abstract.tex}
+
+% Load the paper's sections (everything before \appendix in papers/2302/main.tex).
+% The appendices are deferred to chapters/appendix-2302.tex; the
+% \let\appendix\endinput trick makes TeX stop reading main.tex when it hits
+% \appendix, so the appendix \inputs are skipped here.
+{\let\appendix\endinput \subimport{papers/2302/}{main}}

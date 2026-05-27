@@ -18,6 +18,22 @@
 \title{<thesis title TBD>}
 \author{Luca Arnaboldi}
 
+% \paperchapter{title}{authors}{abstract-input-path}
+%   Special "paper-style" chapter: standard \chapter heading, then the
+%   author list (italic, centred) and the abstract (sans-serif, indented).
+%   Tune the typography here.
+\newcommand{\paperchapter}[3]{%
+  \chapter{#1}%
+  \begin{center}\itshape #2\end{center}%
+  \begingroup
+    \small\sffamily
+    \begin{quote}
+      \noindent\textbf{Abstract.}\enspace\input{#3}%
+    \end{quote}
+  \endgroup
+  \par\vspace{0.5\baselineskip}%
+}
+
 \begin{document}
 
 % \frontmatter is called *before* the cover so the cover and the first
@@ -45,8 +61,30 @@
 
 \mainmatter
 
-% --- Main content (placeholder; chapters land here later) ---
+% --- Introductory chapters ---
 \input{chapters/introduction.tex}
+\input{chapters/background.tex}
+
+% --- Paper chapters (one \paperchapter per included arXiv paper) ---
+\input{chapters/paper-2302.tex}
+\input{chapters/paper-2305.tex}
+\input{chapters/paper-2405.tex}
+\input{chapters/paper-2406.tex}
+\input{chapters/paper-2506.tex}
+
+% --- Appendices, grouped per paper ---
+\appendix
+% ToC separator: add an "Appendices" entry at part-level between the paper
+% chapters and the per-paper appendix chapters. Does not produce a physical
+% \part page; only adds the ToC line.
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{part}{Appendices}
+\input{chapters/appendix-2302.tex}
+\input{chapters/appendix-2305.tex}
+\input{chapters/appendix-2405.tex}
+\input{chapters/appendix-2406.tex}
+\input{chapters/appendix-2506.tex}
 
 \backmatter
 
