@@ -345,16 +345,18 @@
 \newcommand{\bhV}{{\hat{\boldsymbol{V}}}}
 % auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
 
-\newcommand{\bilingualcommand}[3]{%
-	\newcommand{#1}[1][\ ]{%
-		##1%
-		\iflanguage{english}{\text{#2}}{%
-			\iflanguage{french}{\text{#3}}{}%
-		}%
-		##1%
-	}%
-}
-% auto: identical in arXiv-2506, arXiv-2605
+% [skip:macro] bilingualcommand
+% Dead code: paper_parsing.py extracts the \bilingualcommand definition
+% from arXiv-2506/custom_latex.tex and arXiv-2605/macros.tex, but it does
+% not recognise the calls (\bilingualcommand{\name}{english}{french}) as
+% macro definitions. Those calls live only in the upstream sources and
+% never reach the build; the resulting bilingual macros (\where, \textif,
+% \textand, \textiff, \otherwise) are instead inlined at extraction time
+% via arxiv-papers/arXiv-2506-patches.json (and would be in 2605-patches
+% if needed). Nothing in the build ever calls \bilingualcommand, so its
+% definition is dropped from this file. merge_preambles honours this
+% skip marker on re-runs; the upstream sidecars still carry the def
+% (harmless — they're inputs only).
 
 \newcommand{\bl}[1]{\textcolor{orange}{BL: #1}}
 % picked from arXiv-2506 — conflicts: \newcommand{\bl}[1]{{\bf \color{orange} BL: #1}} in arXiv-2302, arXiv-2305; \newcommand{\bl}[1]{\textbf{\textcolor{orange}{[BL: #1]}}} in arXiv-2406
