@@ -41,6 +41,16 @@ from paper_parsing import (
 DEPS_OUT = REPO_ROOT / "papers-dependencies.tex"
 MACROS_OUT = REPO_ROOT / "papers-macros.tex"
 
+# Sort-key overrides for the Packages section of papers-dependencies.tex.
+# A package listed here is emitted as if its name were the value, so we can
+# honour LaTeX's hard load-order constraints (e.g. cleveref must load AFTER
+# hyperref). Everything not listed stays alphabetical.
+PACKAGE_ORDER_OVERRIDES: dict[str, str] = {
+    # "~" (ASCII 0x7E) sorts after every letter, so this places cleveref
+    # immediately after hyperref and before any "i..."-prefixed package.
+    "cleveref": "hyperref~",
+}
+
 SIDECAR_RE = re.compile(r"^arXiv-(\d{4})-(packages|macros)\.tex$")
 USEPACKAGE_RE = re.compile(
     r"\\(?:usepackage|RequirePackage)\*?"
@@ -630,7 +640,12 @@ def write_dependencies(
         if not live:
             return
         lines.append(f"% --- {header} ---")
-        for g in sorted(live, key=lambda x: x.name):
+        sort_key = (
+            (lambda x: PACKAGE_ORDER_OVERRIDES.get(x.name, x.name))
+            if category == "package"
+            else (lambda x: x.name)
+        )
+        for g in sorted(live, key=sort_key):
             r = resolutions[(category, g.name)]
             if r.kind == "skip":
                 lines.append(f"% [skip:{category}] {g.name}")

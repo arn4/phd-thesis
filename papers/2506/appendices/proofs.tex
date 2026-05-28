@@ -143,9 +143,9 @@ for small enough $\eta > 0$ we have for $t \leq \tau_\eta$
 \[ \frac{d\norm{\vec{m}}}{dt} \leq C \cdot C_\sie \times (\vec{m}, \dots, \vec{m}) + \norm{C_\sie} \norm{m}^{\sie-1} \leq (C+1)\norm{C_\sie}\cdot \norm{\vec{m}}^{\sie-1}.\]
 Recall that the hitting time $\tau_{\eta, \text{untied}}$ corresponds to $\norm{m}$ hitting the threshold $\eta\sqrt{L}$. As a result, since the dependency in $\eta$ is of leading order only for $\sie=1$, we find
 \[ \tau_{\eta, \text{untied}} \geq \frac{c}{\norm{C_\sie}} \begin{cases}
-    \eta\sqrt{L} & \textif \sie=1 \\
-    \log(d) & \textif \sie=2\\
-    d^{\frac\sie2-1} & \textif \sie \geq 3
+    \eta\sqrt{L} & \text{if} \sie=1 \\
+    \log(d) & \text{if} \sie=2\\
+    d^{\frac\sie2-1} & \text{if} \sie \geq 3
 \end{cases} \]
 Since the gain satisfies 
 \[ \mathrm{gain} \asymp  \left(\frac{\tau_{\eta, \text{untied}}}{\tau_\eta}\right)^2, \]
@@ -160,9 +160,9 @@ For small enough $\eta$, this implies that
 \[ \frac{dm^{(1)}}{dt} \geq c \norm{C_\sie} (m^{(1)})^{\sie-1} \]
 Since $\norm{m} \geq m^{(1)}$ by the Cauchy-Schwarz inequality, the hitting time $\tau_{\eta, \text{untied}}$ is at most that of $m^{(1)}$, and hence
 \[ \tau_{\eta, \text{untied}} \leq \frac{C}{\norm{C_\sie}} \begin{cases}
-    \eta\sqrt{L} & \textif \sie=1 \\
-    \log(d) & \textif \sie=2\\
-    d^{\frac\sie2-1} & \textif \sie \geq 3
+    \eta\sqrt{L} & \text{if} \sie=1 \\
+    \log(d) & \text{if} \sie=2\\
+    d^{\frac\sie2-1} & \text{if} \sie \geq 3
     \end{cases}
 \]
 This closes the upper bound of Theorem~\ref{2506:thm:sequencelength-gain}.

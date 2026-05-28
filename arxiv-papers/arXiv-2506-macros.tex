@@ -124,9 +124,17 @@
 % from custom_latex.tex:146
 \renewcommand{\labelenumi}{\theenumi}
 % from custom_latex.tex:147
-\newcommand{\quand}{\quad \textand{} \quad}
+\newcommand{\quand}{\quad \text{and} \quad}
+% Hand-edited 2026-05-27: original \quad \textand{} \quad referenced the
+% bilingual \textand meta-macro, which is no longer defined globally (the
+% bilingualcommand-style defs were removed from papers-macros.tex in favour
+% of arxiv-papers/arXiv-2506-patches.json). Mirrored here so a future
+% merge-preambles run re-emits the inlined form. A parse-paper re-run on
+% 2506 would regenerate this from custom_latex.tex and clobber the fix —
+% see memory: extraction-fragilities-followups.
 % from custom_latex.tex:148
-\newcommand{\qquand}{\qquad \textand{} \qquad}
+\newcommand{\qquand}{\qquad \text{and} \qquad}
+% Hand-edited 2026-05-27: same rationale as \quand above.
 
 % --- Theorems ---
 % from custom_latex.tex:12

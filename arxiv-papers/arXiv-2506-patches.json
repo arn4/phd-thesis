@@ -1,0 +1,30 @@
+{
+  "_doc": "Per-paper find/replace patches applied as the LAST step of paper_extraction.py. Use only when the upstream arxiv source has a defect that cannot be repaired in any tracked sidecar (citation-map / macro-map / packages / macros).",
+  "find_replace": [
+    {
+      "find": "\\textiff",
+      "replace": "\\text{if and only if}",
+      "comment": "Macro defined in arXiv-2506/custom_latex.tex via the paper-author meta-macro \\bilingualcommand{\\textiff}{if and only if}{si et seulement si}, which paper_parsing.py does not recognise. Substitute BEFORE \\textif (substring safety). Wrapped in \\text{} (amsmath) so it renders as upright roman in math mode rather than math-italic letters. Currently unused in the extracted body; kept for re-extractions if the upstream paper changes."
+    },
+    {
+      "find": "\\textif",
+      "replace": "\\text{if}",
+      "comment": "From \\bilingualcommand{\\textif}{if}{si}. Wrapped in \\text{} (amsmath) for upright text-mode rendering inside cases environments."
+    },
+    {
+      "find": "\\textand",
+      "replace": "\\text{and}",
+      "comment": "From \\bilingualcommand{\\textand}{and}{et}. Wrapped in \\text{}. Not used in the body itself, but \\quand / \\qquand in arXiv-2506-macros.tex were hand-edited to inline \\text{and} for the same reason."
+    },
+    {
+      "find": "\\otherwise",
+      "replace": "\\text{otherwise}",
+      "comment": "From \\bilingualcommand{\\otherwise}{otherwise}{sinon}. Wrapped in \\text{} for upright rendering."
+    },
+    {
+      "find": "\\where",
+      "replace": "\\text{where}",
+      "comment": "From \\bilingualcommand{\\where}{where}{où}. Wrapped in \\text{}. Currently unused in the extracted body."
+    }
+  ]
+}

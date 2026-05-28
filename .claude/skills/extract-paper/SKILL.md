@@ -75,8 +75,10 @@ Treat `arxiv-papers/arXiv-<id>/` as **strictly read-only**. The script writes on
 3. **Verification compile** (unless `--no-compile`):
 
    ```
-   latexmk -pdf -interaction=nonstopmode -jobname=YYMM -outdir=build/YYMM papers/stand-alone-paper.tex
+   latexmk -lualatex -interaction=nonstopmode -jobname=YYMM -outdir=build/YYMM papers/stand-alone-paper.tex
    ```
+
+   (The script passes `-lualatex` explicitly because the standalone driver loads `thesis-style.sty`, which `\RequirePackage`s `fontspec` — pdflatex would fail immediately. Do not substitute `-pdf` here.)
 
    The driver loads the thesis-wide preamble (`papers-dependencies.tex`, `papers-macros.tex`) and bib, picks the paper via `\jobname`, and uses biblatex + biber with the `authoryear-comp` style. The script parses `build/YYMM/YYMM.log` and reports counts by category (hard errors, undefined refs/cites, missing figures, package clashes, over/underfull boxes). Aux artifacts stay under `build/YYMM/`.
 

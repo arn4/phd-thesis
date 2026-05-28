@@ -882,11 +882,11 @@
 \providecommand{\qq}{\bm{q}}
 % picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\qq}{\mathbf{q}} in arXiv-2402, arXiv-2405, arXiv-2406
 
-\newcommand{\qquand}{\qquad \textand{} \qquad}
-% auto: identical in arXiv-2506
+\newcommand{\qquand}{\qquad \text{and} \qquad}
+% auto: identical in arXiv-2506 (originally \qquad \textand{} \qquad; \textand was a bilingual meta-macro removed from this file — see arXiv-2506-patches.json)
 
-\newcommand{\quand}{\quad \textand{} \quad}
-% auto: identical in arXiv-2506
+\newcommand{\quand}{\quad \text{and} \quad}
+% auto: identical in arXiv-2506 (originally \quad \textand{} \quad; \textand was a bilingual meta-macro removed from this file — see arXiv-2506-patches.json)
 
 \newcommand{\rank}{\mathrm{rank}}
 % auto: identical in arXiv-2605
@@ -1142,26 +1142,3 @@
 
 \definecolor{optimalcolor}{RGB}{38,254,254}
 % auto: identical in arXiv-2406
-
-
-% --- Manual additions ---
-% These were defined in arXiv-2506/custom_latex.tex via a paper-specific
-% meta-macro \bilingualcommand{\name}{english}{french} that paper_parsing.py
-% doesn't recognise (it only knows the standard \newcommand/\def family).
-% Re-running merge_preambles WILL remove these lines — re-add them or
-% upstream a proper fix into paper_parsing.py.
-
-\newcommand{\where}{where}
-% manually-added: from \bilingualcommand{\where}{where}{où} in arXiv-2506
-
-\newcommand{\textif}{if}
-% manually-added: from \bilingualcommand{\textif}{if}{si} in arXiv-2506
-
-\newcommand{\textand}{and}
-% manually-added: from \bilingualcommand{\textand}{and}{et} in arXiv-2506
-
-\newcommand{\textiff}{if and only if}
-% manually-added: from \bilingualcommand{\textiff}{if and only if}{si et seulement si} in arXiv-2506
-
-\newcommand{\otherwise}{otherwise}
-% manually-added: from \bilingualcommand{\otherwise}{otherwise}{sinon} in arXiv-2506
