@@ -2,16 +2,18 @@
 % directly to this file (changing a verbatim, deleting an entry, or
 % writing a '% [skip:macro] name' line) ARE the persistent record of
 % editorial decisions; the script honours them on the next run.
+%
+% NOTE: the many '% [skip:macro] ...' lines below were added by a one-off
+% reachability sweep (2026-06-02): each names a macro defined in the merged
+% union of all papers' sidecars but referenced nowhere in the thesis. The
+% skip marker is the durable record; merge_preambles honours it on re-run.
 
 % --- Math operators ---
-\DeclareMathOperator{\Ber}{Ber}
-% auto: identical in arXiv-2506
+% [skip:macro] Ber
 
-\DeclareMathOperator{\Bin}{Bin}
-% auto: identical in arXiv-2506
+% [skip:macro] Bin
 
-\DeclareMathOperator*{\Circ}{\bigcirc}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] Circ
 
 \DeclareMathOperator{\Cov}{Cov}
 % auto: identical in arXiv-2302, arXiv-2305, arXiv-2402, arXiv-2405, arXiv-2406, arXiv-2506
@@ -22,14 +24,12 @@
 \DeclareMathOperator{\Flatten}{flatten}
 % auto: identical in arXiv-2506
 
-\DeclareMathOperator{\Poi}{Poi}
-% auto: identical in arXiv-2506
+% [skip:macro] Poi
 
 \DeclareMathOperator{\ReLU}{ReLU}
 % auto: identical in arXiv-2506
 
-\DeclareMathOperator{\Relu}{ReLU}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406, arXiv-2506
+% [skip:macro] Relu
 
 \DeclareMathOperator{\SoftMax}{softmax}
 % auto: identical in arXiv-2506
@@ -37,11 +37,9 @@
 \DeclareMathOperator{\Span}{Span}
 % picked from arXiv-2402, arXiv-2405, arXiv-2406, arXiv-2506 — conflicts: \newcommand{\Span}{\mathrm{span}} in arXiv-2605
 
-\DeclareMathOperator{\Trace}{Tr}
-% auto: identical in arXiv-2302, arXiv-2305
+% [skip:macro] Trace
 
-\DeclareMathOperator{\Unif}{Unif}
-% auto: identical in arXiv-2506
+% [skip:macro] Unif
 
 \DeclareMathOperator{\Var}{Var}
 % auto: identical in arXiv-2302, arXiv-2305, arXiv-2506
@@ -49,37 +47,29 @@
 \DeclareMathOperator*{\argmax}{arg\,max}
 % auto: identical in arXiv-2605
 
-\DeclareMathOperator*{\argmin}{argmin}
-% picked from arXiv-2302, arXiv-2305 — conflicts: \DeclareMathOperator*{\argmin}{arg\,min} in arXiv-2605
+% [skip:macro] argmin
 
-\DeclareMathOperator{\dtv}{d_{TV}}
-% auto: identical in arXiv-2506
+% [skip:macro] dtv
 
 \DeclareMathOperator{\polylog}{polylog}
 % picked from arXiv-2406 — conflicts: \newcommand{\polylog}{\mathrm{polylog}} in arXiv-2605
 
-\DeclareMathOperator{\vecop}{vec}
-% auto: identical in arXiv-2605
+% [skip:macro] vecop
 
 
 % --- Commands ---
 \providecommand{\0}{\bm{0}}
 % picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\0}{\mathbf{0}} in arXiv-2402, arXiv-2405, arXiv-2406
 
-\providecommand{\1}{\bm{1}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\1}{\mathbf{1}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] 1
 
-\def\@copyrightLine{}
-% auto: identical in arXiv-2602
+% [skip:macro] @copyrightLine
 
-\def\@sgnarg#1{\sgn\rbr{#1}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] @sgnarg
 
-\def\@sgnargscaleas[#1]#2{\sgn\rbr[#1]{#2}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] @sgnargscaleas
 
-\def\@sgnargscaled#1{\sgn\rbr*{#1}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] @sgnargscaled
 
 \renewcommand\Affilfont{\fontsize{10}{10.8}\itshape}
 % auto: identical in arXiv-2402
@@ -93,11 +83,9 @@
 \newcommand{\E}{\mathbb{E}}
 % picked from arXiv-2605 — conflicts: \providecommand{\E}{\mathbb{E}} in arXiv-2402, arXiv-2405, arXiv-2406
 
-\providecommand{\EE}[2]{{\mathbb E}_{#1}\left.#2\right. }
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] EE
 
-\providecommand{\EEb}[2]{{\mathbb E}_{#1}\left[#2\right] }
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] EEb
 
 \newcommand\EV[1]{\mathbb{E}\left[#1\right]}
 % auto: identical in arXiv-2305
@@ -117,23 +105,18 @@
 \def\Explf{\mathbb E_{(\vec{\lambda},\vec{\lambda}^{\star})\sim\mathcal{N}(\vec{0}_{\hids+\hidt}, \Omega)}}
 % auto: identical in arXiv-2302, arXiv-2305
 
-\newcommand{\He}{{\mathrm{He}}}
-% auto: identical in arXiv-2605
+% [skip:macro] He
 
-\newcommand{\Herm}{{\rm Herm}}
-% auto: identical in arXiv-2605
+% [skip:macro] Herm
 
-\newcommand{\Id}{\mathbf{I}}
-% auto: identical in arXiv-2605
+% [skip:macro] Id
 
-\newcommand{\LA}[1]{\textcolor{orange}{[LA: #1]}}
-% auto: identical in arXiv-2605
+% [skip:macro] LA
 
 \def\M{\mat{M}}
 % picked from arXiv-2302 — conflicts: \def\M{m} in arXiv-2305
 
-\newcommand{\MV}[1]{\textcolor{violet}{[MV: #1]}}
-% auto: identical in arXiv-2605
+% [skip:macro] MV
 
 \newcommand{\N}{\mathbb{N}}
 % picked from arXiv-2605 — conflicts: \providecommand{\N}{\mathbb{N}} in arXiv-2402, arXiv-2405, arXiv-2406
@@ -141,23 +124,17 @@
 \def\P{\mat{P}}
 % renamed from \P; bodies from arXiv-2302, arXiv-2305
 
-\providecommand{\Pr}[1]{{\rm Pr}\left.#1\right. }
-% renamed from \P; bodies from arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] Pr
 
-\providecommand{\PP}[2]{{\rm Pr}_{#1}\left[#2\right] }
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] PP
 
-\providecommand{\PPb}[2]{{\rm Pr}_{#1}\left[#2\right] }
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] PPb
 
-\providecommand{\Pb}[1]{{\rm Pr}\left[#1\right] }
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] Pb
 
-\providecommand{\Pbb}{\mathbb{P}}
-% auto: identical in arXiv-2605
+% [skip:macro] Pbb
 
-\providecommand{\Prob}[2]{{\rm Pr}_{#1}\left[#2\right] }
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] Prob
 
 \def\Q{\mat{Q}}
 % picked from arXiv-2302 — conflicts: \def\Q{Q} in arXiv-2305
@@ -168,11 +145,9 @@
 \newcommand{\RF}{\mathrm{RF}}
 % auto: identical in arXiv-2605
 
-\newcommand{\Sym}{\mathrm{Sym}}
-% auto: identical in arXiv-2605
+% [skip:macro] Sym
 
-\newcommand{\TODO}[1]{\textcolor{red}{TODO: #1}}
-% auto: identical in arXiv-2506
+% [skip:macro] TODO
 
 \DeclareMathOperator{\Tr}{Tr}
 % picked from arXiv-2506 — conflicts: \def\Tr#1{\Trace{\left[#1\right]}} in arXiv-2302, arXiv-2305; \newcommand{\Tr}{\mathrm{Tr}} in arXiv-2605
@@ -180,20 +155,17 @@
 \def\UrlBreaks{\do\/\do-}
 % auto: identical in arXiv-2402, arXiv-2406
 
-\newcommand{\Uset}{\mathcal{U}}
-% auto: identical in arXiv-2605
+% [skip:macro] Uset
 
-\newcommand{\Vara}[1]{\Var\left[#1\right]}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] Vara
 
-\newcommand{\Varb}[2]{\Var_{#1}\left[#2\right]}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] Varb
 
-\def\W{\mat{W}}
-% picked from arXiv-2302 — conflicts: \def\W{W} in arXiv-2305
+% [skip:macro] W
 
-\renewcommand{\aa}{\bm{a}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \renewcommand{\aa}{\mathbf{a}} in arXiv-2402, arXiv-2405, arXiv-2406, arXiv-2605
+% [skip:macro] aa
+% Excluded (gg/ll-class): was \renewcommand{\aa}{\bm{a}} (2402/2405/2406),
+% rebinding the standard \aa (å) text char to a bold vector; unused.
 
 \providecommand{\abs}[1]{\left\lvert#1\right\rvert}
 % auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
@@ -201,95 +173,66 @@
 \def\act{\sigma}
 % auto: identical in arXiv-2302, arXiv-2305
 
-\newcommand{\algcons}{\textsc{Choco-Gossip}\xspace}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] algcons
 
-\newcommand{\algopt}{\textsc{Choco-SGD}\xspace}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] algopt
 
-\providecommand{\alphav}{\bm{\alpha}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] alphav
 
 \def\b{B}
 % auto: identical in arXiv-2305
 
-\newcommand{\bA}{{\boldsymbol{A}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] bA
 
-\newcommand{\bB}{{\boldsymbol{B}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] bB
 
-\newcommand{\bC}{{\boldsymbol{C}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] bC
 
-\newcommand{\bDelta}{{\boldsymbol{\Delta}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] bDelta
 
-\newcommand{\bF}{{\boldsymbol{F}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] bF
 
-\newcommand{\bG}{{\boldsymbol{G}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] bG
 
-\newcommand{\bGamma}{{\boldsymbol{\Gamma}}}
-% auto: identical in arXiv-2402, arXiv-2405
+% [skip:macro] bGamma
 
-\newcommand{\bH}{{\boldsymbol{H}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] bH
 
-\newcommand{\bI}{{\boldsymbol{I}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] bI
 
-\newcommand{\bM}{{\boldsymbol{m}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] bM
 
-\newcommand{\bMM}{{{\boldsymbol{M}}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406, arXiv-2605
+% [skip:macro] bMM
 
-\newcommand{\bOne}{{\boldsymbol{1}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] bOne
 
-\newcommand{\bPi}{{\boldsymbol{\Pi}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] bPi
 
-\newcommand{\bQ}{{\boldsymbol{Q}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] bQ
 
-\newcommand{\bR}{{\boldsymbol{R}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] bR
 
-\newcommand{\bS}{{\boldsymbol{S}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] bS
 
-\newcommand{\bSigma}{{\boldsymbol{\Sigma}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] bSigma
 
-\newcommand{\bT}{{\boldsymbol{T}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] bT
 
-\newcommand{\bTheta}{{\boldsymbol{\Theta}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] bTheta
 
-\newcommand{\bU}{{\boldsymbol{U}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] bU
 
-\newcommand{\bV}{{\boldsymbol{V}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] bV
 
-\newcommand{\bW}{{{\boldsymbol{{W}}}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] bW
 
-\newcommand{\bX}{{\boldsymbol{X}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] bX
 
-\newcommand{\bXi}{{\boldsymbol{\Xi}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] bXi
 
-\newcommand{\bY}{{\boldsymbol{Y}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] bY
 
-\newcommand{\bZ}{{\boldsymbol{Z}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] bZ
 
 \newcommand{\ba}{{\boldsymbol{a}}}
 % auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
@@ -297,53 +240,37 @@
 \newcommand{\balpha}{{\boldsymbol{\alpha}}}
 % auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
 
-\providecommand{\bb}{\bm{b}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\bb}{\mathbf{b}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] bb
 
-\newcommand{\bbB}{{\boldsymbol{B}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] bbB
 
-\newcommand{\bbb}{{\boldsymbol{b}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] bbb
 
-\newcommand{\be}{{\boldsymbol{e}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] be
 
-\newcommand{\beeta}{{\boldsymbol{\eta}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] beeta
 
-\newcommand{\bff}{{\boldsymbol{f}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] bff
 
-\newcommand{\bg}{{\boldsymbol{g}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] bg
 
-\newcommand{\bgamma}{{\boldsymbol{\gamma}}}
-% auto: identical in arXiv-2402, arXiv-2405
+% [skip:macro] bgamma
 
-\newcommand{\bh}{{\boldsymbol{h}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] bh
 
-\newcommand{\bhM}{{\hat{\boldsymbol{m}}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406, arXiv-2605
+% [skip:macro] bhM
 
-\newcommand{\bhMM}{{\hat{\boldsymbol{M}}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406, arXiv-2605
+% [skip:macro] bhMM
 
-\newcommand{\bhQ}{{\hat{\boldsymbol{Q}}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] bhQ
 
-\newcommand{\bhR}{{\hat{\boldsymbol{R}}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] bhR
 
-\newcommand{\bhS}{{\hat{\boldsymbol{S}}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] bhS
 
-\newcommand{\bhU}{{\hat{\boldsymbol{U}}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] bhU
 
-\newcommand{\bhV}{{\hat{\boldsymbol{V}}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] bhV
 
 % [skip:macro] bilingualcommand
 % Dead code: paper_parsing.py extracts the \bilingualcommand definition
@@ -361,53 +288,37 @@
 \newcommand{\bl}[1]{\textcolor{orange}{BL: #1}}
 % picked from arXiv-2506 — conflicts: \newcommand{\bl}[1]{{\bf \color{orange} BL: #1}} in arXiv-2302, arXiv-2305; \newcommand{\bl}[1]{\textbf{\textcolor{orange}{[BL: #1]}}} in arXiv-2406
 
-\newcommand{\blambda}{{\boldsymbol{\lambda}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] blambda
 
-\newcommand{\blockfed}[1]{\tikz[remember picture,overlay]{\node[yshift=3pt,fill=#1,opacity=.25,fit={($(A)+(-0.1*\linewidth - 3pt,3pt)$)($(B)+(0.88*\linewidth - 5pt,-2pt)$)}] {};}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] blockfed
 
-\newcommand{\bmu}{{\boldsymbol{\mu}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] bmu
 
-\newcommand{\bn}{{\boldsymbol{n}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] bn
 
-\newcommand{\bnu}{{\boldsymbol{\nu}}}
-% auto: identical in arXiv-2402, arXiv-2405
+% [skip:macro] bnu
 
-\newcommand{\bomega}{{\boldsymbol{\omega}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] bomega
 
-\newcommand{\boxit}[1]{\tikz[remember picture,overlay]{\node[yshift=3pt,fill=#1,opacity=.25,fit={($(A)+(-0.2*\linewidth - 3pt,3pt)$)($(B)+(0.75*\linewidth - 5pt,-2pt)$)}] {};}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] boxit
 
-\newcommand{\bp}{{\boldsymbol{p}}}
-% auto: identical in arXiv-2605
+% [skip:macro] bp
 
-\newcommand{\bphi}{{\boldsymbol{\phi}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] bphi
 
-\newcommand{\bpi}{{\boldsymbol{\pi}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] bpi
 
-\newcommand{\brho}{{\boldsymbol{\rho}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] brho
 
-\newcommand{\bsA}{{\boldsymbol{\mathsf A}}}
-% auto: identical in arXiv-2605
+% [skip:macro] bsA
 
-\newcommand{\bsQ}{{\boldsymbol{\mathsf Q}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] bsQ
 
-\newcommand{\bsS}{{\boldsymbol{\mathsf S}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] bsS
 
-\newcommand{\bsigma}{{\boldsymbol{\sigma}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] bsigma
 
-\newcommand{\btheta}{{\boldsymbol{\theta}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] btheta
 
 \newcommand{\bu}{{\boldsymbol{u}}}
 % auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
@@ -415,8 +326,7 @@
 \newcommand{\bv}{{\boldsymbol{v}}}
 % auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
 
-\newcommand{\bvarphi}{{\boldsymbol{\varphi}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] bvarphi
 
 \newcommand{\bw}{{\boldsymbol{w}}}
 % auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
@@ -424,8 +334,7 @@
 \newcommand{\bx}{{\boldsymbol{x}}}
 % auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
 
-\newcommand{\bxi}{{\boldsymbol{\xi}}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2605 — conflicts: \newcommand{\bxi}{\boldsymbol{\xi}} in arXiv-2406
+% [skip:macro] bxi
 
 \newcommand{\by}{{\boldsymbol{y}}}
 % auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
@@ -433,20 +342,15 @@
 \newcommand{\bz}{{\boldsymbol{z}}}
 % auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
 
-\newcommand{\bzeta}{{\boldsymbol{\zeta}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2605
+% [skip:macro] bzeta
 
-\newcommand{\cA}{\mathcal{A}}
-% picked from arXiv-2506, arXiv-2605 — conflicts: \providecommand{\cA}{\mathcal{A}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] cA
 
-\newcommand{\cB}{\mathcal{B}}
-% picked from arXiv-2506, arXiv-2605 — conflicts: \providecommand{\cB}{\mathcal{B}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] cB
 
-\newcommand{\cC}{\mathcal{C}}
-% picked from arXiv-2506, arXiv-2605 — conflicts: \providecommand{\cC}{\mathcal{C}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] cC
 
-\newcommand{\cD}{\mathcal{D}}
-% picked from arXiv-2605 — conflicts: \providecommand{\cD}{\mathcal{D}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] cD
 
 \newcommand{\cE}{\mathcal{E}}
 % picked from arXiv-2506, arXiv-2605 — conflicts: \providecommand{\cE}{\mathcal{E}} in arXiv-2402, arXiv-2405, arXiv-2406
@@ -454,29 +358,23 @@
 \newcommand{\cF}{\mathcal{F}}
 % picked from arXiv-2506, arXiv-2605 — conflicts: \providecommand{\cF}{\mathcal{F}} in arXiv-2402, arXiv-2405, arXiv-2406
 
-\newcommand{\cG}{\mathcal{G}}
-% picked from arXiv-2506, arXiv-2605 — conflicts: \providecommand{\cG}{\mathcal{G}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] cG
 
 \newcommand{\cH}{\mathcal{H}}
 % picked from arXiv-2506, arXiv-2605 — conflicts: \providecommand{\cH}{\mathcal{H}} in arXiv-2402, arXiv-2405, arXiv-2406
 
-\newcommand{\cI}{\mathcal{I}}
-% auto: identical in arXiv-2506, arXiv-2605
+% [skip:macro] cI
 
-\providecommand{\cII}{\mathcal{H}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] cII
 
-\providecommand{\cJ}{\mathcal{J}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] cJ
 
-\newcommand{\cK}{\mathcal{K}}
-% picked from arXiv-2506, arXiv-2605 — conflicts: \providecommand{\cK}{\mathcal{K}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] cK
 
 \newcommand{\cL}{\mathcal{L}}
 % picked from arXiv-2506, arXiv-2605 — conflicts: \providecommand{\cL}{\mathcal{L}} in arXiv-2402, arXiv-2405, arXiv-2406
 
-\newcommand{\cM}{\mathcal{M}}
-% picked from arXiv-2506, arXiv-2605 — conflicts: \providecommand{\cM}{\mathcal{M}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] cM
 
 \newcommand{\cN}{\mathcal{N}}
 % picked from arXiv-2506, arXiv-2605 — conflicts: \providecommand{\cN}{\mathcal{N}} in arXiv-2402, arXiv-2405, arXiv-2406
@@ -487,162 +385,124 @@
 \newcommand{\cP}{\mathcal{P}}
 % picked from arXiv-2506, arXiv-2605 — conflicts: \providecommand{\cP}{\mathcal{P}} in arXiv-2402, arXiv-2405, arXiv-2406
 
-\providecommand{\cQ}{\mathcal{Q}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] cQ
 
 \newcommand{\cR}{\mathcal{R}}
 % picked from arXiv-2605 — conflicts: \providecommand{\cR}{\mathcal{R}} in arXiv-2402, arXiv-2405, arXiv-2406
 
-\newcommand{\cS}{\mathcal{S}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2506, arXiv-2605 — conflicts: \providecommand{\cS}{\mathcal{S}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] cS
 
-\newcommand{\cT}{\mathcal{T}}
-% picked from arXiv-2506, arXiv-2605 — conflicts: \providecommand{\cT}{\mathcal{T}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] cT
 
-\newcommand{\cU}{\mathcal{U}}
-% picked from arXiv-2506, arXiv-2605 — conflicts: \providecommand{\cU}{\mathcal{U}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] cU
 
-\newcommand{\cV}{\mathcal{V}}
-% picked from arXiv-2506, arXiv-2605 — conflicts: \providecommand{\cV}{\mathcal{V}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] cV
 
-\newcommand{\cW}{\mathcal{W}}
-% picked from arXiv-2506, arXiv-2605 — conflicts: \providecommand{\cW}{\mathcal{W}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] cW
 
-\providecommand{\cX}{\mathcal{X}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] cX
 
-\providecommand{\cY}{\mathcal{Y}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] cY
 
-\providecommand{\cZ}{\mathcal{Z}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] cZ
 
-\providecommand{\cc}{\bm{c}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\cc}{\mathbf{c}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] cc
 
-\providecommand{\ce}{\mathcal{C}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] ce
 
-\newcommand{\cf}{cf.}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] cf
 
-\newcommand{\change}[1]{\textcolor{black}{ #1}}
-% picked from arXiv-2605 — conflicts: \newcommand{\change}[1]{\textcolor{purple}{ #1}} in arXiv-2405
+% [skip:macro] change
 
 \newcommand{\cmark}{\ding{51}}
 % auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
 
-\newcommand\commenter[2]%
-{%
-  \expandafter\newcommand\csname i#1\endcsname[1]{\inlinecomment{#2}{#1}{##1}}
-  \expandafter\newcommand\csname #1\endcsname[1]{\mycomment{#2}{#1}{##1}}
-}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] commenter
 
-\newcommand{\dC}{\mathbb{C}}
-% auto: identical in arXiv-2406, arXiv-2506, arXiv-2605
+% [skip:macro] dC
 
 \newcommand{\dE}{\mathbb{E}}
 % auto: identical in arXiv-2406, arXiv-2506, arXiv-2605
 
-\newcommand{\dF}{\mathbb{F}}
-% renamed from \dF; bodies from arXiv-2506
+% [skip:macro] dF
 
-\newcommand{\dFped}[1]{\mathbb{F}_#1}
-% renamed from \dF; bodies from arXiv-2406, arXiv-2605
+% [skip:macro] dFped
 
-\newcommand{\dI}{\mathbf{I}}
-% auto: identical in arXiv-2406
+% [skip:macro] dI
 
-\newcommand{\dN}{\mathbb{N}}
-% auto: identical in arXiv-2406, arXiv-2506, arXiv-2605
+% [skip:macro] dN
 
 \newcommand{\dP}{\mathbb{P}}
 % auto: identical in arXiv-2405, arXiv-2406, arXiv-2506, arXiv-2605
 
-\newcommand{\dQ}{\mathbb{Q}}
-% auto: identical in arXiv-2406, arXiv-2506, arXiv-2605
+% [skip:macro] dQ
 
 \newcommand{\dR}{\mathbb{R}}
 % auto: identical in arXiv-2406, arXiv-2506, arXiv-2605
 
-\newcommand{\dS}{\mathbb{S}}
-% auto: identical in arXiv-2406, arXiv-2605
+% [skip:macro] dS
 
-\newcommand{\dZ}[1][]{\ifblank{#1}{\mathbb{Z}}{\mathbb{Z}/#1\mathbb{Z}}}
-% auto: identical in arXiv-2406, arXiv-2506, arXiv-2605
+% [skip:macro] dZ
 
 \def\datadist{\rho}
 % auto: identical in arXiv-2302, arXiv-2305
 
-\providecommand{\bd}{\bm{d}}
-% renamed from \dd; bodies from arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] bd
 
 \def\dd{\text{d}}
 % renamed from \dd; bodies from arXiv-2302, arXiv-2305, arXiv-2506, arXiv-2605
 
-\providecommand{\dddot}{\dot\dot}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] dddot
 
-\providecommand{\ddot}{\dot\dot}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] ddot
 
-\DeclareMathOperator{\diag}{diag}
-% renamed from \diag; bodies from arXiv-2506
+% [skip:macro] diag
 
 \def\diagarg#1{\Diag{\left(#1\right)}}
 % renamed from \diag; bodies from arXiv-2302, arXiv-2305
 
-\providecommand{\divides}{\mid}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] divides
 
 \def\dsp{\mathcal{E}}
 % auto: identical in arXiv-2302, arXiv-2305
 
-\providecommand{\ee}{\bm{e}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\ee}{\mathbf{e}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] ee
 
-\newcommand{\eg}{e.g.}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] eg
 
-\newcommand{\eps}{\varepsilon}
-% auto: identical in arXiv-2506, arXiv-2605
+% [skip:macro] eps
 
-\newcommand{\eqncons}{\textsc{Choco-G}\xspace}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] eqncons
 
 \providecommand{\erf}{\operatorname{erf}}
 % picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \def\erf{\text{erf}} in arXiv-2302, arXiv-2305
 
-\providecommand{\error}{\mathcal{E}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] error
 
-\newcommand{\false}{\texttt{false}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] false
 
-\providecommand{\ff}{\bm{f}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\ff}{\mathbf{f}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] ff
 
-\newcommand{\fk}[1]{{\bf \color{red} FK: #1}}
-% auto: identical in arXiv-2305
+% [skip:macro] fk
 
 \def\gauss{\mathcal{N}}
 % auto: identical in arXiv-2305
 
-\renewcommand{\gg}{\bm{g}}
-% picked from arXiv-2402 — conflicts: \renewcommand{\gg}{\mathbf{g}} in arXiv-2402
+% [skip:macro] gg
+% Excluded: arXiv-2402 defined \gg as \bm{g} (a bold vector), which globally
+% clobbered amssymb's \gg (the much-greater-than relation). Every \gg in the
+% thesis is that relation; arXiv-2402 is not an included chapter and never uses
+% the bold form in its body, so the redefinition was pure breakage.
 
-\let\ggg\gg
-% auto: identical in arXiv-2402, arXiv-2405
+% [skip:macro] ggg
+% Excluded: was \let\ggg\gg, an alias of the bold \gg above; unused everywhere,
+% and it shadowed amssymb's \ggg.
 
-\providecommand{\given}{}
-% auto: identical in arXiv-2506
+% [skip:macro] given
 
-\def\hR{\widehat{\mathcal{R}}}
-% auto: identical in arXiv-2405, arXiv-2406, arXiv-2605
+% [skip:macro] hR
 
-\providecommand{\hh}{\bm{h}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\hh}{\mathbf{h}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] hh
 
 \def\hids{p}
 % auto: identical in arXiv-2302, arXiv-2305
@@ -650,39 +510,30 @@
 \def\hidt{k}
 % auto: identical in arXiv-2302, arXiv-2305
 
-\newcommand{\highlight}[1]{\tikz[remember picture,overlay]{\node[yshift=3pt,fill=#1,opacity=.25,fit={($(A)+(2pt,6pt)$)($(B)+(-3pt,-7pt)$)}] {};}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] highlight
 
 \def\i{\nu}
 % auto: identical in arXiv-2302, arXiv-2305
 
-\newcommand{\ie}{i.e.}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] ie
 
-\providecommand{\ii}{\bm{i}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\ii}{\mathbf{i}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] ii
 
-\def\iid{\text{i.i.d.}}
-% picked from arXiv-2302, arXiv-2305 — conflicts: \newcommand{\iid}{i.i.d.} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] iid
 
 \newcommand{\ind}{\mathbf{1}}
 % auto: identical in arXiv-2506, arXiv-2605
 
-\providecommand{\inlinecomment}[3]{%
-  {\color{#1}#2: #3}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] inlinecomment
 
 \def\inp{d}
 % auto: identical in arXiv-2302, arXiv-2305
 
-\providecommand{\ip}[2]{\ensuremath{\left\langle #1,#2\right\rangle}}
-% auto: identical in arXiv-2605
+% [skip:macro] ip
 
-\providecommand{\jj}{\bm{j}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\jj}{\mathbf{j}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] jj
 
-\providecommand{\kk}{\bm{k}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] kk
 
 \newcommand{\la}[1]{{\bf \color{green} LA: #1}}
 % auto: identical in arXiv-2302, arXiv-2305
@@ -693,21 +544,21 @@
 \def\lf{\lambda}
 % auto: identical in arXiv-2302, arXiv-2305
 
-\providecommand{\lin}[1]{\ensuremath{\left\langle #1 \right\rangle}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] lin
 
-\renewcommand{\ll}{\bm{l}}
-% picked from arXiv-2402 — conflicts: \renewcommand{\ll}{\mathbf{l}} in arXiv-2402
+% [skip:macro] ll
+% Excluded: arXiv-2402 defined \ll as \bm{l} (a bold vector), which globally
+% clobbered amssymb's \ll (the much-less-than relation). Every \ll in the
+% thesis is that relation; arXiv-2402 is not an included chapter and never uses
+% the bold form in its body, so the redefinition was pure breakage.
 
-\newcommand{\llangle}[1][]{\savebox{\@brx}{\(\m@th{#1\langle}\)}%
-  \mathopen{\copy\@brx\mkern2mu\kern-0.9\wd\@brx\usebox{\@brx}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] llangle
 
-\let\lll\ll
-% auto: identical in arXiv-2402, arXiv-2405
+% [skip:macro] lll
+% Excluded: was \let\lll\ll, an alias of the bold \ll above; unused everywhere,
+% and it shadowed amssymb's \lll.
 
-\newcommand{\lone}[1]{\norm{#1}_1}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] lone
 
 \def\loss{\ell^\i}
 % auto: identical in arXiv-2305
@@ -715,89 +566,61 @@
 \def\lr{\gamma}
 % auto: identical in arXiv-2302, arXiv-2305
 
-\newcommand{\ls}[1]{{\color{purple} \textbf{LS: #1}}}
-% auto: identical in arXiv-2302, arXiv-2305
+% [skip:macro] ls
 
-\providecommand{\mA}{\bm{A}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\mA}{\mathbf{A}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] mA
 
-\providecommand{\mB}{\bm{B}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\mB}{\mathbf{B}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] mB
 
-\providecommand{\mC}{\bm{C}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\mC}{\mathbf{C}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] mC
 
-\providecommand{\mD}{\bm{D}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\mD}{\mathbf{D}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] mD
 
-\providecommand{\mE}{\bm{E}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\mE}{\mathbf{E}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] mE
 
-\providecommand{\mF}{\bm{F}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\mF}{\mathbf{F}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] mF
 
-\providecommand{\mG}{\bm{G}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\mG}{\mathbf{G}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] mG
 
-\providecommand{\mH}{\bm{H}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\mH}{\mathbf{H}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] mH
 
-\providecommand{\mI}{\bm{I}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\mI}{\mathbf{I}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] mI
 
-\providecommand{\mJ}{\bm{J}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\mJ}{\mathbf{J}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] mJ
 
-\providecommand{\mK}{\bm{K}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\mK}{\mathbf{K}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] mK
 
-\providecommand{\mL}{\bm{L}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\mL}{\mathbf{L}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] mL
 
-\providecommand{\mLambda}{\bm{\Lambda}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\mLambda}{\mathbf{\Lambda}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] mLambda
 
-\providecommand{\mM}{\bm{M}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\mM}{\mathbf{M}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] mM
 
-\providecommand{\mN}{\bm{N}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\mN}{\mathbf{N}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] mN
 
-\providecommand{\mO}{\bm{O}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\mO}{\mathbf{O}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] mO
 
-\providecommand{\mP}{\bm{P}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\mP}{\mathbf{P}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] mP
 
-\providecommand{\mQ}{\bm{Q}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\mQ}{\mathbf{Q}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] mQ
 
-\providecommand{\mR}{\bm{R}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\mR}{\mathbf{R}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] mR
 
-\providecommand{\mS}{\bm{S}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\mS}{\mathbf{S}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] mS
 
-\providecommand{\mT}{\bm{T}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\mT}{\mathbf{T}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] mT
 
-\providecommand{\mU}{\bm{U}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\mU}{\mathbf{U}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] mU
 
-\providecommand{\mV}{\bm{V}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\mV}{\mathbf{V}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] mV
 
-\providecommand{\mW}{\bm{W}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\mW}{\mathbf{W}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] mW
 
-\providecommand{\mX}{\bm{X}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\mX}{\mathbf{X}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] mX
 
-\providecommand{\mY}{\bm{Y}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\mY}{\mathbf{Y}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] mY
 
-\providecommand{\mZ}{\bm{Z}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\mZ}{\mathbf{Z}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] mZ
 
 \def\mat#1{\mathrm{#1}}
 % auto: identical in arXiv-2302, arXiv-2305
@@ -805,39 +628,25 @@
 \def\max{{\rm max}}
 % auto: identical in arXiv-2402
 
-\providecommand{\mgeq}{\succeq}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] mgeq
 
-\newcommand{\minus}{\scalebox{0.8}{$-$}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] minus
 
-\providecommand{\mlambda}{\bm{\lambda}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] mlambda
 
-\providecommand{\mleq}{\preceq}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] mleq
 
-\providecommand{\mm}{\bm{m}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\mm}{\mathbf{m}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] mm
 
-\providecommand{\mmu}{\bm{\mu}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] mmu
 
-\providecommand{\mycomment}[3]{\todo[caption={},size=footnotesize,color=#1!20]{\textbf{#2: }#3}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] mycomment
 
-\newcommand{\newpart}[1]{{\ \color{teal} #1}}
-% auto: identical in arXiv-2305
+% [skip:macro] newpart
 
-\newcommand{\newreptheorem}[2]{%
-\newenvironment{rep#1}[1]{%
- \def\rep@title{#2 \ref{##1}}%
- \begin{rep@theorem}}%
- {\end{rep@theorem}}}
-% auto: identical in arXiv-2302, arXiv-2305
+% [skip:macro] newreptheorem
 
-\providecommand{\nn}{\bm{n}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\nn}{\mathbf{n}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] nn
 
 \newcommand{\no}{$\times$}
 % auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
@@ -845,8 +654,7 @@
 \def\noise{\Delta}
 % auto: identical in arXiv-2302, arXiv-2305
 
-\def\noisevar{\zeta}
-% auto: identical in arXiv-2302, arXiv-2305
+% [skip:macro] noisevar
 
 \providecommand{\norm}[1]{\ensuremath{\left\lVert #1\right\rVert}}
 % picked from arXiv-2605 — conflicts: \providecommand{\norm}[1]{\left\lVert#1\right\rVert} in arXiv-2402, arXiv-2405, arXiv-2406
@@ -857,69 +665,50 @@
 \newcommand{\og}{\overline{g}}
 % auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
 
-\newcommand{\oh}{\overline{H}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] oh
 
-\providecommand{\oo}{\bm{o}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\oo}{\mathbf{o}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] oo
 
 \newcommand{\op}{\mathrm{op}}
 % auto: identical in arXiv-2605
 
-\newcommand{\otherlabel}[2]{\protected@edef\@currentlabel{#2}\label{#1}}
-% auto: identical in arXiv-2405, arXiv-2406
+% [skip:macro] otherlabel
 
-\newcommand{\ov}{\overline}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] ov
 
-\newcommand{\plus}{\scalebox{0.6}{$+$}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] plus
 
-\providecommand{\pp}{\bm{p}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\pp}{\mathbf{p}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] pp
 
-\providecommand{\prob}[1]{{\rm Pr}\left[#1\right] }
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] prob
 
-\providecommand{\qq}{\bm{q}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\qq}{\mathbf{q}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] qq
 
-\newcommand{\qquand}{\qquad \text{and} \qquad}
-% auto: identical in arXiv-2506 (originally \qquad \textand{} \qquad; \textand was a bilingual meta-macro removed from this file — see arXiv-2506-patches.json)
+% [skip:macro] qquand
 
 \newcommand{\quand}{\quad \text{and} \quad}
 % auto: identical in arXiv-2506 (originally \quad \textand{} \quad; \textand was a bilingual meta-macro removed from this file — see arXiv-2506-patches.json)
 
-\newcommand{\rank}{\mathrm{rank}}
-% auto: identical in arXiv-2605
+% [skip:macro] rank
 
-\newcommand{\real}{\mathbb{R}}
-% picked from arXiv-2605 — conflicts: \providecommand{\real}{\mathbb{R}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] real
 
-\providecommand{\refEQ}[1]{\ensuremath{\stackrel{(\ref{#1})}{=}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] refEQ
 
-\providecommand{\refGE}[1]{\ensuremath{\stackrel{(\ref{#1})}{\geq}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] refGE
 
-\providecommand{\refID}[1]{\ensuremath{\stackrel{(\ref{#1})}{\equiv}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] refID
 
-\providecommand{\refLE}[1]{\ensuremath{\stackrel{(\ref{#1})}{\leq}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] refLE
 
 \def\risk{\mathcal{R}}
 % auto: identical in arXiv-2305
 
-\providecommand{\rr}{\bm{r}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\rr}{\mathbf{r}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] rr
 
-\newcommand{\rrangle}[1][]{\savebox{\@brx}{\(\m@th{#1\rangle}\)}%
-  \mathclose{\copy\@brx\mkern2mu\kern-0.9\wd\@brx\usebox{\@brx}}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] rrangle
 
-\def\sT{{\mathsf T}}
-% auto: identical in arXiv-2605
+% [skip:macro] sT
 
 \def\sectionautorefname{Section}
 % auto: identical in arXiv-2605
@@ -929,73 +718,59 @@
 \newcommand{\sie}{\mathrm{SIE}}
 % auto: identical in arXiv-2506
 
-\def\sign{\@ifnextchar*{\@sgnargscaled}{\@ifnextchar[{\sgnargscaleas}{\@ifnextchar{\bgroup}{\@sgnarg}{\sgn} }}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \def\sign{\text{sign}} in arXiv-2302, arXiv-2305
+% [skip:macro] sign
 
 \newcommand\smallo[1]{o\left(#1\right)}
 % auto: identical in arXiv-2305
 
-\newcommand{\spec}{\mathrm{spec}}
-% auto: identical in arXiv-2605
+% [skip:macro] spec
 
-\newcommand{\speedup}[1]{{\color{gray}(\ifdim #1 pt > 0.3pt #1\else $< #1$\fi{}$\times$)}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] speedup
 
-\renewcommand{\ss}{\bm{s}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\ss}{\mathbb{s}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] ss
+% Excluded (gg/ll-class): was \renewcommand{\ss}{\bm{s}} (2402/2405/2406),
+% rebinding the standard \ss (ß) text char to a bold vector; unused.
 
-\let\sss\ss
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] sss
+% Excluded (gg/ll-class): was \let\sss\ss, an alias of the bold \ss above; unused.
 
-\newcommand{\structureplan}[1]{\textcolor{blue}{\textbf{Plan: #1}}}
-% auto: identical in arXiv-2506
+% [skip:macro] structureplan
 
 \def\subsectionautorefname{Subsection}
 % auto: identical in arXiv-2605
 
-\newcommand\tagthis{\addtocounter{equation}{1}\tag{\theequation}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] tagthis
 
-\providecommand{\tce}{\Xi}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] tce
 
-\newcommand{\tgamma}{\tilde \gamma}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] tgamma
 
-\providecommand{\tgg}{\tilde\gg}
-% auto: identical in arXiv-2402, arXiv-2405
+% [skip:macro] tgg
+% Excluded: was \providecommand{\tgg}{\tilde\gg}, a tilde over the bold \gg
+% above; unused everywhere, and meaningless once \gg reverts to the relation.
 
 % [skip:macro] theassump
 
 \renewcommand{\theenumi}{(\roman{enumi})}
 % auto: identical in arXiv-2506, arXiv-2605
 
-\providecommand{\thth}{\bm{\theta}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] thth
 
-\newcommand{\ti}{\widetilde}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] ti
 
-\newcommand*{\tikzmk}[1]{\tikz[remember picture,overlay,] \node (#1) {};}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] tikzmk
 
-\newcommand{\true}{\texttt{true}}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] true
 
-\providecommand{\tsum}{\textstyle\sum}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] tsum
 
-\providecommand{\tt}{\bm{t}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\tt}{\mathbf{t}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] tt
 
-\providecommand{\txx}{\tilde\xx}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] txx
 
-\providecommand{\uu}{\bm{u}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\uu}{\mathbf{u}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] uu
 
-\newcommand{\vDelta}{\mathbf{\Delta}}
-% auto: identical in arXiv-2405, arXiv-2406, arXiv-2605
+% [skip:macro] vDelta
 
 \renewcommand{\vec}[1]{{\boldsymbol{#1}}}
 % Wrapped in extra braces to isolate as a single math atom. Without them,
@@ -1007,8 +782,7 @@
 % \boldsymbol{#1} in arXiv-2402, arXiv-2405, arXiv-2406, arXiv-2506;
 % \mathbf in arXiv-2402, arXiv-2405; #1 (identity) in arXiv-2305.
 
-\providecommand{\vv}{\bm{v}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\vv}{\mathbf{v}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] vv
 
 \newcommand{\vw}{\vec{w}}
 % auto: identical in arXiv-2506
@@ -1022,42 +796,30 @@
 \def\whp{{\rm w.h.p.}}
 % auto: identical in arXiv-2402
 
-\providecommand{\wt}{\widetilde}
-% auto: identical in arXiv-2605
+% [skip:macro] wt
 
-\providecommand{\ww}{\bm{w}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\ww}{\mathbf{w}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] ww
 
 \newcommand{\xmark}{\ding{55}}
 % auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
 
-\providecommand{\xx}{\bm{x}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\xx}{\mathbf{x}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] xx
 
-\newcommand{\yes}{$\checkmark$}
-% auto: identical in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] yes
 
-\providecommand{\yy}{\bm{y}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\yy}{\mathbf{y}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] yy
 
-\providecommand{\zz}{\bm{z}}
-% picked from arXiv-2402, arXiv-2405, arXiv-2406 — conflicts: \providecommand{\zz}{\mathbf{z}} in arXiv-2402, arXiv-2405, arXiv-2406
+% [skip:macro] zz
 
 
 % --- Environments ---
-\newenvironment{assumptionp}[1]{
-  \renewcommand\theassumptionalt{#1}
-  \assumptionalt
-}{\endassumptionalt}
-% auto: identical in arXiv-2405
+% [skip:macro] assumptionp
 
 
 % --- Theorems ---
-\newtheorem{algotheorem}{Algorithm}
-% renamed from \algorithm; bodies from arXiv-2405
+% [skip:macro] algotheorem
 
-\newtheorem*{algotheorem*}{Algorithm}
-% renamed from \algorithm*; bodies from arXiv-2405
+% [skip:macro] algotheorem*
 
 \newtheorem{assump}{Assumption}
 % auto: identical in arXiv-2302, arXiv-2305
@@ -1065,11 +827,9 @@
 \newtheorem{assumption}{Assumption}
 % picked from arXiv-2405, arXiv-2406, arXiv-2506, arXiv-2605 — conflicts: \newtheorem{assumption}[theorem]{Assumption} in arXiv-2302, arXiv-2305, arXiv-2402
 
-\newtheorem{claim}{Claim}
-% auto: identical in arXiv-2506
+% [skip:macro] claim
 
-\newtheorem{conjecture}{Conjecture}
-% picked from arXiv-2405, arXiv-2406, arXiv-2605 — conflicts: \newtheorem{conjecture}[theorem]{Conjecture} in arXiv-2302, arXiv-2305
+% [skip:macro] conjecture
 
 \newtheorem{corollary}{Corollary}
 % picked from arXiv-2405, arXiv-2406, arXiv-2506, arXiv-2605 — conflicts: \newtheorem{corollary}[theorem]{Corollary} in arXiv-2302, arXiv-2305, arXiv-2402
@@ -1077,8 +837,7 @@
 \newtheorem{definition}{Definition}
 % picked from arXiv-2405, arXiv-2406, arXiv-2506, arXiv-2605 — conflicts: \newtheorem{definition}[theorem]{Definition} in arXiv-2302, arXiv-2305, arXiv-2402
 
-\newtheorem{example}{Example}
-% auto: identical in arXiv-2405, arXiv-2406, arXiv-2605
+% [skip:macro] example
 
 \newtheorem{lemma}{Lemma}
 % picked from arXiv-2405, arXiv-2406, arXiv-2506, arXiv-2605 — conflicts: \newtheorem{lemma}[theorem]{Lemma} in arXiv-2302, arXiv-2305, arXiv-2402
@@ -1086,8 +845,7 @@
 \newtheorem{myalgorithm}{Algorithm}
 % auto: identical in arXiv-2405
 
-\newtheorem{myalgorithm*}{Algorithm}
-% auto: identical in arXiv-2405
+% [skip:macro] myalgorithm*
 
 \newtheorem{proposition}{Proposition}
 % picked from arXiv-2405, arXiv-2406, arXiv-2506, arXiv-2605 — conflicts: \newtheorem{proposition}[theorem]{Proposition} in arXiv-2302, arXiv-2305, arXiv-2402
@@ -1095,8 +853,7 @@
 \newtheorem{remark}{Remark}
 % picked from arXiv-2405, arXiv-2406, arXiv-2605 — conflicts: \newtheorem{remark}[theorem]{Remark} in arXiv-2302, arXiv-2305, arXiv-2402; \newtheorem*{remark}{Remark} in arXiv-2506
 
-\newtheorem*{rep@theorem}{\rep@title}
-% auto: identical in arXiv-2302, arXiv-2305
+% [skip:macro] rep@theorem
 
 \newtheorem{theorem}{Theorem}
 % picked from arXiv-2302, arXiv-2305, arXiv-2405, arXiv-2406, arXiv-2506, arXiv-2605 — conflicts: \newtheorem{theorem}{Theorem}[section] in arXiv-2402
@@ -1112,11 +869,9 @@
 \definecolor{GlobalSemanticMinimaPositionalDynamic}{RGB}{255,80,80}
 % auto: identical in arXiv-2506
 
-\definecolor{SKIPGlobalPositionalMinimaSemanticDynamic}{RGB}{204,51,0}
-% auto: identical in arXiv-2506
+% [skip:macro] SKIPGlobalPositionalMinimaSemanticDynamic
 
-\definecolor{SKIPUniquePositionalMinimaMisalignedDynamic}{RGB}{255,153,102}
-% auto: identical in arXiv-2506
+% [skip:macro] SKIPUniquePositionalMinimaMisalignedDynamic
 
 \definecolor{UniquePositionalMinima}{RGB}{51,51,255}
 % auto: identical in arXiv-2506
@@ -1130,8 +885,7 @@
 \definecolor{allowedcolor}{RGB}{21,115,17}
 % auto: identical in arXiv-2406
 
-\definecolor{mydarkblue}{rgb}{0,0.08,0.45}
-% auto: identical in arXiv-2402, arXiv-2406
+% [skip:macro] mydarkblue
 
 \definecolor{nodynamicscolor}{RGB}{192,150,192}
 % auto: identical in arXiv-2406
