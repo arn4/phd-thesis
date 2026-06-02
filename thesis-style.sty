@@ -31,19 +31,93 @@
   }{}%
 }
 
-% \paperchapter{title}{authors}{abstract-input-path}
-%   Standard \chapter heading, then italic author list and sans-serif
-%   indented abstract. Tune typography here.
-\newcommand{\paperchapter}[3]{%
-  \chapter{#1}%
-  \begin{center}\itshape #2\end{center}%
+% \catchy / \descr — title-part markers, only meaningful inside a \paperchapter
+% title. Default to identity so a title without markers still works.
+\newcommand{\catchy}[1]{#1}
+\newcommand{\descr}[1]{#1}
+
+% Sentinel meaning "no explicit running-header was given to \paperchapter".
+\newcommand{\pc@usecatchy}{}
+
+% \paperchapter[running-header]{title}{authors}{abstract-input-path}
+%   The title is ONE string in natural reading order. Wrap the catchy part in
+%   \catchy{...} and the rest -- INCLUDING the joining colon/space -- in
+%   \descr{...}; on the title page \catchy stays bold and \descr is medium (not
+%   bold), running together at the chapter size (use \\ for a line break).
+%   The ToC + PDF bookmark always get the FULL title. The running header is, in
+%   order of preference: the optional [running-header] if given; otherwise the
+%   \catchy part only (markers gobbled). A title with no markers and no optional
+%   renders exactly as before. Then italic authors + small indented abstract.
+\newcommand{\paperchapter}[4][\pc@usecatchy]{%
+  % Full plain title (ToC/bookmark) + catchy-only fallback header. \\ collapses
+  % to a space here so a title-page line break never leaks into ToC/header.
+  \begingroup
+    \renewcommand{\catchy}[1]{##1}%
+    \renewcommand{\descr}[1]{##1}%
+    \let\\\space
+    \protected@xdef\pc@toctitle{#2}%      full title, both parts
+    \renewcommand{\descr}[1]{}%
+    \protected@xdef\pc@catchyonly{#2}%    catchy part only
+  \endgroup
+  % Running header: explicit optional wins, else the catchy-only fallback.
+  \def\pc@tmp{#1}\def\pc@tmpdef{\pc@usecatchy}%
+  \ifx\pc@tmp\pc@tmpdef
+    \let\@chaptermark\pc@catchyonly
+  \else
+    \def\@chaptermark{#1}%
+  \fi
+  % Title-page meanings: catchy keeps inherited \bfseries, descr goes medium,
+  % \\ is a real line break. Render via the ORIGINAL \@chapter so the ToC gets
+  % the plain title while the heading keeps the marked-up styling; the running
+  % header is supplied through \@chaptermark (see \pc@installmarks below).
+  \renewcommand{\catchy}[1]{##1}%
+  \renewcommand{\descr}[1]{{\mdseries ##1}}%
+  \let\pc@kept@chapter\@chapter
+  \let\@chapter\old@chapter
+  \chapter[\pc@toctitle]{#2}%
+  \let\@chapter\pc@kept@chapter
+  \renewcommand{\catchy}[1]{##1}%
+  \renewcommand{\descr}[1]{##1}%
+  \begin{center}\itshape #3\end{center}%
   \begingroup
     \small
     \begin{quote}
-      \noindent\textsc{Abstract.}\enspace\input{#3}%
+      \noindent\textsc{Abstract.}\enspace\input{#4}%
     \end{quote}
   \endgroup
   \par\vspace{0.5\baselineskip}%
 }
+
+% --- Decoupled ToC vs. running header for \chapter / \section / \subsection ---
+% An optional [..] argument to a sectioning command feeds ONLY the running
+% header (its \xxxmark); the ToC and PDF bookmark always use the full mandatory
+% title. With no optional argument, behaviour is unchanged (header = title).
+% Mechanism: stash the optional arg in \@<type>mark, have each \xxxmark read its
+% stash, and hand the full title to the original \@chapter/\@sect for both the
+% ToC and the (now ignored) mark argument. Must run AFTER hyperref/nameref wrap
+% \@chapter/\@sect, hence \AtEndPreamble. \paperchapter sets \@chaptermark
+% itself and renders through \old@chapter (see above).
+\def\pc@installmarks{%
+  \providecommand{\chaptermark}[1]{}%
+  \providecommand{\sectionmark}[1]{}%
+  \providecommand{\subsectionmark}[1]{}%
+  \def\@chaptermark{}%
+  \def\@sectionmark{}%
+  \def\@subsectionmark{}%
+  \let\pc@oldchaptermark\chaptermark
+  \let\pc@oldsectionmark\sectionmark
+  \let\pc@oldsubsectionmark\subsectionmark
+  \def\chaptermark##1{\pc@oldchaptermark{\@chaptermark}}%
+  \def\sectionmark##1{\pc@oldsectionmark{\@sectionmark}}%
+  \def\subsectionmark##1{\pc@oldsubsectionmark{\@subsectionmark}}%
+  \let\old@chapter\@chapter
+  \def\@chapter[##1]##2{\def\@chaptermark{##1}\old@chapter[{##2}]{##2}}%
+  \let\old@sect\@sect
+  \def\@sect##1##2##3##4##5##6[##7]##8{%
+    \@namedef{@##1mark}{##7}%
+    \old@sect{##1}{##2}{##3}{##4}{##5}{##6}[{##8}]{##8}%
+  }%
+}
+\AtEndPreamble{\pc@installmarks}
 
 \endinput
