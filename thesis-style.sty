@@ -15,6 +15,59 @@
   textheight=210mm,%
   marginratio={4:6,5:5}%
 ]{geometry}
+
+% --- Revision-addendum margin notes -------------------------------------
+% Permanent outer-margin addenda added during revision (extra context, or
+% developments after the paper was published). A small star marks the point
+% in the text and heads the note. Non-floating -> robust in the math/float-
+% dense paper chapters.
+
+% Margin budget: outer margin = A4 210mm - textwidth 140mm = 70mm, split
+% 28:42 (inner:outer) by marginratio 4:6.  32mm + 5mm sep = 37mm, inside the
+% 42mm outer margin with a 5mm safety strip to the page edge.
+\setlength{\marginparwidth}{32mm}
+\setlength{\marginparsep}{5mm}
+
+% xcolor + ragged2e needed here; papers-dependencies.tex loads xcolor only
+% later (~line 143) and never loads ragged2e. Double-loading xcolor is a no-op.
+\RequirePackage{xcolor}
+\RequirePackage{ragged2e}
+\RequirePackage{marginnote}   % non-floating \marginnote
+\RequirePackage{bbding}       % \FourStar -> the anchor symbol
+
+\definecolor{addnotegray}{gray}{0.30}   % muted near-black
+\newcommand{\addnotesym}{\FourStar}     % change here to swap the symbol
+
+% In-text anchor mark: small, raised, muted.
+\newcommand{\pc@addnotemark}{%
+  \textsuperscript{\textcolor{addnotegray}{\scriptsize\addnotesym}}}
+
+% Shared margin-note body formatting.
+\newcommand{\pc@addnotebody}[1]{%
+  \footnotesize\color{addnotegray}%
+  \setlength{\parindent}{0pt}\RaggedRight
+  {\addnotesym}~#1\par}
+
+% \addnote[<vertical nudge>]{text}
+%   Drops the star at the call site and the note in the outer margin.
+%   The optional nudge (default 0pt) dodges a rare collision, e.g. \addnote[14pt]{...}.
+\newcommand{\addnote}[2][0pt]{%
+  \leavevmode\pc@addnotemark
+  \marginnote{\pc@addnotebody{#2}}[#1]}
+
+% addnotelong — same, as an environment for long / multi-paragraph notes.
+\newsavebox{\pc@addnotesave}
+\newenvironment{addnotelong}
+  {\leavevmode\pc@addnotemark
+   \begin{lrbox}{\pc@addnotesave}%
+   \begin{minipage}{\marginparwidth}%
+     \footnotesize\color{addnotegray}%
+     \setlength{\parindent}{0pt}\RaggedRight
+     {\addnotesym}~\ignorespaces}
+  {\end{minipage}\end{lrbox}%
+   \marginnote{\usebox{\pc@addnotesave}}}
+% ------------------------------------------------------------------------
+
 \RequirePackage[indent=0cm]{parskip}
 
 % EB Garamond as the main text font. Ships with TeX Live, so no
