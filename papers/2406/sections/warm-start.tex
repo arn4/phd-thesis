@@ -26,13 +26,13 @@ W^{\star}W_{t}^\top & W^{\star} W^{\star \top}
 We refer to $M_t,Q_t$ as the \textit{order parameters}.
 \begin{figure*}
     \centering
-    \includegraphics[width=0.35\textwidth]{figs/exact_asymptotic_diagram_no_legend}
-    \includegraphics[width=0.38\textwidth]{figs/dynamicsH3_multindex}
+    \includegraphics[width=0.445\textwidth]{figs/exact_asymptotic_diagram_no_legend}
+    \includegraphics[width=0.49\textwidth]{figs/dynamicsH3_multindex}
     \caption{\textbf{Exact asymptotic description:}
         Exact asymptotic characterization of the dynamics of two-layer networks trained with SGD as a function of the batch size ($n_b$) and the learning rate ($\gamma$). \textbf{Left:} Illustration of the different dynamical regimes in a compact phase diagram. \textbf{\color{allowedcolor} Population flow region:} The dynamics is equivalent to population gradient flow. \textbf{\color{notallowedcolor} Noise learning region:} The high-dimensional noise terms dominate the dynamics. 
-        \textbf{\color{teal} Saad\&Solla line:}
-        The learning dynamics attains a plateau characterized by the noise variance \cite{saad1995line}. \textbf{\color{nodynamicscolor} Dynamics not defined:} The deterministic low-dimensional description of the eq.~\eqref{2406:eq:spherical_closed_form_ode} is not valid.
-        \textbf{Right:} The figure shows a comparison of numerical simulations (dots) and theoretical prediction (continuous lines) for three instances $(\delta,\mu)$ associated with different learning regimes (identified by the corresponding colors). For both theory and simulations, the test error is plotted as a function of SGD iterations. We consider a matching architectures problem, i.e. \(\ h^\star = \sigma = \erf\) activation, and hidden units \(p=2,k=2\).
+        \textbf{\color{teal} Saad~\&~Solla line:}
+        The learning dynamics attains a plateau characterized by the noise variance \cite{saad1995line}. \textbf{\color{nodynamicscolor} Dynamics not defined:} The deterministic low-dimensional description of the Equation~\eqref{2406:eq:spherical_closed_form_ode} is not valid.
+        \textbf{Right:} The figure shows a comparison of numerical simulations (dots) and theoretical prediction (continuous lines) for three instances $(\delta,\mu)$ associated with different learning regimes (identified by the corresponding colors). For both theory and simulations, the test error is plotted as a function of SGD iterations. We consider a matching architecture problem, i.e. \(\ h^\star = \sigma = \erf\) activation, and hidden units \(p=2,k=2\).
         % Sticking with \(\mu =\sfrac14\), we can show the accordance between simulated SGD and our simulation in {\color{allowedcolor} population flow regime \(\delta = -1\)}, {\color{olive} Sadd\&Solla regime \(\delta = -\sfrac34\)}, and {\color{notallowedcolor} noise learning regime \(\delta = -\sfrac38\)}. All the simulation are run by \(d=10000\); we have some finite size effects in the population flow regime.
     }
     \label{2406:fig:warm_start_pd}
@@ -43,7 +43,7 @@ provides a set of deterministic ODEs to describe one-pass SGD in high-dimensions
 This portrayal depends ultimately only on the values of the values of the learning rate and the batch size, as quantified by the exponents \((\delta, \mu) \). 
 \begin{proposition}
 \label{2406:prop:main:exact_asympt}
-% The projected SGD dynamics over the weights in eq.~\eqref{2406:eq:main:gd_update_weights} describes a dynamical process for the order parameters that converges to a coupled set of low-dimensional deterministic equations. 
+% The projected SGD dynamics over the weights in Equation~\eqref{2406:eq:main:gd_update_weights} describes a dynamical process for the order parameters that converges to a coupled set of low-dimensional deterministic equations. 
 Consider \(\bar\Omega(t)\) the solution of the system of ordinary differential equations
 \begin{equation}
 \label{2406:eq:spherical_closed_form_ode}
@@ -80,7 +80,7 @@ and auxiliary integrals bearing expectations over $\mathcal{N}(\vec 0, \Omega)$:
 % \quad\text{and}\quad
 % Q^\bot = Q - M P^{-1}M^\top.
 % \]
-Then, there exists a constant $C$ independent from the input data dimension, such that the discrete stochastic process for the covariance \(\{\Omega_t\}_{t\in\mathbb{N}}\) in eq.~\eqref{2406:eq:main:covariance_def} induced by projected SGD dynamics is approximated by the deterministic covariance matrix \(\bar\Omega(t)\) with precision:
+Then, there exists a constant $C$ independent from the input data dimension, such that the discrete stochastic process for the covariance \(\{\Omega_t\}_{t\in\mathbb{N}}\) in Equation~\eqref{2406:eq:main:covariance_def} induced by projected SGD dynamics is approximated by the deterministic covariance matrix \(\bar\Omega(t)\) with precision:
 \begin{equation}
 \label{2406:eq:main:time_horizon}
     \mathbb{E} \norm{\Omega_t - \bar \Omega(t\Delta \tau)} \le e^{Ct}\sqrt{\Delta \tau} 
@@ -89,63 +89,41 @@ with
     $\Delta \tau = d^{\max(-\delta,-2\delta+1-\mu)}$.
 \end{proposition}
 We refer to Appendix~\ref{2406:sec:app:derivation_of_lb_equations} for the informal derivation of the above result. 
-%Its formal rigorous characterization is beyond the scope of this manuscript, and it is an interesting future direction of research.
-% The limiting value of \(\Delta t\), as the input dimension $d$ diverges, is decisive in determining what kind of process we get:
-% \begin{itemize}
-%     \item \(\Delta t \to 0\): Equations~\eqref{2406:eq:spherical_closed_form} converge to a system of ODEs; the solution of the equations \(\tilde \Omega(t)\) can be mapped in the sufficient statistics process with \(\Omega^t \equiv \tilde\Omega(t\Delta t)\);
-%     \item \(\Delta t = O(1)\): Equations~\eqref{2406:eq:spherical_closed_form} define a \emph{deterministic} stochastic process; 
-%     \item \(\Delta t \to +\infty\): Equations~\eqref{2406:eq:spherical_closed_form} diverge as well as the SGD weights dynamics.
-% \end{itemize}
-% Equations~\eqref{2406:eq:informal_ODE} describe the dynamics of non-projected SGD.
-% When the first layer is trained with the update \eqref{2406:eq:spherical_gd_update_weight}, the sufficient statistics evolve following
-% and the above considerations on \(\Delta t\) are valid.
-% All these result can be formalized on a rigorous basis: we present the formal statements and their proof in Appendix~\ref{2406:sec:app:proofs}.
-% \la{Here we have to decide if we want to include the theorem in the main. For clarity, I wouldn't, but it's just me. First let's have the statement, than we decide}
 
-In Fig.~\ref{2406:fig:warm_start_pd}~(left) we summarize the results of Prop.~\ref{2406:prop:main:exact_asympt} in a compact phase diagram. 
+In Figure~\ref{2406:fig:warm_start_pd}~(left) we summarize the results of Proposition~\ref{2406:prop:main:exact_asympt} in a compact phase diagram. 
 The following dynamical regimes appear:
 \begin{itemize}
     \item \textbf{Population Flow}: The dynamics of the sufficient statistics described by a deterministic set of ODEs~\eqref{2406:eq:spherical_closed_form_ode} is equivalent to population gradient flow. 
     \item \textbf{Noise learning}: The dynamic is dominated by high-dimensional noise, and consequently the algorithm does not learn the target;
         the behavior is reflected in the ODEs.
-    \item \textbf{Saad\&Solla line}: The ODE description in Prop.~\ref{2406:prop:main:exact_asympt} is equivalent to the pivotal work on 2LNNs \cite{saad1995line}. In particular, the original work corresponds to the point \((\delta,\mu)=(1,0)\). The learning dynamics is blocked on a plateau characterized by the noise variance in the labels. 
-    % \item \textbf{Large batch interaction}: The dynamics is given by population gradient flow combined with the large-batch corrections terms, i.e. contributions coming from interaction between samples $\vec z^\nu, \vec z^{\nu'}$ in the same batch. This region corresponds in parameter space to \(\delta = 0, \mu > 1\).
-    % \item \textbf{Phase cohexistent point}: The point \(\delta = 0, \mu = 1\) is the only point in parameter space where all term in the equations are not negligible.
+    \item \textbf{Saad~\&~Solla line}: The ODE description in Proposition~\ref{2406:prop:main:exact_asympt} is equivalent to the pivotal work on 2LNNs \cite{saad1995line}. In particular, the original work corresponds to the point \((\delta,\mu)=(1,0)\). The learning dynamics is blocked on a plateau characterized by the noise variance in the labels. 
+    \item \textbf{Large batch interaction}: The dynamics is given by population gradient flow combined with the large-batch corrections terms, i.e. contributions coming from interaction between samples $\vec z^\nu, \vec z^{\nu'}$ in the same batch. This region corresponds in parameter space to \(\delta = 0, \mu > 1\).
+    \item \textbf{Phase coexistent point}: The point \(\delta = 0, \mu = 1\) is the only point in parameter space where all term in the equations are not negligible.
     \item \textbf{Dynamics not defined}: For a broad range of values of \( (\delta, \mu) \) the SGD dynamics is not effectively described by a set of low-dimensional deterministic ODEs.
 \end{itemize}
-In the right panel of Figure~\ref{2406:fig:warm_start_pd} we present a numerical investigation of three particular instances of the regimes presented above. The plot shows a comparison of numerical simulations versus the low-dimensional exact asymptotic characterization given in eqs.~\eqref{2406:eq:spherical_closed_form_ode}. The values of the learning rate and the batch size used for SGD training are varied to probe different regions of phase diagram~\ref{2406:fig:warm_start_pd}. 
+In the right panel of Figure~\ref{2406:fig:warm_start_pd} we present a numerical investigation of three particular instances of the regimes presented above. The plot shows a comparison of numerical simulations versus the low-dimensional exact asymptotic characterization given in Equations~\eqref{2406:eq:spherical_closed_form_ode}. The values of the learning rate and the batch size used for SGD training are varied to probe different regions of phase diagram~\ref{2406:fig:warm_start_pd}. 
 
 \begin{remark}
-When the target's leap index is $\ell>1$, the dynamic of SGD is dominated by a first extensive search phase to achieve weak recovery of the teacher direction (Thm.~\ref{2406:thm:main:sgd_weak_recovery}). 
-% On the other hand, the ODE description for the dynamics in Prop.~\ref{2406:prop:main:exact_asympt} respects convergence bounds detailed in eq.~\eqref{2406:eq:main:time_horizon}. 
+When the target's leap index is $\ell>1$, the dynamic of SGD is dominated by a first extensive search phase to achieve weak recovery of the teacher direction (Theorem~\ref{2406:thm:main:sgd_weak_recovery}). 
+% On the other hand, the ODE description for the dynamics in Proposition~\ref{2406:prop:main:exact_asympt} respects convergence bounds detailed in Equation~\eqref{2406:eq:main:time_horizon}. 
 Therefore, in order to probe interesting dynamical regimes for general single index teachers, we assume non-vanishing initial correlations of the network's hidden layer weights with the teacher's ones when \(d\to+\infty\).
-% Concretely, we fix a correlation parameter $M_0 \in \mathbb{R}^{p\times k}$ and assume the teacher weights \(W^\star\)to be orthonormal. Then, we sample an orthonormal matrix \(\tilde W\) in the subspace orthogonal to the one generated by the span of the rows of \(W^\star\), and finally set the initial weights of the student to:
-% \begin{align}\label{2406:eq:initial_conditions_unconstrainted}
-%     \vec w_{j,0} = M_{j,0} W^\star + \sqrt{1-\norm{M_{j,0}}^2_2}\tilde W,\quad a_{j,0} = 1 && j \in [p]
-% \end{align}
-In App.~\ref{2406:sec:app:hyperparams} we study the tightness of the exponential bound eq.~\eqref{2406:eq:main:time_horizon}; we argue supported by numerical illustrations that (on the practical side) the low dimensional ODE description is valid well beyond the extents of Prop.~\ref{2406:prop:main:exact_asympt}, as already observed by other works \cite{goldt2019dynamics,veiga2022phase} in different context. 
+
+In Appendix~\ref{2406:sec:app:hyperparams} we study the tightness of the exponential bound Equation~\eqref{2406:eq:main:time_horizon}; we argue supported by numerical illustrations that (on the practical side) the low dimensional ODE description is valid well beyond the extents of Proposition~\ref{2406:prop:main:exact_asympt}, as already observed by other works \cite{goldt2019dynamics,veiga2022phase} in different context. 
 \end{remark}
-% The rows of the resulting matrix \(W_0\) are normalized to $1$.
-% Assuming non-vanishing initial correlations is essential when the region of the loss probed at initialization is not flat. 
-% This assumption allows us to overcome the search phase of the dynamics precisely described in \cite{arous2021online}, which is a major obstacle for providing rigorous exact asymptotic description of the dynamics. 
-
-% Indeed, the exact asymptotic description is not valid on large time horizon. This effect is often referred to as the mediocrity effect, and it is present when considering target functions with information
-% the flatness of the loss around using \cite{arous2021online} nomenclature, when there is no mediocrity to escape. 
-% For example, in the context of single-index targets, this arises when the information exponent of the problem is $1$. 
-% Conversely, when \(\ell\ge2\), we consider \emph{warm start}. 
 
 
-\paragraph{Non asymptotic corrections ---}
-Proposition~\ref{2406:prop:main:exact_asympt} unveils a surprising result for the exact asymptotic description of two-layer networks. Indeed, the ODEs written in eq.~\eqref{2406:eq:spherical_closed_form_ode} coincide with the analogous ones for the single sample per batch case ($n_b=1$), modulo trivial rescaling of the parameters \cite{veiga2022phase}.  However, a careful consideration of the ``intra-batch correlations'' in the gradient is needed for correctly describing the low-dimensional process of the order parameters:
+
+\paragraph{Non-asymptotic corrections ---}
+Proposition~\ref{2406:prop:main:exact_asympt} unveils a surprising result for the exact asymptotic description of two-layer networks. Indeed, the ODEs written in Equation~\eqref{2406:eq:spherical_closed_form_ode} coincide with the analogous ones for the single sample per batch case ($n_b=1$), modulo trivial rescaling of the parameters \cite{veiga2022phase}.  However, a careful consideration of the ``intra-batch correlations'' in the gradient is needed for correctly describing the low-dimensional process of the order parameters:
 \begin{align}
     \sum_{\nu' = 1, \nu'\neq\nu}^{n_b} \sigma'(\lambda_j^\nu)\sigma'(\lambda_l^{\nu'})\mathcal{E}^\nu\mathcal{E}^{\nu'} \langle \vec z^{\nu}, \vec z^{\nu'} \rangle 
 \end{align}
-The asymptotic form of this term can be exactly computed to be (using Prop.~\ref{2406:prop:main:exact_asympt} notations):
+The asymptotic form of this term can be exactly computed to be (using Proposition~\ref{2406:prop:main:exact_asympt} notations):
 \begin{align}
 \label{2406:eq:main:large_batch_term}
     \phi^{\rm{BC}}_{jl}=&\mathbb{E}\left[\sigma'(\lambda_j)\mathcal E \left(\lambda^\star\right)^\top\right]P^{-1}\mathbb{E}\left[\sigma'(\lambda_l)\mathcal E \lambda^\star\right]+\\
 &\mathbb{E}\left[\sigma'(\lambda_j)\mathcal E (\lambda^\bot)^\top\right]\left(Q^\bot\right)^{-1}\mathbb{E}\left[\sigma'(\lambda_l)\mathcal E \lambda^\bot\right]
 \end{align}
-with $ \vec \lambda^\bot = \vec \lambda - MP^{-1}\vec\lambda^\star  \text{and}  
+with $ \vec \lambda^\bot = \vec \lambda - MP^{-1}\vec\lambda^\star  \text{ and }  
 Q^\bot = Q - M P^{-1}M^\top$.
-Although the contribution of the above term is asymptotically vanishing in the ODE description~\eqref{2406:eq:spherical_closed_form_ode} when $d \to \infty$, any theoretical description at finite $d$ will effectively depend on $\phi^{\rm{BC}}_{jl}$. In App.~\ref{2406:sec:app:hyperparams} we provide additional numerical investigation on the importance of~\eqref{2406:eq:main:large_batch_term} and the role of large batch sizes for non-asymptotic corrections to the characterization in Prop.~\ref{2406:prop:main:exact_asympt}. Moreover, we note that taking into account the presence of large batch size is pivotal to illustrate the time~/~complexity tradeoffs for weak recovery of the target subspace, as thoroughly discussed in Section~\ref{2406:sec:main:cold_start}.
+Although the contribution of the above term is asymptotically vanishing in the ODE description~\eqref{2406:eq:spherical_closed_form_ode} when $d \to \infty$, any theoretical description at finite $d$ will effectively depend on $\phi^{\rm{BC}}_{jl}$. In Appendix~\ref{2406:sec:app:hyperparams} we provide additional numerical investigation on the importance of~\eqref{2406:eq:main:large_batch_term} and the role of large batch sizes for non-asymptotic corrections to the characterization in Proposition~\ref{2406:prop:main:exact_asympt}. Moreover, we note that taking into account the presence of large batch size is pivotal to illustrate the time~/~complexity tradeoffs for weak recovery of the target subspace, as thoroughly discussed in Section~\ref{2406:sec:main:cold_start}.

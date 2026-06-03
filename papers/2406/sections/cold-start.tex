@@ -1,6 +1,6 @@
 \section{Time / Complexity tradeoffs}
 \label{2406:sec:main:cold_start}
-In this section, we characterize the intertwined dependence between the batch size and the hardness of the learning task in determining the number of one-pass SGD iterations needed to achieve weak recovery of the teacher subspace as in Definition~\ref{2406:def:weak_recovery}. We offer a detailed picture of the tradeoffs to consider in order to minimize the training iteration time $T$, compactly illustrated in the phase diagram in Fig.~\ref{2406:fig:cold_start_pd}.
+In this section, we characterize the intertwined dependence between the batch size and the hardness of the learning task in determining the number of one-pass SGD iterations needed to achieve weak recovery of the teacher subspace as in Definition~\ref{2406:def:weak_recovery}. We offer a detailed picture of the tradeoffs to consider in order to minimize the training iteration time $T$, compactly illustrated in the phase diagram in Figure~\ref{2406:fig:cold_start_pd}.
 
 
 \paragraph{Network initialization ---}
@@ -22,37 +22,15 @@ The seminal work of \cite{arous2021online} studies the weak recovery problem for
     \end{cases}
 \end{align}
 where $\ell$ is the information exponent of the target $f_\star$. 
-\\ As far as weak recovery of the target subspace is concerned, the characterization of multi-index targets follows the same lines of thought just replacing the information exponent by the leap index of the target, e.g. see Definition~\textbf{3} of \cite{dandi2023how} or Definition~\textbf{1} of \cite{abbe2023sgd}. 
+
+As far as weak recovery of the target subspace is concerned, the characterization of multi-index targets follows the same lines of thought just replacing the information exponent by the leap index of the target, e.g. see Definition~\textbf{3} of \cite{dandi2023how} or Definition~\textbf{1} of \cite{abbe2023sgd}. 
 Similarly to the information exponent definition, the leap index is the lowest rank of the tensors appearing in the Hermite expansion of the target $f^\star$. 
 Therefore, we choose to study in the following the training dynamics for the $p=k=1$ scenario for general batch sizes $n_b$. 
 This assumption is useful to provide rigorous guarantees as it largely reduces the complexity of the projected SGD dynamics. However, we argue (supported by numerical simulations in Appendix~\ref{2406:app:multiindex_model}) that the same phenomenology will hold for larger values of $p$ and $k$. 
-% This belief is also motivated by similar extensions of the $p=k=1$ scenario \cite{arous2021online} to broader network and multi index teacher, see \cite{abbe2023sgd}. 
-
-% \bl{What this section is supposed to add?}
-
-
-% When $d\to\infty$, the weights are orthogonal with high probability. In terms of the sufficient statistics: 
-% \begin{equation}\label{2406:eq:initial_distribution_QM}
-% \begin{split}
-%     Q_{jj} \sim \text{Dirac}(1), \quad
-%     j\neq l: 
-%     \sqrt{d} Q^{0}_{jl} \xrightarrow{d\to+\infty} \gauss(0,1)
-%     \\
-%     \sqrt{d} M^{0}_{j} \xrightarrow{d\to+\infty} \gauss(0,1).
-% \end{split}
-% \end{equation}
-% In the case where $\text{IE}=2$ and \(n_b=1\), this initialization has been refered also as \emph{mediocrity} \cite{arnaboldi2023escaping}, since the flatness of the loss at initialization makes the problem hard to learn even if is a maximum of the population risk. 
-% Cold start kicks only when the information exponent is \(\ell>1\), otherwise there is no flat region at initialization, and effecivly every initialization could be assumed to be warm when \(\ell = 1\). We are analizing then only cases where the IE is not trivial; more precisely, we will consider Hermite polynomial activations and target:
-% \begin{align}
-%     \sigma = f_\star = \rm{He}_{\ell}, \qquad \ell \in \mathbb{N}
-% \end{align}
-%  where the quantity $\ell$ is the degree of the Hermite polynomial, and also the IE of the setting.
-%  Our result generilze to any activation and target because what matters is just the leading term of the Hermite expansion of \(\sigma\) and \(f^\star\).
-
 
 
 \subsection{Weak recovery with one-pass SGD}
-Consider the gradient descent dynamics defined on the hidden layer weights by eq.~\eqref{2406:eq:main:gd_update_weights}. We focus on the description of the time evolution of the correlation between the network's hidden layer weight and the target direction:
+Consider the gradient descent dynamics defined on the hidden layer weights by Equation~\eqref{2406:eq:main:gd_update_weights}. We focus on the description of the time evolution of the correlation between the network's hidden layer weight and the target direction:
 \begin{align}
     m_t= \langle \vec w_t , \vec w^\star \rangle 
 \end{align}
@@ -79,7 +57,7 @@ as a result, if $\ell$ is even and $c_\ell c_\ell^\star < 0$, then $m = 0$ is a 
 We are now in the position to formally state the result:
 \begin{theorem} [Projected SGD weak recovery]
 \label{2406:thm:main:sgd_weak_recovery}
-   Consider the projected SGD algorithm with square loss  (Eqs. \eqref{2406:eq:main:gd_update_weights}, \eqref{2406:eq:main:projected_sgd}), and suppose that Assumptions \ref{2406:assump:poly_growth}-\ref{2406:assump:init} hold. There exist absolute constants $c_\gamma, C_\gamma$ such that if
+   Consider the projected SGD algorithm with square loss  (Equations~\eqref{2406:eq:main:gd_update_weights}, \eqref{2406:eq:main:projected_sgd}), and suppose that Assumptions \ref{2406:assump:poly_growth}-\ref{2406:assump:init} hold. There exist absolute constants $c_\gamma, C_\gamma$ such that if
    \[ \gamma\leq c_\gamma \min\left(1, n_b d^{-\left(\frac\ell2\vee 1\right)} \log(d)^{-C_\gamma}\right), \]
     then for large enough $d$ we have with probability $1-ce^{-c\log(n)^2}$
    \begin{equation}
@@ -87,32 +65,10 @@ We are now in the position to formally state the result:
    \end{equation}
 \end{theorem}
 
-\begin{table*}
-\fontsize{8.5pt}{8.5pt}
-% \renewcommand{\arraystretch}{1.0}
-\begin{center}
- % \begin{adjustwidth}{-0cm}{}
-\begin{tabular}{r| c | c | c |l}
-   & SGD & SGD & Correlation loss SGD & One step  \\ 
-  &with $n_b \lesssim d^{\sfrac{\ell}{2}}$ &with $ d^{\sfrac{\ell}{2}} <  < n_b \lesssim d^{\max (\ell-1,1) }$ &with $n_b=o\left(d^{\max(\ell-1, 1)}\right)$ &with $n_b  =  O(d^\ell)$ \\ 
- \hline  $\ell = 1$& $T  = O(\sfrac{d}{n_b}), N  =  O(d)$ & $T = O(1), N  =  O(d)$ & $T = O(\sfrac{d}{n_b}), N  =  O(d)$   & $T = 1, N  =  O(d)$\\ 
- \hline  $\ell = 2$ & $T =  O(\sfrac{d \log{d}}{n_b}), N = O(d \log{d})$ & $T = O(\log{d}), N  =  O(d \log{d})$ & $T  =  O( \sfrac{d\log{d}}{n_b}), N  =  O(d \log{d})$ & $T = 1, N  =  O(d^2)$ \\
- \hline
- $\ell>2$ & $T  =  O(\sfrac{d^{\ell -1}}{n_b}), N  =  O(d^{\ell-1})$ & $T=O(d^{\sfrac{\ell}{2} - 1}), N  =  O(n_b d^{\sfrac{\ell}{2} - 1})$ & $T = O(\sfrac{d^{\ell-1}}{n_b}), N  =  O(d^{\ell-1})$ & $T = 1, N =  O(d^{\ell})$ \\
- \hline
-\end{tabular}
-% \end{adjustwidth}
-\caption{\textbf{Time~/~Complexity tradeoffs:} Number of iterations $T$ and the total number of samples $N$ needed to achieve weak recovery of the target for different training protocols in high dimensions. \textbf{Left:} One-pass SGD of batch size $n_b = d^{\sfrac{\ell}{2}}$, in this regime the optimal time complexity is obtained rescaling by $n_b$ the result of \cite{arous2021online} for $n_b=1$, i.e. by choosing the optimal learning rate $\gamma = O(n_b d^{-\sfrac{\ell}{2}})$. \textbf{Center-left:} One-pass SGD with batch size $d^{\sfrac{\ell}{2}} <  < n_b \lesssim d^{\max (\ell-1,1)}$, for hard problems ($\ell > 2$) the sample complexity is significantly increased with respect to the $n_b=1$ case up to $N = O(n_bd^{\sfrac{\ell}{2}-1})$. The learning rate cannot be increased proportionally to $n_b$ in this region, fixed to be $\gamma = O(1)$. \textbf{Center-Right:} Correlation loss SGD with $n_b = o(d^{\max(\ell-1, 1)})$, this training protocol overcomes the limitation of SGD when $n_b >  >d^{\sfrac{\ell}{2}}$ and $\ell >2$; the total sample complexity is $N=O(d^{\ell-1})$. The learning rate is fixed again to be proportional to the batch size $\gamma = O(n_bd^{-\sfrac{\ell}{2}})$. \textbf{Right:} The target is weakly recovered with one GD step of $n_b=O(d^\ell)$ batch. The learning rate is chosen as $\gamma = O( d^{\sfrac{(\ell-1)}{2}})$ for the One Step routine \cite{dandi2023how}.
-% , while is fixed to the optimal for fastest weak recovery for the other algorithms,  as characterized by Theorems.~(\ref{2406:thm:main:sgd_weak_recovery}  , \ref{2406:thm:main:no_yhat_weak_recovery}). 
-} 
-\label{2406:table:weak_recovery}
-\end{center}
-\end{table*}
-
 
 
  
- \subsection{Illustration of Theorem \ref{2406:thm:main:sgd_weak_recovery}} The phase diagram in Fig.~\ref{2406:fig:cold_start_pd} exemplifies Theorem~\ref{2406:thm:main:sgd_weak_recovery}. We identify three \textit{learning phases}: SGD learning, Correlation Loss SGD learning, and SGD impossible. These regions are explored by varying the batch size and learning rate exponents $\delta,\mu$. Our theory characterizes the optimal learning rate to achieve the lowest possible time iterations of SGD to weakly recover the target direction $\vec w^\star$ when the batch size respects $n_b = o(d^{\ell -1})$:
+ \subsection{Illustration of Theorem \ref{2406:thm:main:sgd_weak_recovery}} The phase diagram in Figure~\ref{2406:fig:cold_start_pd} exemplifies Theorem~\ref{2406:thm:main:sgd_weak_recovery}. We identify three \textit{learning phases}: SGD learning, Correlation Loss SGD learning, and SGD impossible. These regions are explored by varying the batch size and learning rate exponents $\delta,\mu$. Our theory characterizes the optimal learning rate to achieve the lowest possible time iterations of SGD to weakly recover the target direction $\vec w^\star$ when the batch size respects $n_b = o(d^{\ell -1})$:
  \begin{align}
      \delta^\star(\mu) = 
      \begin{cases}
@@ -122,14 +78,14 @@ We are now in the position to formally state the result:
  \end{align}
  
 \textbf{Weak recovery region ---} In the region $n_b \lesssim d^{\sfrac{\ell}{2}}$ there is a net benefit in using larger batch sizes in the SGD optimization. 
-This section shows a similar phenomenology to \cite{arous2021online}: if we optimally choose the learning rate exponent $\delta^\star(\mu)$, the number of time iterations needed to weakly recover the teacher direction $\vec w^\star$ is simply $T(n_b) = \sfrac{I(\ell)}{n_b}$, rescaling straightforwardly the time complexity of the $n_b=1$ case in eq.~\eqref{2406:eq:main:time_complexity_single_index}. By considering higher values for the learning rate ($\delta < \delta^\star(\mu)$) SGD is not able to weakly recover the signal as the dynamics is dominated by terms contracting the network~/~target correlation to zero, defining the SGD impossible region. Vice versa, if one takes into account lower learning rates ($\delta > \delta^\star(\mu)$), it is certainly possible to weakly-recover the target, but at a higher time complexity cost. 
+This section shows a similar phenomenology to \cite{arous2021online}: if we optimally choose the learning rate exponent $\delta^\star(\mu)$, the number of time iterations needed to weakly recover the teacher direction $\vec w^\star$ is simply $T(n_b) = \sfrac{I(\ell)}{n_b}$, rescaling straightforwardly the time complexity of the $n_b=1$ case in Equation~\eqref{2406:eq:main:time_complexity_single_index}. By considering higher values for the learning rate ($\delta < \delta^\star(\mu)$) SGD is not able to weakly recover the signal as the dynamics is dominated by terms contracting the network~/~target correlation to zero, defining the SGD impossible region. Vice versa, if one takes into account lower learning rates ($\delta > \delta^\star(\mu)$), it is certainly possible to weakly-recover the target, but at a higher time complexity cost. 
 
 \textbf{Self-interaction regime --- } Conversely, the region $d^{\sfrac{\ell}{2}} \ll n_b \lesssim d^{\max (\ell-1,1)}$ does not adhere to the same straightforward paradigm. 
 % The dynamics of weights norm is dominated by a \textit{ self-interaction term } leading to the \emph{Correlation Loss SGD} region. 
 Indeed, standard SGD is not able to achieve weak recovery of the teacher direction using $T(n_b)  =  \sfrac{I(\ell)}{n_b}$ time iterations, but a simple modification of it - that we call \emph{Correlation Loss SGD} - is able to. The number of steps needed to weakly recover the target with this new training protocol can then be pushed down to \(T=\mathrm{polylog}(d)\) when using batch sizes $n_b = O(d^{\max (\ell-1,1)})$. We refer to the next section for a detailed analysis of this regime.
  % \\ \textbf{Sub-power region ---} If $n = \omega(d^{\ell-1})$ Theorem \ref{2406:thm:main:sgd_weak_recovery} does not offer a sharp characterization of this region. 
  
-\textbf{One step regime ---} Recent works have discussed the role of one large learning rate gradient descent step (\textit{giant step}) when training of two-layer networks \citep{ba2022high,damian2022neural,dandi2023how}. More precisely, \cite{dandi2023how} sharply characterizes the section $n_b = \Omega(d^{\ell})$ where it is possible to learn the teacher direction in just one step by setting the learning rate to $\delta_{\rm{giant-step}}(\mu) = \frac{1-\ell}{2}$. 
+\textbf{One-step regime ---} Recent works have discussed the role of one large learning rate gradient descent step (\textit{giant step}) when training of two-layer networks \citep{ba2022high,damian2022neural,dandi2023how}. More precisely, \cite{dandi2023how} sharply characterizes the section $n_b = \Omega(d^{\ell})$ where it is possible to learn the teacher direction in just one step by setting the learning rate to $\delta_{\rm{giant-step}}(\mu) = \frac{1-\ell}{2}$. 
 
 
 
@@ -143,10 +99,10 @@ where $\vec{g}_t, \vec{g}_t^\bot$ are the gradient at time $t$ and its component
 \Tilde{\ell} = \frac{1}{n_b}\sum_{\nu \in [n_b]} 1-y^{\nu}f(\vec z^{\nu})
 \end{align}
 
-The above-described protocol is equivalent to consider a vanishing initialization scale for the second layer weights $\vec a_0$ of the network~\ref{2406:eq:main:newtwork_def}. Such assumptions are often considered in different theoretical efforts (see e.g. \cite{abbe2022merged,berthier2023learning,abbe2023sgd}). However, Fig.~\ref{2406:fig:cold_start_pd} illustrates that a careful analysis of the initialization scale $\vec a_0$ is needed to paint an exhaustive description of the SGD dynamics. Indeed, considering Correlation loss SGD allows to overcome the limitations highlighted by Theorem~\ref{2406:thm:main:sgd_weak_recovery} for projected SGD. In particular, Correlation loss SGD is able to access the yellow region depicted in Fig.~\ref{2406:fig:cold_start_pd} where the time complexity can be reduced again to $\Tilde{T}(n_b) = \sfrac{I(\ell)}{n_b}$ using the optimal learning rate $\Tilde{\delta}^\star(\mu) = \sfrac{\ell}{2} - \mu$ even for $\mu > \sfrac{\ell}{2}$. This is precisely stated in the following theorem. 
+The above-described protocol is equivalent to consider a vanishing initialization scale for the second layer weights $\vec a_0$ of the network~\ref{2406:eq:main:newtwork_def}. Such assumptions are often considered in different theoretical efforts (see e.g. \cite{abbe2022merged,berthier2023learning,abbe2023sgd}). However, Figure~\ref{2406:fig:cold_start_pd} illustrates that a careful analysis of the initialization scale $\vec a_0$ is needed to paint an exhaustive description of the SGD dynamics. Indeed, considering Correlation loss SGD allows to overcome the limitations highlighted by Theorem~\ref{2406:thm:main:sgd_weak_recovery} for projected SGD. In particular, Correlation loss SGD is able to access the yellow region depicted in Figure~\ref{2406:fig:cold_start_pd} where the time complexity can be reduced again to $\Tilde{T}(n_b) = \sfrac{I(\ell)}{n_b}$ using the optimal learning rate $\Tilde{\delta}^\star(\mu) = \sfrac{\ell}{2} - \mu$ even for $\mu > \sfrac{\ell}{2}$. This is precisely stated in the following theorem. 
 \begin{theorem} [\emph{Correlation Loss SGD} weak recovery]
 \label{2406:thm:main:no_yhat_weak_recovery}
-   Consider the projected SGD algorithm with correlation loss (eqs. \eqref{2406:eq:main:gd_update_weights}, \eqref{2406:eq:main:correlation_loss}), and suppose that Assumptions \ref{2406:assump:poly_growth}-\ref{2406:assump:init} hold. There exists absolute constants $c_\gamma, C_\gamma$ such that if
+   Consider the projected SGD algorithm with correlation loss (Equations~\eqref{2406:eq:main:gd_update_weights}, \eqref{2406:eq:main:correlation_loss}), and suppose that Assumptions \ref{2406:assump:poly_growth}-\ref{2406:assump:init} hold. There exists absolute constants $c_\gamma, C_\gamma$ such that if
    \[ \gamma \leq c_\gamma \log(d)^{-C_\gamma} \min\left( n_b d^{-\left(\frac\ell2\vee 1\right)}, \sqrt{\frac{n_b}d} \right) \]
     
    Then if $d$ is large enough, we have with probability $1-ce^{-c\log(n)^2}$
@@ -154,18 +110,36 @@ The above-described protocol is equivalent to consider a vanishing initializatio
       t_\eta^+ \leq C \max\left(1, \gamma^{-1}d^{\left(\frac{\ell}2 - 1 \right) \vee 0}\log(d)\right).
    \end{equation}
 \end{theorem}
- The derivation of Theorems \ref{2406:thm:main:sgd_weak_recovery} and \ref{2406:thm:main:no_yhat_weak_recovery} generalizes \cite{arous2021online} which studies the $n_b =1$ case. Informally, the result is obtained by analyzing the stability of the equation for the correlation \(m_t\), along with the requirement on the step-size for the suppression of the effects of the noise across time. However, there is a major difficulty introduced by the large stepsize regime: when the gradient updates become larger, the Taylor-inspired bounds used in \cite{arous2021online} become vacuous. We work around this problem by showing that in this regime, there is a \emph{one-step improvement} which jumps directly to meaningful correlation with the target vector. All details can be found in App. \ref{2406:sec:app:proofs}. We provide in Table~\ref{2406:table:weak_recovery} a representative summary of the results in Thms~(\ref{2406:thm:main:sgd_weak_recovery}.~\ref{2406:thm:main:no_yhat_weak_recovery}) characterizing the time/complexity tradeoffs to achieve weak recovery of general single index target $f^\star$.
+ The derivation of Theorems \ref{2406:thm:main:sgd_weak_recovery} and \ref{2406:thm:main:no_yhat_weak_recovery} generalizes \cite{arous2021online} which studies the $n_b =1$ case. Informally, the result is obtained by analyzing the stability of the equation for the correlation \(m_t\), along with the requirement on the step-size for the suppression of the effects of the noise across time. However, there is a major difficulty introduced by the large step-size regime: when the gradient updates become larger, the Taylor-inspired bounds used in \cite{arous2021online} become vacuous. We work around this problem by showing that in this regime, there is a \emph{one-step improvement} which jumps directly to meaningful correlation with the target vector. All details can be found in App. \ref{2406:sec:app:proofs}. We provide in Table~\ref{2406:table:weak_recovery} a representative summary of the results in Theorems~(\ref{2406:thm:main:sgd_weak_recovery}.~\ref{2406:thm:main:no_yhat_weak_recovery}) characterizing the time/complexity tradeoffs to achieve weak recovery of general single index target $f^\star$.
+ \begin{table*}
+\begin{center}
+\setlength{\tabcolsep}{5pt}
+\setlength\extrarowheight{5pt}
+\begin{tabular}{c| c | c | c |c}
+  \multirow{2}{*}{$\ell$} & SGD & SGD & Correlation loss SGD & One step  \\
+  &{\scriptsize with $n_b \lesssim d^{\sfrac{\ell}{2}}$} &{\scriptsize with $d^{\sfrac{\ell}{2}} \ll n_b \lesssim d^{\max (\ell-1,1)}$} &{\scriptsize with $n_b=o\left(d^{\max(\ell-1, 1)}\right)$} &{\scriptsize with $n_b = O(d^\ell)$} \\
+ \hline  $1$ & $\begin{array}{@{}l@{}} T = O(\sfrac{d}{n_b}) \\[2pt] N = O(d) \end{array}$ & $\begin{array}{@{}l@{}} T = O(1) \\[2pt] N = O(d) \end{array}$ & $\begin{array}{@{}l@{}} T = O(\sfrac{d}{n_b}) \\[2pt] N = O(d) \end{array}$ & $\begin{array}{@{}l@{}} T = 1 \\[2pt] N = O(d) \end{array}$ \\
+ \hline  $2$ & $\begin{array}{@{}l@{}} T = O(\sfrac{d \log{d}}{n_b}) \\[2pt] N = O(d \log{d}) \end{array}$ & $\begin{array}{@{}l@{}} T = O(\log{d}) \\[2pt] N = O(d \log{d}) \end{array}$ & $\begin{array}{@{}l@{}} T = O(\sfrac{d\log{d}}{n_b}) \\[2pt] N = O(d \log{d}) \end{array}$ & $\begin{array}{@{}l@{}} T = 1 \\[2pt] N = O(d^2) \end{array}$ \\
+ \hline
+ $>2$ & $\begin{array}{@{}l@{}} T = O(\sfrac{d^{\ell -1}}{n_b}) \\[2pt] N = O(d^{\ell-1}) \end{array}$ & $\begin{array}{@{}l@{}} T = O(d^{\sfrac{\ell}{2} - 1}) \\[2pt] N = O(n_b d^{\sfrac{\ell}{2} - 1}) \end{array}$ & $\begin{array}{@{}l@{}} T = O(\sfrac{d^{\ell-1}}{n_b}) \\[2pt] N = O(d^{\ell-1}) \end{array}$ & $\begin{array}{@{}l@{}} T = 1 \\[2pt] N = O(d^{\ell}) \end{array}$ \\
+ \hline
+\end{tabular}
+\caption{\textbf{Time~/~Complexity tradeoffs:} Number of iterations $T$ and the total number of samples $N$ needed to achieve weak recovery of the target for different training protocols in high dimensions. \textbf{Left:} One-pass SGD of batch size $n_b = d^{\sfrac{\ell}{2}}$, in this regime the optimal time complexity is obtained rescaling by $n_b$ the result of \cite{arous2021online} for $n_b=1$, i.e. by choosing the optimal learning rate $\gamma = O(n_b d^{-\sfrac{\ell}{2}})$. \textbf{Center-left:} One-pass SGD with batch size $d^{\sfrac{\ell}{2}} <  < n_b \lesssim d^{\max (\ell-1,1)}$, for hard problems ($\ell > 2$) the sample complexity is significantly increased with respect to the $n_b=1$ case up to $N = O(n_bd^{\sfrac{\ell}{2}-1})$. The learning rate cannot be increased proportionally to $n_b$ in this region, fixed to be $\gamma = O(1)$. \textbf{Center-Right:} Correlation loss SGD with $n_b = o(d^{\max(\ell-1, 1)})$, this training protocol overcomes the limitation of SGD when $n_b >  >d^{\sfrac{\ell}{2}}$ and $\ell >2$; the total sample complexity is $N=O(d^{\ell-1})$. The learning rate is fixed again to be proportional to the batch size $\gamma = O(n_bd^{-\sfrac{\ell}{2}})$. \textbf{Right:} The target is weakly recovered with one GD step of $n_b=O(d^\ell)$ batch. The learning rate is chosen as $\gamma = O( d^{\sfrac{(\ell-1)}{2}})$ for the One Step routine \cite{dandi2023how}.
+} 
+\label{2406:table:weak_recovery}
+\end{center}
+\end{table*}
 
-The theoretical predictions of Thm.~\ref{2406:thm:main:no_yhat_weak_recovery} are evaluated in Fig.~\ref{2406:fig:no_yhat_recovery}. The plot compares the student-teacher weight correlation (\(m_t=\langle \vec w_t, \vec w^\star \rangle\)) achieved by vanilla projected SGD and \emph{Correlation Loss SGD} as a function of time. The teacher activation $h^\star$ is fixed to be the third Hermite polynomial ($\ell = 3$), and the batch size varies, effectively changing the region of the phase diagram considered. In agreement with Theorem~\ref{2406:thm:main:no_yhat_weak_recovery}, the figure shows that \emph{Correlation Loss SGD} is always able to achieve faster weak recovery with respect to SGD. Furthermore, the batch size that can be used with \emph{Correlation Loss SGD} in combination with the optimal learning rate $\Tilde{\delta}^\star(\mu) = \sfrac{\ell}{2} - \mu$ is larger, as presented in the phase diagram of Figure~\ref{2406:fig:cold_start_pd}.
+The theoretical predictions of Theorem~\ref{2406:thm:main:no_yhat_weak_recovery} are evaluated in Figure~\ref{2406:fig:no_yhat_recovery}. The plot compares the student-teacher weight correlation (\(m_t=\langle \vec w_t, \vec w^\star \rangle\)) achieved by vanilla projected SGD and \emph{Correlation Loss SGD} as a function of time. The teacher activation $h^\star$ is fixed to be the third Hermite polynomial ($\ell = 3$), and the batch size varies, effectively changing the region of the phase diagram considered. In agreement with Theorem~\ref{2406:thm:main:no_yhat_weak_recovery}, the figure shows that \emph{Correlation Loss SGD} is always able to achieve faster weak recovery with respect to SGD. Furthermore, the batch size that can be used with \emph{Correlation Loss SGD} in combination with the optimal learning rate $\Tilde{\delta}^\star(\mu) = \sfrac{\ell}{2} - \mu$ is larger, as presented in the phase diagram of Figure~\ref{2406:fig:cold_start_pd}.
 %We note that the numerical simulations are implemented for $p=4$ and $k=2$, indeed we expect Theorem~\ref{2406:thm:main:no_yhat_weak_recovery} to hold for larger number of hidden neurons $p$ and for multi-index models $k>1.$ \looseness=-1
 
-\begin{remark}    Theorem~\ref{2406:thm:main:no_yhat_weak_recovery} does not claim superiority of \emph{Correlation Loss SGD} with respect to plain SGD when trying to fully learn the target, but only for achieving weak-correlation faster (Definition~\ref{2406:def:weak_recovery}). As Figure~\ref{2406:fig:no_yhat_recovery} shows, \emph{Correlation Loss SGD} escapes the initial dynamical plateau faster, but is then limited by a loss function not designed properly to reach the global minimum. In Appendix~\ref{2406:sec:app:hyperparams} we investigate the possibility to combine both the algorithms sketched in Fig.~\ref{2406:fig:no_yhat_recovery}, namely escaping the initialization plateau with Correlation loss SGD and then learn the function with SGD; we refer to this protocol as \textit{Adaptive SGD}. Moreover, as Fig.~\ref{2406:fig:cold_start_pd} and Table~\ref{2406:table:weak_recovery} illustrate, the benefits of using Correlation loss SGD are limited to settings in which $\ell >2$. Indeed, the Self-interaction regime (depicted in yellow in Fig.~\ref{2406:fig:cold_start_pd}) is not present for $\ell \le 2$.
+\begin{remark}    Theorem~\ref{2406:thm:main:no_yhat_weak_recovery} does not claim superiority of \emph{Correlation Loss SGD} with respect to plain SGD when trying to fully learn the target, but only for achieving weak-correlation faster (Definition~\ref{2406:def:weak_recovery}). As Figure~\ref{2406:fig:no_yhat_recovery} shows, \emph{Correlation Loss SGD} escapes the initial dynamical plateau faster, but is then limited by a loss function not designed properly to reach the global minimum. In Appendix~\ref{2406:sec:app:hyperparams} we investigate the possibility to combine both the algorithms sketched in Figure~\ref{2406:fig:no_yhat_recovery}, namely escaping the initialization plateau with Correlation loss SGD and then learn the function with SGD; we refer to this protocol as \textit{Adaptive SGD}. Moreover, as Figure~\ref{2406:fig:cold_start_pd} and Table~\ref{2406:table:weak_recovery} illustrate, the benefits of using Correlation loss SGD are limited to settings in which $\ell >2$. Indeed, the Self-interaction regime (depicted in yellow in Figure~\ref{2406:fig:cold_start_pd}) is not present for $\ell \le 2$.
 \end{remark}
 % For all the algorithms studied there is a comparison between theoretical prediction and simulations; we refer to next section for the analysis of the asymptotic description of the dynamics (exemplified with continous lines in the figure). 
 
 \begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{figs/H3H3_m_vs_T}
+    \includegraphics[width=\textwidth, height=0.49\textwidth]{figs/H3H3_m_vs_T}
     \caption{\textbf{{Correlation Loss SGD} weak recovery:} Comparison between the performance of plain SGD and the Correlation Loss SGD, in different regions of the phase diagram, and for different sizes \(d\). The plot shows the test error as a function of the optimization steps. Both the teacher and the student activation functions are fixed to \(\sigma = h^\star =\text{He}_3\), so the information exponent is \(\ell=3\). In all the three plots we vary the value of \(\mu\), while \(\delta = \mu - \sfrac{\ell}{2}\).
     Theorem~\ref{2406:thm:main:no_yhat_weak_recovery} predicts that the \emph{Correlation Loss SGD} weakly recovers the target direction while SGD fails when \(\delta<0\), in accordance to what is shown in the plot. Note that the numbers of steps needed for the target recovery drastically decrease when \(\mu\) becomes large in accordance with Theorems~\ref{2406:thm:main:sgd_weak_recovery},\ref{2406:thm:main:no_yhat_weak_recovery}.
     % The \emph{adaptive SGD} that switches from Correlation loss SGD to the standard one after escaping initial condition, is able to learn the teacher function.
