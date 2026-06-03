@@ -61,12 +61,24 @@
 
 % --- Appendices, grouped per paper ---
 \appendix
-% ToC separator: add an "Appendices" entry at part-level between the paper
-% chapters and the per-paper appendix chapters. Does not produce a physical
-% \part page; only adds the ToC line.
-\cleardoublepage
-\phantomsection
-\addcontentsline{toc}{part}{Appendices}
+% ToC separator: a part-level "Appendices" line before the per-paper appendix
+% chapters (no physical \part page). A plain \addcontentsline here gets
+% reordered *after* the first appendix in the .toc -- the documented
+% \addcontentsline/\include interaction: its deferred write sits at the same
+% level as the following \include's \clearpage (LaTeX2e manual, \addcontentsline;
+% cf. texfaq.org/FAQ-appendix). Fix per the manual's advice -- emit the line
+% from inside the first appendix \chapter, after its \cleardoublepage and just
+% before the chapter's own .toc write -- so the two writes stay adjacent, share
+% a page number, and survive \includeonly. One-shot; restores \@chapter after.
+\makeatletter
+\global\let\thesis@orig@chapter\@chapter
+\gdef\@chapter{%
+  \phantomsection
+  \addcontentsline{toc}{part}{Appendices}%
+  \global\let\@chapter\thesis@orig@chapter
+  \@chapter}
+\makeatother
+
 \include{chapters/appendix-2302}
 \include{chapters/appendix-2305}
 \include{chapters/appendix-2405}
