@@ -52,5 +52,34 @@
     "latex-workshop.message.update.show": false,
 
     // Don't auto-build on every chapter file open; only when the user actually saves.
-    "latex-workshop.latex.build.forceRecipeUsage": true
+    "latex-workshop.latex.build.forceRecipeUsage": true,
+
+    // --- Grammar / spell check: strict American English everywhere ---
+    // Both extensions wrap the same LanguageTool engine. Division of labor:
+    // LTeX owns LaTeX (.tex/.bib), adamvoss.vscode-languagetool owns markdown/plaintext.
+
+    // LTeX -> American English. en-US flags British spellings (e.g. "initialisation"
+    // -> "initialization") via LanguageTool's en-US dictionary.
+    "ltex.language": "en-US",
+    // Default ltex.enabled list MINUS "markdown" so LTeX doesn't double-check markdown
+    // (left to adamvoss below). Everything else here is the LTeX default.
+    "ltex.enabled": [
+        "bibtex", "context", "context.tex", "html", "latex", "org",
+        "restructuredtext", "rsweave"
+    ],
+    // Custom domain terms so LTeX doesn't flag them as misspellings.
+    "ltex.dictionary": {
+        "en-US": [
+            "ansatz", "covariates", "Extragradient", "Gaussianity", "Lipschitz",
+            "overparametrized", "overparametrizing", "Stochasticity", "subgaussian",
+            "subleading"
+        ]
+    },
+
+    // adamvoss.vscode-languagetool stays active for markdown/plaintext (its only
+    // activation events), pinned to American English -- its default is the generic "en".
+    "languageTool.language": "en-US",
+
+    // cSpell stays disabled in this workspace -- LTeX handles spelling.
+    "cSpell.enabled": false
 }
