@@ -545,7 +545,10 @@
     },
     "arnaboldi2024escaping": {
       "global_tag": "arnaboldi2024escaping",
-      "reason": "assigned"
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2406.bib:arnaboldi2023escaping"
+      ]
     },
     "arnaboldi2024online": {
       "global_tag": "arnaboldi2024online",
@@ -1157,18 +1160,14 @@
       "reason": "assigned"
     },
     "hajjar2023symmetries": {
-      "global_tag": "hajjar2022symmetries",
-      "reason": "assigned",
-      "tag_baseline": "hajjar2023symmetries",
-      "merged_from": [
-        "arXiv-2302.bib:chizat_meanfield_symmetries",
-        "arXiv-2506.bib:hajjar2023symmetries#2"
-      ]
+      "global_tag": "hajjar2023symmetries",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2305.bib:chizat_meanfield_symmetries"
     },
     "hajjar2023symmetries#2": {
-      "global_tag": "hajjar2022symmetries",
+      "global_tag": "hajjar2023symmetries",
       "reason": "merged-away",
-      "merged_into": "arXiv-2506.bib:hajjar2023symmetries"
+      "merged_into": "arXiv-2305.bib:chizat_meanfield_symmetries"
     },
     "hovy-etal-2001-toward": {
       "global_tag": "hovy2001semantics",

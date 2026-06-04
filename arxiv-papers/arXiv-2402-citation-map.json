@@ -593,6 +593,8 @@
       "global_tag": "goldt2022gaussian",
       "reason": "assigned",
       "merged_from": [
+        "arXiv-2302.bib:goldt2020gaussian",
+        "arXiv-2305.bib:goldt2020gaussian",
         "arXiv-2405.bib:goldt_gaussian_2021",
         "arXiv-2406.bib:goldt_gaussian_2021",
         "arXiv-2506.bib:goldt_gaussian_2021"

@@ -121,8 +121,9 @@
       "merged_into": "arXiv-2405.bib:abbe2023sgd"
     },
     "arnaboldi2023escaping": {
-      "global_tag": "arnaboldi2023escaping",
-      "reason": "assigned"
+      "global_tag": "arnaboldi2024escaping",
+      "reason": "merged-away",
+      "merged_into": "arXiv-2506.bib:arnaboldi2024escaping"
     },
     "arnaboldi2023high": {
       "global_tag": "arnaboldi2023high",

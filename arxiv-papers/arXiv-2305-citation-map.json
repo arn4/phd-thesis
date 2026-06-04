@@ -220,7 +220,12 @@
     },
     "chizat_meanfield_symmetries": {
       "global_tag": "hajjar2023symmetries",
-      "reason": "assigned"
+      "reason": "assigned",
+      "merged_from": [
+        "arXiv-2302.bib:chizat_meanfield_symmetries",
+        "arXiv-2506.bib:hajjar2023symmetries",
+        "arXiv-2506.bib:hajjar2023symmetries#2"
+      ]
     },
     "copelli_1995": {
       "global_tag": "copelli1995line",
@@ -233,9 +238,9 @@
       "merged_into": "arXiv-2302.bib:goldt_2019"
     },
     "goldt2020gaussian": {
-      "global_tag": "goldt2021gaussian",
+      "global_tag": "goldt2022gaussian",
       "reason": "merged-away",
-      "merged_into": "arXiv-2302.bib:goldt2020gaussian"
+      "merged_into": "arXiv-2402.bib:goldt_gaussian_2021"
     },
     "jacot2022saddletosaddle": {
       "global_tag": "jacot2022saddle",
@@ -276,6 +281,7 @@
       "global_tag": "rotskoff2022trainability",
       "reason": "assigned",
       "merged_from": [
+        "arXiv-2302.bib:rotskoff_2019",
         "arXiv-2402.bib:rotskoff2018trainability",
         "arXiv-2405.bib:rotskoff2018trainability",
         "arXiv-2406.bib:rotskoff2018trainability",
