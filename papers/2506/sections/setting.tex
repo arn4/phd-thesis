@@ -34,10 +34,10 @@ These play exactly the same role as the overlap between target and predictor wei
             \left\lVert \vec{g}(\vec{z}_\star) - \vec{R}\left[\SoftMax{\left(\vec{z}\vec{z}^\top\right)}\right]\right\rVert^2_{\rm F}
         \right].
 \end{equation}
-Note that this formulation reduces the problem of understanding the landscape geometry of $R$ in the $\vec{w}\in\mathbb{R}^{d}$ space to understanding it in $(\vec{e},m)\in\mathbb{R}^{L+1}$ --- a significant simplification when the token size $d$ is large with respect to the sequence length $L$, the regime we will focus in this work.
+Note that this formulation reduces the problem of understanding the landscape geometry of $R$ in the $\vec{w}\in\mathbb{R}^{d}$ space to understanding it in $(\vec{e},m)\in\mathbb{R}^{L+1}$ --- a significant simplification when the token size $d$ is large with respect to the sequence length $L$, the regime we will focus on this work.
 Note that, given the fixed norm constraint on \(\vec{w}\), the sufficient statistics are constrained inside the unit ball of \(\mathbb{R}^{L+1}\): \(\norm{(\vec{e}, m)}\leq 1\). 
 
-\paragraph{Escaping mediocrity ---} As previously discussed, studying the convergence rate of one-pass SGD is akin to studying the population risk landscape. In the standard single-index model, the picture arising from \citep{arous2021online,arnaboldi2024escaping} is rather simple: the only critical points of the population risk are a single global minima at the target weights and (possibly) a strict saddle at zero correlation. Therefore, the convergence rate of one-pass SGD from random initialization is dominated by the time taken to escape this saddle-point, a scenario a scenario commonly referred to as \emph{escaping mediocrity} \citep{arnaboldi2024escaping}. 
+\paragraph{Escaping mediocrity ---} As previously discussed, studying the convergence rate of one-pass SGD is akin to studying the population risk landscape. In the standard single-index model, the picture arising from \citep{arous2021online,arnaboldi2024escaping} is rather simple: the only critical points of the population risk are single global minima at the target weights and (possibly) a strict saddle at zero correlation. Therefore, the convergence rate of one-pass SGD from random initialization is dominated by the time taken to escape this saddle-point, a scenario commonly referred to as \emph{escaping mediocrity} \citep{arnaboldi2024escaping}. 
 
 As we shall see, the risk landscape of sequence models is richer, with in particular the presence of local minima. Nevertheless, these models share the common property of mediocrity at initialization, with the convergence rate dominated by the flatness of the initial saddle-point. Therefore, we start our discussion by formalizing this notion in the context of SSI models. 
 In the high-dimensional scenario where $d$ is large, the initial weight \(\vec{w}^0\) is approximately orthogonal to the target direction \(\vec{w}_\star\), as well as the positional embedding \(P\). Quantitatively, the sufficient statistics are distributed as
@@ -58,11 +58,11 @@ We use this definition of weak recovery as a proxy for identifying the learning 
 
 Finally, for simplicity of the discussion we will make the following assumption on the spherical one-pass SGD dynamics in \cref{2506:eq:normalized-SGD-w}.
 \begin{assumption}[Gradient flow approximation]
-    We approximate the training dynamics of eq.\eqref{2506:eq:normalized-SGD-w} via the following ODE, which corresponds to an order-2 Taylor expansion in $\gamma$:
+    We approximate the training dynamics of Equation~\eqref{2506:eq:normalized-SGD-w} via the following ODE, which corresponds to an order-2 Taylor expansion in $\gamma$:
 \begin{equation}\label{2506:eq:ode_approx}
-    \frac{d\vw}{dt} = \E*{\nabla_{\vw}^\bot \ell(X, y, f_{\vw})} - \frac{\gamma}2  \E*{\norm{\nabla_{\vw}^\bot \ell(X, y, f_{\vw})}^2} \vw,
+    \frac{d\vw}{dt} = \E\left[{\nabla_{\vw}^\bot \ell(X, y, f_{\vw})}\right] - \frac{\gamma}2  \E\left[{\norm{\nabla_{\vw}^\bot \ell(X, y, f_{\vw})}^2} \vw\right],
 \end{equation}
 where $\nabla_{\vw}^\bot = (I - \vw\vw^\top)\nabla_{\vw}$ is the spherical gradient. The time scaling corresponds to $t = \tau/\gamma$.
 \end{assumption}
  As shown in 
-\cite{arous2021online,arnaboldi2024repetita}, such an ODE captures both the right weak recovery time for a fixed $\gamma$, as well as the maximal value of $\gamma$ for which the dynamics do not stay trapped in the uninformative region.
+\cite{arous2021online,arnaboldi2024repetita}, such an ODE captures both the right weak recovery time for a fixed $\gamma$, and the maximal value of $\gamma$ for which the dynamics do not stay trapped in the uninformative region.

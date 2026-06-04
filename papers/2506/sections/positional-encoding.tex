@@ -1,5 +1,5 @@
 \section{Positional encoding and training dynamics} \label{2506:sec:positional_encoding}
-We now turn our attention to the role played by positional encoding in the attention layer when trained under SGD. Since the focus is on the effect of positional encoding, we stick with a class of target functions that can exhibit either a \emph{semantic} (label mostly depends on tokens value, but not the order) or a \emph{positional} (where tokens most important feature is their position in the sequence, rather then their embedding). Consider a SSI target function of the form
+We now turn our attention to the role played by positional encoding in the attention layer when trained under SGD. Since the focus is on the effect of positional encoding, we stick with a class of target functions that can exhibit either a \emph{semantic} (label mostly depends on tokens value, but not the order) or a \emph{positional} (where tokens most important feature is their position in the sequence, rather than their embedding). Consider an SSI target function of the form
 \begin{equation} \label{2506:eq:positional-semantic-label}
     \vec{f}^\mathrm{SSI}_{\vec w_{\star}}(X) = (1-\omega) \SoftMax\left(X\vec{w}_\star \vec{w}_\star^\top X^\top\right) + \omega \SoftMax\left[\begin{pmatrix}
         a^2 & -a^2 \\
@@ -7,7 +7,7 @@ We now turn our attention to the role played by positional encoding in the atten
     \end{pmatrix}\right]
     \in \mathbb{R}^{2\times 2},
 \end{equation}
-where he parameter $\omega\in[0,1]$ allows the target to switch from a semantic to a positional behavior, while the parameter $a\in(0,1]$ controls the alignment of the target with its positional part.
+where the parameter $\omega\in[0,1]$ allows the target to switch from a semantic to a positional behavior, while the parameter $a\in(0,1]$ controls the alignment of the target with its positional part.
 
 We shall train the model in Equation~\eqref{2506:eq:model-definition} with positional encoding
 \(P_1 = -P_2\)
@@ -29,7 +29,7 @@ Varying the parameters, \(\omega\) and \(a\) the high-dimensional SGD dynamics f
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.4\textwidth]{figs/positional-semantic/phase_diagram}
+    \includegraphics[width=0.49\textwidth]{figs/positional-semantic/phase_diagram}
     \caption{Different behaviors of SGD depending on the parameters \(\omega\) and \(a\).}
     \label{2506:fig:phase-diagram-postional-semantic}
 \end{figure}
@@ -39,8 +39,8 @@ The theoretical value of \(\omega\) where we have a transition from  sematic to 
 \begin{figure}
     \centering
     % 
-    \includegraphics[width=0.38\textwidth]{figs/positional-semantic/loss_surface_omega0.67_a1}
-    \includegraphics[width=0.38\textwidth]{figs/positional-semantic/trajectories-probability}
+    \includegraphics[height=0.49\textwidth]{figs/positional-semantic/loss_surface_omega0.67_a1}
+    \includegraphics[height=0.49\textwidth]{figs/positional-semantic/trajectories-probability}
     \caption{
         (left) surface of the population loss for \(\omega = 0.67\) and \(a=1\). The steepest direction at initialization (green vector) points towards the \emph{positional} local minimum, while the global minima is semantic.
         Some examples of SGD trajectories are shown in yellow: most of them fall into the semantic local minimum, while some others manage to fully-recover the global minimum due to finite size effects (\(d=1000\)).
