@@ -7,7 +7,7 @@ In this section we rigorously characterize the number of iterations needed for t
 We start by introducing a restriction of the generative information exponent in \cite{damian2024computational} to polynomial transformations.
 \begin{definition}[Polynomial Generative Information exponent]
 \label{2405:def:lstar_damian2024}
-We define $\ell^\star_p$ as the smallest integer $k$ such that there exists a polynomial $p: \R \rightarrow \R$ with:
+Furthermore, we define $\ell^\star_p$ as the smallest integer $k$ such that there exists a polynomial $p: \R \rightarrow \R$ with:
 \begin{equation}\label{2405:eq:f_hard_gen}
         \Eb{x\sim\cN(0, 1)}{p(h^\star(x))H_{k}(x)}\neq 0,
     \end{equation}
@@ -127,7 +127,11 @@ We are therefore not claiming that Algorithm~\ref{2405:algo:optimizer_main_step}
     (Details in Appendix~\ref{2405:sec:app:implementation}).}
     \label{2405:fig:main:single_index_complete}
 \end{figure}
-We illustrate in Figure~\ref{2405:fig:main:single_index_complete} the stark difference between the weak recovery dynamics of One-Pass SGD and Algo.~\ref{2405:algo:optimizer_main_step} for single-index targets. The Cosine Similarity between the learned weight $\vec w_t$ and the ground truth informative direction $\vec w_\star$ is shown as a function of the time steps $t$ for different target functions. Two optimization routines are considered to exemplify the learning behavior: a) Extragradient Descent (EgD), corresponding to the family of Algorithms~\ref{2405:algo:optimizer_main_step} with positive $\rho$ parameters; b) One-Pass SGD, corresponding to vanilla SGD, or equivalently Algorithm~\ref{2405:algo:optimizer_main_step} associated with $\rho=0$ hyperparameter. The scaling of $(\gamma, \rho)$ as a function of the input dimension  $d$ and exponent $\ell^\star$ are given in Theorem~\ref{2405:thm:single_index_recovery}, while the mini-batch size is fixed to $n_b =1$ (See Appendix~\ref{2405:sec:app:numerics} for extension to larger $n_b$). For all plots, we take $\sigma=\mathrm{relu}$ and we refer to Appendix~\ref{2405:sec:app:implementation} for details.
+We illustrate in Figure~\ref{2405:fig:main:single_index_complete} the stark difference between the weak recovery dynamics of One-Pass SGD and Algo.~\ref{2405:algo:optimizer_main_step} for single-index targets. The Cosine Similarity between the learned weight $\vec w_t$ and the ground truth informative direction $\vec w_\star$ is shown as a function of the time steps $t$ for different target functions. Two optimization routines are considered to exemplify the learning behavior:
+\begin{enumerate}
+    \item Extragradient Descent (EgD), corresponding to the family of Algorithms~\ref{2405:algo:optimizer_main_step} with positive $\rho$ parameters;
+    \item One-Pass SGD, corresponding to vanilla SGD, or equivalently Algorithm~\ref{2405:algo:optimizer_main_step} associated with $\rho=0$ hyperparameter.
+\end{enumerate}The scaling of $(\gamma, \rho)$ as a function of the input dimension  $d$ and exponent $\ell^\star$ are given in Theorem~\ref{2405:thm:single_index_recovery}, while the mini-batch size is fixed to $n_b =1$ (See Appendix~\ref{2405:sec:app:numerics} for extension to larger $n_b$). For all plots, we take $\sigma=\mathrm{relu}$ and we refer to Appendix~\ref{2405:sec:app:implementation} for details.
 \begin{itemize}
     \item \textbf{SGD-easy non-symmetric targets ($\ell = \ell^\star =1$) --} The Left section of Figure~\ref{2405:fig:main:single_index_complete} shows $h^\star(x) = \mathrm{relu}(x)$. Here both SGD and Algorithm~\ref{2405:algo:optimizer_main_step} learn in $T= O(d)$.
     \item \textbf{SGD-easy symmetric targets ($\ell = \ell^\star = 2$) -- } The Center-Left section of Figure~\ref{2405:fig:main:single_index_complete} shows $ h^\star(x) = \mathrm{He}_2(x)$. Here both SGD and Algorithm~\ref{2405:algo:optimizer_main_step} learn in $T=O(d \log d)$. 
