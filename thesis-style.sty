@@ -33,37 +33,31 @@
 \RequirePackage{xcolor}
 \RequirePackage{ragged2e}
 \RequirePackage{marginnote}   % non-floating \marginnote
-\RequirePackage{bbding}       % \FourStar -> the anchor symbol
 
 \definecolor{addnotegray}{gray}{0.30}   % muted near-black
-\newcommand{\addnotesym}{\FourStar}     % change here to swap the symbol
-
-% In-text anchor mark: small, raised, muted.
-\newcommand{\pc@addnotemark}{%
-  \textsuperscript{\textcolor{addnotegray}{\scriptsize\addnotesym}}}
 
 % Shared margin-note body formatting.
 \newcommand{\pc@addnotebody}[1]{%
-  \footnotesize\color{addnotegray}%
+  \scriptsize\color{addnotegray}%
   \setlength{\parindent}{0pt}\RaggedRight
-  {\addnotesym}~#1\par}
+  #1\par}
 
 % \addnote[<vertical nudge>]{text}
-%   Drops the star at the call site and the note in the outer margin.
+%   Drops the note in the outer margin, aligned with the call site.
 %   The optional nudge (default 0pt) dodges a rare collision, e.g. \addnote[14pt]{...}.
 \newcommand{\addnote}[2][0pt]{%
-  \leavevmode\pc@addnotemark
+  \leavevmode
   \marginnote{\pc@addnotebody{#2}}[#1]}
 
 % addnotelong — same, as an environment for long / multi-paragraph notes.
 \newsavebox{\pc@addnotesave}
 \newenvironment{addnotelong}
-  {\leavevmode\pc@addnotemark
+  {\leavevmode
    \begin{lrbox}{\pc@addnotesave}%
    \begin{minipage}{\marginparwidth}%
-     \footnotesize\color{addnotegray}%
+     \scriptsize\color{addnotegray}%
      \setlength{\parindent}{0pt}\RaggedRight
-     {\addnotesym}~\ignorespaces}
+     \ignorespaces}
   {\end{minipage}\end{lrbox}%
    \marginnote{\usebox{\pc@addnotesave}}}
 % ------------------------------------------------------------------------
