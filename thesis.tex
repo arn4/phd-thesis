@@ -12,6 +12,7 @@
 \usepackage{csquotes}  % recommended by biblatex when babel is loaded
 \usepackage[backend=biber,style=alphabetic,natbib=true]{biblatex}
 \addbibresource{papers-bibliography.bib}
+\addbibresource{extra-bibliography.bib}
 
 \title{<thesis title TBD>}
 \author{Luca Arnaboldi}
@@ -19,7 +20,7 @@
 % Drafting toggle: uncomment and list only the chapters you want typeset.
 % A full build (no \includeonly) must have been run at least once so every
 % per-file .aux exists; cross-refs and page numbers then stay correct.
-\includeonly{chapters/introduction}
+% \includeonly{chapters/introduction}
 
 \begin{document}
 
@@ -50,7 +51,6 @@
 
 % --- Introductory chapters ---
 \include{chapters/introduction}
-\include{chapters/background}
 
 % --- Paper chapters (one \paperchapter per included arXiv paper) ---
 \include{chapters/paper-2302}

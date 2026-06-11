@@ -1,0 +1,54 @@
+% Schematic of the two-layer (shallow) STUDENT network
+%   f(x) = (1/p) sum_j a_j sigma(<w_j, x>)  -- panel (b) of the teacher-student
+% figure in chapters/introduction.tex.  Standalone tikzpicture, resized to its
+% minipage at the call site.  Needs tikz library arrows.meta (loaded in thesis.tex).
+\begin{tikzpicture}[
+    >={Latex[length=1.8mm]},
+    font=\small,
+    xnode/.style={circle, draw=netin!75, fill=netin!12, minimum size=7mm, inner sep=0pt},
+    hnode/.style={circle, draw=#1!90, fill=#1!20, minimum size=8.5mm, inner sep=0pt},
+    hnode/.default=nethid,
+    onode/.style={circle, draw=netout!95, fill=netout!32, minimum size=9.5mm, inner sep=0pt},
+    dots/.style={draw=none, fill=none, inner sep=1pt},
+    wedge/.style={draw=#1!55, line width=0.5pt},
+    wedge/.default=nethid,
+    aedge/.style={draw=netout!75, line width=0.8pt},
+    oedge/.style={->, draw=netout, line width=0.9pt},
+    lab/.style={font=\footnotesize\itshape, text=black!65},
+    wlab/.style={font=\footnotesize\itshape},
+  ]
+  % --- input layer ---
+  \node[xnode] (i1) at (0, 2.0) {$x_1$};
+  \node[xnode] (i2) at (0, 1.0) {$x_2$};
+  \node[xnode] (i3) at (0, 0.0) {$x_3$};
+  \node[dots]  (id) at (0,-1.0) {$\vdots$};
+  \node[xnode] (in) at (0,-2.0) {$x_d$};
+
+  % --- hidden layer (each neuron + its incoming weights share a color) ---
+  \node[hnode=nethid]  (h1) at (2.6, 1.5) {$\sigma$};
+  \node[hnode=nethidb] (h2) at (2.6, 0.5) {$\sigma$};
+  \node[dots]          (hd) at (2.6,-0.5) {$\vdots$};
+  \node[hnode=nethidc] (hp) at (2.6,-1.5) {$\sigma$};
+
+  % --- output ---
+  \node[onode] (o) at (5.2, 0) {$\textstyle\sum$};
+
+  % --- first-layer (W) edges, colored per neuron ---
+  \foreach \b/\c in {h1/nethid, h2/nethidb, hp/nethidc}
+    \foreach \a in {i1,i2,i3,in}
+      \draw[wedge=\c] (\a) -- (\b);
+
+  % --- second-layer (a) edges ---
+  \foreach \b in {h1,h2,hp}
+    \draw[aedge] (\b) -- (o);
+
+  % --- readout arrow ---
+  \draw[oedge] (o) -- ++(1.5,0) node[right, font=\small, text=black] {$f(\vec{x})\in\mathbb{R}$};
+
+  % --- labels ---
+  \node[wlab, text=black!70] at (1.3, 2.55) {$W$};
+  \node[wlab, text=netout]   at (4.0, 1.15) {$\vec{a}$};
+  \node[lab] at (0,-3.0)   {$\vec{x}\in\mathbb{R}^{d}$};
+  \node[lab] at (2.6,-3.0) {$p$ neurons};
+  \node[lab] at (5.2,-3.0) {readout};
+\end{tikzpicture}

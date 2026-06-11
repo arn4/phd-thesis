@@ -78,6 +78,20 @@
   }{}%
 }
 
+% --- Figure palette + TikZ libraries ------------------------------------
+% Shared by the hand-drawn schematics under chapters/figs/ (e.g. the
+% teacher--student network diagram in the introduction). The colours need
+% only xcolor (required above). The TikZ library loads must wait until tikz
+% itself is pulled in by papers-dependencies.tex -- which is \input AFTER this
+% package -- so they are deferred to \AtEndPreamble (etoolbox, required above),
+% which still fires inside the preamble but after tikz has loaded.
+\definecolor{netin}{HTML}{5B6B7B}   % input layer      -- slate
+\definecolor{nethid}{HTML}{4F86C6}  % hidden neuron 1  -- blue
+\definecolor{nethidb}{HTML}{2E9E8F} % hidden neuron 2  -- teal
+\definecolor{nethidc}{HTML}{8E6FC6} % hidden neuron p  -- violet
+\definecolor{netout}{HTML}{E0922F}  % output layer     -- amber
+\AtEndPreamble{\usetikzlibrary{arrows.meta,positioning,calc}}
+
 % \catchy / \descr — title-part markers, only meaningful inside a \paperchapter
 % title. Default to identity so a title without markers still works.
 \newcommand{\catchy}[1]{#1}

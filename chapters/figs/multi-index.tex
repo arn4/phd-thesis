@@ -1,0 +1,55 @@
+% Schematic of the MULTI-INDEX teacher
+%   f^*(x) = h^*(W^* x),   W^* in R^{k x d},  k < d  -- panel (a) of the
+% teacher-student figure in chapters/introduction.tex.  Standalone tikzpicture,
+% resized to its minipage at the call site.  The input is projected onto k
+% directions (linear, no activation) and then passed jointly through a general
+% nonlinear link h^*.  Needs tikz library arrows.meta (loaded in thesis.tex).
+\begin{tikzpicture}[
+    >={Latex[length=1.8mm]},
+    font=\small,
+    xnode/.style={circle, draw=netin!75, fill=netin!12, minimum size=7mm, inner sep=0pt},
+    dnode/.style={circle, draw=#1!90, fill=#1!20, minimum size=8.5mm, inner sep=0pt},
+    dnode/.default=nethid,
+    hbox/.style={rounded corners=3pt, draw=netout!95, fill=netout!22,
+                 minimum width=11mm, minimum height=21mm, inner sep=2pt},
+    dots/.style={draw=none, fill=none, inner sep=1pt},
+    wedge/.style={draw=#1!55, line width=0.5pt},
+    wedge/.default=nethid,
+    aedge/.style={draw=netout!75, line width=0.8pt},
+    oedge/.style={->, draw=netout, line width=0.9pt},
+    lab/.style={font=\footnotesize\itshape, text=black!65},
+    wlab/.style={font=\footnotesize\itshape},
+  ]
+  % --- input layer ---
+  \node[xnode] (i1) at (0, 2.0) {$x_1$};
+  \node[xnode] (i2) at (0, 1.0) {$x_2$};
+  \node[xnode] (i3) at (0, 0.0) {$x_3$};
+  \node[dots]  (id) at (0,-1.0) {$\vdots$};
+  \node[xnode] (in) at (0,-2.0) {$x_d$};
+
+  % --- k teacher directions (k < d; linear projections, each its own color) ---
+  \node[dnode=nethid]  (d1) at (2.4, 0.85) {};
+  \node[dots]          (dd) at (2.4, 0.0)  {$\vdots$};
+  \node[dnode=nethidc] (dk) at (2.4,-0.85) {};
+
+  % --- general nonlinear link ---
+  \node[hbox] (h) at (4.5, 0) {$h^\star$};
+
+  % --- first-layer (W^*) edges, colored per direction ---
+  \foreach \b/\c in {d1/nethid, dk/nethidc}
+    \foreach \a in {i1,i2,i3,in}
+      \draw[wedge=\c] (\a) -- (\b);
+
+  % --- directions feed the link jointly ---
+  \draw[aedge] (d1) -- (h.west);
+  \draw[aedge] (dk) -- (h.west);
+
+  % --- output ---
+  \draw[oedge] (h.east) -- ++(1.4,0) node[right, font=\small, text=black] {$f^\star(\vec{x})\in\mathbb{R}$};
+
+  % --- labels ---
+  \node[wlab, text=black!70] at (1.2, 2.55) {$W^\star$};
+  \node[lab] at (0,-3.0)   {$\vec{x}\sim\mathcal{N}(0,I_d)$};
+  \node[lab] at (2.4,-3.0) {$k$ directions};
+  \node[lab] at (4.5,-3.0) {link $h^\star$};
+\end{tikzpicture}
