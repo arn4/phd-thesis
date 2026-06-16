@@ -1,0 +1,101 @@
+\section{Motivation}
+\label{intro:sec:motivation}
+
+Artificial intelligence is the defining technological development of this decade.
+The release of ChatGPT in late 2022 triggered a wave of public interest in machine
+learning that had been building for years in research laboratories.
+What made this transition possible was the solution of an extraordinary engineering
+challenge: the construction of a pipeline capable of digesting nearly the entirety
+of human digital knowledge and using it to train deep learning models of
+unprecedented scale.
+This achievement draws on decades of cumulative work spanning hardware design,
+software engineering, and fundamental research---from the first attempts to emulate
+the human brain with artificial neural networks in the 1950s, through the
+development of backpropagation in the 1980s, to the rise of GPU computing in the
+2000s and the explosion of large-scale datasets in the 2010s.
+Yet for all this engineering progress, our theoretical understanding of \emph{why}
+these models work remains strikingly limited.
+
+The reasons to close this gap are manifold.
+The most immediate are practical: a deeper understanding can guide the design of
+better algorithms, improve the efficiency of existing models, and reduce the
+enormous computational and energetic costs of training.
+The social motivations are equally compelling---a rigorous theory underpins the
+growing fields of interpretability, fairness, and robustness, which are essential
+if AI systems are to be deployed safely in high-stakes settings.
+But this thesis is submitted to the \emph{École Doctorale de Physique} (EDPY), and
+physicists are not driven by practical concerns alone.
+We are also moved by the desire to understand the fundamental principles governing
+the behavior of complex systems.
+There is something deeply human in wanting to understand the mechanisms of a
+technology that increasingly surrounds us and shapes every aspect of our lives;
+satisfying that curiosity is a legitimate scientific goal in its own right, and has
+historically led to unexpected discoveries with far-reaching consequences.
+
+What makes deep learning theoretically challenging is precisely what makes it
+empirically powerful.
+Many machine learning models are theoretically grounded by construction: support
+vector machines rest on the geometry of convex optimization; decision trees can be
+analyzed with combinatorial and probabilistic tools.
+Deep learning broke free of these clean frameworks.
+The central idea---using a very large number of parameters to fit data---violates
+the assumptions underlying classical statistics: the bias--variance trade-off,
+convexity, and the availability of closed-form solutions.
+Yet deep networks learn effective representations, generalize remarkably well to
+unseen examples, and are trained with algorithms as simple as stochastic gradient
+descent navigating a highly non-convex loss landscape.
+This has challenged many of the intuitions we had about learning and generalization,
+and continues to generate vigorous debate in the research community.
+
+A physicist's instinct, confronted with a phenomenon that outstrips existing theory,
+is to build a model---a simplified but principled caricature that retains the
+essential features and can be understood analytically.
+Think of where chemistry stood at the end of the nineteenth century: practitioners
+could synthesize remarkably complex molecules and predict reactions with
+considerable reliability, yet nobody understood the deep mechanism, why atoms bond
+the way they do.
+The Thomson model was the first crude, almost certainly incomplete picture of the
+underlying atomic structure.
+It was wrong in important ways, but concrete enough to be tested, refuted, and
+improved.
+This is, roughly speaking, where we stand with deep learning today, and it is the
+role we aspire to play.
+We want to be Thomson, so that someone can be Bohr after us, and eventually
+someone arrives at quantum mechanics.
+
+One advantage we have is that our experiments run on computers.
+We do not need a particle collider to test a theory of deep learning---we need a
+laptop and a few days of compute time.
+This is an enormous freedom, and we should exploit it.
+A second advantage is that the fundamental process at the core is mathematically
+well-defined: training a neural network is an optimization procedure whose rules are
+written down precisely, even if their consequences are not.
+We do not need to figure out \emph{what} the process is; only \emph{why} it works
+and \emph{how} its dynamics unfold.
+The goal is a theory that is both analytically tractable and grounded in
+experimental evidence.
+
+Among the many aspects of deep learning that resist theoretical explanation, we
+focus on the \emph{dynamics of training}: the process by which randomly initialized
+parameters converge to a configuration that generalizes well to unseen data.
+The loss landscape of deep learning is highly non-convex, and it is far from obvious
+why stochastic gradient descent should find good solutions in it.
+Yet it does---and the dynamics induced by SGD introduce an inductive bias that
+correlates with generalization.
+Understanding this bias, its origins, and its consequences is the central thread
+running through this thesis.
+
+Classical learning theory---PAC learning, VC dimension, Rademacher
+complexity---analyzes generalization in the worst case over all possible data
+distributions.
+This regime is useful as a foundation but tends to produce pessimistic bounds that
+badly overestimate the true error of well-trained deep networks.
+Statistical physics offers a complementary perspective, analyzing the \emph{typical}
+behavior of learning algorithms averaged over a natural distribution of instances.
+This leads to sharper, more realistic predictions.
+The connection between statistical physics and machine learning is not new: the
+tools of disordered systems and mean-field theory were applied to neural network
+capacity and generalization as far back as the 1980s.
+In some sense, machine learning is a canonical problem of statistical physics---large
+numbers of parameters, large datasets, and emergent collective behavior.
+We inherit and build on this tradition.

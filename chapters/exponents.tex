@@ -1,0 +1,23 @@
+\subsection{The learning exponents}
+\paragraph{What do we measure?}
+We track the learning dynamics through two complementary metrics.
+The \emph{generalization error} $\mathcal{R}(W, \vec{a})$~\eqref{eq:intro:risk}
+measures how well the student predicts unseen labels; in the teacher--student
+setting with squared loss it admits a closed-form expression in the sufficient
+statistics $(Q, M, \vec{a})$.
+The \emph{weak recovery stopping time} is a coarser measure that captures the onset
+of learning: it is the first time at which the student develops any non-trivial
+correlation with the teacher subspace, formalized as
+\begin{equation}
+\label{eq:intro:weak-recovery}
+    \frac{1}{d}\bigl\lVert W\, {W^\star}^\top \bigr\rVert_F \geq \eta,
+\end{equation}
+for some constant $\eta \in (0, 1)$ independent of $d$.
+At Gaussian initialization, $\tfrac{1}{d}\|W^0 {W^\star}^\top\|_F = O(1/\sqrt{d}) \to 0$, so
+the network starts nearly orthogonal to the teacher.
+The number of gradient steps---equivalently, the number of samples---needed to go
+from this blank slate to weak recovery is the central complexity measure studied
+across several chapters of this thesis.
+\subsubsection{Information exponent}
+\subsubsection{The leap exponent}
+\subsubsection{Generative exponent}
