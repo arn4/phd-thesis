@@ -1,12 +1,13 @@
-\subsection{The Saad \& Solla Equations}
-Compressing the problem to order parameters $(Q, M, \vec{a})$ is only half the
-story.The other half is the \emph{high-dimensional limit} $d \to \infty$: in this regime,
-the stochastic fluctuations of the order parameters around their mean become
+\section{The Saad \& Solla equations}
+We now turn to the result from the literature on which much of this thesis is built.
+Compressing the problem to the order parameters $(Q, M, \vec{a})$ is only half of the
+story; the other half is the \emph{high-dimensional limit} $d \to \infty$. In this
+regime the stochastic fluctuations of the order parameters around their mean become
 negligible, and the entire training trajectory concentrates on a deterministic path
 governed by a system of \emph{ordinary differential equations} (ODEs).
 
-\paragraph{Low dimensional dynamics for an high-dimensional problem.}
-We can make Equation~\eqref{eq:intro:sgd} explicit in terms of the local fields, and write the stochastic dynamics of the weights $\vec{w}_i$ and the output weights $a_i$ of the student network as
+\subsection{The order-parameter dynamics}
+We can make Equation~\eqref{eq:intro:sgd} explicit in terms of the local fields, and write the stochastic dynamics of the weights $\vec{w}_j$ and the output weights $a_j$ of the student network as
 \begin{align}
     \vec{w}_j^{\nu+1} &= \vec{w}_j^{\nu} + \frac{\gamma}{p\sqrt{d}} \left( y(\vec{\lambda}^{\star,\nu}) - h(\vec{\lambda}^{\nu}) \right) a_j \sigma'(\lambda^\nu_j) \vec{x}^\nu, \\
     %
@@ -14,7 +15,7 @@ We can make Equation~\eqref{eq:intro:sgd} explicit in terms of the local fields,
 \end{align}
 where \(\vec{\lambda}^{\nu} = \frac{1}{\sqrt{d}}(\langle \vec{w}_1, \vec{x}^\nu \rangle, \ldots, \langle \vec{w}_p, \vec{x}^\nu \rangle)\) and \(\vec{\lambda}^{\star,\nu} = \frac{1}{\sqrt{d}}(\langle \vec{w}_1^\star, \vec{x}^\nu \rangle, \ldots, \langle \vec{w}_k^\star, \vec{x}^\nu \rangle)\) are the \emph{local fields} (i.e., pre-activations) of the student and teacher networks, respectively, relative to the current input $\vec{x}^\nu$ used in the $\nu$-th SGD step. The quantity \(y^\nu(\lambda^{\star,\nu}) \coloneqq y(\vec{\lambda}^{\star,\nu}) + \sqrt{\Delta}\xi^\nu\) is the noisy label of the current training sample.
 The second-layer weights $a_j$ are updated with a rescaled learning rate $\gamma/d$, which keeps both layers evolving on the same timescale as $d \to \infty$.
-With a bit of extra work we can derive the update rule for the order parameters
+With a little extra work we can derive the update rule for the order parameters themselves,
 \begin{equation} \label{eq:intro:op-update}
 \begin{aligned}
     Q^{\nu+1}_{jl} =& Q^{\nu}_{jl} + \frac{\gamma}{pd} \left( y(\vec{\lambda}^{\star,\nu}) - h(\vec{\lambda}^{\nu}) \right) \left( a_l \sigma'(\lambda^\nu_l) \lambda^\nu_j + a_j \sigma'(\lambda^\nu_j) \lambda^\nu_l  \right) + \\ & + \frac{\gamma}{p d} \frac{\gamma}{p}\left( y(\vec{\lambda}^{\star,\nu}) - h(\vec{\lambda}^{\nu}) \right)^2 a_j a_l \sigma'(\lambda^\nu_j) \sigma'(\lambda^\nu_l) \frac{\norm{\vec{x}^\nu}^2}{d}, \\
@@ -23,15 +24,15 @@ With a bit of extra work we can derive the update rule for the order parameters
 \end{aligned}
 \end{equation}
 Since we are interested in the high-dimensional limit, the factor $\sfrac{\norm{\vec{x}^\nu}^2}{d}$ in the $Q$ update can be replaced by its expectation $\mathbb{E}\left[\sfrac{\norm{\vec{x}^\nu}^2}{d}\right] = 1$. \addnote{This is the classical \emph{à la physique} argument from \citet{saad1995exact}. In the next section we will report a formalization of this argument.}
-The update rules above are still stochastic, but they do not explicitly depend on the input $\vec{x}^\nu$ anymore, only on the local fields $\vec{\lambda}^\nu$ and $\vec{\lambda}^{\star,\nu}$, which are Gaussian random variables with covariance given by the order parameters themselves. In other words, we have a \emph{duality} between the process in the space of the weights \(W\in\mathbb{R}^{p\times d}\) and the process in the space of the order parameters \((Q, M, \vec{a})\in\mathbb{R}^{p\times p}\times\mathbb{R}^{p\times k}\times\mathbb{R}^p\)
+The update rules above are still stochastic, but they no longer depend explicitly on the input $\vec{x}^\nu$: they involve only the local fields $\vec{\lambda}^\nu$ and $\vec{\lambda}^{\star,\nu}$, which are Gaussian random variables whose covariance is given by the order parameters themselves. In other words, we have a \emph{duality} between the process in the space of the weights \(W\in\mathbb{R}^{p\times d}\) and the process in the space of the order parameters \((Q, M, \vec{a})\in\mathbb{R}^{p\times p}\times\mathbb{R}^{p\times k}\times\mathbb{R}^p\)
 \begin{align*}
     \text{update rule for } W \quad &\leftrightarrow \quad \text{update rule for } (Q, M, \vec{a}) \\
     \text{sample } \vec{x}^\nu \sim \mathcal{N}(0, I_d) \quad &\leftrightarrow \quad \text{sample } (\vec{\lambda}^\nu, \vec{\lambda}^{\star,\nu}) \sim \mathcal{N}(0, \Omega) \\
     \text{population risk } \mathcal{R}(W) \quad &\leftrightarrow \quad \text{population risk } \mathcal{R}(Q, M, \vec{a}).
 \end{align*}
-The duality allows us to have a full characterization of the random SGD process in dimension \(d\) that is independent of the \(d\) itself. The population risk is a quanity that fully characterizes the generalization properties of the student network, and it can be computed from the order parameters; on the other hand, the dynamics is self-contained in the order parameters space, so we can study the generalization properties of the student network without having to deal with the high-dimensional weights \(W\) directly.
+This duality gives a full characterization of the random SGD process in dimension \(d\) that is itself independent of \(d\). The population risk is a quantity that fully characterizes the generalization properties of the student network, and it can be computed directly from the order parameters; the dynamics, in turn, is self-contained in the order-parameter space, so we can study the generalization of the student without ever dealing with the high-dimensional weights \(W\) directly.
 
-\paragraph{The deterministic equations}
+\subsection{From discrete updates to ODEs}
 The update rules in Equation~\eqref{eq:intro:op-update} can be rearranged as
 \begin{equation}
 \begin{aligned}
@@ -40,7 +41,7 @@ The update rules in Equation~\eqref{eq:intro:op-update} can be rearranged as
     \frac{a_j^{\nu+1}-a_j^{\nu}}{\sfrac{\gamma}{pd}} =& \left( y(\vec{\lambda}^{\star,\nu}) - h(\vec{\lambda}^{\nu}) \right) \sigma(\lambda^\nu_j).
 \end{aligned}
 \end{equation}
-Intuitively, when \(d\to\infty\) the left-hand side of the equations above can be interpreted as a derivative with respect to a continuous time variable \(t = \nu \frac{\gamma}{pd}\), and the right hand side can be replaced by its expectation over the Gaussian distribution of the local fields, which is parametrized by the order parameters themselves. \addnote{In the traditional derivation of Saad\&Solla equations, the usual time sacling is $t=\frac{\nu}{d}$. Later will clarify why we prefer this scaling.} This leads to a system of ODEs for the order parameters, known as the \emph{Saad \& Solla equations}\cite{saad1995exact,saad1996dynamics}:
+Intuitively, when \(d\to\infty\) the left-hand side of the equations above can be interpreted as a derivative with respect to a continuous time variable \(t = \nu \frac{\gamma}{pd}\), while the right-hand side can be replaced by its expectation over the Gaussian distribution of the local fields, which is parametrized by the order parameters themselves. \addnote{In the traditional derivation of the Saad \& Solla equations, the usual time scaling is $t=\frac{\nu}{d}$. We will later clarify why we prefer this scaling.} This leads to a system of ODEs for the order parameters, known as the \emph{Saad \& Solla equations}\cite{saad1995exact,saad1996dynamics}:
 \begin{equation} \label{eq:intro:ss-odes} \tag{SS-ODEs}
 \begin{aligned}
     \dod{Q_{jl}}{t} =& \overbrace{\mathbb{E}_{(\vec{\lambda}, \vec{\lambda}^\star) \sim \mathcal{N}(0, \Omega)}
@@ -49,22 +50,22 @@ Intuitively, when \(d\to\infty\) the left-hand side of the equations above can b
     \dod{a_j}{t} =& \underbrace{\mathbb{E}_{(\vec{\lambda}, \vec{\lambda}^\star) \sim \mathcal{N}(0, \Omega)} \left[ \left( h^\star(\vec{\lambda}^{\star}) - h(\vec{\lambda}) \right) \sigma(\lambda_j) \right]}_{\textstyle \eqqcolon \Phi^{a}_{j}(\Omega, a)}.
 \end{aligned}
 \end{equation}
-The trajectory drawn by these equations is completely determined by the initial conditions. After that the dynamics is deterministic, and the randomness of the training process is averaged out in the high-dimensional limit.
+Once the initial conditions are fixed, the trajectory drawn by these equations is completely determined: the dynamics is deterministic, and the randomness of the training process has been averaged out in the high-dimensional limit.
 \begin{remark}
-    Note that even though the Saad \& Solla determine a deterministic trajectory for the order parameters, the actual trajectory of the weights $W$ is still stochastic, and impossible to characterize without knowing the specific realization of the training data \(x^\nu\). The Saad \& Solla equations only describe the trajectory of the order parameters, and consequently the population risk.
+    Note that, even though the Saad \& Solla equations determine a deterministic trajectory for the order parameters, the actual trajectory of the weights $W$ is still stochastic, and impossible to characterize without knowing the specific realization of the training data \(\vec{x}^\nu\). The Saad \& Solla equations only describe the trajectory of the order parameters, and consequently of the population risk.
 \end{remark}
 
-The formalization of the argument above, and the proof of the convergence of the stochastic process to the deterministic one was first given by \citet{goldt2019dynamics}. \addnote{ The original theorem was stated for matching student and teacher networks, but the proof can be easily extended to the more general case of a multi-index teacher, and network student.}
-\begin{theorem}[Convergence of S\&S Equations, \cite{goldt2019dynamics}] \label{thm:intro:ss-convergence}
-    Let's suppose that
+The formalization of the argument above, together with the proof of convergence of the stochastic process to the deterministic one, was first given by \citet{goldt2019dynamics}. \addnote{The original theorem was stated for matching student and teacher networks, but the proof extends straightforwardly to the more general case of a multi-index teacher and a general student network.}
+\begin{theorem}[Convergence of the Saad \& Solla equations, \cite{goldt2019dynamics}] \label{thm:intro:ss-convergence}
+    Suppose that
   \begin{enumerate}
-    \item The function \(\sigma\) is bounded and its derivatives up to the second order exist and are bounded, too;
-    \item The function \(h^\star\) grows at most like a polynomial, i.e. \(|h^\star(\vec{\lambda}^\star)| \le K(1 + \|\vec{\lambda}^\star\|^p)\) for some constants \(K\) and \(p\);
+    \item The function \(\sigma\) is bounded, and its derivatives up to the second order exist and are bounded too;
+    \item The function \(h^\star\) grows at most like a polynomial, i.e., \(|h^\star(\vec{\lambda}^\star)| \le K(1 + \|\vec{\lambda}^\star\|^p)\) for some constants \(K\) and \(p\);
     \item \(W^\star\) is of rank \(k\);
     \item The initial macroscopic state \({\Omega^0}\) is deterministic and bounded by a constant;
     \item The constants \(\Delta, p, k\) and \(\gamma\) are all finite.
   \end{enumerate}
-  Let \(T>0\), then the overlap matrix satisfies 
+  Then, for any \(T>0\), the overlap matrix satisfies
   \begin{equation}
     \max_{0\le\nu\le Td} \E\left[
       \left\|({\Omega}^\nu,a^\nu) - \left(\tilde{{\Omega}}\left(\frac{\nu}{d}\right), \tilde{a}\left(\frac{\nu}{d}\right)\right)\right\|
@@ -72,63 +73,80 @@ The formalization of the argument above, and the proof of the convergence of the
     \le
     \frac{C{(T)}}{\sqrt{d}},
   \end{equation}
-  where \(\left(\tilde{{\Omega}}, \tilde{a}\right)\) it's the unique solution of the Equations~\eqref{eq:intro:ss-odes},
+  where \(\left(\tilde{{\Omega}}, \tilde{a}\right)\) is the unique solution of Equations~\eqref{eq:intro:ss-odes},
   with the initial condition \[\left(\tilde{{\Omega}}{(0)}, \tilde{a{(0)}}\right) = \left(\Omega^0, a^0\right).\]
 \end{theorem}
 
-\paragraph{The SGD noise.} It is useful trying to interpret the actual content of the Saad \& Solla equations; for this with follow the nomenclature use by \citet{veiga2022phase}. We have two typology of terms:
+\subsection{Anatomy of the equations: learning vs.\ noise}
+It is worth interpreting the actual content of the Saad \& Solla equations; for this we follow the nomenclature used by \citet{veiga2022phase}. There are two types of terms:
 \begin{enumerate}
-    \item \emph{learning terms} \(\Phi\): they are the terms leading the dynamic to align the student with the teacher, and consequently to reduce the population risk; it can be shown that thse same terms are the one remaining in the \emph{gradient flow} limit, thus driving the learning.
-    \item \emph{variance term} \(\Psi\): they are the terms that arise from the stochasticity of the training process, and they are responsible for the fluctuations of the order parameters around their mean trajectory; it is interesting to note that they are proportional to the learning rate \(\gamma\), and the \emph{do not} vanish for \(\Delta = 0\). This term is the crucial noise introduced by SGD, fundamentally differentiating it from the gradient flow limit.
+    \item \emph{learning terms} \(\Phi\): these are the terms that drive the dynamics to align the student with the teacher, and consequently to reduce the population risk; it can be shown that these same terms are the only ones that survive in the \emph{gradient flow} limit, and are therefore what drives the learning.
+    \item \emph{variance term} \(\Psi\): this is the term that arises from the stochasticity of the training process, and it is responsible for the fluctuations of the order parameters around their mean trajectory; notably, it is proportional to the learning rate \(\gamma\) and does \emph{not} vanish for \(\Delta = 0\). This is the crucial noise introduced by SGD, and is precisely what differentiates it from the gradient flow limit.
 \end{enumerate}
-The \emph{variance term} is responsible for the \emph{plateau} phenomenon \cite{veiga2022phase}, where the order parameters get stuck in a suboptimal configuration and can't reach the exact global minimum even in the limit \(t\to\infty\).
-% TODO put a pictureof the plateau phenomenon.
+The \emph{variance term} is responsible for the \emph{plateau} phenomenon \cite{veiga2022phase}, where the order parameters get stuck in a suboptimal configuration and cannot reach the exact global minimum even in the limit \(t\to\infty\).
+% TODO put a picture of the plateau phenomenon.
 
-Practitioners often address this problem by using a decaying learning rate, which effectively makes the variance term vanish, combined to larger batch sizes, which reduce the variance of the stochastic gradients by averaging the noise of the labels. 
-It is natural to ask how the Equations~\eqref{eq:intro:ss-odes} change when we consider a learning rate and a batch size that are also scaling with the dimension \(d\); this is the exact topic of Chapter~\ref{chap:paper-2406}.
-% add a couple of lines explaining the new saad and solla equation we found: intra-batch non-asymptotic corrections, phase diagram where we can kill variance, but learn with higher sample complexity, or be on the edge of nearning/not learning, and have the plateu. paper-2406
+Practitioners often address this problem with a decaying learning rate, which effectively makes the variance term vanish, combined with larger batch sizes, which reduce the variance of the stochastic gradients by averaging out the label noise.
+It is natural to ask how Equations~\eqref{eq:intro:ss-odes} change when the learning rate and the batch size are themselves allowed to scale with the dimension \(d\); this is exactly the topic of Chapter~\ref{chap:paper-2406}.
+% TODO add a couple of lines explaining the new Saad & Solla equation we found: intra-batch non-asymptotic corrections, phase diagram where we can kill variance, but learn with higher sample complexity, or be on the edge of learning/not learning, and have the plateau. paper-2406
 
-\paragraph{Examples}
-The Equation~\eqref{eq:intro:ss-odes} can fully describe the dynamics only if it is actually possible to analyticaly integrate the expectations on the right-hand side, arriving to a closed-form expression for \(\Phi, \Psi\) as a function of the order parameters. This stronly depends on the choice of the activation function \(\sigma\) and the teacher function \(h^\star\); in literature the problem is often tackled by considering simple setting of \emph{matching architectures}.
+\subsection{Closed-form examples}
+Equation~\eqref{eq:intro:ss-odes} can fully describe the dynamics only when it is actually possible to integrate analytically the expectations on the right-hand side, arriving at a closed-form expression for \(\Phi\) and \(\Psi\) as functions of the order parameters. This depends strongly on the choice of the activation function \(\sigma\) and of the teacher function \(h^\star\); in the literature the problem is often tackled in the simple setting of \emph{matching architectures}.
 
-Let's assume for simplicity that the \emph{teacher} is a two-layer network with $k$ hidden neurons and the same activation function $\sigma$, as the \emph{student} network is with $p$ hidden neurons
+Assume for simplicity that the \emph{teacher} is itself a two-layer network, with $k$ hidden neurons and the same activation function $\sigma$ as the \emph{student} (which has $p$ hidden neurons):
 \begin{equation}
     f^\star(\vec{x}) = \frac1k \sum_{j=1}^k a_j^\star \sigma\left(\frac{\vec{w}_j^\star \cdot \vec{x}}{\sqrt{d}}\right)
     \quad\text{or equivalently}\quad
     h^\star(\vec{\lambda}^\star) = \frac1k \sum_{j=1}^k a_j^\star \sigma(\lambda_j^\star)
 \end{equation}
-The whole integrability of Equation~\eqref{eq:intro:ss-odes} boils down to the possibility to compute the following expectations given any generic covariance \(C\)
+The integrability of Equation~\eqref{eq:intro:ss-odes} then boils down to whether we can compute, for a generic covariance \(C_s \in PSD\mathbb{R}^{p \times p}\), the following expectations:
 \begin{align}
     I_2^\text{risk}(C_2) &\coloneqq \mathbb{E}_{(z_1, z_2) \sim \mathcal{N}(0, C_2)}\left[ \sigma(z_1) \sigma(z_2) \right], \\
     I_2^\text{noise}(C_2) &\coloneqq \mathbb{E}_{(z_1, z_2) \sim \mathcal{N}(0, C_2)}\left[ \sigma'(z_1) \sigma'(z_2) \right], \\
     I_3(C_3) &\coloneqq \mathbb{E}_{(z_1, z_2, z_3) \sim \mathcal{N}(0, C_3)}\left[ \sigma(z_1) \sigma'(z_2) z_3 \right], \\
     I_4(C_4) &\coloneqq \mathbb{E}_{(z_1, z_2, z_3, z_4) \sim \mathcal{N}(0, C_4)}\left[ \sigma'(z_1) \sigma'(z_2) z_3 z_4 \right].
 \end{align}
-The term \(I_2^\text{risk}\) is the one that appears in the expression of the population risk; the term \(I_3\) is the one that appears in the learning terms \(\Phi\); the terms \(I_2^\text{noise}\) and \(I_4\) are the ones that appear in the variance term \(\Psi\).
+Here \(I_2^\text{risk}\) appears in the expression of the population risk, \(I_3\) appears in the learning terms \(\Phi\), and \(I_2^\text{noise}\) and \(I_4\) appear in the variance term \(\Psi\).
 
-In this case, a lot of literature has been devoted into discussing the possibility to have exact asymptotic equation for the dynamics depending on the choice of the activation function \(\sigma\) \addnote{Some of this activations do not fully satisfy the conditions of Theorem~\ref{thm:intro:ss-convergence}, but they have been proven to work empirically. On the other hand, the theorem is \emph{probably} not tight.}
+A substantial body of literature has been devoted to whether these expectations admit a closed form, and hence to whether the asymptotic equations are exact, depending on the choice of the activation function \(\sigma\). \addnote{Some of these activations do not fully satisfy the assumptions of Theorem~\ref{thm:intro:ss-convergence}, yet they have been shown to work empirically; the theorem is, in all likelihood, not tight.}
 \begin{itemize}
-    \item \emph{linear} \(\sigma(x) = x\): this case is trivial, since the student and the teacher are just linear models, and the dynamics can be fully solved in closed form;
-    \item \emph{error function} \(\sigma(x) = \erf(\sfrac{x}{\sqrt{2}})\): this is the original setting of \citet{saad1995exact}, where the equations can be fully solved in closed form, and the dynamics can be fully characterized;
-    \item \emph{ReLU} \(\sigma(x) = \max(0, x)\): this is the most common activation function used in practice, but it does not have a closed form solution for the expectations \(I_4\). The other integrals have been studied in \citet{yoshida2019data} using result from \citet{yoshida2017statistical};
-    \item \emph{phase retrieval} \(\sigma(x) = x^2\): the study of Equations~\eqref{eq:intro:ss-odes} for this activation function is the full content of Chapter~\ref{chap:paper-2305}. We determined the exact closed form of the expectations, and used the result to study the number of samples needed to learn the teacher network.
-    \item \emph{polynomial} \(\sigma(x) = p(x)\): the framework introduced in Chapter~\ref{chap:paper-2305} can be extended to any polynomial activation function. The code attached to work can be used to compute the exact closed form of the expectations, altough the number of terms grows exponentially with the degree of the polynomial, making it impractical for high-degree polynomials.
-    \item \emph{GeLU} \(\sigma(x) = x \Phi(x)\): this is a smooth approximation of the ReLU function, and it has been shown to have a closed form solution for the expectations \(I_2^\text{risk}\) and \(I_3\) \cite{richert2023layered}.
+    \item \emph{linear} \(\sigma(x) = x\): this case is trivial, since the student and the teacher are then just linear models, and the dynamics can be fully solved in closed form;
+    \item \emph{error function} \(\sigma(x) = \erf(\sfrac{x}{\sqrt{2}})\): this is the original setting of \citet{saad1995exact}, where the equations can be fully solved in closed form and the dynamics fully characterized;
+    \item \emph{ReLU} \(\sigma(x) = \max(0, x)\): this is the most common activation function used in practice, but it has no closed-form solution for the expectation \(I_4\). The other integrals were studied in \citet{yoshida2019data} using results from \citet{yoshida2017statistical};
+    \item \emph{phase retrieval} \(\sigma(x) = x^2\): the study of Equations~\eqref{eq:intro:ss-odes} for this activation function is the full content of Chapter~\ref{chap:paper-2305}. We determined the exact closed form of the expectations and used it to study the number of samples needed to learn the teacher network;
+    \item \emph{polynomial} \(\sigma(x) = p(x)\): the framework introduced in Chapter~\ref{chap:paper-2305} can be extended to any polynomial activation function. The code attached to that work can be used to compute the exact closed form of the expectations, although the number of terms grows exponentially with the degree of the polynomial, making it impractical for high-degree polynomials;
+    \item \emph{GeLU} \(\sigma(x) = x \Phi(x)\): this is a smooth approximation of the ReLU function, and it has been shown to admit a closed-form solution for the expectations \(I_2\) and \(I_3\) \cite{richert2023layered}.
 \end{itemize}
-The other activations commonly used (such as sigmoid, tanh, etc.) do not have a closed-form solution for the expectations, and the dynamics can only be studied numerically by approximating the expectations.
-One possibility is to use a Monte Carlo approximation of the expectations, but in my experience this is not very precise and often leads to worse results than simulating the SGD on weights directly. A better possibility is to approximate the activation function with Hermite polynomials, which have a closed-form solution for the expectations;
-\addnote{Expanding in Hermite polynomials along every dimension is essentially equivalent to a tensor-product Gauss--Hermite quadrature of the correlated expectation; this technique is used in Chapter~\ref{chap:paper-2506}, in slightly different setting.}
-a more advanced technique for approximating the expectations is discussed in \citet{citton2024line}, where the authors expand both the activation function and the correlated Gaussian measure in the Hermite basis to get a very precise approximation of the expectations for any activation function.
+The other activations commonly used in practice (such as sigmoid, \(\tanh\), and so on) do not admit a closed-form solution for the expectations, and the dynamics can then only be studied numerically, by approximating the expectations.
+One option is a Monte Carlo approximation of the expectations, but in our experience this is rarely precise enough and often leads to worse results than simulating SGD on the weights directly. A better option is to approximate the activation function with Hermite polynomials, for which the expectations do admit a closed form;
+\addnote{Expanding in Hermite polynomials along every dimension is essentially equivalent to a tensor-product Gauss--Hermite quadrature of the correlated expectation; this technique is used in Chapter~\ref{chap:paper-2506}, in a slightly different setting.}
+a more advanced technique for approximating the expectations is discussed in \citet{citton2024line}, where the authors expand both the activation function and the correlated Gaussian measure in the Hermite basis to obtain a very precise approximation of the expectations for any activation function.
 
-Despite the fact that the Saad \& Solla equations are not always analytically solvable, they are still a very powerful tool to study the dynamics of SGD around initialization. for small displacement, any \(sigma\) and \(h^\star\) can be approximated in a series of Hermite polynomials, and still have a closed form solution for the expectations, that approximate the dynamics of the order parameters. This is the core idea of many Chapters of this thesis, thus we will dig further in the next section.
+Even though the Saad \& Solla equations are not always analytically solvable, they remain a very powerful tool for studying the dynamics of SGD around initialization: for small displacements, any \(\sigma\) and \(h^\star\) can be expanded in a series of Hermite polynomials, which again yields a closed-form expression for the expectations and approximates the dynamics of the order parameters. This idea is at the core of several chapters of this thesis, and we develop it further in the next section.
 
 
-\paragraph{Is \(d\to\infty\) all you need?}
-When deriving Equations~\eqref{eq:intro:ss-odes}, we used as infinitesimal time step \(\sfrac{\gamma}{pd}\), which is indeed going to zero as \(d\to\infty\). However, in is not the only possibility to have a vanishing time step
+\subsection{Beyond the high-dimensional limit}
+When deriving Equations~\eqref{eq:intro:ss-odes}, we took the infinitesimal time step to be \(\sfrac{\gamma}{pd}\), which indeed vanishes as \(d\to\infty\). However, this is not the only way to obtain a vanishing time step:
 \begin{itemize}
-    \item \(\gamma \to 0\), \(d,p\) finite: this is the classical limit that for online SGD converges to \emph{gradient flow} \cite{robbins1951stochastic};
-    \item \(p \to \infty\), \(d, \gamma\) finite: this is the limit of inifite width networks, sometimes called \emph{mean-field} limit, which has been studied in the context of two-layer networks \cite{mei2018mean, chizat2018global,sirignano2020mean}.
+    \item \(\gamma \to 0\), \(d,p\) finite: this is the classical limit that, for online SGD, converges to \emph{gradient flow} \cite{robbins1951stochastic};
+    \item \(p \to \infty\), \(d, \gamma\) finite: this is the infinite-width limit, sometimes called the \emph{mean-field} limit, studied for two-layer networks in \cite{mei2018mean, chizat2018global,sirignano2020mean}.
 \end{itemize}
-In Chapter~\ref{chap:paper-2302} we investigate the connection between the Saad \& Solla and this other two limits, covering them all with one single framework. Moreover, we study also possible combinations of those such as the \emph{high-dimensional gradient flow} limit, or the \emph{high-dimensional mean-field} limit, which are not covered by the classical Saad \& Solla equations.
-% maybe expand more on the reslt of the paper 2302
+The key observation is that the convergence of the overlap process to these equations is, more generally, controlled by the effective time step \(\sfrac{\gamma}{pd}\) alone: a non-asymptotic refinement of Theorem~\ref{thm:intro:ss-convergence} due to \citet{veiga2022phase} bounds the deviation from the deterministic trajectory by a quantity that vanishes whenever \(\sfrac{\gamma}{pd}\to 0^+\), regardless of how that limit is reached. The deterministic, low-dimensional description in terms of the order parameters is therefore valid \emph{beyond} the high-dimensional limit on which the original Saad \& Solla analysis focused, and the three limits above can be treated on the same footing.
 
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=0.6\textwidth]{papers/2302/figs/TriangleV3}
+  \caption[The three limiting regimes of one-pass SGD.]{%
+    The three limiting regimes of one-pass SGD and the regimes that interpolate
+    them. As long as the effective time step satisfies \(\sfrac{\gamma}{pd}\to 0^+\),
+    the order-parameter dynamics admits a deterministic, low-dimensional
+    description. The corners are the high-dimensional (\(d\to\infty\)), classical
+    gradient-flow (\(\gamma\to 0\)), and mean-field (\(p\to\infty\)) limits, while the
+    edges and interior interpolate between them; see Chapter~\ref{chap:paper-2302}
+    for details.}
+  \label{intro:fig:triangle}
+\end{figure}
+
+In Chapter~\ref{chap:paper-2302} we build on this observation to study the connection between the Saad \& Solla equations and the other two limits within a single framework, summarized by the phase diagram of Figure~\ref{intro:fig:triangle}. Its three corners are the high-dimensional, classical gradient-flow, and mean-field limits, while the edges and interior cover combinations such as the \emph{high-dimensional gradient-flow} and \emph{high-dimensional mean-field} limits, which are not captured by the classical Saad \& Solla equations.
+
+The mean-field corner is the most delicate. Because Equations~\eqref{eq:intro:ss-odes} track the \(O(p^2 + pk)\) order parameters, they become intractable precisely in the overparametrized regime \(p\to\infty\) for which the mean-field description \cite{mei2018mean,chizat2018global} was devised. We bridge the two by exploiting the fact that, throughout training, the student weights remain close to the low-dimensional subspace spanned by the teacher directions: projecting the dynamics onto this subspace collapses the growing system of ODEs back to a description of constant dimension, recovering a mean-field PDE while keeping the explicit dependence on \(d\). This connects the order-parameter picture of this section to the hydrodynamic, optimal-transport viewpoint of the mean-field literature.
