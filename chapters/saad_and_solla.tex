@@ -87,8 +87,7 @@ The \emph{variance term} is responsible for the \emph{plateau} phenomenon \cite{
 % TODO put a picture of the plateau phenomenon.
 
 Practitioners often address this problem with a decaying learning rate, which effectively makes the variance term vanish, combined with larger batch sizes, which reduce the variance of the stochastic gradients by averaging out the label noise.
-It is natural to ask how Equations~\eqref{eq:intro:ss-odes} change when the learning rate and the batch size are themselves allowed to scale with the dimension \(d\); this is exactly the topic of Chapter~\ref{chap:paper-2406}.
-% TODO add a couple of lines explaining the new Saad & Solla equation we found: intra-batch non-asymptotic corrections, phase diagram where we can kill variance, but learn with higher sample complexity, or be on the edge of learning/not learning, and have the plateau. paper-2406
+It is natural to ask how Equations~\eqref{eq:intro:ss-odes} change when the learning rate and the batch size are themselves allowed to scale with the dimension \(d\); this is exactly the topic of Chapter~\ref{chap:paper-2406}. Letting both scale as powers of \(d\) modifies the Saad \& Solla equations through \emph{intra-batch}, finite-\(d\) corrections to the otherwise dimension-free dynamics, and uncovers a genuine \emph{time/complexity tradeoff}: a larger batch averages the gradient noise and suppresses the variance term \(\Psi\), but beyond a critical size it no longer reduces the number of steps and merely consumes more samples per step. The resulting phase diagram, in the \(n_b\)--\(\gamma\) plane of the batch size and the learning rate, separates a regime in which the network fails to learn, an intermediate regime on the edge of learning where the plateau persists, and a regime of successful recovery, and it pinpoints the batch size that minimizes the training time.
 
 \subsection{Closed-form examples}
 Equation~\eqref{eq:intro:ss-odes} can fully describe the dynamics only when it is actually possible to integrate analytically the expectations on the right-hand side, arriving at a closed-form expression for \(\Phi\) and \(\Psi\) as functions of the order parameters. This depends strongly on the choice of the activation function \(\sigma\) and of the teacher function \(h^\star\); in the literature the problem is often tackled in the simple setting of \emph{matching architectures}.
@@ -104,9 +103,9 @@ The integrability of Equation~\eqref{eq:intro:ss-odes} then boils down to whethe
     I_2^\text{risk}(C_2) &\coloneqq \mathbb{E}_{(z_1, z_2) \sim \mathcal{N}(0, C_2)}\left[ \sigma(z_1) \sigma(z_2) \right], \\
     I_2^\text{noise}(C_2) &\coloneqq \mathbb{E}_{(z_1, z_2) \sim \mathcal{N}(0, C_2)}\left[ \sigma'(z_1) \sigma'(z_2) \right], \\
     I_3(C_3) &\coloneqq \mathbb{E}_{(z_1, z_2, z_3) \sim \mathcal{N}(0, C_3)}\left[ \sigma(z_1) \sigma'(z_2) z_3 \right], \\
-    I_4(C_4) &\coloneqq \mathbb{E}_{(z_1, z_2, z_3, z_4) \sim \mathcal{N}(0, C_4)}\left[ \sigma'(z_1) \sigma'(z_2) z_3 z_4 \right].
+    I_4(C_4) &\coloneqq \mathbb{E}_{(z_1, z_2, z_3, z_4) \sim \mathcal{N}(0, C_4)}\left[ \sigma'(z_1) \sigma'(z_2) \sigma(z_3) \sigma(z_4) \right].
 \end{align}
-Here \(I_2^\text{risk}\) appears in the expression of the population risk, \(I_3\) appears in the learning terms \(\Phi\), and \(I_2^\text{noise}\) and \(I_4\) appear in the variance term \(\Psi\).
+Here \(I_2^\text{risk}\) appears in the expression of the population risk and \(\Phi^a\), \(I_3\) appears in the learning terms \(\Phi^M\) and \(\Phi^Q\), while \(I_2^\text{noise}\) and \(I_4\) appear in the variance term \(\Psi^Q\).
 
 A substantial body of literature has been devoted to whether these expectations admit a closed form, and hence to whether the asymptotic equations are exact, depending on the choice of the activation function \(\sigma\). \addnote{Some of these activations do not fully satisfy the assumptions of Theorem~\ref{thm:intro:ss-convergence}, yet they have been shown to work empirically; the theorem is, in all likelihood, not tight.}
 \begin{itemize}
