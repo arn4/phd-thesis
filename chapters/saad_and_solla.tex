@@ -83,8 +83,30 @@ It is worth interpreting the actual content of the Saad \& Solla equations; for 
     \item \emph{learning terms} \(\Phi\): these are the terms that drive the dynamics to align the student with the teacher, and consequently to reduce the population risk; it can be shown that these same terms are the only ones that survive in the \emph{gradient flow} limit, and are therefore what drives the learning.
     \item \emph{variance term} \(\Psi\): this is the term that arises from the stochasticity of the training process, and it is responsible for the fluctuations of the order parameters around their mean trajectory; notably, it is proportional to the learning rate \(\gamma\) and does \emph{not} vanish for \(\Delta = 0\). This is the crucial noise introduced by SGD, and is precisely what differentiates it from the gradient flow limit.
 \end{enumerate}
-The \emph{variance term} is responsible for the \emph{plateau} phenomenon \cite{veiga2022phase}, where the order parameters get stuck in a suboptimal configuration and cannot reach the exact global minimum even in the limit \(t\to\infty\).
-% TODO put a picture of the plateau phenomenon.
+When label noise is present (\(\Delta>0\)), the irreducible \(\Delta\)-dependent contribution to the variance term is responsible for the \emph{noise plateau} phenomenon \cite{veiga2022phase}: the order parameters converge to a suboptimal fixed point and cannot reach the global minimum even as \(t\to\infty\); see Figure~\ref{intro:fig:plateau}.
+\begin{figure}[t]
+  \centering
+  \begin{minipage}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{chapters/figs/saad-solla-plateau/plateau-noiseless}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{chapters/figs/saad-solla-plateau/plateau-noisy}
+  \end{minipage}
+  \caption[The plateau phenomenon in the Saad \& Solla equations.]{%
+    Excess risk \(\mathcal{R} - \Delta/2 = \mathbb{E}[\tfrac{1}{2}(h - h^\star)^2]\)
+    against training time \(t = \nu\gamma/(pd)\) for the erf soft-committee machine
+    (\(p=8\), \(k=4\), \(\gamma=2\), \(d=2000\)).
+    \emph{Left} (\(\Delta=0\)): the order parameters align with the teacher and
+    the excess risk decreases monotonically toward zero.
+    \emph{Right} (\(\Delta=10^{-3}\)): the variance term \(\Psi\), proportional to
+    \(\gamma\), pins the dynamics at a finite noise plateau even as \(t\to\infty\).
+    The solid line is the deterministic Saad \& Solla ODE; dots are a single
+    online-SGD run at finite \(d\), started from the same initial condition.}
+  \label{intro:fig:plateau}
+\end{figure}
 
 Practitioners often address this problem with a decaying learning rate, which effectively makes the variance term vanish, combined with larger batch sizes, which reduce the variance of the stochastic gradients by averaging out the label noise.
 It is natural to ask how Equations~\eqref{eq:intro:ss-odes} change when the learning rate and the batch size are themselves allowed to scale with the dimension \(d\); this is exactly the topic of Chapter~\ref{chap:paper-2406}. Letting both scale as powers of \(d\) modifies the Saad \& Solla equations through \emph{intra-batch}, finite-\(d\) corrections to the otherwise dimension-free dynamics, and uncovers a genuine \emph{time/complexity tradeoff}: a larger batch averages the gradient noise and suppresses the variance term \(\Psi\), but beyond a critical size it no longer reduces the number of steps and merely consumes more samples per step. The resulting phase diagram, in the \(n_b\)--\(\gamma\) plane of the batch size and the learning rate, separates a regime in which the network fails to learn, an intermediate regime on the edge of learning where the plateau persists, and a regime of successful recovery, and it pinpoints the batch size that minimizes the training time.
