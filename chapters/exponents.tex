@@ -1,23 +1,145 @@
-\section{The learning exponents}
-\paragraph{What do we measure?}
-We track the learning dynamics through two complementary metrics.
-The \emph{generalization error} $\mathcal{R}(W, \vec{a})$~\eqref{eq:intro:risk}
-measures how well the student predicts unseen labels; in the teacher--student
-setting with squared loss it admits a closed-form expression in the sufficient
-statistics $(Q, M, \vec{a})$.
-The \emph{weak recovery stopping time} is a coarser measure that captures the onset
-of learning: it is the first time at which the student develops any non-trivial
-correlation with the teacher subspace, formalized as
+\section{Information exponent and beyond}
+\label{sec:intro:exponents}
+The core question of this section is to characterize the sample complexity of learning a function \(h^\star\), given an expressive enough student. We show that the answer is controlled by a single integer, the \emph{information exponent} of \citet{arous2021online}, which measures the flatness of the population risk at the initialization saddle. We then discuss two generalizations: the \emph{leap exponent} of \citet{abbe2022merged, abbe2023sgd}, which governs the multi-index case \(k > 1\), and the \emph{generative exponent} of \citet{damian2024computational}, which measures the hardness of the problem under a broader class of algorithms. 
+
+
+Let's focus for now on the \emph{single-index} setting, where the teacher is a single-index model \(f^\star(\vec{x}) = h^\star(\vec{w}^\star \cdot \vec{x})\) and the student has the same shape \(f(\vec{x}) = \sigma(\vec{w} \cdot \vec{x})\) with a different activation function \(\sigma\). The overlap matrices of Equation~\eqref{eq:intro:overlaps} then collapse to two scalars, the \emph{self-overlap} and the \emph{teacher overlap},
 \begin{equation}
-\label{eq:intro:weak-recovery}
-    \frac{1}{d}\bigl\lVert W\, {W^\star}^\top \bigr\rVert_F \geq \eta,
+\label{eq:intro:single-index-overlaps}
+    q = \frac{\norm{\vec{w}}^2}{d}, \qquad m = \frac{\langle \vec{w}, \vec{w}^\star\rangle}{d},
 \end{equation}
-for some constant $\eta \in (0, 1)$ independent of $d$.
-At Gaussian initialization, $\tfrac{1}{d}\|W^0 {W^\star}^\top\|_F = O(1/\sqrt{d}) \to 0$, so
-the network starts nearly orthogonal to the teacher.
-The number of gradient steps---equivalently, the number of samples---needed to go
-from this blank slate to weak recovery is the central complexity measure studied
-across several chapters of this thesis.
-\subsubsection{Information exponent}
-\subsubsection{The leap exponent}
-\subsubsection{Generative exponent}
+and the pre-activations are jointly Gaussian, \((\lambda, \lambda^\star) \sim \mathcal{N}(0, \Omega)\) with covariance \[\Omega = \left(\begin{smallmatrix} q & m \\ m & 1\end{smallmatrix}\right).\]
+We are going to make one more assumptions on top the setting of Section~\ref{intro:sec:settings}:
+\begin{assumption}[Projected SGD]
+    The student is trained with projected SGD, where each step is projected back onto the sphere \(\mathbb{S}^{d-1}(\sqrt{d})\); in other words, the update rule
+    \[\vec{w}^{\tau+1} = \vec{w}^{\tau} - \gamma \frac{\vec{w}^{\tau} - \gamma \nabla_{\vec{w}}\ell(f(\vec{x}^{\tau}), y^{\tau})}{\norm{\vec{w}^{\tau} - \gamma \nabla_{\vec{w}}\ell(f(\vec{x}^{\tau}), y^{\tau})}}\sqrt{d}.\]
+\end{assumption}
+The effect of this is to keep the norm of the student weights fixed, \(q = 1\), so that the only degree of freedom is the teacher overlap \(m\).
+This is a technical simplification that allows us to focus where the true signal is, the correlation with the teacher, and ignore the fact that change into the norm of the student weights can also alter the risk, without contributing to the learning of the teacher direction; see Chapter~\ref{chap:paper-2305} for a more detailed discussion of this point.
+The Saad \& Solla equations~\eqref{eq:intro:ss-odes} then collapse onto a single ODE for \(m\), that naturally embeds the spherical constraint
+\addnote{We are actually neglecting the \emph{variance term} \(\Psi\) in the self-overlap equation, which is subleading in the small-learning-rate regime that governs the escape from initialization; in Chapter~\ref{chap:paper-2305} we keep it and show that the derivation goes through.}
+\begin{equation} \label{eq:intro:m-ode-sphere}
+\begin{aligned}
+    \dod{m}{t} =& \underbrace{\mathbb{E}\!\left[ \left( h^\star(\lambda^\star) - \sigma(\lambda) \right) \sigma'(\lambda)\,\lambda^\star \right]}_{\text{drift}}
+                -m\underbrace{\mathbb{E}\!\left[ \left( h^\star(\lambda^\star) - \sigma(\lambda) \right) \sigma'(\lambda)\,\lambda \right]}_{\text{spherical constraint}}
+\end{aligned}
+\end{equation}
+% The Equation can be shown to be equivalent to this more compact form
+% \begin{equation} \label{eq:intro:m-ode-sphere-compact}
+%     \dod{m}{t} = (1 - m^2)\,C'(m), \qquad C(m) = \mathbb{E}_{(\lambda, \lambda^\star)}\!\left[ \sigma(\lambda)\,h^\star(\lambda^\star) \right].
+% \end{equation}
+The derivation is reported in Appendix~\ref{app:intro:m-ode-sphere}. The quantity \(C(m)\) is the \emph{correlation potential}, and it is actually the only quantity that matters for the population risk \[\mathcal{R}(m) = \text{const} - C(m).\]
+
+Two features of Equation~\eqref{eq:intro:m-ode-sphere-compact} matter for what follows. The prefactor \((1 - m^2)\) is purely \emph{geometric}: the spherical Jacobian \(\sin^2\theta\) for \(m = \cos\theta\)---so the activations \(\sigma\) and \(h^\star\) enter the dynamics only through the scalar \emph{correlation potential} \(C(m)\), and the equation is exact for every \(m \in [-1, 1]\), not merely near initialization. Moreover \(C(m)\) is exactly what the risk sees: on the sphere the marginal terms of \(\mathcal{R}\) are frozen, leaving
+\begin{equation} \label{eq:intro:correlation-potential}
+    \mathcal{R}(m) = \mathrm{const} - C(m),
+\end{equation}
+so that the overlap dynamics is gradient ascent on \(C\).
+
+Since the final goal is to determine the sample complexity of learning, we can use the time \(t\) as a proxy for the number of samples \(n\), and solve Equation~\eqref{eq:intro:m-ode-sphere-compact} to determine how many samples it takes to reach a certain level of teacher overlap \(m\). Given \(m(t)\) the solution to the ODE, we can invert the relation to get the time \(t_\text{solved}\) at which the student reaches the minimal possible risk
+\[\mathcal{R}(m(t_\text{solved}(T))) = (1-T)\mathcal{R}(m^0),\]
+where \(T\) is the target risk level.
+The number of gradient steps, equivalently the number of samples for one-pass SGD, is then \[n_\text{solved} = t_\text{solved}(T)\,d/\gamma\quad\implies\quad n = \mathcal{O}_d(d t_\text{solved}(T)).\]
+Despite the ODE for \(m\) is dimension independent, the time \(t_\text{solved}\) depends on the dimension \(d\) through the initial condition: at the random initialization \(\vec{w}^0 \sim \mathcal{N}(0, I_d)\) the student-teacher overlap, by contrast, is an average of \(d\) independent mean-zero terms, and is therefore tiny: \[m^0 = \frac{\langle \vec{w}^0, \vec{w}^\star \rangle}{d} = \mathcal{O}_d\left(\frac{1}{\sqrt{d}}\right)\].
+Since we are interested in the complexity only, and not the precise constants, we can actually focus on a small value \(T\), such that the correlation \(m\) is still small, but finite, knowing that the rest of the learning is fast and does not contribute to the scaling with \(d\). In other words the most difficult part of the learning is to escape the curse of dimensionality that place the initial weight vector almost orthogonal to the teacher, and finally getting to a finite correlation \(m\) with the teacher. What we would like to measure is \emph{weak recovery}.
+\begin{definition}[Weak recovery]
+    We say that the student has achieved weak recovery of the teacher with threshold \(\eta\) if the teacher overlap \(m\) has reached a finite value \(\eta\) independent of the dimension \(d\):
+    \begin{equation}
+    \label{eq:intro:weak-recovery}
+        m = \frac{\langle \vec{w}, \vec{w}^\star \rangle}{d} \geq \eta, \qquad \eta \in (0, 1).
+    \end{equation}
+    In respect to the dynamics of Equation~\eqref{eq:intro:m-ode-sphere-compact}, we define as \(t_\text{weak}(\eta)\) the time at which the student achieves weak recovery \(m(t_\text{weak}) = \eta\).
+\end{definition}
+
+In practice, we can take \(\eta\) small enough that Equation~\eqref{eq:intro:m-ode-sphere-compact} is well approximated by its leading order expansion around \(m = 0\)
+\addnote{The actual factor in front of \(m^{\ell-1}\) is not dependent on \(d\) and does not affect the final escaping complexity. In the same way, the factor \((1 - m^2)\) does not change the leading order of the expansion.}
+\begin{equation}
+\label{eq:intro:approx-m-ode}
+    \dod{m}{t} \propto C^{(\ell)}(0)\,m^{\ell-1}, \qquad \ell = \min\{j \geq 1 : C^{(j)}(0) \neq 0\}.
+\end{equation}
+We can better understand the meaning of this by looking at some examples.
+\begin{example}[Linear regression]
+    For the linear regression target \(h^\star(x) = x\) and the linear activation \(\sigma(x) = x\), the correlation potential is \(C(m) = m\), so \(C'(m) = 1\) and
+    \begin{equation}
+        \dod{m}{t} = 1 - m^2
+        % for small m
+        \overbrace{\approx}^{m \ll 1} 1\quad \text{with i.c. } m^0 \approx 1/\sqrt{d}.
+    \end{equation}
+    The solution is \(m(t) = m^0 + t\), so the weak recovery time is \(t_\text{weak}(\eta) \approx \eta\), so the total sample complexity is \(n=\mathcal{O}_d(t_\text{weak}(\eta)d)= \mathcal{O}_d(d)\).
+    % TODO: cite result for linear regression.
+\end{example}
+\begin{example}[Phase retrieval]
+    For the phase retrieval target \(h^\star(x) = x^2\) and the quadratic activation \(\sigma(x) = x^2\), the correlation potential is \(C(m) = 1 + 2m^2\), so \(C'(m) = 4m\) and
+    \begin{equation}
+        \dod{m}{t} = 4\,m\,(1 - m^2) \overbrace{\approx}^{m \ll 1} 4\,m\quad \text{with i.c. } m^0 \approx 1/\sqrt{d}.
+    \end{equation}
+    The solution is \(m(t) = m^0\,e^{4t}\), so the weak recovery time is \(t_\text{weak}(\eta) \approx \frac{1}{4}\log(\eta\sqrt{d})\), so the total sample complexity is \(n=\mathcal{O}_d(t_\text{weak}(\eta)d)= \mathcal{O}_d(d\log d)\). In Chapter~\ref{chap:paper-2305} we actually dig deeper into the equation and study the precise constants, and how they scale with the learning rate \(\gamma\) and the label noise \(\Delta\).
+\end{example}
+% TODO make 3 plots with the potentials for: linear regression (and erf-erf), phase retrieval (and He_2-He_2), and He_3-He3.
+The take home message is that: flatter is the correlation potential (or equivalently the population risk) at initialization, harder is the escape from the critical point \(m = 0\), and more samples are needed to achieve weak recovery. Geometrically in the weight space, the population risk at \(w^0\) is a \emph{strict saddle}, flat along all but one direction---a golf course with a single hole---so the student is stuck at \emph{mediocrity}, only weakly correlated with the teacher. In the space of the order parameter \(m\), this translates into a flat potential \(C(m)\) at \(m = 0\), with initialization very close to the critical point.
+% TODO use the visualization of the golf course in appendix of paper 2305, plus another one in the space of the order parameter \(m\) next to it.\
+
+The integer \(\ell\) in Equation~\eqref{eq:intro:approx-m-ode} is the \emph{information exponent} of \citet{arous2021online}, and it is the only quantity that matters for the sample complexity of learning a single-index target with SGD. Expanding \(h^\star = \sum_k a_k \mathrm{He}_k\) and \(\sigma = \sum_k b_k \mathrm{He}_k\), and use the orthogonality of Hermite polynomials under a correlated Gaussian, \(\mathbb{E}[\mathrm{He}_j(\lambda)\mathrm{He}_k(\lambda^\star)] = \delta_{jk}\,k!\,m^k\); the correlation is then a pure power series in the overlap,
+\begin{equation} \label{eq:intro:correlation-series}
+    C(m) = \sum_{k \geq 0} k!\,a_k\,b_k\, m^k,
+\end{equation}
+so that near the saddle \(\mathcal{R}(m) - \mathcal{R}(0) = -\sum_{k\geq1} k!\,a_k b_k\, m^k\).
+\begin{assumption}[$\sigma$ excites the $\ell$-th mode]
+    The student activation \(\sigma\) is such that \(b_\ell = \mathbb{E}[\sigma\,\mathrm{He}_\ell]/\ell! \neq 0\).
+    In other words, the student is expressive enough to excite the mode of any teacher.
+\end{assumption}
+The first term that bends the landscape is the lowest \(k\) with \(a_k \neq 0\)---which is exactly \(\ell\). In words, the information exponent is the order to which the population risk is flat at the mediocrity saddle: \(\mathcal{R}(m) - \mathcal{R}(0) \approx -\,\ell!\,a_\ell b_\ell\,m^\ell\). Near the saddle the geometric factor in~\eqref{eq:intro:m-ode-sphere-compact} is \(1 - m^2 \approx 1\), so the escape drift inherits the same order,
+\begin{equation} \label{eq:intro:drift-ie}
+    \dod{m}{t} = (1-m^2)\,C'(m) \;\sim\; \ell\,\ell!\,a_\ell b_\ell\, m^{\ell - 1}.
+\end{equation}
+We can now state the original definition of the information exponent.
+\begin{definition}[Information exponent \cite{arous2021online}]
+    The information exponent \(\ell\) of a single-index target \(h^\star\) is the lowest order of the Hermite expansion of \(h^\star\) with non-zero coefficient, \[\ell = \min\{j \geq 1 : a_j = \mathbb{E}_{z\sim\mathcal{N}(0,1)}[h^\star(z)\,\mathrm{He}_j(z)] \neq 0\}.\]
+\end{definition}
+
+The last piece of the puzzle is to understand how the information exponent controls the sample complexity of learning. Integrating the deterministic drift~\eqref{eq:intro:drift-ie} from \(m^0 = O(1/\sqrt{d})\) gives the escape time, hence the number of samples:
+\begin{equation} \label{eq:intro:info-scaling}
+    t_\text{escape} \asymp \begin{cases}
+        1 & \ell = 1, \\
+        \log d & \ell = 2, \\
+        d^{\ell/2-1} & \ell \geq 3.
+    \end{cases}
+\end{equation}
+Unfortunately, the escape time of Equation~\eqref{eq:intro:drift-ie} is not enough to determine the sample complexity: the drift captured by the ODE~\eqref{eq:intro:m-ode-sphere-compact} is only the mean of the stochastic dynamics, and for \(\ell \geq 3\) the potential is so flat that the fluctuations of the order parameter around the mean trajectory cannot be negleted.
+\addnote{In particular the variance term \(\Psi\) in the Saad \& Solla equations~\eqref{eq:intro:ss-odes} is of order \(m^{2(\ell-1)}\), and therefore dominates the drift \(m^{\ell-1}\) for \(\ell \geq 3\). It has to be taken into account to get the correct sample complexity.}
+The formal result requires more sophisticated tools, but the scaling is captured by the following theorem.
+\begin{theorem}[Sample complexity of learning a single-index target with SGD \cite{arous2021online}]
+    The sample complexity of learning a single-index target with information exponent \(\ell\) with one-pass SGD is
+    \begin{equation}
+        n = \begin{cases}
+            O(d) & \ell = 1, \\
+            O(d\log d) & \ell = 2, \\
+            O(d^{\ell - 1}) & \ell \geq 3.
+        \end{cases}
+    \end{equation}
+\end{theorem}
+
+% expand: information exponent is more general than the single-index setting. Cite Chapter~\ref{chap:paper-2506} as en example, or Chapter~\ref{chap:paper-2406} for different scalings with the learning rate, and batch size. 
+
+\paragraph{CSQ lower bound and smoothing}
+Reshaping the landscape by smoothing the loss removes this penalty and recovers the deterministic rate \(d^{\ell/2}\), which matches the \emph{correlated statistical query} (CSQ) lower bound \citep{damian2023smoothing}. How the batch size trades off against the number of steps, as a function of \(\ell\), is the subject of Chapter~\ref{chap:paper-2406}.
+
+
+
+\subsection{The leap exponent}
+When the teacher has more than one relevant direction (\(k > 1\)), a single integer no longer suffices: the directions are typically recovered not all at once but in sequence, and the relevant measure of hardness is the \emph{leap exponent} (or leap complexity) of \citet{abbe2022merged, abbe2023sgd}. It generalizes the information exponent direction-wise---instead of the lowest non-zero Hermite \emph{coefficient}, it is the lowest degree of the Hermite \emph{tensors} that couple the directions already learned to those still to be discovered.
+
+Keeping the read-out fixed as before, multi-index learning then unfolds as a \emph{staircase} \citep{abbe2021staircase}: a sequence of escapes in which the network first aligns with the easiest directions, and each newly recovered direction lowers the barrier to the next, so the dynamics hops from saddle to saddle. Targets whose features are all \emph{linearly connected}---leap one---are recovered in \(O(d)\) samples, while each additional unit of leap raises the cost, in direct analogy with the single-index hierarchy~\eqref{eq:intro:info-scaling}. How data reuse reshapes this staircase, and lets gradient methods beat the leap-limited rate, is taken up in Chapter~\ref{chap:paper-2405}.
+
+\subsection{Generative exponent}
+The two exponents above measure the difficulty of correlating the raw label \(y\) with a function of the input. But one is free to first \emph{transform} the label. This is the idea behind the \emph{generative exponent} \(\ell^\star\) of \citet{damian2024computational},
+\begin{equation} \label{eq:intro:generative-exponent}
+    \ell^\star = \min\left\{ j \geq 1 : \mathbb{E}_{\xi \sim \mathcal{N}(0,1)}\!\left[ g(h^\star(\xi))\,\mathrm{He}_j(\xi) \right] \neq 0 \ \text{ for some } g : \mathbb{R} \to \mathbb{R} \right\},
+\end{equation}
+where the minimization now ranges over all transformations \(g\) of the label as well as over the Hermite degree.
+
+Since the choice \(g = \mathrm{id}\) recovers Equation~\eqref{eq:intro:info-exponent}, one always has \(\ell^\star \leq \ell\); allowing a nonlinear \(g\) can only lower the exponent, and frequently does so strictly. The gap can be dramatic: for an even target, the label is blind to the sign of \(\vec{w}^\star \cdot \vec{x}\), which forces \(\ell^\star \geq 2\) no matter how large \(\ell\) grows. Crucially, it is the generative exponent---not the information exponent---that is the right hardness measure for the broad class of \emph{statistical query} and \emph{low-degree polynomial} algorithms: the genuinely hard problems are those with \(\ell^\star > 2\), for which even the best first-order method, approximate message passing, fails \citep{troiani2024fundamental}.
+
+The catch is that plain one-pass SGD cannot exploit this: a single pass only ever forms correlational queries \(\mathbb{E}[y\,\phi(\vec{x})]\), and is therefore stuck with \(\ell\). Transforming the labels---or, more strikingly, simply \emph{reusing} the data over a few passes, which lets the network synthesize the transformation on its own---unlocks the richer queries \(\mathbb{E}[g(y)\,\phi(\vec{x})]\) and the \(\ell^\star\) rate. Chapter~\ref{chap:paper-2405} makes this precise: a gradient-based algorithm that sees each sample only twice weakly recovers any polynomial target in \(O(d\log^2 d)\) samples, matching the generative-exponent bound, and the notion extends to the multi-index setting.
+
+Together, the three exponents trace the arc of this thesis: the information exponent fixes the cost of one-pass SGD on a single-index target, the leap exponent lifts it to the multi-index staircase, and the generative exponent marks the lower limit that becomes reachable once we step beyond a single pass.

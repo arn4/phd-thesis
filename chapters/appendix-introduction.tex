@@ -1,0 +1,65 @@
+\chapter{Appendices to the Introduction}
+\label{chap:appendix-introduction}
+
+\section{The single-index overlap dynamics on the sphere}
+\label{app:intro:m-ode-sphere}
+
+This appendix supplies the derivation deferred from Section~\ref{sec:intro:exponents}. Throughout we are in the single-index, single-neuron setting with the read-out fixed at \(a = 1\) and the weights confined to the sphere \(\norm{\vec{w}} = \sqrt{d}\), so the self-overlap is frozen at \(q = 1\) and the pre-activations are jointly Gaussian, \((\lambda, \lambda^\star) \sim \mathcal{N}(0, \Omega)\) with \(\Omega = \left(\begin{smallmatrix} 1 & m \\ m & 1\end{smallmatrix}\right)\). Our goal is the compact overlap equation
+\begin{equation} \label{app:intro:eq:target}
+    \dod{m}{t} = (1 - m^2)\,C'(m), \qquad C(m) = \mathbb{E}_{(\lambda, \lambda^\star)}\!\left[ \sigma(\lambda)\,h^\star(\lambda^\star) \right],
+\end{equation}
+which we obtain in two complementary ways: directly from the discrete projected updates, in their gradient-flow limit on the sphere, which makes the origin of the factor \((1 - m^2)\) transparent; and by reducing the spherically projected Saad \& Solla drift~\eqref{eq:intro:m-ode-sphere}, which establishes the equivalence claimed in the main text.
+
+\subsection{Derivation as a spherical gradient flow}
+\label{app:intro:gradient-flow}
+
+We start from the projected update of the main text: at step \(\tau\), on a fresh sample \((\vec{x}, y)\),
+\begin{equation} \label{app:intro:eq:proj-update}
+    \vec{w}^{\tau+1} = \sqrt{d}\,\frac{\vec{w}^{\tau} - \gamma\,\nabla_{\vec{w}}\ell}{\norm{\vec{w}^{\tau} - \gamma\,\nabla_{\vec{w}}\ell}}, \qquad \nabla_{\vec{w}}\ell = \big(\sigma(\lambda) - y\big)\,\sigma'(\lambda)\,\frac{\vec{x}}{\sqrt{d}}.
+\end{equation}
+Renormalizing onto the sphere makes the increment tangential to leading order in the step size,
+\begin{equation} \label{app:intro:eq:tangent-step}
+    \vec{w}^{\tau+1} - \vec{w}^{\tau} = -\gamma\,P_{\vec{w}}^{\perp}\,\nabla_{\vec{w}}\ell + O(\gamma^2), \qquad P_{\vec{w}}^{\perp} = I - \frac{\vec{w}\vec{w}^\top}{d},
+\end{equation}
+the discarded \(O(\gamma^2)\) carrying the curvature of the retraction together with the gradient fluctuations---the \emph{variance term} \(\Psi\), one power of \(\gamma\) down and neglected throughout, as in the main text. Since the sample is fresh the gradient is unbiased for the population risk, \(\mathbb{E}[\nabla_{\vec{w}}\ell] = \nabla_{\vec{w}}\mathcal{R}\), and---the projector depending on \(\vec{w}\) alone---
+\begin{equation}
+    \mathbb{E}[\vec{w}^{\tau+1} - \vec{w}^{\tau}] = -\gamma\,P_{\vec{w}}^{\perp}\,\nabla_{\vec{w}}\mathcal{R} + O(\gamma^2).
+\end{equation}
+On the sphere \(q = 1\) is frozen, so \(\mathcal{R}\) depends on the weights only through \(m = \sfrac{\langle \vec{w}, \vec{w}^\star\rangle}{d}\), and \(\mathcal{R}(m) = \mathrm{const} - C(m)\) as in Equation~\eqref{eq:intro:correlation-potential}. The chain rule gives the radial gradient \(\nabla_{\vec{w}}\mathcal{R} = \sfrac{\mathcal{R}'(m)}{d}\,\vec{w}^\star\); projecting it leaves \(P_{\vec{w}}^{\perp}\vec{w}^\star = \vec{w}^\star - m\,\vec{w}\), and reading off the overlap increment \(\mathbb{E}[\Delta m] = \sfrac1d\,\langle \vec{w}^\star,\,\mathbb{E}[\Delta \vec{w}]\rangle\),
+\begin{equation}
+    \mathbb{E}[\Delta m] = -\frac{\gamma}{d^2}\,\mathcal{R}'(m)\,\big(\norm{\vec{w}^\star}^2 - m\,\langle \vec{w}^\star, \vec{w}\rangle\big) = -\frac{\gamma}{d}\,\mathcal{R}'(m)\,(1 - m^2),
+\end{equation}
+using \(\norm{\vec{w}^\star}^2 = d\) and \(\langle \vec{w}^\star, \vec{w}\rangle = d\,m\). The Saad \& Solla time scaling now makes the dimension factor meaningful: measuring time as \(t = \tau\,\sfrac{\gamma}{d}\),
+\addnote{In single-index setting the time scaling is \(t = \tau\,\sfrac{\gamma}{d}\) because \(p=1\).}
+so that one sample advances \(t\) by \(\delta t = \sfrac{\gamma}{d}\), the overlap concentrates in the high-dimensional limit on the deterministic trajectory \(\dod{m}{t} = \mathbb{E}[\Delta m]/\delta t\). With \(\mathcal{R}'(m) = -C'(m)\) this is
+\begin{equation}
+    \dod{m}{t} = -(1 - m^2)\,\mathcal{R}'(m) = (1 - m^2)\,C'(m),
+\end{equation}
+Equation~\eqref{app:intro:eq:target}. The factor \(\sfrac{\gamma}{d}\) is thus the time step itself---not a stray constant---and \((1 - m^2)\) is the spherical Jacobian \(\sin^2\theta\) for \(m = \cos\theta\).
+
+\subsection{Equivalence with the Saad \& Solla equation}
+\label{app:intro:ss-equivalence}
+
+The spherically projected Saad \& Solla drift~\eqref{eq:intro:m-ode-sphere} reads
+\begin{equation}
+    \dod{m}{t} = \mathbb{E}\!\left[(h^\star(\lambda^\star) - \sigma(\lambda))\,\sigma'(\lambda)\,\lambda^\star\right] - m\,\mathbb{E}\!\left[(h^\star(\lambda^\star) - \sigma(\lambda))\,\sigma'(\lambda)\,\lambda\right].
+\end{equation}
+For the bivariate Gaussian above, Stein's identities read, for any regular \(G(\lambda, \lambda^\star)\),
+\begin{equation} \label{app:intro:eq:stein}
+    \mathbb{E}[\lambda\, G] = \mathbb{E}[\partial_\lambda G] + m\,\mathbb{E}[\partial_{\lambda^\star} G], \qquad
+    \mathbb{E}[\lambda^\star G] = m\,\mathbb{E}[\partial_\lambda G] + \mathbb{E}[\partial_{\lambda^\star} G],
+\end{equation}
+since \(\operatorname{Var}\lambda = \operatorname{Var}\lambda^\star = 1\) and \(\operatorname{Cov}(\lambda, \lambda^\star) = m\). Applying them to \(G = (h^\star(\lambda^\star) - \sigma(\lambda))\,\sigma'(\lambda)\), whose partial derivatives are \(\partial_\lambda G = (h^\star - \sigma)\,\sigma'' - (\sigma')^2\) and \(\partial_{\lambda^\star} G = {h^\star}'\,\sigma'\) (arguments suppressed), the two terms of the drift become
+\begin{align}
+    \mathbb{E}[\lambda^\star G] &= m\,\mathbb{E}\!\left[(h^\star - \sigma)\sigma'' - (\sigma')^2\right] + \mathbb{E}\!\left[{h^\star}'\sigma'\right], \\
+    m\,\mathbb{E}[\lambda\, G] &= m\,\mathbb{E}\!\left[(h^\star - \sigma)\sigma'' - (\sigma')^2\right] + m^2\,\mathbb{E}\!\left[{h^\star}'\sigma'\right].
+\end{align}
+Subtracting, the self-interaction terms cancel identically and only the cross term survives,
+\begin{equation}
+    \dod{m}{t} = \mathbb{E}[\lambda^\star G] - m\,\mathbb{E}[\lambda\, G] = (1 - m^2)\,\mathbb{E}\!\left[{h^\star}'(\lambda^\star)\,\sigma'(\lambda)\right].
+\end{equation}
+Price's theorem---which states that, for jointly Gaussian \((\lambda, \lambda^\star)\) of unit variance and correlation \(m\),
+\begin{equation} \label{app:intro:eq:price}
+    C'(m) = \dod{}{m}\,\mathbb{E}[\sigma(\lambda)\,h^\star(\lambda^\star)] = \mathbb{E}[\sigma'(\lambda)\,{h^\star}'(\lambda^\star)]
+\end{equation}
+---then identifies this expectation with \(C'(m)\) and recovers Equation~\eqref{app:intro:eq:target}, establishing the equivalence.
