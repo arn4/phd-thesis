@@ -14,13 +14,13 @@
 \addbibresource{papers-bibliography.bib}
 \addbibresource{extra-bibliography.bib}
 
-\title{<thesis title TBD>}
+\title{Effective Dynamics of Stochastic Gradient Descent in High-Dimensional Neural Networks}
 \author{Luca Arnaboldi}
 
 % Drafting toggle: uncomment and list only the chapters you want typeset.
 % A full build (no \includeonly) must have been run at least once so every
 % per-file .aux exists; cross-refs and page numbers then stay correct.
-% \includeonly{chapters/introduction, chapters/paper-2406}
+% \includeonly{chapters/introduction, chapters/appendix-introduction}
 
 \begin{document}
 
@@ -32,6 +32,12 @@
 \IfFileExists{cover.pdf}
   {\includepdf[pages=-]{cover.pdf}}
   {\include{front-matter/cover-placeholder.tex}}
+
+% --- Blank verso after cover ---
+\thispagestyle{empty}\cleardoublepage
+
+% --- Epigraph ---
+\include{front-matter/epigraph.tex}
 
 % --- Abstracts (English, Italian, French) ---
 \include{front-matter/abstract-en.tex}
@@ -79,6 +85,7 @@
   \@chapter}
 \makeatother
 
+\include{chapters/appendix-introduction}
 \include{chapters/appendix-2302}
 \include{chapters/appendix-2305}
 \include{chapters/appendix-2405}
