@@ -25,7 +25,7 @@ The repo has two distinct layers, with mostly different files:
 | `papers/stand-alone-paper.tex` | Shared `\jobname`-dispatched driver to compile any single paper. Auto-generated; do not edit by hand. |
 | `thesis.tex` | Root of the full thesis build (`\documentclass{book}`). |
 | `thesis-style.sty` | Thesis-wide style package; defines `\paperchapter`. |
-| `chapters/` | `introduction.tex`, `background.tex`, plus per-paper `paper-YYMM.tex` and `appendix-YYMM.tex` wrappers. |
+| `chapters/` | `introduction.tex` (inputs `motivation.tex`, `setting.tex`, `saad_and_solla.tex`, `exponents.tex`), `appendix-introduction.tex`, per-paper `paper-YYMM.tex` and `appendix-YYMM.tex` wrappers, plus a `figs/` subdirectory for introduction figures. |
 | `front-matter/` | Three abstracts (en/it/fr), acknowledgements, foreword, cover/cv placeholders. |
 | `latexmkrc` | Build config: `lualatex` + `biber`, `out_dir=build/`. |
 | `.github/workflows/build.yml` | CI — incremental per-target build on main + tag-triggered all-targets Pages deploy. |
@@ -57,7 +57,7 @@ Two behavioral rules apply to everything under `arxiv-papers/`:
 
 ## Skills (editorial pipeline — now in maintenance mode)
 
-All eight papers under `arxiv-papers/` have been extracted into `papers/YYMM/` and Luca is now hand-editing both that tree and the three merged outputs at root. **Do not re-run any of the editorial skills proactively:**
+Five papers are active in the thesis (2302, 2305, 2405, 2406, 2506); three others (2402, 2602, 2605) are fully extracted into `papers/YYMM/` but are definitively excluded from the final manuscript. All eight have been extracted and Luca is now hand-editing both that tree and the three merged outputs at root. **Do not re-run any of the editorial skills proactively:**
 
 - `merge-bibs` and `merge-preambles` regenerate the three merged outputs from per-paper sidecars. Hand-edits to those merged files get wiped (e.g. the 2506 bilingual macros currently in `papers-macros.tex`, which aren't derivable from any sidecar). Their output is also expected to be stable now — a non-empty diff on a re-run means a sidecar shifted that needs investigation, not silent acceptance.
 - `extract-paper` overwrites `papers/YYMM/` with `--force` and would clobber every hand-tuning of the extracted bodies (and break the slug lists hard-coded in `chapters/appendix-YYMM.tex`). Treat it as destructive.
@@ -72,10 +72,16 @@ For flags, inputs, outputs, and exact behavior of each skill, **read the skill**
 - `extract-paper` — convert one paper into `papers/YYMM/`. Rewrites cite keys, macro names, label/ref keys (`\label{eq:foo}` → `\label{YYMM:eq:foo}` etc.), and figure paths; runs a body-cleanup pass (spacing/list-layout/math-kerning/float-placement strips, `wrapfigure` → `figure`, etc.); applies the optional `patches.json`; then runs a verification compile via the standalone driver.
 - `check-paper` — compile a paper from `arxiv-papers/` as-is and report LaTeX errors/warnings plus bibliography coverage; restores the folder afterwards.
 
+## Skills (bibliography and reporting — always safe)
+
+- `add-bib` — add a one-off BibTeX entry (textbook, intro-only citation, etc.) that doesn't come from the arXiv pipeline. Checks `papers-bibliography.bib` for an existing entry first; if absent, appends to `extra-bibliography.bib` and wires that file into `thesis.tex`.
+- `citation-usage` — generate an HTML report of how often each `papers-bibliography.bib` entry is cited across `papers/`, with per-paper breakdown and an importance score. Use to audit coverage, find never-cited entries, or rank reference importance.
+
 ## Thesis assembly
 
 - `thesis.tex` is `\documentclass[11pt,a4paper,openright]{book}` with multi-language babel (`main=english,italian,french`). `\usepackage{thesis-style}` **must precede** `\input{papers-dependencies.tex}` so its `\PassOptionsToPackage` calls take effect before the merged preamble loads `hyperref` / `placeins`.
 - `cleveref` is loaded directly from `papers-dependencies.tex`, positioned immediately after `hyperref` (LaTeX requires the order). The line sits out-of-alphabetical-order on purpose; `merge_preambles.py` honours that placement via its `PACKAGE_ORDER_OVERRIDES` table, so a future re-run keeps it next to `hyperref` rather than alphabetising it back ahead.
+- The introduction chapter (`chapters/introduction.tex`) is split into four section files via `\input`: `motivation.tex`, `setting.tex`, `saad_and_solla.tex`, `exponents.tex`. Its own appendix material lives in `chapters/appendix-introduction.tex` (included in the backmatter alongside the per-paper appendix chapters).
 - `\paperchapter{title}{authors}{abstract-path}` (defined in `thesis-style.sty`) is the entry point for each paper chapter. Each `chapters/paper-YYMM.tex` calls it and then `\subimport`s the paper's `main.tex` wrapped in `{\let\appendix\endinput ...}`, so the paper-internal `\appendix` doesn't switch the whole book into appendix mode mid-chapter.
 - Per-paper appendices are deferred to `chapters/appendix-YYMM.tex`, which `\subimport`s each appendix slug explicitly. **If `extract-paper` is re-run and the slug set in `papers/YYMM/main.tex` changes, update the corresponding `chapters/appendix-YYMM.tex` list to match.**
 - Babel reserves `\og` and `\no` for French; both are `\let ... \relax`'d at the top of `thesis.tex` so `papers-macros.tex` can rebind them.
