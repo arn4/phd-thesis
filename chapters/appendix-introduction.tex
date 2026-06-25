@@ -63,3 +63,119 @@ Price's theorem---which states that, for jointly Gaussian \((\lambda, \lambda^\s
     C'(m) = \dod{}{m}\,\mathbb{E}[\sigma(\lambda)\,h^\star(\lambda^\star)] = \mathbb{E}[\sigma'(\lambda)\,{h^\star}'(\lambda^\star)]
 \end{equation}
 ---then identifies this expectation with \(C'(m)\) and recovers Equation~\eqref{app:intro:eq:target}, establishing the equivalence.
+
+\section{The partial-trace algorithm}
+\label{app:intro:partial-trace}
+
+This appendix describes the spectral algorithm of \citet{damian2024computational} that achieves weak recovery of the teacher direction \(\vec{w}^\star\) from \(n \asymp d^{\ell/2}\) samples, matching the CSQ lower bound discussed in Section~\ref{sec:intro:exponents}. We work in the single-index setting: \(\vec{x} \sim \mathcal{N}(0, I_d)\), \(\vec{w}^\star \in \mathbb{S}^{d-1}(\sqrt{d})\), \(\lambda^\star = \langle \vec{w}^\star, \vec{x}\rangle / \sqrt{d} \sim \mathcal{N}(0,1)\), and \(y = h^\star(\lambda^\star) = \sum_{k \geq \ell} a_k\,\mathrm{He}_k(\lambda^\star)\) with information exponent \(\ell\) and \(a_\ell \neq 0\). Let \(\hat{\vec{w}}^\star = \vec{w}^\star / \sqrt{d}\) denote the unit teacher direction.
+
+\subsection{The population identity}
+
+The algorithm rests on the family of multivariate Hermite tensors. For \(\vec{x} \sim \mathcal{N}(0, I_d)\) and \(\ell \geq 1\), the order-\(\ell\) Hermite tensor \(T_\ell(\vec{x}) \in (\mathbb{R}^d)^{\otimes \ell}\) is the unique degree-\(\ell\) symmetric tensor polynomial in \(\vec{x}\) orthogonal to all polynomials of lower degree in \(L^2(\mathcal{N}(0,I_d))\). The explicit component forms for small \(\ell\) are:
+\begin{align*}
+    T_1(\vec{x})_i =& x_i, \\
+    T_2(\vec{x})_{ij} =& x_i x_j - \delta_{ij}, \\
+    T_3(\vec{x})_{ijk} =& x_i x_j x_k
+        - \bigl(\delta_{ij}\,x_k + \delta_{ik}\,x_j + \delta_{jk}\,x_i\bigr), \\
+    T_4(\vec{x})_{ijkl} =& x_i x_j x_k x_l \\
+        &- \bigl(\delta_{ij}\,x_k x_l + \delta_{ik}\,x_j x_l + \delta_{il}\,x_j x_k
+               + \delta_{jk}\,x_i x_l + \delta_{jl}\,x_i x_k + \delta_{kl}\,x_i x_j\bigr) \\
+        & + \bigl(\delta_{ij}\delta_{kl} + \delta_{ik}\delta_{jl} + \delta_{il}\delta_{jk}\bigr).
+        \label{app:intro:eq:hermite-tensor-forms}
+\end{align*}
+Each formula is the outer product \(\vec{x}^{\otimes \ell}\) with the lower order corrections needed to enforce orthogonality: at order \(\ell = 2\) the identity is subtracted; at order \(\ell = 3\), the three symmetrized terms \(\delta_{ij}x_k + \delta_{ik}x_j + \delta_{jk}x_i\); at order \(\ell = 4\), six rank-two matrix terms and three rank-zero (double-\(\delta\)) corrections. The general construction follows the recurrence
+\begin{equation}\label{app:intro:eq:hermite-tensor-recurrence}
+    T_\ell(\vec{x}) = \operatorname{sym}\!\bigl(\vec{x} \otimes T_{\ell-1}(\vec{x})\bigr)
+                    - (\ell-1)\,\operatorname{sym}\!\bigl(I \otimes T_{\ell-2}(\vec{x})\bigr),
+    \quad T_0 = 1,\; T_1(\vec{x}) = \vec{x},
+\end{equation}
+where \(\operatorname{sym}\) denotes full symmetrization over all index permutations. This mirrors the scalar recurrence \(\mathrm{He}_\ell(t) = t\,\mathrm{He}_{\ell-1}(t) - (\ell-1)\,\mathrm{He}_{\ell-2}(t)\).
+
+The defining property, which one verifies from~\eqref{app:intro:eq:hermite-tensor-recurrence} by induction, is the contraction identity: for any unit vector \(\vec{v} \in \mathbb{S}^{d-1}\),
+\begin{equation}\label{app:intro:eq:hermite-tensor-contraction}
+    T_\ell(\vec{x})[\underbrace{\vec{v},\,\ldots,\,\vec{v}}_\ell] = \mathrm{He}_\ell(\langle \vec{v},\,\vec{x}\rangle).
+\end{equation}
+For example, when \(\ell = 3\) this is immediate: contracting with \(\vec{v}^{\otimes 3}\),
+\[
+    T_3(\vec{x})[\vec{v},\vec{v},\vec{v}]
+    = (\langle\vec{v},\vec{x}\rangle)^3
+      - \underbrace{\bigl(\delta_{ij}x_k + \delta_{ik}x_j + \delta_{jk}x_i\bigr)v_iv_jv_k}_{=\;3\,\|\vec{v}\|^2\langle\vec{v},\vec{x}\rangle\;=\;3\langle\vec{v},\vec{x}\rangle}
+    = \mathrm{He}_3(\langle\vec{v},\vec{x}\rangle),
+\]
+since each term \(\delta_{ij}x_k v_iv_jv_k = \|\vec{v}\|^2\langle\vec{v},\vec{x}\rangle = \langle\vec{v},\vec{x}\rangle\).
+
+Setting \(\vec{v} = \hat{\vec{w}}^\star\) in~\eqref{app:intro:eq:hermite-tensor-contraction} returns \(\mathrm{He}_\ell(\lambda^\star)\). The Hermite expansion \(h^\star(\lambda^\star) = \sum_{k \geq \ell} a_k\,\mathrm{He}_k(\lambda^\star)\) therefore rewrites as a series of fully contracted tensors:
+\begin{equation}\label{app:intro:eq:hstar-tensor-expansion}
+    h^\star(\lambda^\star)
+    = \sum_{k \geq \ell} a_k\;T_k(\vec{x})\bigl[\underbrace{\hat{\vec{w}}^\star,\ldots,\hat{\vec{w}}^\star}_k\bigr].
+\end{equation}
+The \emph{population identity} follows from tensor Hermite orthogonality. For each \(k\), taking the expectation of~\eqref{app:intro:eq:hstar-tensor-expansion} multiplied by \(T_\ell(\vec{x})\):
+\[
+    \mathbb{E}\!\left[T_k(\vec{x})\bigl[(\hat{\vec{w}}^\star)^{\otimes k}\bigr] \cdot T_\ell(\vec{x})\right]
+    = \mathbb{E}\!\left[\mathrm{He}_k(\lambda^\star)\cdot T_\ell(\vec{x})\right].
+\]
+For \(k \neq \ell\) this vanishes because tensors of different degree are orthogonal in \(L^2(\mathcal{N}(0,I_d))\). For \(k = \ell\), the second-moment identity
+\(\mathbb{E}[(T_\ell(\vec{x}))_{i_1\cdots i_\ell}(T_\ell(\vec{x}))_{j_1\cdots j_\ell}] = \ell!\,\delta^{\mathrm{sym}}_{(i_1\cdots i_\ell)(j_1\cdots j_\ell)}\),
+with \(\delta^{\mathrm{sym}}\) the symmetrized Kronecker product, gives after contracting \(\ell\) indices against \(\hat{\vec{w}}^\star\):
+\[
+    \mathbb{E}\!\left[\mathrm{He}_\ell(\lambda^\star)\cdot T_\ell(\vec{x})_{j_1\cdots j_\ell}\right]
+    = \ell!\,\hat{w}^\star_{j_1}\cdots\hat{w}^\star_{j_\ell}.
+\]
+Summing over \(k\), and using \(a_k = 0\) for \(k < \ell\) by definition of the information exponent, the series collapses to the single term \(k = \ell\):
+\begin{equation}\label{app:intro:eq:pop-identity}
+    \mathbb{E}\!\left[\,y\cdot T_\ell(\vec{x})\,\right] = a_\ell\cdot\ell!\cdot(\hat{\vec{w}}^\star)^{\otimes \ell}.
+\end{equation}
+The right-hand side is a rank one spike of \(\Theta(1)\) magnitude pointing exactly in the teacher direction. Observing this tensor directly would achieve recovery, but it has \(d^\ell\) entries and we have only \(n\) samples. The partial trace collapses it to a matrix or a vector while preserving the rank one structure.
+
+\subsection{The estimator}
+
+Form the empirical version of Equation~\eqref{app:intro:eq:pop-identity} and contract identity pairs to reduce the order of the tensor. Write \([\,I^{\otimes r}\,]\) for the operation of contracting \(r\) pairs of free indices against the \(d \times d\) identity.
+
+\medskip\noindent
+\textbf{\(\ell\) even.} Contract \((\ell-2)/2\) index pairs, landing on a \(d\times d\) matrix:
+\begin{equation}\label{app:intro:eq:estimator-even}
+    M_n = \frac{1}{n}\sum_{i=1}^n y_i\cdot T_\ell(\vec{x}_i)\!\left[\,I^{\otimes(\ell-2)/2}\,\right] \;\in\; \mathbb{R}^{d\times d}, \qquad \hat{\vec{w}} = v_1(M_n),
+\end{equation}
+where \(v_1(\cdot)\) denotes the leading eigenvector.
+
+\medskip\noindent
+\textbf{\(\ell\) odd.} Contract \((\ell-1)/2\) index pairs, landing on a vector:
+\begin{equation}\label{app:intro:eq:estimator-odd}
+    \vec{v}_n = \frac{1}{n}\sum_{i=1}^n y_i\cdot T_\ell(\vec{x}_i)\!\left[\,I^{\otimes(\ell-1)/2}\,\right] \;\in\; \mathbb{R}^d, \qquad \hat{\vec{w}} = \frac{\vec{v}_n}{\norm{\vec{v}_n}}.
+\end{equation}
+
+\medskip
+Taking the expectation in~\eqref{app:intro:eq:estimator-even} and using~\eqref{app:intro:eq:pop-identity}: each traced identity pair uses \(\langle\hat{\vec{w}}^\star,\hat{\vec{w}}^\star\rangle = 1\), so contracting \((\hat{\vec{w}}^\star)^{\otimes\ell}\) against \((\ell-2)/2\) identity matrices leaves a rank one matrix:
+\begin{equation}\label{app:intro:eq:pop-mean}
+    \mathbb{E}[M_n] = a_\ell\cdot\ell!\cdot\hat{\vec{w}}^\star(\hat{\vec{w}}^\star)^\top
+    = \frac{a_\ell\cdot\ell!}{d}\cdot\vec{w}^\star(\vec{w}^\star)^\top,
+\end{equation}
+a rank one spike of strength \(a_\ell\cdot\ell! = \Theta(1)\) along \(\vec{w}^\star\). In the odd case, \(\mathbb{E}[\vec{v}_n] = a_\ell\cdot\ell!\cdot\hat{\vec{w}}^\star\), a vector of \(\Theta(1)\) norm aligned with \(\vec{w}^\star\).
+
+\subsection{Why \(n \asymp d^{\ell/2}\) is the threshold}
+
+Consider the even case; the odd case is analogous. Decompose \(M_n = \mathbb{E}[M_n] + (M_n - \mathbb{E}[M_n])\).
+
+\medskip\noindent\textbf{Signal.} From~\eqref{app:intro:eq:pop-mean}, the spike has operator norm \(\norm{\mathbb{E}[M_n]}_\mathrm{op} = \Theta(1)\).
+
+\medskip\noindent\textbf{Noise.} The fluctuation \(M_n - \mathbb{E}[M_n]\) is an average of \(n\) i.i.d.\ mean zero matrices. Each summand \(y_i\cdot T_\ell(\vec{x}_i)[\,I^{\otimes(\ell-2)/2}\,]\) has \(O(1)\) entries, but a large operator norm: contracting the order-\(\ell\) Hermite tensor down to a matrix leaves a residual operator norm growth of \(d^{(\ell-2)/2}\), which combined with the matrix dimension \(d\) places the fluctuation scale at
+\[
+    \norm{M_n - \mathbb{E}[M_n]}_\mathrm{op} \;\asymp\; \sqrt{\frac{d^{\ell/2}}{n}}\cdot\sqrt{\mathbb{E}[h^{\star 2}]}.
+\]
+This is the heavy-tailed noise phenomenon: unlike standard PCA, where the contracted noise has operator norm \(d^{1/2}\), the contracted degree-\(\ell\) Hermite tensor yields operator norm \(d^{\ell/2}\).
+
+\medskip\noindent\textbf{Detectability.} The spike is visible above the bulk if and only if signal \(\gtrsim\) noise:
+\begin{equation}\label{app:intro:eq:bbp}
+    \Theta(1) \;\gtrsim\; \sqrt{\frac{d^{\ell/2}}{n}} \qquad\Longleftrightarrow\qquad \boxed{n \;\gtrsim\; d^{\ell/2}.}
+\end{equation}
+Above this threshold the leading eigenvector of \(M_n\) satisfies \(\langle \hat{\vec{w}},\,\hat{\vec{w}}^\star\rangle \geq \mathrm{const} > 0\), achieving weak recovery. Below it the spike is submerged in the semicircular bulk (a BBP-type transition at \(n \asymp d^{\ell/2}\)) and \(\lvert\hat{\vec{w}}\cdot\hat{\vec{w}}^\star\rvert \approx d^{-1/2}\), no better than a random initialization.
+
+\subsection{Familiar special cases}
+
+\(\ell = 2\): The contraction \([\,I^{\otimes 0}\,]\) is trivial, and \(T_2(\vec{x}) = \vec{x}\vec{x}^\top - I\), so the estimator reduces to the standard PCA matrix,
+\[
+    M_n = \frac{1}{n}\sum_{i=1}^n y_i\!\left(\vec{x}_i\vec{x}_i^\top - I\right), \qquad \mathbb{E}[M_n] = 2\,a_2\,\hat{\vec{w}}^\star(\hat{\vec{w}}^\star)^\top,
+\]
+recovering \(\vec{w}^\star\) at \(n \asymp d\).
+
+\(\ell = 3\): The vector estimator \(\vec{v}_n = \frac{1}{n}\sum_i y_i\,T_3(\vec{x}_i)[\,I\,]\) contracts one index pair of the third-order tensor to a vector aligned with \(\hat{\vec{w}}^\star\), recovering \(\vec{w}^\star\) at \(n \asymp d^{3/2}\).

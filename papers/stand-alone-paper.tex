@@ -8,6 +8,10 @@
 % \jobname, and uses biblatex (alphabetic) with the biber backend.
 \documentclass[11pt]{article}
 
+% article has no chapter counter; provide a dummy so thesis-style.sty can
+% define \newtheorem{example}{Example}[chapter] without error.
+\newcounter{chapter}
+
 \usepackage{thesis-style}  % must precede papers-dependencies.tex so its \PassOptionsToPackage calls take effect
 
 \input{papers-dependencies.tex}
