@@ -185,4 +185,26 @@
 \RequirePackage{amsthm}
 \newtheorem{example}{Example}[chapter]
 
+% --- Numbered publication list (foreword) --------------------------------
+% \begin{contribution}{title}{authors}{venue} abstract text \end{contribution}
+% Uses a single global counter across the whole document.
+\newcounter{contribution}
+\newenvironment{contribution}[4]{%
+  % #1=title  #2=authors  #3=venue  #4=abstract (e.g. \input{...})
+  \refstepcounter{contribution}%
+  \par\medskip
+  \noindent\textbf{\arabic{contribution}.}\enspace\textbf{#1}\newline
+  {\small\itshape #2}\newline
+  {\small\itshape #3}%
+  {\setlength{\parskip}{0pt}\par}%
+  \begingroup\small\setlength{\parindent}{0pt}\setlength{\leftskip}{1.5em}%
+  \noindent\textsc{Abstract.}\enspace #4\par
+  \endgroup
+  {\setlength{\parskip}{0pt}\par}%
+  \begingroup\small\setlength{\parindent}{0pt}\setlength{\leftskip}{1.5em}%
+  \noindent\textsc{Contribution.}\enspace\ignorespaces
+}{%
+  \par\endgroup
+}
+
 \endinput

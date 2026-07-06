@@ -1,4 +1,146 @@
 \chapter*{Foreword}
 \addcontentsline{toc}{chapter}{Foreword}
 
-[Foreword --- placeholder.]
+In this thesis, we study the training dynamics of neural networks under stochastic gradient
+descent, with a focus on characterizing \emph{when} and \emph{how fast} learning happens.
+Our analysis is inspired by the statistical physics of high-dimensional systems: we work
+in the limit where both the input dimension and the dataset size are large and
+proportional, and we use a low-dimensional equations that
+describe the full training trajectory.
+The central organizing concept is the \emph{information exponent}, an integer that measures
+the flatness of the loss landscape near initialization and turns out to control the sample
+complexity of learning across a wide range of architectures and training protocols.
+
+To set the stage, Chapter~\ref{chap:introduction} develops the mathematical framework
+that underlies the subsequent chapters.
+We motivate the statistical physics approach, introduce the teacher--student setup that
+serves as our laboratory throughout the thesis, and derive the Saad--Solla ordinary
+differential equations governing online SGD in two-layer networks.
+We then show how the information exponent emerges from these equations as the key
+quantity controlling escape from the initialization saddle, and we discuss its
+generalizations to multi-index functions and broader algorithm classes.
+
+Chapter~\ref{chap:paper-2302} provides a unifying derivation of dimensionless ODEs for
+SGD, reconciling the high-dimensional and mean-field viewpoints within a single framework
+and identifying the minimal set of order parameters needed to describe training.
+Chapter~\ref{chap:paper-2305} applies this framework to characterize the escape from
+mediocre initialization when learning hard single-index models, giving sharp conditions
+on the activation function and loss under which SGD succeeds or stalls.
+
+Chapters~\ref{chap:paper-2406} and~\ref{chap:paper-2405} extend the theory in two
+complementary directions.
+Chapter~\ref{chap:paper-2406} keeps the single-index setting and examines the role of
+batch size, showing that it governs a fundamental time--complexity tradeoff: larger batches
+can effectively lower the information exponent and shift the sample complexity from
+polynomial to linear in the input dimension.
+Chapter~\ref{chap:paper-2405} turns to multi-index models, where the target function
+depends on several latent directions simultaneously, and shows that a simple
+data-repetition scheme restores learnability in this harder setting by allowing the network
+to learn one direction at a time.
+
+Chapter~\ref{chap:paper-2506} extends the framework beyond fully connected two-layer
+networks to sequence models and single-layer attention networks.
+We derive the SGD asymptotics in this architecturally richer setting and show that
+analogous effective equations govern learning, with the information exponent retaining
+its organizing role even when the architecture introduces structured dependencies between
+tokens.
+
+Each paper chapter opens with its abstract and author list, as the work was collaborative.
+Appendices are collected at the back of the thesis rather than at the end of each chapter,
+and the bibliography is shared across all chapters.
+
+\subsection*{Publications}
+This thesis is a collection of 5 papers I have co-authored during my PhD.
+Below I summarize each paper's contribution.
+
+\begin{contribution}
+  {From high-dimensional \& mean-field dynamics to dimensionless ODEs:
+   A unifying approach to SGD in two-layer networks}
+  {Luca Arnaboldi, Ludovic Stephan, Florent Krzakala, Bruno Loureiro}
+  {Conference on Learning Theory (COLT) 2023}
+  {\input{../papers/2302/abstract.tex}}
+  I have contributed with all numerical experiments and illustration.
+  I have helped designing part of the theoretical framework.
+\end{contribution}
+
+\begin{contribution}
+  {Escaping mediocrity: how two-layer networks learn hard generalized
+   linear models with SGD}
+  {Luca Arnaboldi, Florent Krzakala, Bruno Loureiro, Ludovic Stephan}
+  {arXiv preprint 2023}
+  {\input{../papers/2305/abstract.tex}}
+  I have authored the theoretical framework and the numerical experiments.
+\end{contribution}
+
+\begin{contribution}
+  {Online Learning and Information Exponents: On The Importance of
+   Batch size, and Time / Complexity Tradeoffs}
+  {Luca Arnaboldi, Yatin Dandi, Florent Krzakala, Bruno Loureiro, Luca Pesce, Ludovic Stephan}
+  {International Conference on Machine Learning (ICML) 2024}
+  {\input{../papers/2406/abstract.tex}}
+  I have contributed to the problem formulation and design.
+  I have designed the code for the numerical experiments, and executed a portion of them.
+\end{contribution}
+
+\begin{contribution}
+  {Repetita Iuvant: Data Repetition Allows SGD to Learn
+   High-Dimensional Multi-Index Functions}
+  {Luca Arnaboldi, Yatin Dandi, Florent Krzakala, Luca Pesce, Ludovic Stephan}
+  {arXiv preprint 2024}
+  {\input{../papers/2405/abstract.tex}}
+  I contributed to the problem formulation and design.
+  I have designed the code for the numerical experiments, and executed a portion of them.
+\end{contribution}
+
+\begin{contribution}
+  {Asymptotics of SGD in Sequence-Single Index Models and
+   Single-Layer Attention Networks}
+  {Luca Arnaboldi, Bruno Loureiro, Ludovic Stephan, Florent Krzakala, Lenka Zdeborov\'{a}}
+  {Neural Information Processing Systems (NeurIPS) 2025}
+  {\input{../papers/2506/abstract.tex}}
+  I have designed the theoretical framework, not including the formal proofs.
+  I have conducted all numerical experiments and illustrations.
+\end{contribution}
+
+A paper partially related to the thesis work, but not included in the thesis, is:
+
+\begin{contribution}
+  {The Benefits of Reusing Batches for Gradient Descent in Two-Layer
+   Networks: Breaking the Curse of Information and Leap Exponents}
+  {Yatin Dandi, Emanuele Troiani, Luca Arnaboldi, Luca Pesce, Lenka Zdeborov\'{a}, Florent Krzakala}
+  {International Conference on Machine Learning (ICML) 2024}
+  {\input{../papers/2402/abstract.tex}}
+  I contributed to the problem formulation and design.
+  I participated in the numerical implementation and executed a portion of the numerical experiments.
+\end{contribution}
+
+My collaborators and I have also explored a new promising line of research on the spectral theory of hierarchical feature learning in deep networks.
+\begin{contribution}
+  {Deep Learning as Neural Low-Degree Filtering: A Spectral Theory of
+   Hierarchical Feature Learning}
+  {Yatin Dandi, Matteo Vilucchio, Luca Arnaboldi, Hugo Tabanelli, Florent Krzakala}
+  {arXiv preprint 2026, under review at NeurIPS 2026}
+  {\input{../papers/2605/abstract.tex}}
+  I have contributed to the codebase for the numerical experiments, and executed a portion of them.
+\end{contribution}
+
+In the last two years of the doctoral program, we have started a collaboration on large language models for information retrieval, that ended up in a state of the art model on BEIR benchmark, under the calls of models <150M.
+\addnote{The model was SOTA when released in January 2026, but has been surpassed since then.}
+This project was possible thanks to a grant won with Swiss AI Initiative, for 26'000 GPU hours on the Swiss National Supercomputing Centre (CSCS) Clariden cluster.
+\begin{contribution}
+  {ColBERT-Zero: To Pre-train Or Not To Pre-train ColBERT models}
+  {Antoine Chaffin, Luca Arnaboldi, Am\'{e}lie Chatelain, Florent Krzakala}
+  {Late Interaction Workshop at European Conference on Information Retrieval (ECIR) 2026}
+  {\input{../papers/2602/abstract.tex}}
+  I was responsible for writing and deploying the training code on the cluster, running all ablations; I have also made some minor contributions to the underlying packages (\texttt{pylate}, \texttt{sentence-transformers}) that power the training code.
+\end{contribution}
+
+
+Finally, I was part of the creation of one of the most used benchmarks for measuring the reasoning capabilities of large language models, called \emph{Humanity Last Exam}.
+\begin{contribution}
+  {A benchmark of expert-level academic questions to assess {AI} capabilities}
+  {{Center for AI Safety}, {Scale AI}, {HLE Contributors Consortium}}
+  {Nature vol. 649}
+  {Benchmarks are important tools for tracking the rapid advancements in large language model (LLM) capabilities. However, benchmarks are not keeping pace in difficulty: LLMs now achieve over 90\% accuracy on popular benchmarks like MMLU, limiting informed measurement of state-of-the-art LLM capabilities. In response, we introduce Humanity's Last Exam (HLE), a multi-modal benchmark at the frontier of human knowledge, designed to be the final closed-ended academic benchmark of its kind with broad subject coverage. HLE consists of 2,500 questions across dozens of subjects, including mathematics, humanities, and the natural sciences. HLE is developed globally by subject-matter experts and consists of multiple-choice and short-answer questions suitable for automated grading. Each question has a known solution that is unambiguous and easily verifiable, but cannot be quickly answered via internet retrieval. State-of-the-art LLMs demonstrate low accuracy and calibration on HLE, highlighting a significant gap between current LLM capabilities and the expert human frontier on closed-ended academic questions. To inform research and policymaking upon a clear understanding of model capabilities, we publicly release HLE at \href{https://lastexam.ai/}{this https URL}.}
+  I have designed 2 question that were included in the benchmark, that at the time of the release were not solvable by any LLM.
+\end{contribution}
