@@ -5,6 +5,11 @@
       "find": "\\cite{{dandi2023twolayer}}",
       "replace": "\\cite{dandi2023how}",
       "comment": "Upstream typo in sections/appendix/glm_expansion.tex: \\cite{{...}} with double braces slipped past the citation-key rewriter (which only matches single-brace \\cite{key}). After rewrite, dandi2023twolayer maps to dandi2023how per arXiv-2406-citation-map.json (legitimate dedup of the same paper, arXiv:2305.18270)."
+    },
+    {
+      "find": "\\onecolumn\n",
+      "replace": "",
+      "comment": "assembler.tex:122 switches the (two-column NeurIPS-style) body to one-column for the appendix. The thesis is one-column throughout, so this is a no-op layout-wise -- but \\onecolumn's kernel definition is an unconditional \\clearpage, which strands the appendix chapter's title alone on its opening page (next page starts the real appendix content). Dropping it removes the forced page break; ends up as an empty appendices/section.tex, harmless as a \\subimport."
     }
   ]
 }
