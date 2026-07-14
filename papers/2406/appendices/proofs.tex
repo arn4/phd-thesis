@@ -239,7 +239,10 @@ The contribution of the terms $Z_t$ is bounded by the following lemma:
 \begin{proposition}\label{2406:prop:app:diff_ineq_estimates}
     Let $T \geq 0$. There exists constants $c, C > 0$ such that
     \begin{equation}
-        \mathbb{P}\left(m_t \geq m_0 + \sum_{s=0}^{t-1} \Phi_{\mathrm{drift}}(m_s) - C\Phi_{\mathrm{noise}}(m_s) - C K(T) \quad \forall t \leq T \quad \big\vert\quad \bigcap_{t\leq T} \cE_t \right) \geq 1 - Te^{-c\log(n)^2}
+        \begin{aligned}
+            &\mathbb{P}\left(m_t \geq m_0 + \sum_{s=0}^{t-1} \Phi_{\mathrm{drift}}(m_s) - C\Phi_{\mathrm{noise}}(m_s) - C K(T) \quad \forall t \leq T \quad \big\vert\quad \bigcap_{t\leq T} \cE_t \right) \\
+            &\geq 1 - Te^{-c\log(n)^2}
+        \end{aligned}
     \end{equation}
     where $\Phi_{\mathrm{drift}}$ and $\Phi_{\mathrm{noise}}$ are given by
     \begin{align}

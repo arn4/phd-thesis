@@ -13,13 +13,14 @@ Definition~\ref{2506:def:sie} of the sequence information exponent does not appl
 
 The population loss function is given by
 \begin{equation}\begin{split}
-    R(e,m) &= \mathbb{E}_{\vec{z},\vec{z}_\star \sim \mathcal{P}(e,m)} \left[\norm{
+    R(e,m) &= \mathbb{E}_{\vec{z},\vec{z}_\star \sim \mathcal{P}(e,m)} \Biggl[\Biggl\lVert
         (1-\omega) \SoftMax\left(\vec{z}_\star \vec{z}_\star^\top \right) + \omega \SoftMax\left[\begin{pmatrix}
         a^2 & -a^2 \\
         -a^2 & a^2 \\
-    \end{pmatrix}\right]- \SoftMax\left(\vec{z} \vec{z}^\top \right)
-    }_F\right] \\
-    &= \mathbb{E}_{\vec{z},\vec{z}_\star \sim \mathcal{P}(e,m)} \left[\mathcal{L}(\vec{z},\vec{z}_\star)\right] 
+    \end{pmatrix}\right] \\
+    &\qquad\qquad {}- \SoftMax\left(\vec{z} \vec{z}^\top \right)
+    \Biggr\rVert_F\Biggr] \\
+    &= \mathbb{E}_{\vec{z},\vec{z}_\star \sim \mathcal{P}(e,m)} \left[\mathcal{L}(\vec{z},\vec{z}_\star)\right]
 \end{split}\end{equation}
 with
 \begin{equation}
@@ -81,9 +82,9 @@ where in the last step we used again the small learning rate limit.
     \frac{\partial \mathcal{L}}{\partial m}\cdot \frac{\vec{w}_\star}{d} + \frac{\partial \mathcal{L}}{\partial e}\cdot \frac{\vec p}{\sqrt{d}}
  \]
  We can rearrange the equation above as
- \[
-    \frac{m^{\tau+1} - m^\tau}{\sfrac{\gamma}{d}} = -\vec{w}_\star \cdot \left(\frac{\partial \mathcal{L}}{\partial m}\cdot \frac{\vec{w}_\star}{d} + \frac{\partial \mathcal{L}}{\partial e}\cdot \frac{\vec p}{\sqrt{d}}\right) + \vec{w} \cdot \left(\frac{\partial \mathcal{L}}{\partial m}\cdot \frac{\vec{w}_\star}{d} + \frac{\partial \mathcal{L}}{\partial e}\cdot \frac{\vec p}{\sqrt{d}}\right) = -\frac{\partial \mathcal{L}}{\partial m} + m\frac{\partial \mathcal{L}}{\partial m} + e\frac{\partial \mathcal{L}}{\partial e}
- \]
+ \[\begin{split}
+    \frac{m^{\tau+1} - m^\tau}{\sfrac{\gamma}{d}} =& -\vec{w}_\star \cdot \left(\frac{\partial \mathcal{L}}{\partial m}\cdot \frac{\vec{w}_\star}{d} + \frac{\partial \mathcal{L}}{\partial e}\cdot \frac{\vec p}{\sqrt{d}}\right) + \vec{w} \cdot \left(\frac{\partial \mathcal{L}}{\partial m}\cdot \frac{\vec{w}_\star}{d} + \frac{\partial \mathcal{L}}{\partial e}\cdot \frac{\vec p}{\sqrt{d}}\right) \\=& -\frac{\partial \mathcal{L}}{\partial m} + m\frac{\partial \mathcal{L}}{\partial m} + e\frac{\partial \mathcal{L}}{\partial e}
+ \end{split}\]
  where we used the fact \(\vec p \cdot \vec{w}_\star \approx 0\) in high dimension (as already assumed above), and \(\norm{\vec{w}_\star}=d\).
 
  We are interested in what is happening at initialization, therefore all the derivatives should be evaluated around \((e,m)=0\). We already know that \(\left.\nabla_{e,m}\mathcal{L}\right|_{e=m=0}=0,\) so we expand the at the next order in \(m\)

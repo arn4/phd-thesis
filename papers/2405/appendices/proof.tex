@@ -64,15 +64,27 @@ We fix a vector $\vec{v}$ and consider the random process $m_t(\vec{v}) := \lang
       \end{align*}
   \end{itemize}
   By recursion, deterministically,
-  \[ m_t(\vec{v}) \geq m_0(\vec{v}) + \gamma\sum_{s = 0}^{t-1} \left(\langle \Phi(\vec{u}_s), \vec{v} \rangle - \gamma\norm{\Phi(\vec{u}_s)}^2\langle \vec{u}_s, \vec{v} \rangle\right) - \sum_{s=0}^{t-1}\gamma^3 \left|\langle \Phi(\vec{u}_s), \vec{v} \rangle\right|\norm{\Phi(\vec{u}_s)}^2 \]
+  \[
+    \resizebox{\linewidth}{!}{$\displaystyle
+      m_t(\vec{v}) \geq m_0(\vec{v}) + \gamma\sum_{s = 0}^{t-1} \left(\langle \Phi(\vec{u}_s), \vec{v} \rangle - \gamma\norm{\Phi(\vec{u}_s)}^2\langle \vec{u}_s, \vec{v} \rangle\right) - \sum_{s=0}^{t-1}\gamma^3 \left|\langle \Phi(\vec{u}_s), \vec{v} \rangle\right|\norm{\Phi(\vec{u}_s)}^2
+    $}
+  \]
 
   Since Assumption~\ref{2405:assump:app:concentration} implies Assumption B in \cite{arous2021online}, for a small enough choice of $c(\delta, \alpha)$, one has
   \[ \dP\left( \sum_{t=0}^T\gamma^3 \left|\langle \Phi(\vec{u}_t), \vec{v} \rangle\right| \norm{\Phi(\vec{u}_s)}^2 \leq \frac{\alpha\kappa}{2\sqrt{d}} \right) \geq 1 - \frac\delta6. \]
 
   Additionnally, the same assumption implies that
-  \[ \operatorname{Var}(\langle \Phi(\vec{u}_s), \vec{v} \rangle)  \leq \Ea{\langle \Phi(\vec{u}_s), \vec{v} \rangle^2} \leq C_1 \quad \text{and} \quad \operatorname{Var}(\gamma\norm{\Phi(\vec{u}_s)}^2) \leq \gamma^2\Ea{\norm{\Phi(\vec{u}_s)}^4} \leq c(\delta)^2 C_1.\]
+  \[
+    \resizebox{\linewidth}{!}{$\displaystyle
+      \operatorname{Var}(\langle \Phi(\vec{u}_s), \vec{v} \rangle)  \leq \Ea{\langle \Phi(\vec{u}_s), \vec{v} \rangle^2} \leq C_1 \quad \text{and} \quad \operatorname{Var}(\gamma\norm{\Phi(\vec{u}_s)}^2) \leq \gamma^2\Ea{\norm{\Phi(\vec{u}_s)}^4} \leq c(\delta)^2 C_1.
+    $}
+  \]
   We can then apply Doob's martingale inequality: there exists a constant $C(\delta)$ such that with probability at least $1 - \frac\delta6$
-  \[ \sup_{t \leq T} \left| \gamma\sum_{s = 0}^t  \left( \langle \Phi(\vec{u}_s), \vec{v} \rangle - \gamma\norm{\Phi(\vec{u}_s)}^2\langle \vec{u}_s, \vec{v} \rangle - \Ea{\langle \Phi(\vec{u}_s), \vec{v} \rangle - \gamma\norm{\Phi(\vec{u}_s)}^2\langle \vec{u}_s, \vec{v} \rangle} \right) \right| \leq C(\delta)\gamma\sqrt{T}. \]
+  \[
+    \resizebox{\linewidth}{!}{$\displaystyle
+      \sup_{t \leq T} \left| \gamma\sum_{s = 0}^t  \left( \langle \Phi(\vec{u}_s), \vec{v} \rangle - \gamma\norm{\Phi(\vec{u}_s)}^2\langle \vec{u}_s, \vec{v} \rangle - \Ea{\langle \Phi(\vec{u}_s), \vec{v} \rangle - \gamma\norm{\Phi(\vec{u}_s)}^2\langle \vec{u}_s, \vec{v} \rangle} \right) \right| \leq C(\delta)\gamma\sqrt{T}.
+    $}
+  \]
   The bound~\eqref{2405:eq:app:bound_gamma_T} on $T$ implies that we can choose $c(\delta, \alpha)$ small enough so that
   \[ C(\delta)\gamma\sqrt{T} \leq \frac{C(\delta) \sqrt{c(\delta, \alpha)}}{\sqrt{d}} \leq \frac{\alpha\kappa}{2\sqrt{d}}.\]
   Combining all those inequalities with a union bound, under the event of Eq.~\eqref{2405:eq:app:large_init_event},
@@ -127,7 +139,9 @@ It turns out that in this case, we can control accurately the trajectory of $W^\
   \[ C(\delta)d^{-1/2}\leq \frac{\eta\epsilon}{3} \norm{\psi(\vec{0})}, \]
   we have
   \begin{equation}
-    \gamma t \left(\norm{\psi(\vec{0})}^2 - (2\epsilon' + \eta q) \norm{\psi(\vec{0})}\right)  \leq \langle \vec{u}_t, \psi(\vec{0}) \rangle \leq \frac{\eta\epsilon}{2} \norm{\psi(\vec{0})} + \gamma t  \left(\norm{\psi(\vec{0})}^2 + (\epsilon' + \eta q) \norm{\psi(\vec{0})}\right).
+    \resizebox{\linewidth}{!}{$\displaystyle
+      \gamma t \left(\norm{\psi(\vec{0})}^2 - (2\epsilon' + \eta q) \norm{\psi(\vec{0})}\right)  \leq \langle \vec{u}_t, \psi(\vec{0}) \rangle \leq \frac{\eta\epsilon}{2} \norm{\psi(\vec{0})} + \gamma t  \left(\norm{\psi(\vec{0})}^2 + (\epsilon' + \eta q) \norm{\psi(\vec{0})}\right).
+    $}
   \end{equation}
 
   For small enough $\epsilon$ and $q$, the LHS of the above inequality is always at least $\gamma t \norm{\psi(0)}^2 / 2$, which implies that
@@ -302,18 +316,26 @@ Define the following quantities:
 \end{align}
 
   For simplicity, we let $u = \langle \vec{w}, \vec{z} \rangle + a_0\rho_0 h^\star(\langle \vec{w}^\star, \vec{z} \rangle)$. Doing a Taylor expansion of $\sigma'$ in the second order, we have
-  \begin{align*}
-    \sigma'\left(\langle \vec{w}, \vec{z} \rangle + \rho h^\star(\langle \vec{w}^\star, \vec{z} \rangle) \sigma'(\langle \vec{w}, \vec{z} \rangle) \cdot \norm{\vec{z}}^2\right) = &\sigma'(u)
-    + \sigma''(u) \rho h^\star(\langle \vec{w}^\star, \vec{z} \rangle) \sigma'(\langle \vec{w}, \vec{z} \rangle) \cdot  \left(\norm{\vec{z}}^2 - d \right) \\
-    &+ R(u) \rho^2 h^\star(\langle \vec{w}^\star, \vec{z} \rangle)^2 \sigma'(\langle \vec{w}, \vec{z} \rangle)^2 \cdot  \left(\norm{\vec{z}}^2 - d \right)^2 ,
-  \end{align*}
+  \[
+    \resizebox{\linewidth}{!}{$\displaystyle
+      \begin{aligned}
+        \sigma'\left(\langle \vec{w}, \vec{z} \rangle + \rho h^\star(\langle \vec{w}^\star, \vec{z} \rangle) \sigma'(\langle \vec{w}, \vec{z} \rangle) \cdot \norm{\vec{z}}^2\right) = &\sigma'(u)
+        + \sigma''(u) \rho h^\star(\langle \vec{w}^\star, \vec{z} \rangle) \sigma'(\langle \vec{w}, \vec{z} \rangle) \cdot  \left(\norm{\vec{z}}^2 - d \right) \\
+        &+ R(u) \rho^2 h^\star(\langle \vec{w}^\star, \vec{z} \rangle)^2 \sigma'(\langle \vec{w}, \vec{z} \rangle)^2 \cdot  \left(\norm{\vec{z}}^2 - d \right)^2 ,
+      \end{aligned}
+    $}
+  \]
   where $R(u)$ is the Taylor remainder of $\sigma'$ at second order around $u$.
 
   The distribution of the triplet $(\langle \vec{w}, \vec{z} \rangle, \langle \vec{w^\star}, \vec{z} \rangle, \langle \vec{w^\star}, \vec{z}^\bot \rangle)$ is the same as the one of $(x, x^\star, x^\bot)$, hence
-  \begin{align*}
-    \Ea{\langle \Phi(\vec{z}), \vec{w}^\star \rangle} - a_0\phi(m) = &\underbrace{\rho\Ea{\sigma''(u)  h^\star(\langle \vec{w}^\star, \vec{z} \rangle)^2 \sigma'(\langle \vec{w}, \vec{z} \rangle) \cdot  \left(\norm{\vec{z}}^2 - d \right) \langle \vec{w}^\star, \vec{z}^\bot \rangle}}_{(1)} \\
-    &+ \underbrace{\rho^2 \Ea{R(u) h^\star(\langle \vec{w}^\star, \vec{z} \rangle)^3 \sigma'(\langle \vec{w}, \vec{z} \rangle)^2 \cdot  \left(\norm{\vec{z}}^2 - d \right)^2  \langle \vec{w}^\star, \vec{z}^\bot \rangle}}_{(2)}.
-  \end{align*}
+  \[
+    \resizebox{\linewidth}{!}{$\displaystyle
+      \begin{aligned}
+        \Ea{\langle \Phi(\vec{z}), \vec{w}^\star \rangle} - a_0\phi(m) = &\underbrace{\rho\Ea{\sigma''(u)  h^\star(\langle \vec{w}^\star, \vec{z} \rangle)^2 \sigma'(\langle \vec{w}, \vec{z} \rangle) \cdot  \left(\norm{\vec{z}}^2 - d \right) \langle \vec{w}^\star, \vec{z}^\bot \rangle}}_{(1)} \\
+        &+ \underbrace{\rho^2 \Ea{R(u) h^\star(\langle \vec{w}^\star, \vec{z} \rangle)^3 \sigma'(\langle \vec{w}, \vec{z} \rangle)^2 \cdot  \left(\norm{\vec{z}}^2 - d \right)^2  \langle \vec{w}^\star, \vec{z}^\bot \rangle}}_{(2)}.
+      \end{aligned}
+    $}
+  \]
   We first bound (2). From the Hölder inequality (since $\frac12 + \frac18 + \frac18 + \frac18 + \frac18 = 1$),
   \begin{align*}
     (2) &\leq \rho^2 \Ea{R(u)^8}^{\frac18}\Ea{h^\star(x^\star)^8}^{\frac18}\Ea{\sigma'(x)^8}^{\frac18}\Ea{\langle \vec{w}^\star, \vec{z}^\bot \rangle^8}^{\frac18}\Ea{\left(\norm{\vec{z}}^2 - d \right)^4}^{\frac12}
@@ -373,11 +395,15 @@ We define the following quantities related to Assumption~\ref{2405:assump:init}:
   \Delta^{(k)} &= \Ea{h^\star(x^\star)^k}
 \end{align*}
 Then, by Proposition 11.37 from \cite{odonnell2014analysis}, and using $x^\bot = x^\star - mx$:
-\begin{align*}
-  \left.\frac{\partial^k \phi(m; \rho_0)}{\partial \rho_0^k}\right|_{\rho_0 = 0} &= \Ea{h^\star(x^\star)^{k+1} x^\star \sigma^{(k+1)}(x) \sigma'(x)^k} - m \cdot \Ea{h^\star(x^\star)^{k+1} x \sigma^{(k+1)}(x) \sigma'(x)^k} \\
-  &= \left(u_{0}^{(k)}v_{0}^{(k)} + u_{1}^{(k)}(v_{1}^{(k)} + \Delta^{(k)})\cdot m + o(m)\right) - m \left(u_1^{(k)} \Delta^{(k)} + o(1)\right) \\
-  &= u_{0}^{(k)}v_{0}^{(k)} + u_{1}^{(k)}v_{1}^{(k)}\cdot m + o(m)
-\end{align*}
+\[
+  \resizebox{\linewidth}{!}{$\displaystyle
+    \begin{aligned}
+      \left.\frac{\partial^k \phi(m; \rho_0)}{\partial \rho_0^k}\right|_{\rho_0 = 0} &= \Ea{h^\star(x^\star)^{k+1} x^\star \sigma^{(k+1)}(x) \sigma'(x)^k} - m \cdot \Ea{h^\star(x^\star)^{k+1} x \sigma^{(k+1)}(x) \sigma'(x)^k} \\
+      &= \left(u_{0}^{(k)}v_{0}^{(k)} + u_{1}^{(k)}(v_{1}^{(k)} + \Delta^{(k)})\cdot m + o(m)\right) - m \left(u_1^{(k)} \Delta^{(k)} + o(1)\right) \\
+      &= u_{0}^{(k)}v_{0}^{(k)} + u_{1}^{(k)}v_{1}^{(k)}\cdot m + o(m)
+    \end{aligned}
+  $}
+\]
 This allows us to show Proposition \ref{2405:prop:app:phi_phip_nnz}:
 \begin{proof}
   Assume first that $\ell_p^\star = 1$. Then $\phi(0; \rho_0)$ is an analytic function of $\rho_0$ with
@@ -506,7 +532,11 @@ Let $\sigma$ be an analytic function which is not a polynomial. Then for any $k 
   \[ \Ea{x f(x+b)} = \Ea{f'(x+b)}. \]
 \end{proof}
 The above shows that for fixed $n \in \mathbb{N}$, the set
-\[ \mathcal{B}_n = \left\{ b \in \R \ : \ \Ea{\sigma^{(n)}(x+b) \sigma'(x+b)^{n-1}} = 0 \quad \text{or} \quad \Ea{x \sigma^{(n)}(x+b) \sigma'(x+b)^{n-1}} = 0  \right\} \]
+\[
+  \resizebox{\linewidth}{!}{$\displaystyle
+    \mathcal{B}_n = \left\{ b \in \R \ : \ \Ea{\sigma^{(n)}(x+b) \sigma'(x+b)^{n-1}} = 0 \quad \text{or} \quad \Ea{x \sigma^{(n)}(x+b) \sigma'(x+b)^{n-1}} = 0  \right\}
+  $}
+\]
 has measure $0$. Since there is a countable number of such subsets, the set
 \[ \mathcal{B} = \bigcup_{n \in \mathbb{N}} \mathcal{B}_n \]
 also has measure zero, which is equivalent to the statement of Lemma~\ref{2405:lem:bias_activation}.

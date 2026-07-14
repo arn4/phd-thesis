@@ -26,9 +26,9 @@ The numerical procedure is as follows:
             \{X_i\}_{i=1}^{N_\mathrm{int}^{2L}} = \bigotimes_{l=1}^{2L} \{x_i\}_{i=1}^{N_\mathrm{int}} \text{ and } \{W_i\}_{i=1}^{N_\mathrm{int}^{2L}} = \bigotimes_{l=1}^{2L} \{w_i\}_{i=1}^{N_\mathrm{int}}
           \]
     \item Let \(T\) be the Cholesky decomposition of \(\Sigma\), i.e. \(\Sigma = T^\top T\). We can then change the variable to \(y = T^{-1}(x - \mu)\) and compute the integral as
-          \[
-            I=\int_{\mathbb{R}^{2L}} f(x) \frac{1}{(2\pi)^{L}} \exp\left(-\frac{1}{2} (x - \mu)^\top \Sigma^{-1} (x - \mu)\right) dx = \int_{\mathbb{R}^{2L}} f(Ty + \mu) \frac{1}{(2\pi)^{L}} \exp\left(-\frac{1}{2} y^\top y\right) dy
-          \]
+          \[\begin{split}
+            I=&\int_{\mathbb{R}^{2L}} f(x) \frac{1}{(2\pi)^{L}} \exp\left(-\frac{1}{2} (x - \mu)^\top \Sigma^{-1} (x - \mu)\right) dx \\=& \int_{\mathbb{R}^{2L}} f(Ty + \mu) \frac{1}{(2\pi)^{L}} \exp\left(-\frac{1}{2} y^\top y\right) dy
+          \end{split}\]
     \item The integral can then be approximated, as
           \[
             I \approx \sum_{i=1}^{N_\mathrm{int}^{2L}} \left(\prod_{l=1}^{2L}W_{i,l}\right) f(TX_i + \mu)

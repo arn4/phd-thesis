@@ -41,12 +41,12 @@ We begin by computing the expectation of the gradient term:
 
 \begin{proof}
   Recall that $\cL(X, y, f) = (y - f(X))^2 = y^2 - 2yf(X) + f(X)^2$. For simplicity, define
-\[ \tilde\vw_{\text{tied}} = (\vw\  \vw \dots \vw)\in \dR^{dL}, \quad \tilde\vw_{\text{untied}} = (\vw_1 \dots \vw_L)\in \dR^{dL} \quand \tilde W^\star = \begin{pmatrix}
+\[\begin{split} \tilde\vw_{\text{tied}} =& (\vw\  \vw \dots \vw)\in \dR^{dL},\\ \quad \tilde\vw_{\text{untied}} =& (\vw_1 \dots \vw_L)\in \dR^{dL}, \text{ and} \\ \tilde W^\star =& \begin{pmatrix}
     \vw_1^\star & \vec{0} & \cdots & \vec{0} \\
     \vec{0} & \vw_2^\star & \cdots & \vec{0} \\
     \vdots & \vdots & \ddots & \vdots \\
     \vec{0} & \vec{0} & \cdots & \vw_L^\star 
-\end{pmatrix} \in \dR^{L \times dL} \]
+\end{pmatrix} \in \dR^{L \times dL} \end{split}\]
 
 Then, for $\square \in \{ \text{tied}, \text{untied}\}$, we have 
 \[ f_\square(X) = \sigma\left(\frac{\langle \tilde\vw_\square, \Flatten(X) \rangle}{\sqrt{L}}\right)\quand y(X) = g(\tilde W^\star \cdot \Flatten(X)).\]
@@ -98,7 +98,11 @@ We turn our attention to the inhibitive terms in Proposition~\ref{2506:prop:app:
 
 We write $\vec{x}_i = \vec{x}_i^\parallel + \vec{x}_i^\bot$, where $\vec{x}_i^\parallel$ is the projection on $\vec{x}_i$ on the subspace spanned by $\vw$ and $\vw^\star$.
 Then
-\[ \nabla_{\vw}^\bot \cL(X, y, f) = 2\sigma'\left( \frac{\langle \vw_{\text{tied}}, \Flatten(X)\rangle}{\sqrt{L}} \right)\left(\sigma'\left( \frac{\langle \vw_{\text{tied}}, \Flatten(X)\rangle}{\sqrt{L}} \right) - y(X)\right) \cdot \frac{\sum_{i} (I - \vw \vw^\bot) \vec{x}_i^\parallel + \sum_i \vec{x}_i^\bot }{\sqrt{L}} \]
+\[
+    \resizebox{\linewidth}{!}{$\displaystyle
+      \nabla_{\vw}^\bot \cL(X, y, f) = 2\sigma'\left( \frac{\langle \vw_{\text{tied}}, \Flatten(X)\rangle}{\sqrt{L}} \right)\left(\sigma'\left( \frac{\langle \vw_{\text{tied}}, \Flatten(X)\rangle}{\sqrt{L}} \right) - y(X)\right) \cdot \frac{\sum_{i} (I - \vw \vw^\bot) \vec{x}_i^\parallel + \sum_i \vec{x}_i^\bot }{\sqrt{L}}
+    $}
+  \]
 Importantly, the vector $x_i^\bot$ is independent from any of the prefactors, and has norm $d-2$, while the first vector is a fixed-dimensional Gaussian. As a result, we have
 \[ \E*{\norm{\nabla_{\vw}^\bot \cL(X, y, f)}^2} = \E*{f_{\vw}(X)^2(y(X) - f_{\vw}(X))^2}(d-2) + O(1) \]
 It remains to show that the expectation above is bounded away from zero. Assuming that the labels are centered for simplicity, when $m = 0$ the expectation simplifies to
@@ -125,7 +129,7 @@ This implies:
     \item when $\sie = 2$,
     \[ m(t) \geq m_0\exp\left(\frac{C_{\sie} \times (\ind_L, \dots, \ind_L)}{2}t\right), \quad \text{hence} \quad \tau_\eta \leq \frac{C'\ln(d)}{C_{\sie} \times (\ind_L, \dots, \ind_L)}; \]
     \item when $\sie \geq 2$,
-    \[ m(t) \geq \left(m(0)^{2-\sie} - \frac{C_{\sie} \times (\ind_L, \dots, \ind_L)}{2}t^{\sie-2}\right)^{-\frac1{\sie-2}}, \quad \text{hence} \quad \tau_\eta \leq \frac{C'd^{\frac\sie2-1}}{C_{\sie} \times (\ind_L, \dots, \ind_L)}. \]
+    \[ m(t) \geq \left(m(0)^{2-\sie} - \frac{C_{\sie} \times (\ind_L, \dots, \ind_L)}{2}t^{\sie-2}\right)^{-\frac1{\sie-2}},\] hence\[\tau_\eta \leq \frac{C'd^{\frac\sie2-1}}{C_{\sie} \times (\ind_L, \dots, \ind_L)}. \]
 \end{itemize}
 The bound on $\gamma$ above is always weaker (up to constant factors) than the bound $\gamma \leq C(d\tau_d)^{-1}$ of Theorem~\ref{2506:thm:app:ben_arous_meta}, and hence we always have
 \[ t_\eta^+ \leq Cd\tau_\eta^2,\]
@@ -143,9 +147,9 @@ for small enough $\eta > 0$ we have for $t \leq \tau_\eta$
 \[ \frac{d\norm{\vec{m}}}{dt} \leq C \cdot C_\sie \times (\vec{m}, \dots, \vec{m}) + \norm{C_\sie} \norm{m}^{\sie-1} \leq (C+1)\norm{C_\sie}\cdot \norm{\vec{m}}^{\sie-1}.\]
 Recall that the hitting time $\tau_{\eta, \text{untied}}$ corresponds to $\norm{m}$ hitting the threshold $\eta\sqrt{L}$. As a result, since the dependency in $\eta$ is of leading order only for $\sie=1$, we find
 \[ \tau_{\eta, \text{untied}} \geq \frac{c}{\norm{C_\sie}} \begin{cases}
-    \eta\sqrt{L} & \text{if} \sie=1 \\
-    \log(d) & \text{if} \sie=2\\
-    d^{\frac\sie2-1} & \text{if} \sie \geq 3
+    \eta\sqrt{L} & \text{ if } \sie=1 \\
+    \log(d) & \text{ if } \sie=2\\
+    d^{\frac\sie2-1} & \text{ if } \sie \geq 3
 \end{cases} \]
 Since the gain satisfies 
 \[ \mathrm{gain} \asymp  \left(\frac{\tau_{\eta, \text{untied}}}{\tau_\eta}\right)^2, \]

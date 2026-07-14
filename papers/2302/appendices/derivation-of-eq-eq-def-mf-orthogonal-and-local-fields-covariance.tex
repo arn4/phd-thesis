@@ -8,8 +8,8 @@ Let's start by taking the time derivative of Eq.~\eqref{2302:eq:def:Qorth}
 and plugging in equations~\eqref{2302:eq:def:gf_ode}~and~\eqref{2302:eq:def:Psi} one after the other we get
 \[\begin{split}
 \Psi^\bot_{ij}(\Omega)  &=  \mathbb E \Bigg[ \left(\sigma'(\lambda_i)\lambda_{j} + \sigma'(\lambda_j)\lambda_{i}\right) \mathcal{E}  - 
-     \sum_{r=1}^k \sum_{t=1}^k \sigma'(\lambda_i)\lambda^{\star}_{r}\mathcal{E} \left[ \P^{-1} \right]_{rt} \left[ \M^\top \right]_{tj} -
-     \sum_{r=1}^k \sum_{t=1}^k \left[\M\right]_{ir} \left[ \P^{-1} \right]_{rt} \lambda^{\star}_{t}\sigma'(\lambda_i)\mathcal{E}\Bigg] \\
+     \sum_{r=1}^k \sum_{t=1}^k \sigma'(\lambda_i)\lambda^{\star}_{r}\mathcal{E} \left[ \P^{-1} \right]_{rt} \left[ \M^\top \right]_{tj} - \\
+     & \qquad\qquad -\sum_{r=1}^k \sum_{t=1}^k \left[\M\right]_{ir} \left[ \P^{-1} \right]_{rt} \lambda^{\star}_{t}\sigma'(\lambda_i)\mathcal{E}\Bigg] \\
     &= \mathbb E  \left[ 
         \mathcal{E} \sum_{r=1}^k \sum_{t=1}^k \left( 
         \sigma'(\lambda_i)\left(\lambda_{j} - \lambda^{\star}_{r} \left[\P^{-1}\right]_{rt} \left[\M^\top\right]_{tj}\right) +

@@ -26,57 +26,68 @@ We introduce our summary statistics \(u = (m,q) \coloneqq (w^\star \cdot w, \nor
     \Phi(w) =& \frac{3\norm{w^\star}^4+\Delta}{2} + \frac{3}{2}\norm{w}^4 - \norm{w^\star}^2\norm{w}^2 - 2(w^\star\cdot w)^2 \\
     \Phi(m,q) =& \frac{3\rho^2+\Delta}{2} + \frac32 q^2 - \rho q - 2m^2
 \end{split}\]
-Let's compute the gradients
+We now compute the gradients needed for the dynamics. The stochastic gradient is
 \[
     \nabla_w L = 2 (w \cdot x)^3 x  - 2(w \cdot x) \sqrt{\Delta}\xi x - 2(w^\star \cdot x)^2(w \cdot x) x
 \]
+The gradient of the population loss is
 \[
     \nabla_w\Phi = 6qw-2\rho w-4mw^\star
 \]
+The gradients of the sufficient statistics with respect to \(w\) are
 \[
-    \nabla_w m = w^\star \qquad \nabla_w q = 2w \qquad
+    \nabla_w m = w^\star \qquad \nabla_w q = 2w,
 \]
+and their Hessians are
 \[
-    \nabla^2_w m = 0 \qquad \nabla^2_w q = 2I_d \qquad
+    \nabla^2_w m = 0 \qquad \nabla^2_w q = 2I_d.
 \]
 Last ingredient we need for the dynamic equations is \(V\coloneqq \mathbb E_{x,\xi} \left[\nabla_w(L-\Phi)\otimes\nabla_w(L-\Phi)\right]\).
-% Since \(\nabla_w L\) just contains odd powers of \(x_i\) and \(\xi\), we have \(V\coloneqq \mathbb E_{x,\xi} \left[\nabla_w L\otimes\nabla_w\Phi\right]~=~0\). 
-We are left with
-\[
-    V= \mathbb E_{x,\xi} \left[\nabla_wL\otimes\nabla_wL\right]+\nabla_w\Phi\otimes\nabla_w\Phi-\mathbb E_{x,\xi} \left[\nabla_w L\otimes\nabla_w\Phi + \nabla_w\Phi\otimes\nabla_w L\right].
-\]
-Let's compute the two terms separately
-\[
-    \nabla_w\Phi\otimes\nabla_w\Phi = 4(3q-\rho)^2ww^\top - 4(6qm-2\rho m)(w^\star w^{\top}+w w^{\star\top}) + 4\cdot4m^2 w^\star w^{\star\top}
-\]
-\[\begin{split}
-    \mathbb E_{x,\xi}\left[\nabla_wL\right]\otimes\nabla_w\Phi 
-        =& (6\norm{w}^2w-4(w^\star\cdot w) w^\star - 2 \norm{w^\star}w)\otimes (6qw-2\rho w-4mw^\star)
-        =  \nabla_w\Phi\otimes\nabla_w\Phi
-\end{split}\]
 
+We are left with
+\[\begin{split}
+    V ={}& \mathbb E_{x,\xi} \left[\nabla_wL\otimes\nabla_wL\right]+\nabla_w\Phi\otimes\nabla_w\Phi \\
+       &- \mathbb E_{x,\xi} \left[\nabla_w L\otimes\nabla_w\Phi + \nabla_w\Phi\otimes\nabla_w L\right].
+\end{split}\]
+We compute the two terms separately
+\[\begin{split}
+    \nabla_w\Phi\otimes\nabla_w\Phi ={}& 4(3q-\rho)^2ww^\top \\
+        &- 4(6qm-2\rho m)(w^\star w^{\top}+w w^{\star\top}) + 4\cdot4m^2 w^\star w^{\star\top}
+\end{split}\]
+Since \(\mathbb E_{x,\xi}\left[\nabla_wL\right] = \nabla_w\Phi\), the cross term reduces to the same quantity:
+\[\begin{split}
+    \mathbb E_{x,\xi}\left[\nabla_wL\right]\otimes\nabla_w\Phi
+        =& (6\norm{w}^2w-4(w^\star\cdot w) w^\star - 2 \norm{w^\star}w)\otimes (6qw-2\rho w-4mw^\star) \\
+        =& \nabla_w\Phi\otimes\nabla_w\Phi.
+\end{split}\]
+It remains to compute the second-moment term:
 \[\begin{split}
     &\mathbb E_{x,\xi} \left[\nabla_wL\otimes\nabla_wL\right] = \\
-        &\quad=\mathbb E_{x,\xi} \big[4(w\cdot x )^6 xx^\top + 4 (w\cdot x)^2\Delta \xi^2 xx^\top + 4 (w^\star\cdot x)^4 (w\cdot x)^2 xx^\top 
-                                -8(w\cdot x)^4(w^\star\cdot x)^2 xx^\top\big] \\
+        &\quad=\mathbb E_{x,\xi} \Big[4(w\cdot x )^6 xx^\top + 4 (w\cdot x)^2\Delta \xi^2 xx^\top \\
+        &\qquad\qquad + 4 (w^\star\cdot x)^4 (w\cdot x)^2 xx^\top
+                                -8(w\cdot x)^4(w^\star\cdot x)^2 xx^\top\Big] \\
         &\quad =4(90\norm{w}^4ww^\top+15\norm{w}^6I_d) + 4\Delta(\norm{w}^2I_d+2ww^\top) \\
-        &\qquad +4\big[(3\norm{w^\star}^4\norm{w}^2+12\norm{w^\star}^2(w^\star\cdot w)^2)I_d+6\norm{w^\star}^4ww^\top
+        &\qquad +4\big[(3\norm{w^\star}^4\norm{w}^2+12\norm{w^\star}^2(w^\star\cdot w)^2)I_d \\
+        &\quad\qquad +6\norm{w^\star}^4ww^\top
                 + (12\norm{w^\star}^2\norm{w}^2+24(w^\star\cdot w)^2)w^\star (w^\star)^\top\\
         &\quad\qquad +24\norm{w^\star}^2(w^\star\cdot w)(w^\star w+ ww^\star)\big] \\
-        &\qquad -8\big[(3\norm{w}^4\norm{w^\star}^2+12\norm{w}^2(w^\star\cdot w)^2)I_d+6\norm{w}^4w^\star(w^\star)^\top
+        &\qquad -8\big[(3\norm{w}^4\norm{w^\star}^2+12\norm{w}^2(w^\star\cdot w)^2)I_d \\
+        &\quad\qquad +6\norm{w}^4w^\star(w^\star)^\top
                 + (12\norm{w}^2\norm{w^\star}^2+24(w^\star\cdot w)^2)w w^\top \\
         &\quad\qquad +24\norm{w}^2(w^\star\cdot w)(w^\star w+ ww^\star)\big] \\
         %
-        &\quad= 4(15q^3+\Delta q+3\rho^2q+12\rho m^2-6q^2\rho-24qm^2)I_d + 4(90q^2+2\Delta+6\rho^2-24\rho q -48m^2)ww^\top \\
-        &\qquad +4(12\rho q + 24m^2-12q^2)w^\star(w^\star)^\top
-                +4(24\rho m-48qm)(w^\star w+ ww^\star)
+        &\quad= 4(15q^3+\Delta q+3\rho^2q+12\rho m^2-6q^2\rho-24qm^2)I_d \\
+        &\qquad + 4(90q^2+2\Delta+6\rho^2-24\rho q -48m^2)ww^\top \\
+        &\qquad +4(12\rho q + 24m^2-12q^2)w^\star(w^\star)^\top \\
+        &\qquad +4(24\rho m-48qm)(w^\star w+ ww^\star)
 \end{split}\]
 
 We finally get the expression for  the matrix \(V=\mathbb E_{x,\xi} \left[\nabla_wL\otimes\nabla_wL\right]-\nabla_w\Phi\otimes\nabla_w\Phi\)
 \begin{equation}\label{2305:eq:matrixV}\begin{split}
-   V =& 4(15q^3+\Delta q+3\rho^2q+12\rho m^2-6q^2\rho-24qm^2)I_d + 4(90q^2+2\Delta+6\rho^2-24\rho q -48m^2-9q^2+6\rho q-\rho^2)ww^\top \\
-      & +4(12\rho q + 24m^2-12q^2-4m^2)w^\star(w^\star)^\top
-        +4(24\rho m-48qm+6qm-2\rho m)(w^\star w+ ww^\star)
+   V ={}& 4(15q^3+\Delta q+3\rho^2q+12\rho m^2-6q^2\rho-24qm^2)I_d \\
+        &+ 4(90q^2+2\Delta+6\rho^2-24\rho q -48m^2-9q^2+6\rho q-\rho^2)ww^\top \\
+        &+ 4(12\rho q + 24m^2-12q^2-4m^2)w^\star(w^\star)^\top \\
+        &+ 4(24\rho m-48qm+6qm-2\rho m)(w^\star w+ ww^\star)
 \end{split}\end{equation}
 
 We now have all the ingredients needed for computing the dynamics
@@ -84,14 +95,16 @@ We now have all the ingredients needed for computing the dynamics
     f_m =& \lim_{d\to+\infty}\nabla_w \Phi \cdot \nabla_w m = 6qm-2\rho m -4\rho m = 6m(q-\rho) \\
     f_q =& \lim_{d\to+\infty}\nabla_w \Phi \cdot \nabla_w q = 12q^2 - 4\rho q - 8m^2 \\
     g_m =& \lim_{d\to+\infty}\frac{\delta_d}{2}\Tr{V \nabla^2_w m}= 0\\
-    g_q =& \lim_{d\to+\infty}\frac{\delta_d}{2}\Tr{V \nabla^2_w q}=
-           4(15q^3+\Delta q+3\rho^2q+12\rho m^2-6q^2\rho-24qm^2) \lim_{d\to+\infty}\frac{\gamma}{2d}\Tr{I_d 2I_d} \\
+    g_q =& \lim_{d\to+\infty}\frac{\delta_d}{2}\Tr{V \nabla^2_w q} \\
+        =& 4(15q^3+\Delta q+3\rho^2q+12\rho m^2-6q^2\rho-24qm^2)
+           \cdot\lim_{d\to+\infty}\frac{\gamma}{2d}\Tr{2I_d} \\
         =& 4\gamma(15q^3+\Delta q+3\rho^2q+12\rho m^2-6q^2\rho-24qm^2)
 \end{split}\]
 In the last one we used the fact that the only term that can survive the \(\Tr{\cdot}/d\) are the ones proportional to the identity. For the same reason \(\Sigma = 0\) in this case. The full equations read as
 \begin{equation}\label{2305:eq:phaseretrievalGBA}\begin{split}
  \dif m &= 6m(\rho-q) \dif t \\
- \dif q &= 4\left[2m^2+\rho q-3q^2 +\gamma(15q^3+\Delta q+3\rho^2q+12\rho m^2-6q^2\rho-24qm^2)\right] \dif t
+ \dif q &= 4\Big[2m^2+\rho q-3q^2 \\
+         &\qquad +\gamma(15q^3+\Delta q+3\rho^2q+12\rho m^2-6q^2\rho-24qm^2)\Big] \dif t
 \end{split}\end{equation}
 Note that this equations are exactly the same as \eqref{2305:eq:quadraticODE_M} and \eqref{2305:eq:quadraticODE_Q}, as expected. What is not trivial is proving that the diffusion term will also be equivalent.
 
@@ -101,23 +114,26 @@ Imagine now we want to find the diffusion term around a generic point \((m,q) = 
 \[(\tilde m, \tilde q) = \left(\sqrt{d}(m-\bar m), \sqrt{d}(q-\bar q)\right)\].
 The drift terms diverge, but diffusion term will appear; this diffusion is the first stochastic correction to the deterministic dynamic of the sufficient statistics, and can be added to the equations \eqref{2305:eq:phaseretrievalGBA}, paying attention to multiply it by \(\sfrac1{\sqrt{d}}\) to compensate the zoom factor.
 
-Let's express loss and its gradients respect to the new sufficient statistics
+We express the loss and its gradients in terms of the new sufficient statistics.
 \[\Phi(\tilde m, \tilde q) = \frac{3\rho^2+\Delta}{2} + \frac{3}{2} \left(\frac{\tilde q}{\sqrt{d}}+\bar q\right)^2 - \rho \left(\frac{\tilde q}{\sqrt{d}}+\bar q\right) - 2\left(\frac{\tilde m}{\sqrt{d}}+\bar m\right)^2\]
+Its gradient with respect to \(w\) is
 \[
-    \nabla_w\Phi = 6 \left(\frac{\tilde q}{\sqrt{d}}+\bar q\right) w-2\rho w-4\left(\frac{\tilde m}{\sqrt{d}}+\bar m\right)w^\star
+    \nabla_w\Phi = 6 \left(\frac{\tilde q}{\sqrt{d}}+\bar q\right) w-2\rho w-4\left(\frac{\tilde m}{\sqrt{d}}+\bar m\right)w^\star.
 \]
+The gradients of the zoomed statistics are
 \[
-    \nabla_w \tilde m = \sqrt{d} w^\star \qquad \nabla_w \tilde q = 2\sqrt{d}w \qquad
+    \nabla_w \tilde m = \sqrt{d} w^\star \qquad \nabla_w \tilde q = 2\sqrt{d}w,
 \]
+and their Hessians are
 \[
-    \nabla^2_w \tilde m = 0 \qquad \nabla^2_w \tilde q = 2\sqrt{d}I_d \qquad
+    \nabla^2_w \tilde m = 0 \qquad \nabla^2_w \tilde q = 2\sqrt{d}I_d.
 \]
 The expression of matrix \(V\) is the same as the one in equation \eqref{2305:eq:matrixV} with the following substitutions
 \[\begin{split}
     q = \frac{\tilde q}{\sqrt{d}} + \bar q \qquad
     m = \frac{\tilde m}{\sqrt{d}} + \bar m.
 \end{split}\]
-Let's dive into the computation of the diffusion matrix
+We now compute the three entries of the diffusion matrix in turn.
 \[\begin{split}
  \Sigma_{\tilde m, \tilde m} =&  \lim_{d\to+\infty} \delta_d (\nabla_w{\tilde m})^\top V \nabla_w{\tilde m}  \\ 
  %
@@ -135,6 +151,7 @@ Let's dive into the computation of the diffusion matrix
  & + 8\Delta\bar m^2 -192\bar m^4+324\bar m^2 \bar q^2
 \end{split}\]
 
+The off-diagonal entry is
 \[\begin{split}
  \Sigma_{\tilde m, \tilde q} =&  \lim_{d\to+\infty} \delta_d (\nabla_w{\tilde q})^\top V \nabla_w{\tilde m}  \\ 
  %
@@ -152,6 +169,7 @@ Let's dive into the computation of the diffusion matrix
  =& 768\bar m \bar q^3+24\Delta \bar m \bar q+336\rho^2\bar m \bar q+432 \rho \bar m^3-624\rho\bar m \bar q^2-912\bar m^3 \bar q 
 \end{split}\]
 
+Finally, the bottom-right entry gives
 \[\begin{split}
  \Sigma_{\tilde q, \tilde q} =&  \lim_{d\to+\infty} \delta_d (\nabla_w{\tilde q})^\top V \nabla_w{\tilde q}  \\ 
  %

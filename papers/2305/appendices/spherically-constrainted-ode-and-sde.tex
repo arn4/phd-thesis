@@ -7,8 +7,8 @@ Let's recall the update rule for the weights
     \w_j^{\i+1} = \frac{\w_j^{\i}-\lr\nabla_{\w_j}\ell(y^{\nu},f_{\Theta^{\nu}}(x^{\nu}))}{\left\lVert\w_j^{\i}-\lr\nabla_{\w_j}\ell(y^{\nu},f_{\Theta^{\nu}}(x^{\nu}))\right\rVert}\sqrt{d},
 \end{equation}
 we will find the leading order approximation of it and then apply the argument as the unconstrained case for deriving the ODEs.
-To shorten the notation we will use \(\loss\) for indicating \(\ell(y^{\nu},f_{\Theta^{\nu}}(x^{\nu}))\).
 
+To shorten the notation we will use \(\loss\) for indicating \(\ell(y^{\nu},f_{\Theta^{\nu}}(x^{\nu}))\).
 Let's start by computing the normalization factor
 \[\begin{split}
   \frac{1}{\left\|\w^{\nu}_j - \gamma \nabla_{\w_j}{\loss}\right\|} =&
@@ -16,7 +16,7 @@ Let's start by computing the normalization factor
     =&\left[\left\|\w^{\nu}_j\right\|^2 - 2\gamma\w^{\nu}_j\cdot \nabla_{\w_j}{\loss}+\gamma^2\left\|\nabla_{\w_j}{\loss}\right\|^2\right]^{-\frac12} \\
     =&\frac{1}{\sqrt{d}}\left[1- \frac1d\left(2\gamma\w^{\nu}_j\cdot \nabla_{\w_j}{\loss}-\gamma^2\left\|\nabla_{\w_j}{\loss}\right\|^2\right)\right]^{-\frac12} \\
     =&\frac{1}{\sqrt{d}}\left[1+ \frac{1}{2d}\left(2\gamma\w^{\nu}_j\cdot \nabla_{\w_j}{\loss}-\gamma^2\left\|\nabla_{\w_j}{\loss}\right\|^2\right)+\smallo{d^{-1}}\right].
-\end{split}\]
+ \end{split}\]
 Note that we kept both two terms in the expansion because we can show that both the norm and the scalar product with a weight vector are order 1
 \[\begin{split}
   \left\|\nabla_{\w_j}{\loss}\right\|^2 \sim&

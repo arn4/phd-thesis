@@ -140,9 +140,9 @@ In the domain of our interest, namely \(s_\text{ext}>0\),  \(s_\text{ext}\) is a
 \]
 Note that this learning rate correspond to an exit time whose log's prefactor is constant to \(\frac{1}{4}\), as reported in the main.
 We can also compute the optimal number of steps; we choose to stick with the \emph{annealed formula}: for large \(p\) both the estimation lead to the same result, while for small \(p\) we are underestimating the exit time of a small factor. Hence, the annealed minimum number of steps is
-\[
-    s^\text{min}_\text{ext}{(p,d,\Delta,T)}\coloneqq s^\text{anl}_\text{ext}{(p,d,\gamma_\text{opt}{(p,d,\Delta)},\Delta,T)} = \frac{d\left[8+2p+(2+\Delta)p^2\right]\log\left[\frac{T(p+1)d+(p+1)(1-T)}{2 p}\right]}{4p^2}.
-\]
+\[\begin{split}
+    s^\text{min}_\text{ext}{(p,d,\Delta,T)}\coloneqq& s^\text{anl}_\text{ext}{(p,d,\gamma_\text{opt}{(p,d,\Delta)},\Delta,T)} = \\ =& \frac{d\left[8+2p+(2+\Delta)p^2\right]\log\left[\frac{T(p+1)d+(p+1)(1-T)}{2 p}\right]}{4p^2}.
+\end{split}\]
 This formula can be used to estimate the overparametrization gain. Noting that \(s^\text{min}_\text{ext}\) is monotonically decrising in \(p\), we can define the gain as
 \[
     \lim_{d\to+\infty} \frac{s^\text{min}_\text{ext}{(p=1,d,\Delta,T)}}{\lim_{p\to+\infty}s^\text{min}_\text{ext}{(p,d,\Delta,T)}} = \frac{12+\Delta}{2+\Delta}.

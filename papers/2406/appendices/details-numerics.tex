@@ -1,6 +1,6 @@
 \section{Additional numerical investigation}
 \label{2406:sec:app:hyperparams}
-In this appendix, we provide additional details on the numerical implementations presented in the main text, along with further explorations. The code to reproduce representative figures is available in \href{https://github.com/IdePHICS/batch-size-time-complexity-tradeoffs}{https://github.com/IdePHICS/batch-size-time-complexity-tradeoffs}.
+In this appendix, we provide additional details on the numerical implementations presented in the main text, along with further explorations. The code to reproduce representative figures is available in \href{https://github.com/IdePHICS/batch-size-time-complexity-tradeoffs}{our GitHub repository}.
 
 \subsection{Cold start for multi-index models} \label{2406:app:multiindex_model}
 The theoretical considerations for weak recovery under cold starts presented in Theorems~\ref{2406:thm:main:sgd_weak_recovery}\&\ref{2406:thm:main:no_yhat_weak_recovery} are proven rigorously just for one-hidden neuron network learning single-index targets (\(p=k=1\)); this section aims to provide arguments to generalize this to the multi-index case. 
@@ -61,7 +61,7 @@ We are going to test in the simplest case possible: GLM with \(\text{He}_3\) as 
 The learning rate is progressively reduced because the plain SGD requires a lower learning rate compared to the one used by correlation loss to escape fast. Certainly, one can design a much more powerful algorithm than the one we present, but the goal here is just to show that the combination of the two is beneficial, and not to find the possible one.
 \begin{figure}
     \centering
-    \includegraphics{figs/adaptive_SGD}
+    \includegraphics[height=0.49\textwidth]{figs/adaptive_SGD}
     \caption{\textbf{Adaptive SGD:} The plot compares the performance of SGD and Correlation loss SGD, algorithms with Adaptive SGD; this protocol consists of first using correlation loss SGD to achieve weak recovery, and then switch to adaptive SGD for learning the target. (\(\ell=3,\mu=1.85, \delta=\mu-\frac\ell2, \Delta=10^{-6}\)).}
     \label{2406:fig:app:adaptive}
 \end{figure}
@@ -86,8 +86,8 @@ Although disappearing when taking the limit, the terms of evolution process \eqr
 In this section, we aim to provide numerical arguments about the importance of intra-batch correlations at finite \(d\). We stick with the GLM setting, with \(\erf\) as activation function. Note that since the information exponent of this target is 1, there is no mediocrity at initialization, we can set \(m=\vec w^\top \vec w ^\star = 0\) without falling in the \emph{cold start regime}.
 \begin{figure}
     \centering
-    \includegraphics[height=0.35\textwidth]{figs/finitesize_asymptotic_test_error}
-    \includegraphics[height=0.35\textwidth]{figs/finitesize_asymptotic_differnce}
+    \includegraphics[height=0.3925\textwidth]{figs/finitesize_asymptotic_test_error}
+    \includegraphics[height=0.3925\textwidth]{figs/finitesize_asymptotic_differnce}
     \caption{\textbf{Non asymptotic corrections:} Comparison between simulations (dots), exact asymptotic solution of ODE (continuous black line), and exact solution including the subleading large-batch corrections (dashed line). As expected, as \(d\to+\infty\) the simulations are getting closer and closer to the asymptotic solution; on the other hand, taking into account the batch correlations allows to have a better description of the dynamic even a small \(d\).}
     \label{2406:fig:app:finitesizeasym}
 \end{figure}
