@@ -2,5 +2,19 @@
 \chapter*{Résumé}
 \addcontentsline{toc}{chapter}{Résumé}
 
-[Résumé en français --- substitut.]
+\begin{noparskip}
+
+Pour comprendre pourquoi les réseaux neuronaux entraînés à l’aide de la méthode du gradient obtiennent des résultats positifs, nous avons besoin de modèles théoriques capables de rendre compte de la manière dont ils identifient des structures cachées de faible dimension au sein de données de haute dimension. Malgré la prédominance empirique de l’apprentissage profond à grande échelle, même les petits réseaux peu profonds restent difficiles à appréhender d’un point de vue analytique : les dynamiques qui régissent ce qu’ils apprennent — ainsi que la vitesse à laquelle ils le font — ne sont pas encore pleinement comprises.
+Cette thèse s’appuie sur une théorie de ces dynamiques inspirée de la physique statistique : elle étudie la descente stochastique du gradient sur des réseaux peu profonds et des architectures d’attention simplifiées, entraînés sur des données synthétiques générées par un « enseignant », en suivant l’évolution d’un ensemble de statistiques récapitulatives plutôt que celle de chaque poids individuel.
+Dans la limite des dimensions élevées, cette évolution est décrite exactement par un système fermé d’équations différentielles déterministes, ce qui rend la vitesse et la difficulté de l’apprentissage entièrement quantifiables.
+
+Dans un premier temps, nous replaçons les descriptions auparavant distinctes de cette dynamique — les régimes classiques du flux de gradient, de la haute dimensionnalité et du champ moyen surparamétré — dans le cadre de cas particuliers d’un processus sous-jacent unique. Dans ce cadre, nous fournissons des formules fermées pour la complexité d’échantillonnage de l’apprentissage d’objectifs difficiles, tels que la « récupération de phase », et démontrons que l’augmentation de la largeur du réseau n’accélère l’apprentissage que d’un facteur constant, sans échapper à la difficulté déterminée par l’exposant d’information de l’objectif.
+
+La deuxième partie examine comment de simples modifications apportées à la méthode standard (classique) de descente stochastique du gradient permettent de déplacer l’apprentissage hors de ce paysage de difficulté. Une réutilisation modérée des données — c’est-à-dire observer chaque échantillon deux fois au lieu d’une seule — déplace l’obstacle de l’\emph{exposant d’information}(information exponent) régissant l’apprentissage en un seul passage vers un \emph{exposant génératif}(generative exponent) plus faible, permettant ainsi la récupération efficace de la quasi-totalité des directions cachées, grâce à un mécanisme hiérarchique qui prend en compte les cas difficiles restants. Nous identifions la taille de lot qui minimise le temps d’apprentissage pour une cible de difficulté donnée et introduisons une fonction de perte modifiée qui élimine complètement la limite de vitesse qui en résulte.
+Enfin, nous étendons l’analyse au-delà des entrées statiques aux données séquentielles et à une couche d’attention simplifiée, démontrant que la structure positionnelle peut accélérer considérablement l’apprentissage par rapport à des entrées non structurées.
+
+Pris dans leur ensemble, ces résultats fournissent une théorie unifiée et résolvable de la dynamique d’apprentissage des réseaux peu profonds et des modèles d’attention simples. Ils quantifient à quel moment l’apprentissage basé sur les gradients parvient à découvrir une structure cachée, dans quelle mesure de simples modifications algorithmiques peuvent améliorer ce résultat, et quelles propriétés des données et de l’apprentissage déterminent sa vitesse.
+
+\end{noparskip}
+\textbf{Mots-clés :} apprentissage profond, réseaux de neurones, descente de gradient stochastique, dynamiques d'entraînement, physique statistique, théorie du champ moyen, modèles enseignant-élève, complexité en échantillons, récupération de phase, mécanismes d'attention
 \end{otherlanguage}

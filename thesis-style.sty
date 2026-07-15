@@ -64,6 +64,12 @@
 
 \RequirePackage[indent=0cm]{parskip}
 
+% \begin{noparskip} ... \end{noparskip}
+%   Suppresses \parskip between paragraphs for a block of text (e.g. a
+%   front-matter abstract), without leaking the change past \end{noparskip}
+%   -- \begin/\end already group, so no explicit \begingroup/\endgroup needed.
+\newenvironment{noparskip}{\setlength{\parskip}{0pt}}{}
+
 % EB Garamond as the main text font. Ships with TeX Live, so no
 % system/CI font conditional is needed. Falls back silently if the
 % font is somehow missing.
