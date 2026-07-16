@@ -24,9 +24,9 @@ The repo has two distinct layers, with mostly different files:
 | `papers/YYMM/` | Per-paper thesis-ready content (`abstract.tex`, `main.tex`, `sections/`, `appendices/`, `figs/`), produced by `extract-paper`. Tracked; hand-editable after extraction. |
 | `papers/stand-alone-paper.tex` | Shared `\jobname`-dispatched driver to compile any single paper. Auto-generated; do not edit by hand. |
 | `thesis.tex` | Root of the full thesis build (`\documentclass{book}`). |
-| `thesis-style.sty` | Thesis-wide style package; defines `\paperchapter`. |
+| `thesis-style.sty` | Thesis-wide style package; defines `\paperchapter` and the CV formatting macros used by `front-matter/cv.tex`. |
 | `chapters/` | `introduction.tex` (inputs `motivation.tex`, `setting.tex`, `saad_and_solla.tex`, `exponents.tex`), `appendix-introduction.tex`, per-paper `paper-YYMM.tex` and `appendix-YYMM.tex` wrappers, plus a `figs/` subdirectory for introduction figures. |
-| `front-matter/` | Three abstracts (en/it/fr), acknowledgements, foreword, cover/cv placeholders. |
+| `front-matter/` | Three abstracts (en/it/fr), acknowledgements, foreword, cover placeholder, CV chapter (`cv.tex`, unnumbered, `\include`d at the end of the thesis). |
 | `latexmkrc` | Build config: `lualatex` + `biber`, `out_dir=build/`. |
 | `.github/workflows/build.yml` | CI — incremental per-target build on main + tag-triggered all-targets Pages deploy. |
 | `build/` | latexmk aux/PDF output. Gitignored. |
@@ -85,6 +85,7 @@ For flags, inputs, outputs, and exact behavior of each skill, **read the skill**
 - `\paperchapter{title}{authors}{abstract-path}` (defined in `thesis-style.sty`) is the entry point for each paper chapter. Each `chapters/paper-YYMM.tex` calls it and then `\subimport`s the paper's `main.tex` wrapped in `{\let\appendix\endinput ...}`, so the paper-internal `\appendix` doesn't switch the whole book into appendix mode mid-chapter.
 - Per-paper appendices are deferred to `chapters/appendix-YYMM.tex`, which `\subimport`s each appendix slug explicitly. **If `extract-paper` is re-run and the slug set in `papers/YYMM/main.tex` changes, update the corresponding `chapters/appendix-YYMM.tex` list to match.**
 - Babel reserves `\og` and `\no` for French; both are `\let ... \relax`'d at the top of `thesis.tex` so `papers-macros.tex` can rebind them.
+- `front-matter/cv.tex` (the unnumbered "Curriculum Vitae" chapter, `\include`d at the very end of `thesis.tex`, after the bibliography) is built entirely from CV-specific macros defined in `thesis-style.sty`: `\cventry` for two-line title/date + description/location block entries (Education, Experience, Awards), `\cvtravel` (a thin `\cventry` wrapper for Conferences/Schools/Workshops), `\cvline` for single-line title + description + date entries with no location (Scientific Reviewing, Teaching, Open Source), the `cvcompact` environment for denser spacing on those fact-list sections, and `cvpublist`/`\cvpub` for the numbered Publications/Preprints lists. Every section is kept in reverse-chronological order; read the macro comments in `thesis-style.sty` before changing the CV's structure.
 
 ## Builds
 

@@ -18,9 +18,15 @@
 \author{Luca Arnaboldi}
 
 % Drafting toggle: uncomment and list only the chapters you want typeset.
-% A full build (no \includeonly) must have been run at least once so every
-% per-file .aux exists; cross-refs and page numbers then stay correct.
-% \includeonly{chapters/introduction, chapters/appendix-introduction}
+% A full build (no \includeonly) must have been run at least once so every per-file .aux exists; cross-refs and page numbers then stay correct.
+% \includeonly{
+%   front-matter/cover-placeholder,
+%   front-matter/abstract-en,
+%   front-matter/abstract-it,
+%   front-matter/abstract-fr,
+%   front-matter/foreword.tex,
+%   chapters/introduction
+% }
 
 \begin{document}
 
@@ -97,9 +103,7 @@
 % --- Bibliography ---
 \printbibliography[heading=bibintoc]
 
-% --- CV (external PDF; typeset placeholder if missing) ---
-\IfFileExists{cv.pdf}
-  {\includepdf[pages=-]{cv.pdf}}
-  {\include{front-matter/cv-placeholder.tex}}
+% --- Curriculum Vitae (unnumbered chapter, appears in the ToC) ---
+\include{front-matter/cv.tex}
 
 \end{document}

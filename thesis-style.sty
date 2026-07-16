@@ -213,4 +213,110 @@
   \par\endgroup
 }
 
+% --- Curriculum Vitae formatting -----------------------------------------
+% Tight vertical rhythm throughout by design -- entries sit close together,
+% only the one identifying label per line is bold, nothing is italicized.
+
+% \cvsection{title} -- heading with a thin rule, used inside the unnumbered
+% CV chapter (front-matter/cv.tex).
+\newcommand{\cvsection}[1]{%
+  \par\medskip\noindent{\Large\bfseries #1}\par
+  \vspace{-0.35em}\noindent\rule{\linewidth}{0.4pt}\par\smallskip}
+
+% \cv@entrysep -- vertical gap after each \cventry; default matches the
+% Education/Experience spacing. \begin{cvcompact}...\end{cvcompact} below
+% overrides it locally for denser fact-list sections.
+\newlength{\cv@entrysep}
+\setlength{\cv@entrysep}{2pt}
+
+% \cventry{title}{entity}{location}{date}{extra}
+%   Uniform two-line entry -- the same structure for every entry in the CV
+%   (Education, Experience, Awards, Scientific Reviewing, Teaching,
+%   Open Source, and, via \cvtravel below, Conferences):
+%     line 1: bold "title @ entity" (just "title" if entity is empty)
+%             ....(fill)....  date
+%     line 2: extra, if given  ....(fill)....  location
+%             (line 2 is omitted entirely if both extra and location are
+%             empty, so a bare fact with no sub-detail doesn't leave a
+%             half-blank second line)
+%   #2 (entity), #3 (location), #4 (date) and #5 (extra) may be empty.
+%   Empty-argument tests use etoolbox's \ifstrempty (robust to any content,
+%   including a leading "[") rather than a hand-rolled \ifx sentinel trick.
+%   Note the \\{} (not bare \\) before line 2: if the following text starts
+%   with "[" (as the Teaching placeholder's "[Institution]" example does), a
+%   bare \\ would misparse it as \\'s optional vertical-skip argument
+%   ("Missing number, treated as zero."); the empty group blocks that
+%   lookahead.
+%   Uses \hspace* (not \hspace) for the fill glue: when #5 is empty, line 2
+%   starts with nothing but that glue, and plain \hspace glue at the very
+%   start of a line gets silently discarded by TeX's line breaker -- it
+%   never gets to push #3 to the right, leaving the location stuck on the
+%   left. The starred form is unskippable, so it survives being first.
+\newcommand{\cventry}[5]{%
+  \par\noindent\textbf{#1\ifstrempty{#2}{}{\ @\ #2}}\hspace*{0.5em plus 1fill}\mbox{#4}%
+  \ifstrempty{#5}{%
+    \ifstrempty{#3}{}{\\{}\hspace*{0.5em plus 1fill}\mbox{#3}}%
+  }{%
+    \\{}#5\hspace*{0.5em plus 1fill}\mbox{#3}%
+  }%
+  \par\vspace{\cv@entrysep}}
+
+% \cvline{title}{description}{date} -- simple single-line entry, no
+% location: bold title, optional ": description", date filled right.
+% #2 and #3 may be empty. For facts with just one identifying label plus
+% an optional detail and a timeframe -- no separate place involved.
+% Used for Scientific Reviewing, Teaching, Open Source.
+\newcommand{\cvline}[3]{%
+  \par\noindent\textbf{#1}\ifstrempty{#2}{}{: #2}\hspace*{0.5em plus 1fill}\mbox{#3}%
+  \par\vspace{\cv@entrysep}}
+
+% \begin{cvcompact}...\end{cvcompact} -- denser \cventry/\cvtravel/\cvline
+% spacing for fact-list sections (Awards, Conferences, Scientific Reviewing,
+% Teaching, Open Source) vs. the default used by Education/Experience.
+% Zeroes \parskip (the between-paragraph gap every \cventry rides on) and
+% replaces it with a small, explicit \cv@entrysep -- an environment group,
+% so both revert automatically at \end{cvcompact}.
+\newenvironment{cvcompact}{%
+  \setlength{\parskip}{0pt}%
+  \setlength{\cv@entrysep}{4pt}%
+}{}
+
+% \cvtravel{event}{location}{date}{contribution type} -- conference/school/
+% workshop entry. Thin wrapper around \cventry: the event is the plain bold
+% title (no "@ entity" join here), date fills line 1; the contribution type
+% is the line-2 extra, location fills line 2. Contribution type empty falls
+% back to a literal "-". The fallback is resolved into a plain macro first
+% (rather than embedding an empty-test inside the argument being
+% constructed for \cventry) since \ifstrempty itself needs its argument
+% already fully formed.
+\newcommand{\cvtravel}[4]{%
+  \def\pc@cvtravelrole{#4}%
+  \ifx\pc@cvtravelrole\@empty\def\pc@cvtravelrole{-}\fi
+  \cventry{#1}{}{#2}{#3}{\pc@cvtravelrole}}
+
+% \begin{cvpublist}...\end{cvpublist} -- tight numbered list for publications.
+\newenvironment{cvpublist}{%
+  \begin{enumerate}[label=\arabic*.,leftmargin=1.6em,itemsep=3pt,parsep=0pt,topsep=3pt]}{%
+  \end{enumerate}}
+
+% \cvpub{authors}{title}{venue}{year} -- one numbered publication entry;
+% use inside cvpublist. Title is bold (the highlighted element); authors
+% and venue are plain -- no italics.
+\newcommand{\cvpub}[4]{\item \textbf{#2} #1. #3, #4.}
+
+% \cvpersonal{name}{location}{email}{website}{scholar-url}{github-user}
+%   Labeled two-column Personal Information table (Luca's preferred version
+%   over the earlier flowing-text block). Deliberately not a full multi-line
+%   postal address.
+\newcommand{\cvpersonal}[6]{%
+  \par\noindent
+  \begin{tabular}{@{}ll@{}}
+    Name           & #1 \\
+    Location       & #2 \\
+    Email          & \href{mailto:#3}{#3} \\
+    Website        & \href{https://#4}{#4} \\
+    Google Scholar & \href{#5}{Profile} \\
+    GitHub         & \href{https://github.com/#6}{#6} \\
+  \end{tabular}\par}
+
 \endinput
