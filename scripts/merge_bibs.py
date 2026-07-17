@@ -8,7 +8,7 @@ Run:
     uv run scripts/merge_bibs.py --no-stop   # batch; auto-resolve duplicates
 
 Outputs:
-    papers-bibliography.bib                          (gitignored; regenerable)
+    papers-bibliography.bib                   (tracked in git; regenerable)
     arxiv-papers/arXiv-YYMM-citation-map.json (one per sidecar; tracked in git)
 """
 
