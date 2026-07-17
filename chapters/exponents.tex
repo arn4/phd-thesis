@@ -170,8 +170,9 @@ Figure~\ref{fig:intro:cold_start_pd} shows the resulting phase diagram.
 \end{figure}
 
 Chapter~\ref{chap:paper-2506} extends the exponent to a model that proxies the attention layer. The input \(X\in \mathbb{R}^{L \times d}\) is now a sequence of \(L\) \(d\)-dimensional vectors, and our learned model is
+\addnote{The bilinear read-out is displayed here for concreteness. Chapter~\ref{chap:paper-2506} establishes its results for a general \emph{reduction map} \(R\ : \mathbb{R}^{L\times L}\to\mathbb{R}^k\).}
 \[f(X) = \vec{a}_L^\top \SoftMax\left(\left(X+\frac{P}{\sqrt{d}}\right) \vec{w}\vec{w}^\top \left(X+\frac{P}{\sqrt{d}}\right)^\top\right)\vec{a}_R,\]
-where \(P\) is a fixed positional encoding, and \(\vec{a}_L, \vec{a}_R \in \mathbb{R}^L\) are the read-out vectors.\footnote{The bilinear read-out is displayed here for concreteness. Chapter~\ref{chap:paper-2506} establishes its results for a general \emph{reduction map} \(R : \mathbb{R}^{L\times L}\to\mathbb{R}^k\) applied to the softmax output, of which \(A \mapsto \vec{a}_L^\top A\, \vec{a}_R\) --- the \emph{linear attention} case --- is one instance.}
+where \(P\) is a fixed positional encoding, and \(\vec{a}_L, \vec{a}_R \in \mathbb{R}^L\) are the read-out vectors.
 The information exponent is then defined as the smallest degree of the Hermite multivariate expansion of the target function, now called the \emph{Sequence Information Exponent} (SIE), and the sample complexity obeys the same \(d\)-scaling hierarchy as~\eqref{eq:intro:info-scaling} with \(\ell\) replaced by the SIE.
 The order-parameter space expands from the scalar \(m\) to the pair \((m, \vec{e})\), where \(m = \vec{w}^\star\cdot\vec{w}/d\) is the teacher overlap and \(\vec{e} = P\vec{w}/\sqrt{d}\) encodes the alignment of the student weights with the positional encoding \(P\); the dynamics is described by a coupled ODE in \((m,\vec{e})\), illustrated in Figure~\ref{fig:intro:2506-trajectories}.
 \begin{figure}[t]
