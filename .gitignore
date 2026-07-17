@@ -23,3 +23,6 @@ build/
 *.nav
 *.snm
 *.vrb
+
+# Local Claude review working set (findings, report, regenerator) — not part of the manuscript
+claude-review/

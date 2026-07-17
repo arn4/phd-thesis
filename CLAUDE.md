@@ -30,6 +30,7 @@ The repo has two distinct layers, with mostly different files:
 | `latexmkrc` | Build config: `lualatex` + `biber`, `out_dir=build/`. |
 | `.github/workflows/build.yml` | CI — incremental per-target build on main + tag-triggered all-targets Pages deploy. |
 | `build/` | latexmk aux/PDF output. Gitignored. |
+| `claude-review/` | Findings + local HTML report from `deep-review`, consumed by `solve-issue`. Gitignored. |
 | `pyproject.toml`, `uv.lock` | uv-managed environment (`uv.lock` is currently gitignored). |
 
 ## `arxiv-papers/` sidecar conventions
@@ -76,6 +77,13 @@ For flags, inputs, outputs, and exact behavior of each skill, **read the skill**
 
 - `add-bib` — add a one-off BibTeX entry (textbook, intro-only citation, etc.) that doesn't come from the arXiv pipeline. Checks `papers-bibliography.bib` for an existing entry first; if absent, appends to `extra-bibliography.bib` and wires that file into `thesis.tex`.
 - `citation-usage` — generate an HTML report of how often each `papers-bibliography.bib` entry is cited across `papers/`, with per-paper breakdown and an importance score. Use to audit coverage, find never-cited entries, or rank reference importance.
+
+## Skills (thesis review)
+
+Both operate on `claude-review/`, the git-ignored local working set: `findings/merged.json` (source of truth, one `Fxxx` id per finding), `meta.json` (the review's name/version), and `report.html` + `report.md`. The report is **local only** — never publish it as an Artifact or upload it anywhere.
+
+- `deep-review` — audit the whole thesis for defence-readiness with a squad of parallel **read-only** agents (typography, grammar, correctness, soundness, notation, bibliography, figures, front-matter, hostile examiner) and assemble the results into a fresh numbered review, archiving the previous one under `claude-review/archive/v<N>/`. No thesis file is edited. Expensive and long-running — don't launch it proactively.
+- `solve-issue` — resolve one `deep-review` finding by its code: apply the fix to the `.tex` file the finding points at, or record a dismissal if the user's comment says it isn't a real issue, then flip `solved` in `merged.json` and regenerate the report. One finding per invocation.
 
 ## Thesis assembly
 
