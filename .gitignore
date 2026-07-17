@@ -26,3 +26,6 @@ build/
 
 # Local Claude review working set (findings, report, regenerator) — not part of the manuscript
 claude-review/
+
+# Transient per-finding worktrees created by /solve-issue
+.claude/worktrees/
