@@ -206,13 +206,18 @@ Lifting the degree \(\ell\) part to the ambient space \(\mathbb{R}^d\) gives the
     \label{eq:intro:hermite-tensor}
     T_\ell = \sum_{\substack{\alpha \in \mathbb{N}^k \\ |\alpha| = \ell}} a_\alpha \, \mathrm{sym}\!\left(\vec{w}^{\star\,\otimes\alpha_1}_1 \otimes \cdots \otimes \vec{w}^{\star\,\otimes\alpha_k}_k\right) \in (\mathbb{R}^d)^{\otimes \ell}.
 \end{equation}
-Exactly as in the single-index case~\eqref{eq:intro:drift-ie}, the drift of \(\vec{m}\) near initialization (\(\vec{m} \approx 0\)) is governed by the leading nontrivial tensor,
+Exactly as in the single-index case~\eqref{eq:intro:drift-ie}, the escape from initialization (\(\vec{m} \approx 0\)) is governed by the leading nontrivial tensor. The population gradient drives the student weights along the contraction of \(T_\ell\) with \(\vec{w}\) itself,
 \begin{equation}
     \label{eq:intro:leap-drift}
-    \frac{d}{dt} \vec{m} \approx \ell!\,b_\ell\, T_\ell[\vec{w}^{\otimes(\ell-1)}],
+    \dod{\vec{w}}{t} \;\propto\; \ell!\,b_\ell\, T_\ell[\vec{w}^{\otimes(\ell-1)}],
     \qquad \ell = \min\{|\alpha| : a_\alpha \neq 0\},
 \end{equation}
-where \(b_\ell\) is the \(\ell\)-th Hermite coefficient of \(\sigma\), and \(T_\ell[\vec{w}^{\otimes(\ell-1)}] \in \mathbb{R}^d\) denotes the contraction of \(T_\ell\) with \((\ell-1)\) copies of \(\vec{w}\). The integer \(\ell\) is the \emph{leap exponent} (or leap complexity) of \citet{abbe2022merged, abbe2023sgd}: the lowest degree of the non-trivial Hermite tensors of \(f^\star\).
+and the overlap vector follows by projection onto the teacher directions,
+\begin{equation}
+    \label{eq:intro:leap-drift-overlap}
+    \dod{m_r}{t} = \frac{1}{d}\left\langle \vec{w}^\star_r,\, \dod{\vec{w}}{t} \right\rangle, \qquad r \in [k].
+\end{equation}
+Here \(b_\ell\) is the \(\ell\)-th Hermite coefficient of \(\sigma\), and \(T_\ell[\vec{w}^{\otimes(\ell-1)}] \in \mathbb{R}^d\) denotes the contraction of \(T_\ell\) with \((\ell-1)\) copies of \(\vec{w}\); each such contraction brings down a factor \(\langle \vec{w}^\star_s, \vec{w}\rangle = d\,m_s\), so the drift of \(\vec{m}\) is a polynomial of degree \(\ell-1\) in the overlaps---the multi-index counterpart of the \(m^{\ell-1}\) drift of~\eqref{eq:intro:drift-ie}. The integer \(\ell\) is the \emph{leap exponent} (or leap complexity) of \citet{abbe2022merged, abbe2023sgd}: the lowest degree of the non-trivial Hermite tensors of \(f^\star\).
 
 An equivalent formulation, direction by direction, makes the analogy with the single-index case fully explicit. For each direction \(\vec{v}\) in the teacher subspace \(V^\star = \mathrm{span}(\vec{w}^\star_1,\ldots,\vec{w}^\star_k)\), define the \emph{directional information exponent} \citep{arnaboldi2024repetita}
 \begin{equation}
