@@ -30,13 +30,18 @@ on the activation function and loss under which SGD succeeds or stalls.
 Chapters~\ref{chap:paper-2406} and~\ref{chap:paper-2405} extend the theory in two
 complementary directions.
 Chapter~\ref{chap:paper-2406} keeps the single-index setting and examines the role of
-batch size, showing that it governs a fundamental time--complexity tradeoff: larger batches
-can effectively lower the information exponent and shift the sample complexity from
-polynomial to linear in the input dimension.
+batch size, showing that it governs a fundamental time--complexity tradeoff: enlarging the
+batch up to a critical size, which grows with the hardness of the target, proportionally
+reduces the number of gradient steps needed to learn while leaving the total number of
+samples consumed unchanged, so the gain is one of parallelism rather than of sample
+efficiency. Beyond that threshold, larger batches stop paying off, a limitation we overcome
+with a modified training protocol that suppresses the auto-correlation terms of the loss.
 Chapter~\ref{chap:paper-2405} turns to multi-index models, where the target function
 depends on several latent directions simultaneously, and shows that a simple
-data-repetition scheme restores learnability in this harder setting by allowing the network
-to learn one direction at a time.
+data-repetition scheme restores learnability in this harder setting: revisiting the same
+data lets the network sidestep the barrier set by the information exponent and learn almost
+every direction in a number of steps nearly linear in the input dimension, while the
+remaining hard directions are picked up sequentially, one at a time.
 
 Chapter~\ref{chap:paper-2506} extends the framework beyond fully connected two-layer
 networks to sequence models and single-layer attention networks.
