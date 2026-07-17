@@ -131,7 +131,7 @@ Similar to \eqref{2302:eq:def:pre_activations}, we can then define the orthogona
 \begin{align}\label{2302:eq:def:lambda_orth}
     \vec{\lambda}^{\bot\i} &= W^{\bot\i}\vec{x}^\i \\
     \label{2302:eq:def:Qorth}
-    Q^\bot &= W^\bot (W^\bot)^\top = Q - MP^{-1}M^\top  .
+    Q^\bot &= \sfrac{1}{d} W^\bot (W^\bot)^\top = Q - MP^{-1}M^\top  .
 \end{align}
 Since we are in a regime where $\gamma / p \ll 1$, the ODE approximation of SGD corresponds to equations \eqref{2302:eq:def:gf_ode}. From there, with a little algebra (see Appendix \ref{2302:app:mean_field_orthogonal_derivation}), we can derive the corresponding equations for $Q^\bot$:
 \begin{equation} \label{2302:eq:def:mf_orthogonal}
