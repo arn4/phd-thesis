@@ -97,7 +97,7 @@ where in the last step we used again the small learning rate limit.
  \frac{e^{\tau+1} - e^\tau}{\sfrac{\gamma}{d}} =
     -e\left.\frac{\partial^2 \mathcal{L}}{\partial e^2}\right|_{m,e=0} + 2 me \left.\frac{\partial^2 \mathcal{L}}{\partial m\partial e}\right|_{m,e=0}.
  \]
- Since the hessian of he loss has always a negative eigenvalue, both these equations need \(\tau = O(d\log d)\) to escape a neighborhood of initialization, leading to \(\text{IE}=2\).
+ Since the hessian of the loss has always a negative eigenvalue, both these equations need \(\tau = O(d\log d)\) steps of population gradient descent at constant learning rate \(\gamma\) to escape a neighborhood of initialization, leading to \(\mathrm{SIE}=2\). This step count is not the sample complexity of online SGD: controlling the gradient noise forces \(\gamma = O(\sfrac{1}{\log d})\), and the same estimate \(\tau \asymp \sfrac{d}{\gamma}\cdot\log d\) then returns the \(\mathcal{O}(d\log^2 d)\) of Theorem~\ref{2506:thm:sie}.
 
 \subsection{Numerical experiments on the transition}
 In this Appendix we would like to provide more details on the phase diagram of Figure~\ref{2506:fig:phase-diagram-postional-semantic}. 
