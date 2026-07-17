@@ -40,7 +40,7 @@ And the Euclidean Hessian is:
 \end{align}
  which we recall are the second moments of the pre-activations $(\lambda_{\star},\lambda)$. With this notation, the population risk (the expected value of \eqref{2305:eq:app:poprisk}) reads:
 \begin{align}
-    \mathcal{R}(m,q) =\sfrac{\Delta}{2}+ 3\rho^2+3q^2-4m^2-2\rho q
+    \mathcal{R}(m,q) =\sfrac{\Delta}{2}+ \frac{3}{2}\rho^2+\frac{3}{2}q^2-2m^2-\rho q
 \end{align}
 In order to compute the expected gradient, we need the following moments:
 \begin{align}
@@ -66,7 +66,7 @@ Finally, let's compute the expected Hessian. For that, we will need the followin
     \end{align}
     This is a negative-definite matrix with $d-1$ negative eigenvalues $-2\rho$ and one negative eigenvalue $-2(\rho+1)$ with eigenvector $\theta_{\star}$. Therefore, this is a local maximum. The risk associated is given by: 
     \begin{align}
-        \mathcal{R}(0) = \frac{\Delta}{2}+3\rho^2
+        \mathcal{R}(0) = \frac{\Delta}{2}+\frac{3}{2}\rho^2
     \end{align}
     \item $(m,q) = (0,\sfrac{\rho}{3})$: This defines a line of critical points $\{w \in\mathbb{R}^{d}: w \perp w_{\star} \text{ and }||w|| = \sfrac{1}{\sqrt{3}}||w_{\star}||\}$. The Hessian is given by:
     \begin{align}
@@ -74,7 +74,7 @@ Finally, let's compute the expected Hessian. For that, we will need the followin
     \end{align}
     Note this is a rank-two matrix with $d-2$ zero eigenvalues (associated to flat directions), one negative eigenvalue with eigenvector $w_{\star}$ and a positive eigenvalue with eigenvector perpendicular to the minima. This is a saddle-point, and have population risk:
     \begin{align}
-        \mathcal{R}(0,\sfrac{\rho}{3}) = \frac{\Delta}{2}+\frac{10}{3}\rho^2
+        \mathcal{R}(0,\sfrac{\rho}{3}) = \frac{\Delta}{2}+\frac{4}{3}\rho^2
     \end{align}
     \item $w=\pm w_{\star}$ ($(m,q) = (\pm\rho,\rho)$): From the definition of our problem, this is the global minima. The expected Hessian is given by:  
     \begin{align}
