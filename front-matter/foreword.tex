@@ -29,13 +29,12 @@ on the activation function and loss under which SGD succeeds or stalls.
 
 Chapters~\ref{chap:paper-2406} and~\ref{chap:paper-2405} extend the theory in two
 complementary directions.
-Chapter~\ref{chap:paper-2406} keeps the single-index setting and examines the role of
+Chapter~\ref{chap:paper-2406} examines the role of
 batch size, showing that it governs a fundamental time--complexity tradeoff: enlarging the
 batch up to a critical size, which grows with the hardness of the target, proportionally
 reduces the number of gradient steps needed to learn while leaving the total number of
 samples consumed unchanged, so the gain is one of parallelism rather than of sample
-efficiency. Beyond that threshold, larger batches stop paying off, a limitation we overcome
-with a modified training protocol that suppresses the auto-correlation terms of the loss.
+efficiency.
 Chapter~\ref{chap:paper-2405} turns to multi-index models, where the target function
 depends on several latent directions simultaneously, and shows that a simple
 data-repetition scheme restores learnability in this harder setting: revisiting the same
