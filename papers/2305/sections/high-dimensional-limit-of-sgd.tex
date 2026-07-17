@@ -34,7 +34,7 @@ Notice that the matrices $M, Q$ are precisely the second moments of the pre-acti
 \end{align}
 where we have defined the displacement vector 
 \begin{equation}
-\mathcal{E}^{\i} \coloneqq \frac{1}{p}\sum_{j=1}^{\hids}a_{j}(\lambda_{j}^{\nu})^2 - (\lambda^{\star\i})^2 + \sqrt{\noise} z^{\i},
+\mathcal{E}^{\i} \coloneqq (\lambda^{\star\i})^2 - \frac{1}{p}\sum_{j=1}^{\hids}a_{j}(\lambda_{j}^{\nu})^2 + \sqrt{\noise} z^{\i},
 \end{equation}
 and we used \(\sfrac{\lr}{d}\) as the learning rate of the second layer, in order to have the same high-dimensional scaling.
 \paragraph{High-dimensional limit ---} As of now we have not made any assumptions on the dimension of the problem; the stochastic processes defined in \eqref{2305:eq:def:overlap_process} are exact, with the right-hand side depending implicitly on $(m,Q)$ through the moments of $(\lambda_{\star}, \lambda)$. However, our goal is to study this process in the high-dimensional limit $d\to\infty$ where learning is hard and simulating \eqref{2305:eq:sgd} can be computationally demanding. Defining a step-size $\delta t = \sfrac{\gamma}{pd}$ and a continuous extension of $(a^{\nu},m^{\nu},Q^{\nu})$ to continuous time $(a(\nu\delta t),m(\nu\delta t),Q(\nu\delta t))$ by linear interpolation, it can be shown that in the high-dimensional limit $d\to\infty$ the sufficient statistics $(a(t),m(t),Q(t))$ concentrate in their expectation $(\bar{a}(t),\bar{m}(t),\bar{Q}(t))$, which satisfies the following system of ordinary differential equations (ODEs):

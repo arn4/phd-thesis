@@ -4,7 +4,7 @@
 \subsection{Derivation of the process}
 Let's start by reminding the definition of \emph{displacement} at step \(\i\)
 \begin{equation}
-\mathcal{E}^{\i} \coloneqq \frac{1}{p}\sum_{j=1}^{\hids}a_{j}(\lambda_{j}^{\nu})^2 - (\lambda_{\star}^\i)^2 + \sqrt{\noise} z^{\i},
+\mathcal{E}^{\i} \coloneqq (\lambda_{\star}^\i)^2 - \frac{1}{p}\sum_{j=1}^{\hids}a_{j}(\lambda_{j}^{\nu})^2 + \sqrt{\noise} z^{\i},
 \end{equation}
 from which it's easy to write the loss function
 \begin{equation}
@@ -12,13 +12,13 @@ from which it's easy to write the loss function
 \end{equation}
 The gradient respect to the parameters is given
 \begin{equation}\begin{split}
-    \partial_{a_j} \ell{(y^{\nu},f_{\Theta^{\nu}}(x^{\nu}))} &= \frac1p \mathcal{E}^{\i} (\lambda_{j}^{\nu})^2 \\
-    \nabla_{\w_j} \ell{(y^{\nu},f_{\Theta^{\nu}}(x^{\nu}))}  &= \frac1p \mathcal{E}^{\i} 2 a^\i_j \lambda_{j}^{\nu} x^\i
+    \partial_{a_j} \ell{(y^{\nu},f_{\Theta^{\nu}}(x^{\nu}))} &= -\frac1p \mathcal{E}^{\i} (\lambda_{j}^{\nu})^2 \\
+    \nabla_{\w_j} \ell{(y^{\nu},f_{\Theta^{\nu}}(x^{\nu}))}  &= -\frac1p \mathcal{E}^{\i} 2 a^\i_j \lambda_{j}^{\nu} x^\i
 \end{split}\end{equation}
 Using \(\gamma\) as learning rate for the weights \(\w_j\) and \(\sfrac{\gamma}{p}\) for the second layer, we have the following update equations
 \begin{equation}\begin{split}
-    a^{\i+1}_j &= a^{\i}_j - \frac{\gamma}{pd} \mathcal{E}^{\i} (\lambda_{j}^{\nu})^2 \\
-    \w_j^{\i+1} &= \w_j^{\i} - \frac{\gamma}{p} \mathcal{E}^{\i} 2 a^\i_j \lambda_{j}^{\nu} x^\i
+    a^{\i+1}_j &= a^{\i}_j + \frac{\gamma}{pd} \mathcal{E}^{\i} (\lambda_{j}^{\nu})^2 \\
+    \w_j^{\i+1} &= \w_j^{\i} + \frac{\gamma}{p} \mathcal{E}^{\i} 2 a^\i_j \lambda_{j}^{\nu} x^\i
 \end{split}\end{equation}
 Applying the definition of the sufficient statistics, \(m_j = \sfrac{\w_j\w_\star}{d}\) and \(\Q_{jl} = \sfrac{\w_j\w_l}{d}\), we can recover Eqs.~\eqref{2305:eq:def:overlap_process}.
 
@@ -38,16 +38,16 @@ For the risk we just need
 \end{split}\]
 while for the ODE of \(\bar{a}\) 
 \[\begin{split}
-    \EV{\mathcal{E} \lf_j^2} = \frac{1}{p}\sum_{l=1}^{\hids}a_{l}\EV{\lambda_{l}^2\lf_j^2} - \EV{\lambda_{\star}^2\lf_j^2},
+    \EV{\mathcal{E} \lf_j^2} = \EV{\lambda_{\star}^2\lf_j^2} - \frac{1}{p}\sum_{l=1}^{\hids}a_{l}\EV{\lambda_{l}^2\lf_j^2},
 \end{split}\]
 where we omitted the noise part since it averages out with the expectation.
 The equation for \(\bar{m}\) requires 
 \[\begin{split}
-    2a_j\EV{\mathcal{E} \lf_j\lf_\star} = \frac{2}{p}\sum_{l=1}^{\hids}a_j a_{l}\EV{\lambda_{l}^2\lf_j\lf_\star} - 2\EV{\lambda_{\star}^2\lf_j\lf_\star},
+    2a_j\EV{\mathcal{E} \lf_j\lf_\star} = 2\EV{\lambda_{\star}^2\lf_j\lf_\star} - \frac{2}{p}\sum_{l=1}^{\hids}a_j a_{l}\EV{\lambda_{l}^2\lf_j\lf_\star},
 \end{split}\]
 while we need two different expectations for \(\bar\Q\)
 \[\begin{split}
-    2(a_j+a_l)\EV{\mathcal{E} \lf_j\lf_\star} &= 2(a_j+a_l)\left[\frac{1}{p}\sum_{s=1}^{\hids}a_s\EV{\lambda_{s}^2\lf_j\lf_l} - \EV{\lambda_{\star}^2\lf_j\lf_l}\right] \quad\text{and} \\
+    2(a_j+a_l)\EV{\mathcal{E} \lf_j\lf_\star} &= 2(a_j+a_l)\left[\EV{\lambda_{\star}^2\lf_j\lf_l} - \frac{1}{p}\sum_{s=1}^{\hids}a_s\EV{\lambda_{s}^2\lf_j\lf_l}\right] \quad\text{and} \\
     %
     4\frac{\gamma}{p}{\mathcal{E}}^{2} a_{j}a_{l}\lambda_{j}\lambda_{l}  = 16\frac{\gamma}{p} a_{j}a_{l} \Bigg[ 
         &  \EV{\lf_j \lf_l\lf_\star^4}  - \frac{2}{p} \sum_{s =1}^{p} a_s \EV{\lf_j \lf_l \lf_\star^2 \lf_s^2} +\\
