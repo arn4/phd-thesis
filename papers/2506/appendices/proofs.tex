@@ -5,7 +5,7 @@
 We consider the following approximation of the SGD dynamics:
 
 \begin{equation}\label{2506:eq:app:ode_approx}
-    \frac{d\vw}{dt} = -\E*{\nabla_{\vw}^\bot \cL(X, y, f_{\vw})} - \gamma  \E*{\norm{\nabla_{\vw}^\bot \cL(X, y, f_{\vw})}^2} \vw
+    \frac{d\vw}{dt} = -\E*{\nabla_{\vw}^\bot \cL(X, y, f_{\vw})} - \frac{\gamma}{2}  \E*{\norm{\nabla_{\vw}^\bot \cL(X, y, f_{\vw})}^2} \vw
 \end{equation}
 
 The results of \cite{arous2021online} (when $m$ is a scalar) and \cite{arnaboldi2024repetita} (when $\vec{m}$ is a vector) imply the following:
@@ -79,8 +79,8 @@ We arrive at the following result:
     \end{align*}
     Then the tied and untied overlaps satisfy the following ODEs:
     \begin{align}
-        \frac{dm}{dt} &= \phi_{\text{tied}}(m) - \gamma  \E*{\norm{\nabla_{\vw}^\bot \cL(X, y, f_{\vw})}^2} m \label{2506:eq:app:tied_dynamics} \\
-         \frac{dm}{dt} &= \phi_{\text{untied}}(\vec{m}) - \gamma  \E*{\norm{\nabla_{\vw}^\bot \cL(X, y, f_{\vw})}^2} \vec{m} \label{2506:eq:app:untied_dynamics}
+        \frac{dm}{dt} &= \phi_{\text{tied}}(m) - \frac{\gamma}{2}  \E*{\norm{\nabla_{\vw}^\bot \cL(X, y, f_{\vw})}^2} m \label{2506:eq:app:tied_dynamics} \\
+         \frac{dm}{dt} &= \phi_{\text{untied}}(\vec{m}) - \frac{\gamma}{2}  \E*{\norm{\nabla_{\vw}^\bot \cL(X, y, f_{\vw})}^2} \vec{m} \label{2506:eq:app:untied_dynamics}
     \end{align}
 \end{proposition}
 

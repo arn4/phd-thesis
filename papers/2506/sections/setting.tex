@@ -60,7 +60,7 @@ Finally, for simplicity of the discussion we will make the following assumption 
 \begin{assumption}[Gradient flow approximation]
     We approximate the training dynamics of Equation~\eqref{2506:eq:normalized-SGD-w} via the following ODE, which corresponds to an order-2 Taylor expansion in $\gamma$:
 \begin{equation}\label{2506:eq:ode_approx}
-    \frac{d\vw}{dt} = \E\left[{\nabla_{\vw}^\bot \ell(X, y, f_{\vw})}\right] - \frac{\gamma}2  \E\left[{\norm{\nabla_{\vw}^\bot \ell(X, y, f_{\vw})}^2} \vw\right],
+    \frac{d\vw}{dt} = -\E\left[{\nabla_{\vw}^\bot \ell(X, y, f_{\vw})}\right] - \frac{\gamma}2  \E\left[{\norm{\nabla_{\vw}^\bot \ell(X, y, f_{\vw})}^2}\right] \vw,
 \end{equation}
 where $\nabla_{\vw}^\bot = (I - \vw\vw^\top)\nabla_{\vw}$ is the spherical gradient. The time scaling corresponds to $t = \tau/\gamma$.
 \end{assumption}
