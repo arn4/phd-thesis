@@ -132,7 +132,7 @@ The last piece of the puzzle is to understand how the information exponent contr
     \end{cases}
 \end{equation}
 However, the escape time predicted by Equation~\eqref{eq:intro:drift-ie} is not sufficient to determine the sample complexity for \(\ell \geq 3\).
-\addnote{To be precise, even for \(\ell = 2\) the stochastic noise dominates the escape time, but the drift is still enough to determine the scaling.}
+\addnote{To be precise, even for \(\ell = 2\) the stochastic noise dominates the escape time, but the drift is still enough to determine the scaling. Appendix~\ref{app:intro:validity-window} makes precise the time horizon over which the deterministic description is valid, and where instead these fluctuations take over.}
 The deterministic drift captured by the ODE is only the mean of the stochastic dynamics, and the potential is so flat that the fluctuations of the order parameter around the mean trajectory cannot be neglected. Effectively, the dynamics can be divided in two parts:
 \begin{itemize}
     \item \emph{search phase}: the student is stuck in the flat region around \(m = 0\), and the dynamics is dominated by the stochastic fluctuations of the order parameter; the escape time is therefore longer than predicted by the deterministic ODE~\eqref{eq:intro:m-ode-sphere-compact};

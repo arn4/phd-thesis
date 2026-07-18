@@ -64,6 +64,113 @@ Price's theorem---which states that, for jointly Gaussian \((\lambda, \lambda^\s
 \end{equation}
 ---then identifies this expectation with \(C'(m)\) and recovers Equation~\eqref{app:intro:eq:target}, establishing the equivalence.
 
+\section{Validity window of the deterministic description}
+\label{app:intro:validity-window}
+
+The order-parameter ODEs of Equation~\eqref{eq:intro:ss-odes} rest on a
+non-asymptotic guarantee, Theorem~\ref{thm:intro:ss-convergence}: over any fixed
+horizon \([0, T]\) the stochastic overlap process stays within
+\(\sfrac{C(T)}{\sqrt{d}}\) of the deterministic trajectory. The horizon enters
+only through the constant \(C(T)\), and it is worth making its growth explicit.
+Collecting the order parameters into a single vector \(\Omega\), the sharper form
+established in Chapter~\ref{chap:paper-2302} (Theorem~\ref{2302:th:conv_eps}), due
+to \citet{veiga2022phase}, reads, with step size \(\delta t = \sfrac{\gamma}{pd}\)
+and continuous time \(t = \nu\,\delta t\),
+\begin{equation} \label{app:intro:eq:veiga-bound}
+    \lVert \Omega^{\nu} - \Omega(t) \rVert_\infty
+    \;\leq\; e^{C t}\,\sqrt{\frac{\gamma}{pd}}, \qquad C > 0 .
+\end{equation}
+Since \(\sfrac{\gamma}{p} = \mathcal{O}(1)\) we have \(\sqrt{\sfrac{\gamma}{pd}}
+\asymp d^{-1/2}\), so \eqref{app:intro:eq:veiga-bound} is the bound
+\(\sfrac{C(T)}{\sqrt{d}}\) with the horizon dependence made visible:
+\(C(T) \asymp e^{CT}\), the guarantee degrading \emph{exponentially} in time. It is
+this bound that we invoked when we called the deterministic description ``valid
+beyond the high-dimensional limit'' in Section~\ref{sec:intro:beyond}: the
+right-hand side vanishes whenever \(\sfrac{\gamma}{pd}\to 0^{+}\), however that
+limit is reached. What that statement leaves implicit, and what we make precise
+here, is that the exponential prefactor confines the guarantee to a finite time
+horizon.
+
+\paragraph{The horizon.}
+Fix a tolerance \(\eta \in (0,1)\) below which we regard the deterministic
+trajectory as tracking the true process. The right-hand side of
+\eqref{app:intro:eq:veiga-bound} stays under \(\eta\) exactly while
+\begin{equation} \label{app:intro:eq:window}
+    e^{Ct}\sqrt{\frac{\gamma}{pd}} \leq \eta
+    \quad\Longleftrightarrow\quad
+    t \;\leq\; t_\star \coloneqq \frac{1}{2C}\log\frac{pd}{\gamma}
+        - \frac{1}{C}\log\frac{1}{\eta}
+    \;=\; \frac{1}{2C}\log d + \mathcal{O}(1),
+\end{equation}
+again using \(\sfrac{\gamma}{p} = \mathcal{O}(1)\). The deterministic ODE is
+therefore controlled only up to \(t_\star = \mathcal{O}(\log d)\); past it, the
+error bar \eqref{app:intro:eq:veiga-bound} exceeds any fixed threshold and the
+description guarantees nothing.
+
+\paragraph{Where this leaves the escape times.}
+Comparing \(t_\star\) with the information-exponent escape times of
+Equation~\eqref{eq:intro:info-scaling} shows precisely which part of the dynamics
+the deterministic ODE captures:
+\begin{itemize}
+    \item \(\ell = 1\): \(t_\text{escape} \asymp 1 \ll t_\star\); the escape
+    happens well inside the window and the deterministic description is exact
+    throughout.
+    \item \(\ell = 2\): \(t_\text{escape} \asymp \log d\), the \emph{same} order
+    as \(t_\star \asymp \sfrac{1}{2C}\log d\). The escape sits at the very edge of
+    the guarantee: the deterministic drift still fixes the correct scaling, but
+    whether the trajectory is resolved all the way out depends on the constant
+    \(C\).
+    \item \(\ell \geq 3\): \(t_\text{escape} \asymp d^{\ell/2 - 1}\), polynomially
+    larger than \(t_\star\). Here \(e^{C t_\text{escape}} = e^{C\,d^{\ell/2-1}}\)
+    is super-polynomially large long before escape, and the bound
+    \eqref{app:intro:eq:veiga-bound} is \emph{vacuous} over the entire search
+    phase.
+\end{itemize}
+There is a complementary way to see the failure that does not even appeal to the
+horizon. Near the mediocrity saddle the overlap starts at \(m^0 \asymp d^{-1/2}\),
+while the additive error floor in \eqref{app:intro:eq:veiga-bound} is already
+\(\sqrt{\sfrac{\gamma}{pd}} \asymp d^{-1/2}\) at \(t = 0\). The uncertainty on
+\(m\) is thus of the same order as \(m\) itself throughout the flat region: the
+deterministic mean cannot resolve the sub-\(d^{-1/2}\) growth that carries the
+student out of the saddle, and the exponential prefactor only compounds this.
+\addnote{Equivalently, the bound controls a \emph{relative} error on \(m\) only
+once \(m = \mathcal{O}(1)\); while \(m = \mathcal{O}(d^{-1/2})\) the signal and the
+error bar coincide.}
+This is the analytic content of the statement, made in
+Section~\ref{sec:intro:exponents}, that in the search phase the fluctuations of
+the order parameter cannot be neglected.
+
+\paragraph{What replaces the deterministic argument.}
+The deterministic ODE is therefore used in this thesis only where the horizon is
+\(\mathcal{O}(1)\) or \(\mathcal{O}(\log d)\) --- the descent phase, and the
+gradient-flow / mean-field / high-dimensional regimes of the phase diagram in
+Figure~\ref{intro:fig:triangle}. The long search phase, which for \(\ell \geq 3\)
+is the bottleneck that sets the sample complexity, is instead controlled by
+\emph{separate stochastic arguments}, and Chapter~\ref{chap:paper-2305} is where
+this is worked out in full and checked against simulation. There, the subsection
+\emph{``Does stochasticity matter?''} (Section~\ref{2305:sec:sde_p1}) promotes the
+overlap ODE to the effective diffusion of \citet{arous2022high} --- same drift,
+fluctuation amplitude \(\sqrt{\sfrac{\gamma}{d}}\) --- and integrates it
+\emph{through} the saddle, exactly where the bound \eqref{app:intro:eq:veiga-bound}
+is vacuous. Solving the stochastic exit-time problem yields corrections of
+relative order \(\sqrt{\sfrac{\gamma}{d}}\) that leave the deterministic exit-time
+formulas \eqref{2305:eq:exit_time_p1}--\eqref{2305:eq:exit:quenched} unchanged at
+leading order; and Figure~\ref{2305:fig:sde_p1} confirms numerically, at
+\(d = 3000\), that SGD and the integrated SDE started from the same initialization
+reach the signal at essentially the same time. Stochasticity is thus \emph{shown},
+not merely assumed, not to alter the sample complexity.
+
+The same conclusion is reached, by different means, in the chapters that need
+polynomially long horizons directly: Chapters~\ref{chap:paper-2405}
+and~\ref{chap:paper-2406} control the discrete process with high probability on the
+random horizon \(t \leq T \wedge \tau_\eta\), through a martingale decomposition of
+the drift, a discrete Gr\"onwall inequality, and sub-Gaussian concentration of the
+per-step fluctuations --- none of which passes through
+\eqref{app:intro:eq:veiga-bound}. All are instances of the information-exponent
+analysis of \citet{arous2021online}: the deterministic reduction makes the
+\emph{descent} phase tractable, while the \emph{search} phase belongs to the
+stochastic theory.
+
 \section{The partial-trace algorithm}
 \label{app:intro:partial-trace}
 
