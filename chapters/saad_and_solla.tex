@@ -41,7 +41,7 @@ The update rules in Equation~\eqref{eq:intro:op-update} can be rearranged as
     \frac{a_j^{\nu+1}-a_j^{\nu}}{\sfrac{\gamma}{pd}} =& \left( y^\nu(\vec{\lambda}^{\star,\nu}) - h(\vec{\lambda}^{\nu}) \right) \sigma(\lambda^\nu_j).
 \end{aligned}
 \end{equation}
-Intuitively, when \(d\to\infty\) the left-hand side of the equations above can be interpreted as a derivative with respect to a continuous time variable \(t = \nu \frac{\gamma}{pd}\), while the right-hand side can be replaced by its expectation over the Gaussian distribution of the local fields, which is parametrized by the order parameters themselves. \addnote{In the traditional derivation of the Saad \& Solla equations, the usual time scaling is $t=\frac{\nu}{d}$. We will later clarify why we prefer this scaling.} This leads to a system of ODEs for the order parameters, known as the \emph{Saad \& Solla equations}\cite{saad1995exact,saad1996dynamics}:
+Intuitively, when \(d\to\infty\) the left-hand side of the equations above can be interpreted as a derivative with respect to a continuous time variable \(t = \nu \frac{\gamma}{pd}\), while the right-hand side can be replaced by its expectation over the Gaussian distribution of the local fields, which is parametrized by the order parameters themselves. \addnote{In the traditional derivation of the Saad \& Solla equations, the usual time scaling is $t=\frac{\nu}{d}$. We will later clarify why we prefer this scaling.} This leads to a system of ODEs for the order parameters, known as the \emph{Saad \& Solla equations}~\cite{saad1995exact,saad1996dynamics}:
 \begin{equation} \label{eq:intro:ss-odes} \tag{SS-ODEs}
 \begin{aligned}
     \dod{Q_{jl}}{t} =& \overbrace{\mathbb{E}_{(\vec{\lambda}, \vec{\lambda}^\star) \sim \mathcal{N}(0, \Omega)}
