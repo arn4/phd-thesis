@@ -3,7 +3,7 @@
 The core question of this section is to characterize the sample complexity of learning a function \(h^\star\), given an expressive enough student. We show that the answer is controlled by a single integer, the \emph{information exponent} of \citet{arous2021online}, which measures the flatness of the population risk at the initialization saddle. We then discuss two generalizations: the \emph{leap exponent} of \citet{abbe2022merged, abbe2023sgd}, which governs the multi-index case \(k > 1\), and the \emph{generative exponent} of \citet{damian2024computational}, which measures the hardness of the problem under a broader class of algorithms. 
 
 
-We focus for now on the \emph{single-index} setting, where the teacher is a single-index model \(f^\star(\vec{x}) = h^\star(\vec{w}^\star \cdot \vec{x})\) and the student has the same shape \(f(\vec{x}) = \sigma(\vec{w} \cdot \vec{x})\) with a different activation function \(\sigma\). The overlap matrices of Equation~\eqref{eq:intro:overlaps} then collapse to two scalars, the \emph{self-overlap} and the \emph{teacher overlap},
+We focus for now on the \emph{single-index} setting, where the teacher is a single-index model \(f^\star(\vec{x}) = h^\star(\vec{w}^\star \cdot \vec{x}/\sqrt{d})\) and the student has the same shape \(f(\vec{x}) = \sigma(\vec{w} \cdot \vec{x}/\sqrt{d})\) with a different activation function \(\sigma\). The overlap matrices of Equation~\eqref{eq:intro:overlaps} then collapse to two scalars, the \emph{self-overlap} and the \emph{teacher overlap},
 \begin{equation}
 \label{eq:intro:single-index-overlaps}
     q = \frac{\norm{\vec{w}}^2}{d}, \qquad m = \frac{\langle \vec{w}, \vec{w}^\star\rangle}{d},
@@ -190,14 +190,14 @@ The order-parameter space expands from the scalar \(m\) to the pair \((m, \vec{e
 When the teacher has more than one relevant direction (\(k > 1\)), the single-index picture extends naturally. The teacher is now a \emph{multi-index model},
 \begin{equation}
     \label{eq:intro:multi-index-teacher}
-    f^\star(\vec{x}) = h^\star(W^\star \vec{x}), \qquad W^\star = (\vec{w}^\star_1, \ldots, \vec{w}^\star_k)^\top \in \mathbb{R}^{k \times d},
+    f^\star(\vec{x}) = h^\star\!\left(\frac{W^\star \vec{x}}{\sqrt{d}}\right), \qquad W^\star = (\vec{w}^\star_1, \ldots, \vec{w}^\star_k)^\top \in \mathbb{R}^{k \times d},
 \end{equation}
 and the single overlap \(m\) of Equation~\eqref{eq:intro:single-index-overlaps} broadens to an overlap vector \(\vec{m} \in \mathbb{R}^k\),
 \begin{equation}
     \label{eq:intro:multi-index-overlaps}
     m_r = \frac{\langle \vec{w}, \vec{w}^\star_r \rangle}{d}, \qquad r \in [k].
 \end{equation}
-The multivariate target \(h^\star : \mathbb{R}^k \to \mathbb{R}\) admits a Hermite expansion in the teacher pre-activations \(\vec{\lambda}^\star = W^\star \vec{x}\),
+The multivariate target \(h^\star : \mathbb{R}^k \to \mathbb{R}\) admits a Hermite expansion in the teacher pre-activations \(\vec{\lambda}^\star = W^\star \vec{x}/\sqrt{d}\),
 \begin{equation}
     \label{eq:intro:multi-index-hermite}
     h^\star(\vec{\lambda}) = \sum_{\alpha \in \mathbb{N}^k} a_\alpha \prod_{r=1}^k \mathrm{He}_{\alpha_r}(\lambda_r), \qquad a_\alpha = \frac{1}{\alpha!}\,\mathbb{E}\!\left[h^\star(\vec{\lambda}^\star)\prod_{r=1}^k\mathrm{He}_{\alpha_r}(\lambda^\star_r)\right].
@@ -230,7 +230,7 @@ then the leap exponent is \(\ell = \min_{\vec{v} \in V^\star} \ell_{\vec{v}}\), 
 \paragraph{Staircase dynamics} Capturing the staircase dynamics requires the student to also have \(p \geq k\) neurons,
 \begin{equation}
     \label{eq:intro:multi-neuron-student}
-    f(\vec{x}) = \frac{1}{p}\sum_{j=1}^p a_j\,\sigma(\vec{w}_j \cdot \vec{x}),
+    f(\vec{x}) = \frac{1}{p}\sum_{j=1}^p a_j\,\sigma\!\left(\frac{\vec{w}_j \cdot \vec{x}}{\sqrt{d}}\right),
 \end{equation}
 each with its own overlap vector \(\vec{m}_j = W^\star\vec{w}_j/d \in \mathbb{R}^k\). Every neuron starts from an independent random initialization and evolves according to Equation~\eqref{eq:intro:leap-drift}, so different neurons can specialize to different teacher directions.
 
