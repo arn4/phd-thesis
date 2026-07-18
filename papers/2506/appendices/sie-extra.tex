@@ -8,7 +8,7 @@ In this Appendix, we focus on a particular choice of positional encoding that br
 \(\vec{c}\in\mathbb{R}^L\) is a fixed vector of coefficients. We call this special version of positional encoding \textit{injected positional encoding}.
 The trained model becomes:
 \begin{equation} \label{2506:eq:injected-model-definition}
-    f_{\vec{w}}(X) = R\left[
+    f_{\vec{w}}(X) = \Pi\left[
         \SoftMax{\left(\left(X+\frac{\tilde{P}}{\sqrt{d}}\right)\vec{w}\vec{w}^\top\left(X+\frac{\tilde{P}}{\sqrt{d}}\right)^\top + \vec{c}\vec{c}^\top\right)}
     \right],
 \end{equation}

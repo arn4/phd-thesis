@@ -11,7 +11,7 @@ where the parameter $\omega\in[0,1]$ allows the target to switch from a semantic
 
 We shall train the model in Equation~\eqref{2506:eq:model-definition} with positional encoding
 \(P_1 = -P_2\)
-and reduction map \(R\) the identity function. We focus on the \emph{gradient flow} limit where $\eta$ is sufficiently small \citep{chung1954stochastic}. Our analysis will focus on the population loss given by Equation~\eqref{2506:eq:population-loss_sufficient-statistic}, since it completely characterize the behavior of SGD in this regime; the sufficient statistics \((\vec{e},m)\) are the only free variables of the setting.
+and reduction map \(\Pi\) the identity function. We focus on the \emph{gradient flow} limit where $\eta$ is sufficiently small \citep{chung1954stochastic}. Our analysis will focus on the population loss given by Equation~\eqref{2506:eq:population-loss_sufficient-statistic}, since it completely characterize the behavior of SGD in this regime; the sufficient statistics \((\vec{e},m)\) are the only free variables of the setting.
 
 The sequential information exponent of this setting is \(\mathrm{SIE}=2\) (see Appendix~\ref{2506:app:further-positional-demantic} for the explicit derivation), thus by Theorem~\ref{2506:thm:sie} the sample complexity for escaping the initialization is \(\mathcal{O}(d \log d)\).
 After the initial phase, SGD fast converges to the minimum of the population loss that is fully aligned with either the semantic or the positional sufficient statistic, i.e. \(\norm{(\vec{e},m)} = 1\), but is not guaranteed to be the global minimum. 

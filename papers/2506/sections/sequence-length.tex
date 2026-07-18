@@ -4,7 +4,7 @@ In this section, we focus a first new emerging characteristic of the \emph{seque
 \paragraph{Linear attention ---} 
 Our first goal is to understand the dependence of the convergence rate of SGD on the sequence length. For that, consider the particular case of \emph{linear attention}, given by the reduction map:
 \begin{equation}
-    R[A] = \vec{a}_\mathrm{left}^\top A \vec{a}_\mathrm{right} \quad \text{with } \vec{a}_\mathrm{left} = \vec{a}_\mathrm{right} = \frac{1}{\sqrt{L}} \left(1, 1, \ldots, 1\right)^\top \in \mathbb{R}^L.
+    \Pi[A] = \vec{a}_\mathrm{left}^\top A \vec{a}_\mathrm{right} \quad \text{with } \vec{a}_\mathrm{left} = \vec{a}_\mathrm{right} = \frac{1}{\sqrt{L}} \left(1, 1, \ldots, 1\right)^\top \in \mathbb{R}^L.
 \end{equation}
 Rearranging the terms
 \begin{equation}

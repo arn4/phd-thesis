@@ -31,7 +31,7 @@ These play exactly the same role as the overlap between target and predictor wei
 \begin{equation} \label{2506:eq:population-loss_sufficient-statistic}
     R(\vec{w}) \equiv R(\vec{e}, m) =
         \mathbb{E}_{(\vec{z}_\star, \vec{z})}\left[
-            \left\lVert \vec{g}(\vec{z}_\star) - \vec{R}\left[\SoftMax{\left(\vec{z}\vec{z}^\top\right)}\right]\right\rVert^2_{\rm F}
+            \left\lVert \vec{g}(\vec{z}_\star) - \Pi\left[\SoftMax{\left(\vec{z}\vec{z}^\top\right)}\right]\right\rVert^2_{\rm F}
         \right].
 \end{equation}
 Note that this formulation reduces the problem of understanding the landscape geometry of $R$ in the $\vec{w}\in\mathbb{R}^{d}$ space to understanding it in $(\vec{e},m)\in\mathbb{R}^{L+1}$ --- a significant simplification when the token size $d$ is large with respect to the sequence length $L$, the regime we will focus on this work.

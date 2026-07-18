@@ -5,11 +5,11 @@ While multi-index models have served as a cornerstone in theoretical analyses of
 
 The main goal of this work is to extend our theoretical understanding of learning with SGD on multi-index models to attention-based architectures and sequential data. Inspired by \cite{cui2024phase,troiani2025fundamental}, our focus will be on the following class of single-layer, tied attention model:
 \begin{equation} \label{2506:eq:model-definition}
-    \vec{f}_{\vec{w}}(X) = R\left[
+    \vec{f}_{\vec{w}}(X) = \Pi\left[
         \SoftMax{\left(\left(X+\frac{P}{\sqrt{d}}\right)\vec{w}\vec{w}^\top\left(X+\frac{P}{\sqrt{d}}\right)^\top\right)}
     \right],
 \end{equation}
-where $\vec{w}\in \mathbb{R}^{d}$ are the trainable weights and $R$ is the \emph{reduction map}, which allows passing from an $L\times L$ matrix to a $k$-dimensional vector. As detailed in \Cref{2506:app:reduction}, this model is a reduction of the standard attention mechanism, where
+where $\vec{w}\in \mathbb{R}^{d}$ are the trainable weights and $\Pi$ is the \emph{reduction map}, which allows passing from an $L\times L$ matrix to a $k$-dimensional vector. As detailed in \Cref{2506:app:reduction}, this model is a reduction of the standard attention mechanism, where
 \begin{enumerate}
     \item key and query matrix are tied, and $d_\mathrm{head} = 1$: $Q=K=X\cdot \vec{w}\in \mathbb{R}^{L\times 1}$ ; 
     \item since we are considering a single layer attention, we take the value matrix to be the identity: $V=I_{L}$, since we do not need to learn a new representation of the sequence. 
