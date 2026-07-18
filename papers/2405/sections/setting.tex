@@ -100,8 +100,9 @@ When the optimal transformation $f$ is known, a simple SGD algorithm on $(\vec{z
 \paragraph{Achieving lower bounds with data repetition --}
 
 Although the performance of single-pass SGD is limited by the Information Exponent of $h^\star$, the situation drastically changes when multiple-pass algorithms are considered. Recently, \cite{dandi2024benefits} proved that non-even single-index targets are weakly recovered in $T = O(d)$ when considering extensive batch sizes with multiple pass. This begs the question of how good can a ``reusing'' algorithm be. We answer this question for the class of polynomial link functions:
+\addnote{We quote the sharp bound; the additional, not-provably-optimal polylogarithmic factor at generative exponent \(\ge 2\) is suppressed here and carried in full ($d\log(d)^2$) by the formal Theorem~\ref{2405:thm:single_index_recovery}.}
 \begin{theorem}[Informal]
-    There is a choice of hyperparameters such that if $h^\star$ is a polynomial function, Algorithm~\ref{2405:algo:optimizer_main_step} achieves weak recovery in $O(d\log(d)^2)$ samples.
+    There is a choice of hyperparameters such that if $h^\star$ is a polynomial function, Algorithm~\ref{2405:algo:optimizer_main_step} achieves weak recovery in $O(d\log d)$ samples.
 \end{theorem}
 This shows in particular that a simple gradient-based algorithm, which only requires seeing the data twice, is optimal for learning any polynomials.
 

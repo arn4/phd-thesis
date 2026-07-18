@@ -140,9 +140,10 @@ The deterministic drift captured by the ODE is only the mean of the stochastic d
 \end{itemize}
 The \emph{search phase} is the bottleneck that determines the scaling of the sample complexity with \(d\), while the \emph{descent phase} always happens linearly in \(d\) and contributes only sub-leading terms for \(\ell \geq 2\). 
 The formal result requires more sophisticated tools, but the scaling is captured by the following theorem.
+\addnote{Every information exponent \(\ell \ge 2\) hides an extra polylogarithmic factor, present but not proven sharp. Informally we quote the sharp bound; the formal proofs keep all logarithmic factors, a convention we follow throughout the thesis.}
 \begin{theorem}[Informal version of \citet{arous2021online}]
     The sample complexity of learning a single-index target with information exponent \(\ell\) with one-pass SGD is
-    \begin{equation}
+    \begin{equation} \label{eq:intro:sgd-sample-complexity}
         n = \begin{cases}
             \mathcal{O}(d) & \ell = 1, \\
             \mathcal{O}(d\log d) & \ell = 2, \\
@@ -173,7 +174,7 @@ Chapter~\ref{chap:paper-2506} extends the exponent to a model that proxies the a
 \addnote{The bilinear read-out is displayed here for concreteness. Chapter~\ref{chap:paper-2506} establishes its results for a general \emph{reduction map} \(R\ : \mathbb{R}^{L\times L}\to\mathbb{R}^k\).}
 \[f(X) = \vec{a}_L^\top \SoftMax\left(\left(X+\frac{P}{\sqrt{d}}\right) \vec{w}\vec{w}^\top \left(X+\frac{P}{\sqrt{d}}\right)^\top\right)\vec{a}_R,\]
 where \(P\) is a fixed positional encoding, and \(\vec{a}_L, \vec{a}_R \in \mathbb{R}^L\) are the read-out vectors.
-The information exponent is then defined as the smallest degree of the Hermite multivariate expansion of the target function, now called the \emph{Sequence Information Exponent} (SIE), and the sample complexity obeys the same \(d\)-scaling hierarchy as~\eqref{eq:intro:info-scaling} with \(\ell\) replaced by the SIE.
+The information exponent is then defined as the smallest degree of the Hermite multivariate expansion of the target function, now called the \emph{Sequence Information Exponent} (SIE), and the sample complexity obeys the same \(d\)-scaling hierarchy as~\eqref{eq:intro:sgd-sample-complexity} with \(\ell\) replaced by the SIE.
 The order-parameter space expands from the scalar \(m\) to the pair \((m, \vec{e})\), where \(m = \vec{w}^\star\cdot\vec{w}/d\) is the teacher overlap and \(\vec{e} = P\vec{w}/\sqrt{d}\) encodes the alignment of the student weights with the positional encoding \(P\); the dynamics is described by a coupled ODE in \((m,\vec{e})\), illustrated in Figure~\ref{fig:intro:2506-trajectories}.
 \begin{figure}[t]
     \centering
@@ -265,7 +266,7 @@ This gap can be substantial, as illustrated in the following examples.
  From a practical standpoint, this means that even the optimal partial-trace algorithm recovers \(\vec{w}\) in \(\mathcal{O}(d^{3/2})\) when restricted to linear queries of the label, but if it is allowed to first transform the label with \(g(y) = \mathrm{sign}(y)\) it can recover \(\vec{w}\) in \(\mathcal{O}(d)\). See Figure~\ref{fig:intro:gen-exp-H3} for a numerical illustration.
 \end{example}
 \begin{example}[\(\mathrm{He}_4\)]
- \(\mathrm{He}_4\) has information exponent \(\ell = 4\), but taking \(g(y) = y^2\) allows one to correlate the transformed label with \(\mathrm{He}_2\), giving \(\ell^\star = 2\). The complexity drops from \(\mathcal{O}(d^2)\) under CSQ to \(\mathcal{O}(d\log^2 d)\); see Figure~\ref{fig:intro:gen-exp-H4} for a numerical illustration.
+ \(\mathrm{He}_4\) has information exponent \(\ell = 4\), but taking \(g(y) = y^2\) allows one to correlate the transformed label with \(\mathrm{He}_2\), giving \(\ell^\star = 2\). The complexity drops from \(\mathcal{O}(d^2)\) under CSQ to \(\mathcal{O}(d\log d)\); see Figure~\ref{fig:intro:gen-exp-H4} for a numerical illustration.
 \end{example}
 The generative exponent governs the \emph{Statistical Query} (SQ) lower bound \(d^{\ell^\star/2}\); problems with \(\ell^\star > 2\) are genuinely hard: even the best first-order method, approximate message passing, fails on them \citep{troiani2024fundamental}.
 
@@ -284,11 +285,11 @@ This result is formalized in the following theorem:
     \begin{equation}
         n = \begin{cases}
             \mathcal{O}(d) & \ell^\star = 1, \\
-            \mathcal{O}(d\log^2 d) & \ell^\star = 2.
+            \mathcal{O}(d\log d) & \ell^\star = 2.
         \end{cases}
     \end{equation}
 \end{theorem}
-This is the same sample-complexity table as~\eqref{eq:intro:info-scaling}, with \(\ell\) replaced by \(\ell^\star\). Since \(\ell^\star \leq \ell\), the displaced gradient is always at least as efficient as one-pass SGD and strictly better whenever \(\ell^\star < \ell\).
+This is the same sample-complexity table as~\eqref{eq:intro:sgd-sample-complexity}, with \(\ell\) replaced by \(\ell^\star\). Since \(\ell^\star \leq \ell\), the displaced gradient is always at least as efficient as one-pass SGD and strictly better whenever \(\ell^\star < \ell\).
 
 \begin{figure}[t]
     \centering
@@ -303,10 +304,10 @@ This is the same sample-complexity table as~\eqref{eq:intro:info-scaling}, with 
     \caption{\textbf{Information exponent vs.\ generative exponent: separation in sample complexity} (from Chapter~\ref{chap:paper-2405}).
     Both panels plot the teacher--student overlap \(m\) as a function of the number of gradient steps \(T\), for one-pass SGD (circles) and the displaced gradient algorithm (crosses) at several values of \(d\).
     \emph{(a)}~Target \(\mathrm{He}_3\) has \(\ell = 3\) but \(\ell^\star = 1\) (the label can be sign-transformed to produce a linear-exponent query): one-pass SGD requires \(\mathcal{O}(d^2)\) steps, while the displaced gradient recovers the teacher in \(\mathcal{O}(d)\).
-    \emph{(b)}~Target \(\mathrm{He}_4\) has \(\ell = 4\) but \(\ell^\star = 2\) (it is even, so \(\ell^\star \geq 2\)): one-pass SGD needs \(\mathcal{O}(d^3)\) steps, while the displaced gradient achieves recovery in \(\mathcal{O}(d\log^2 d)\).}
+    \emph{(b)}~Target \(\mathrm{He}_4\) has \(\ell = 4\) but \(\ell^\star = 2\) (it is even, so \(\ell^\star \geq 2\)): one-pass SGD needs \(\mathcal{O}(d^3)\) steps, while the displaced gradient achieves recovery in \(\mathcal{O}(d\log d)\).}
     \label{fig:intro:gen-exp}
 \end{figure}
 
-In the multi-index setting, data reuse extends the staircase hierarchy. One-pass SGD follows the \emph{CSQ staircase} of \citet{abbe2021staircase}: each phase aligns with the direction of smallest \emph{directional information exponent} and the cost of each step scales as \(d^{\ell_{\vec{v}}-1}\). With the displaced gradient, the staircase is governed by the generative exponent instead, enabling an \emph{SQ staircase} over a strictly larger class of functions. A canonical example is \(h^\star(\vec{z}) = \mathrm{He}_4(z_1) + \mathrm{sign}(z_1 z_2 z_3)\): the \(\mathrm{He}_4\) component has \(\ell = 4\), \(\ell^\star = 2\), and the displaced gradient weakly recovers the first direction in \(\mathcal{O}(d\log^2 d)\) steps; once \(m_1 = \mathcal{O}(1)\), the \(\mathrm{sign}\) component, which has \(\ell=\ell^\star = 3\), becomes learnable and is recovered in a second \(\mathcal{O}(d\log^2 d)\) phase. The same function is invisible to the CSQ staircase because its first direction has \(\ell = 4\).
+In the multi-index setting, data reuse extends the staircase hierarchy. One-pass SGD follows the \emph{CSQ staircase} of \citet{abbe2021staircase}: each phase aligns with the direction of smallest \emph{directional information exponent} and the cost of each step scales as \(d^{\ell_{\vec{v}}-1}\). With the displaced gradient, the staircase is governed by the generative exponent instead, enabling an \emph{SQ staircase} over a strictly larger class of functions. A canonical example is \(h^\star(\vec{z}) = \mathrm{He}_4(z_1) + \mathrm{sign}(z_1 z_2 z_3)\): the \(\mathrm{He}_4\) component has \(\ell = 4\), \(\ell^\star = 2\), and the displaced gradient weakly recovers the first direction in \(\mathcal{O}(d\log d)\) steps; once \(m_1 = \mathcal{O}(1)\), the \(\mathrm{sign}\) component, which has \(\ell=\ell^\star = 3\), becomes learnable and is recovered in a second \(\mathcal{O}(d\log d)\) phase. The same function is invisible to the CSQ staircase because its first direction has \(\ell = 4\).
 
 Together, the three exponents trace the arc of this thesis: the information exponent fixes the cost of one-pass SGD on a single-index target, the leap exponent lifts it to the multi-index staircase, and the generative exponent marks the lower limit that becomes reachable once we step beyond a single pass.
