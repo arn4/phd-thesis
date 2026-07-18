@@ -273,11 +273,11 @@ The generative exponent governs the \emph{Statistical Query} (SQ) lower bound \(
 \paragraph{Displaced gradient SGD achieves the generative exponent rate}
 The generative exponent sets the complexity lower bound, but can a gradient-based algorithm achieve it \emph{agnostically}, without prior knowledge of the optimal transformation \(g\)? The key mechanism is remarkably simple: \emph{data reuse}. When the gradient step uses the same sample twice, as in the displaced gradient algorithm of Chapter~\ref{chap:paper-2405}, the update direction becomes a nonlinear function of \(y\). Concretely, the displaced gradient first computes a perturbed weight \(\tilde{\vec{w}} = \vec{w} - \rho\,\nabla_{\vec{w}}\ell\) and then evaluates the gradient at \(\tilde{\vec{w}}\) on the same sample: \addnote{If \(\rho\) is positive the method is known as \emph{extragradient}, and if \(\rho\) is negative it is known as \emph{sharpness-aware minimization}.}
 \[
-    \nabla_{\vec{w}}\ell\!\left(f(\vec{x};\tilde{\vec{w}}),\,y\right) = \,y\,\sigma'\!\big(\langle\tilde{\vec{w}},\vec{x}\rangle\big)\,\vec{x}.
+    \nabla_{\vec{w}}\ell\!\left(f(\vec{x};\tilde{\vec{w}}),\,y\right) = -\,y\,\sigma'\!\big(\langle\tilde{\vec{w}},\vec{x}\rangle\big)\,\vec{x}.
 \]
 With \(\rho \sim 1/d\), the inner product \(\langle\tilde{\vec{w}},\vec{x}\rangle = \langle\vec{w},\vec{x}\rangle + \rho\,y\,\sigma'(\langle\vec{w},\vec{x}\rangle)\,\|\vec{x}\|^2\) receives an \(\mathcal{O}(1)\) perturbation that is a \emph{nonlinear} function of \(y\) (because \(\|\vec{x}\|^2 \approx d\) and the product \(\rho d\) yields an \(\mathcal{O}(1)\) contribution). Taylor-expanding \(\sigma'\) around \(\langle\vec{w},\vec{x}\rangle\) generates higher-order correlational queries \(\mathbb{E}[p(y)\,\varphi(\vec{x})]\) for a polynomial \(p\) determined by the activation
 \[
-    \nabla_{\vec{w}}\ell\!\left(f(\vec{x};\tilde{\vec{w}}),\,y\right) = y \left(\sigma'(\langle\vec{w},\vec{x}\rangle) + \,y\,\sigma''(\langle\vec{w},\vec{x}\rangle) + y^2\,\sigma'''(\langle\vec{w},\vec{x}\rangle) + \cdots \right)\,\vec{x},
+    \nabla_{\vec{w}}\ell\!\left(f(\vec{x};\tilde{\vec{w}}),\,y\right) = -y \left(\sigma'(\langle\vec{w},\vec{x}\rangle) + \,y\,\sigma''(\langle\vec{w},\vec{x}\rangle) + y^2\,\sigma'''(\langle\vec{w},\vec{x}\rangle) + \cdots \right)\,\vec{x},
 \] so the network implicitly synthesizes the label transformation, provided \(\sigma\) has higher-order derivatives.
 This result is formalized in the following theorem:
 \begin{theorem}[Informal version of Chapter~\ref{chap:paper-2405}]
