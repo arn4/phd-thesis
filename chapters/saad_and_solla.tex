@@ -9,18 +9,18 @@ governed by a system of \emph{ordinary differential equations} (ODEs).
 \subsection{The order-parameter dynamics}
 We can make Equation~\eqref{eq:intro:sgd} explicit in terms of the local fields, and write the stochastic dynamics of the weights $\vec{w}_j$ and the output weights $a_j$ of the student network as
 \begin{align}
-    \vec{w}_j^{\nu+1} &= \vec{w}_j^{\nu} + \frac{\gamma}{p\sqrt{d}} \left( y(\vec{\lambda}^{\star,\nu}) - h(\vec{\lambda}^{\nu}) \right) a_j \sigma'(\lambda^\nu_j) \vec{x}^\nu, \\
+    \vec{w}_j^{\nu+1} &= \vec{w}_j^{\nu} + \frac{\gamma}{p\sqrt{d}} \left( y^\nu(\vec{\lambda}^{\star,\nu}) - h(\vec{\lambda}^{\nu}) \right) a_j \sigma'(\lambda^\nu_j) \vec{x}^\nu, \\
     %
-    a_j^{\nu+1} &= a_j^{\nu} + \frac{\gamma}{pd} \left( y(\vec{\lambda}^{\star,\nu}) - h(\vec{\lambda}^{\nu}) \right) \sigma(\lambda^\nu_j)
+    a_j^{\nu+1} &= a_j^{\nu} + \frac{\gamma}{pd} \left( y^\nu(\vec{\lambda}^{\star,\nu}) - h(\vec{\lambda}^{\nu}) \right) \sigma(\lambda^\nu_j)
 \end{align}
-where \(\vec{\lambda}^{\nu} = \frac{1}{\sqrt{d}}(\langle \vec{w}_1, \vec{x}^\nu \rangle, \ldots, \langle \vec{w}_p, \vec{x}^\nu \rangle)\) and \(\vec{\lambda}^{\star,\nu} = \frac{1}{\sqrt{d}}(\langle \vec{w}_1^\star, \vec{x}^\nu \rangle, \ldots, \langle \vec{w}_k^\star, \vec{x}^\nu \rangle)\) are the \emph{local fields} (i.e., pre-activations) of the student and teacher networks, respectively, relative to the current input $\vec{x}^\nu$ used in the $\nu$-th SGD step. The quantity \(y^\nu(\lambda^{\star,\nu}) \coloneqq y(\vec{\lambda}^{\star,\nu}) + \sqrt{\Delta}\xi^\nu\) is the noisy label of the current training sample.
+where \(\vec{\lambda}^{\nu} = \frac{1}{\sqrt{d}}(\langle \vec{w}_1, \vec{x}^\nu \rangle, \ldots, \langle \vec{w}_p, \vec{x}^\nu \rangle)\) and \(\vec{\lambda}^{\star,\nu} = \frac{1}{\sqrt{d}}(\langle \vec{w}_1^\star, \vec{x}^\nu \rangle, \ldots, \langle \vec{w}_k^\star, \vec{x}^\nu \rangle)\) are the \emph{local fields} (i.e., pre-activations) of the student and teacher networks, respectively, relative to the current input $\vec{x}^\nu$ used in the $\nu$-th SGD step. The quantity \(y^\nu(\vec{\lambda}^{\star,\nu}) \coloneqq y(\vec{\lambda}^{\star,\nu}) + \sqrt{\Delta}\xi^\nu\) is the noisy label of the current training sample.
 The second-layer weights $a_j$ are updated with a rescaled learning rate $\gamma/d$, which keeps both layers evolving on the same timescale as $d \to \infty$.
 With a little extra work we can derive the update rule for the order parameters themselves,
 \begin{equation} \label{eq:intro:op-update}
 \begin{aligned}
-    Q^{\nu+1}_{jl} =& Q^{\nu}_{jl} + \frac{\gamma}{pd} \left( y(\vec{\lambda}^{\star,\nu}) - h(\vec{\lambda}^{\nu}) \right) \left( a_l \sigma'(\lambda^\nu_l) \lambda^\nu_j + a_j \sigma'(\lambda^\nu_j) \lambda^\nu_l  \right) + \\ & + \frac{\gamma}{p d} \frac{\gamma}{p}\left( y(\vec{\lambda}^{\star,\nu}) - h(\vec{\lambda}^{\nu}) \right)^2 a_j a_l \sigma'(\lambda^\nu_j) \sigma'(\lambda^\nu_l) \frac{\norm{\vec{x}^\nu}^2}{d}, \\
-    M^{\nu+1}_{jr} =& M^{\nu}_{jr} + \frac{\gamma}{pd} \left( y(\vec{\lambda}^{\star,\nu}) - h(\vec{\lambda}^{\nu}) \right) a_j \sigma'(\lambda^\nu_j) \lambda^{\star,\nu}_r , \\
-    a_j^{\nu+1} =& a_j^{\nu} + \frac{\gamma}{pd} \left( y(\vec{\lambda}^{\star,\nu}) - h(\vec{\lambda}^{\nu}) \right) \sigma(\lambda^\nu_j).
+    Q^{\nu+1}_{jl} =& Q^{\nu}_{jl} + \frac{\gamma}{pd} \left( y^\nu(\vec{\lambda}^{\star,\nu}) - h(\vec{\lambda}^{\nu}) \right) \left( a_l \sigma'(\lambda^\nu_l) \lambda^\nu_j + a_j \sigma'(\lambda^\nu_j) \lambda^\nu_l  \right) + \\ & + \frac{\gamma}{p d} \frac{\gamma}{p}\left( y^\nu(\vec{\lambda}^{\star,\nu}) - h(\vec{\lambda}^{\nu}) \right)^2 a_j a_l \sigma'(\lambda^\nu_j) \sigma'(\lambda^\nu_l) \frac{\norm{\vec{x}^\nu}^2}{d}, \\
+    M^{\nu+1}_{jr} =& M^{\nu}_{jr} + \frac{\gamma}{pd} \left( y^\nu(\vec{\lambda}^{\star,\nu}) - h(\vec{\lambda}^{\nu}) \right) a_j \sigma'(\lambda^\nu_j) \lambda^{\star,\nu}_r , \\
+    a_j^{\nu+1} =& a_j^{\nu} + \frac{\gamma}{pd} \left( y^\nu(\vec{\lambda}^{\star,\nu}) - h(\vec{\lambda}^{\nu}) \right) \sigma(\lambda^\nu_j).
 \end{aligned}
 \end{equation}
 Since we are interested in the high-dimensional limit, the factor $\sfrac{\norm{\vec{x}^\nu}^2}{d}$ in the $Q$ update can be replaced by its expectation $\mathbb{E}\left[\sfrac{\norm{\vec{x}^\nu}^2}{d}\right] = 1$. \addnote{This is the classical \emph{à la physique} argument from \citet{saad1995exact}. In the next section we will report a formalization of this argument.}
@@ -36,9 +36,9 @@ This duality gives a full characterization of the random SGD process in dimensio
 The update rules in Equation~\eqref{eq:intro:op-update} can be rearranged as
 \begin{equation}
 \begin{aligned}
-    \frac{Q^{\nu+1}_{jl}-Q^{\nu}_{jl}}{\sfrac{\gamma}{pd}} =& \left( y(\vec{\lambda}^{\star,\nu}) - h(\vec{\lambda}^{\nu}) \right) \left( a_l \sigma'(\lambda^\nu_l) \lambda^\nu_j + a_j \sigma'(\lambda^\nu_j) \lambda^\nu_l  \right) + \\ & + \frac{\gamma}{p}\left( y(\vec{\lambda}^{\star,\nu}) - h(\vec{\lambda}^{\nu}) \right)^2 a_j a_l \sigma'(\lambda^\nu_j) \sigma'(\lambda^\nu_l), \\
-    \frac{M^{\nu+1}_{jr}-M^{\nu}_{jr}}{\sfrac{\gamma}{pd}} =& \left( y(\vec{\lambda}^{\star,\nu}) - h(\vec{\lambda}^{\nu}) \right) a_j \sigma'(\lambda^\nu_j), \\
-    \frac{a_j^{\nu+1}-a_j^{\nu}}{\sfrac{\gamma}{pd}} =& \left( y(\vec{\lambda}^{\star,\nu}) - h(\vec{\lambda}^{\nu}) \right) \sigma(\lambda^\nu_j).
+    \frac{Q^{\nu+1}_{jl}-Q^{\nu}_{jl}}{\sfrac{\gamma}{pd}} =& \left( y^\nu(\vec{\lambda}^{\star,\nu}) - h(\vec{\lambda}^{\nu}) \right) \left( a_l \sigma'(\lambda^\nu_l) \lambda^\nu_j + a_j \sigma'(\lambda^\nu_j) \lambda^\nu_l  \right) + \\ & + \frac{\gamma}{p}\left( y^\nu(\vec{\lambda}^{\star,\nu}) - h(\vec{\lambda}^{\nu}) \right)^2 a_j a_l \sigma'(\lambda^\nu_j) \sigma'(\lambda^\nu_l), \\
+    \frac{M^{\nu+1}_{jr}-M^{\nu}_{jr}}{\sfrac{\gamma}{pd}} =& \left( y^\nu(\vec{\lambda}^{\star,\nu}) - h(\vec{\lambda}^{\nu}) \right) a_j \sigma'(\lambda^\nu_j), \\
+    \frac{a_j^{\nu+1}-a_j^{\nu}}{\sfrac{\gamma}{pd}} =& \left( y^\nu(\vec{\lambda}^{\star,\nu}) - h(\vec{\lambda}^{\nu}) \right) \sigma(\lambda^\nu_j).
 \end{aligned}
 \end{equation}
 Intuitively, when \(d\to\infty\) the left-hand side of the equations above can be interpreted as a derivative with respect to a continuous time variable \(t = \nu \frac{\gamma}{pd}\), while the right-hand side can be replaced by its expectation over the Gaussian distribution of the local fields, which is parametrized by the order parameters themselves. \addnote{In the traditional derivation of the Saad \& Solla equations, the usual time scaling is $t=\frac{\nu}{d}$. We will later clarify why we prefer this scaling.} This leads to a system of ODEs for the order parameters, known as the \emph{Saad \& Solla equations}\cite{saad1995exact,saad1996dynamics}:
