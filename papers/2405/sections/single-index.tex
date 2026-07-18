@@ -57,11 +57,11 @@ $
 
 \paragraph {Proof Sketch --} We provide here the proof sketch for Theorem~\ref{2405:thm:single_index_recovery}. For any vector $\vec{w}$, under the correlation loss, we have
 \begin{equation}\label{2405:eq:sgd_gradient}
-    \nabla_{\vec{w}} \cL(f(\vec{z}; \vec{w}, a_0), y) = a_0 y \sigma'(\langle \vec{w}, z \rangle) \cdot \vec{z},
+    \nabla_{\vec{w}} \cL(f(\vec{z}; \vec{w}, a_0), y) = -a_0 y \sigma'(\langle \vec{w}, z \rangle) \cdot \vec{z},
 \end{equation}
 so the gradient is aligned with $\vec{z}$. As a result, we have
 \begin{equation}\label{2405:eq:sam_gradient}
-    \nabla_{\vec w}\cL\left(f(\vec z; \tilde{\vec{w}}(\rho), a_0),  y \right) = a_0 y \sigma'\big(\langle \vec{w}, \vec{z} \rangle + a_0 \rho y \sigma'(\langle \vec{w}, \vec{z} \rangle) \cdot \underbrace{\norm{\vec{z}}^2}_{\approx d}\big) \cdot \vec{z}
+    \nabla_{\vec w}\cL\left(f(\vec z; \tilde{\vec{w}}(\rho), a_0),  y \right) = -a_0 y \sigma'\big(\langle \vec{w}, \vec{z} \rangle + a_0 \rho y \sigma'(\langle \vec{w}, \vec{z} \rangle) \cdot \underbrace{\norm{\vec{z}}^2}_{\approx d}\big) \cdot \vec{z}
 \end{equation}
 This expression for the gradient exhibits two important properties:
 \begin{itemize}
