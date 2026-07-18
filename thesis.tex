@@ -14,6 +14,13 @@
 \addbibresource{papers-bibliography.bib}
 \addbibresource{extra-bibliography.bib}
 
+% Let long URLs (e.g. NeurIPS hex-hash paper links) break after digits and
+% letters, not only at slashes/dots, so bibliography entries don't overflow the
+% right margin. Low penalties = eager breaks; biblatex disables these by default.
+\setcounter{biburlnumpenalty}{7000}
+\setcounter{biburlucpenalty}{7000}
+\setcounter{biburllcpenalty}{7000}
+
 \title{Effective Dynamics of Stochastic Gradient Descent in High-Dimensional Neural Networks}
 \author{Luca Arnaboldi}
 
