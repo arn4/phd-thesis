@@ -1,7 +1,7 @@
 \section{Setting and Main Contributions}
 \label{2405:sec:main:setting}
 
-Given a dataset of $N$ labeled examples $\{\vec z^\nu, y^\nu\}_{\nu \in [N]}$ in $d$ dimensions, we analyze the learning properties of fully connected two-layer networks with first layer weights $W=\{\vec w_j\}_{j \in [p]}$, second layer $\vec a \in \mathbb{R}^p$, and activation function $\sigma: \mathbb R \to \mathbb R$
+Given a dataset of $N$ labeled examples $\{\vec z^\nu, y^\nu\}_{\nu \in [N]}$ in $d$ dimensions,\addnote{In this chapter the input covariate is denoted $\vec z$, playing the role of $\vec x$ in the rest of the thesis.} we analyze the learning properties of fully connected two-layer networks with first layer weights $W=\{\vec w_j\}_{j \in [p]}$, second layer $\vec a \in \mathbb{R}^p$, and activation function $\sigma: \mathbb R \to \mathbb R$
 \begin{align}
     f(\vec z; W, \vec a) = \frac{1}{p} \sum_{j =1}^p a_j \sigma \left(\langle \vec z, \vec w_j \rangle \right) \label{2405:eq:def_nn}
 \end{align}

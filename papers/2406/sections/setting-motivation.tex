@@ -19,7 +19,7 @@ Consider a two-layer neural network with activation function $\sigma$ and first 
 \label{2406:eq:main:newtwork_def}
     f(\vec z) = \frac{1}{p} \sum_{j=1}^p a_j \sigma{( \langle \vec z, \vec w_j \rangle)} .
 \end{align}
- We are interested in studying the capacity of $f$ to learn from training data $\mathcal{D} = \{(\vec{z}^{\nu}, y^{\nu})_{\nu \in [N]}\in\mathbb{R}^{d+1}\}$. In the following, we work under the following setting.
+ We are interested in studying the capacity of $f$ to learn from training data $\mathcal{D} = \{(\vec{z}^{\nu}, y^{\nu})_{\nu \in [N]}\in\mathbb{R}^{d+1}\}$.\addnote{In this chapter the input covariate is denoted $\vec z$, playing the role of $\vec x$ in the rest of the thesis.} In the following, we work under the following setting.
 
 \paragraph{Data model ---} As hinted in the introduction, we focus on the case the (noisy) labels depend on the covariates only through a projection over a $k$-dimensional subspace:
 \begin{align}
