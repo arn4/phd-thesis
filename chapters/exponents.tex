@@ -138,7 +138,7 @@ The deterministic drift captured by the ODE is only the mean of the stochastic d
     \item \emph{search phase}: the student is stuck in the flat region around \(m = 0\), and the dynamics is dominated by the stochastic fluctuations of the order parameter; the escape time is therefore longer than predicted by the deterministic ODE~\eqref{eq:intro:m-ode-sphere-compact};
     \item \emph{descent phase}: once the student has escaped the flat region, the drift dominates and the dynamics is well approximated by the ODE~\eqref{eq:intro:m-ode-sphere-compact}; the escape time is therefore well captured by Saad \& Solla's equations~\eqref{eq:intro:ss-odes}.
 \end{itemize}
-The \emph{search phase} is the bottleneck that determines the scaling of the sample complexity with \(d\), while the \emph{descent phase} always happen linearly in \(d\) and contributes only sub-leading terms for \(\ell \geq 2\). 
+The \emph{search phase} is the bottleneck that determines the scaling of the sample complexity with \(d\), while the \emph{descent phase} always happens linearly in \(d\) and contributes only sub-leading terms for \(\ell \geq 2\). 
 The formal result requires more sophisticated tools, but the scaling is captured by the following theorem.
 \begin{theorem}[Informal version of \citet{arous2021online}]
     The sample complexity of learning a single-index target with information exponent \(\ell\) with one-pass SGD is
