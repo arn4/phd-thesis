@@ -91,7 +91,7 @@ Indeed, standard SGD is not able to achieve weak recovery of the teacher directi
 
 \subsection{The self-interaction regime}
 Surprisingly, when the learning rate becomes extensive ($\gamma = \omega(1)$), the usual SGD algorithm struggles to achieve weak recovery. This can be explained by writing the gradient update as
-\[ \vec{w}_t + \gamma \vec{g}_t = (1 - \gamma\langle \vec{g}_t, \vec{w}_t \rangle)\vec{w}_t + \vec{g}_t^\bot, \]
+\[ \vec{w}_t - \gamma \vec{g}_t = (1 - \gamma\langle \vec{g}_t, \vec{w}_t \rangle)\vec{w}_t - \gamma\vec{g}_t^\bot, \]
 where $\vec{g}_t, \vec{g}_t^\bot$ are the gradient at time $t$ and its component orthogonal to $\vec{w}_t$, respectively. As a result, projected gradient descent can be seen as a version of spherical SGD with a random weight decay $\gamma \langle \vec{g}_t, \vec{w}_t \rangle$. When $\gamma = \omega(1)$, this weight decay also becomes of order $\omega(1)$, which leads to very unpredictable behavior of the process $(\vec{w}_t)_{t \geq 0}$.
 
  In this section, we study a modified version for the training protocol, in which the self-interaction term $\langle \vec{g}_t, \vec{w}_t \rangle$ is much smaller; we will refer to this new algorithm as \emph{Correlation loss SGD} (see e.g. \cite{damian2023smoothing}), as it effectively amounts to gradient updates on the correlation loss:
