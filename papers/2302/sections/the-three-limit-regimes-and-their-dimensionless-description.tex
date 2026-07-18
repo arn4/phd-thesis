@@ -146,7 +146,7 @@ Since we are in a regime where $\gamma / p \ll 1$, the ODE approximation of SGD 
 We show in the appendix how we can then approximate the dynamics by only tracking the evolution of $M$ and $\mathrm{diag}(Q^\bot)$, and using the following ansatz:
 \begin{equation}
 \label{2302:eq:mf_approx_lowd}
-    \vec{w}^\bot_i \approx \sqrt{q_{ii}^\bot} \cdot \vec{g}_i,
+    \vec{w}^\bot_i \approx \sqrt{d\, q_{ii}^\bot} \cdot \vec{g}_i,
 \end{equation}
 where $\vec{g}_i$ are i.i.d uniform random variables on $\mathcal S^{d-k-1}$ independent from the $q_{ii}^\bot$. More precisely, we consider the reduced parameters $\tilde\Theta = (M, q) \in \mathbb R^{p(k+1)}$, and the following mean-field equivalent of the  overlaps:
 \begin{equation}

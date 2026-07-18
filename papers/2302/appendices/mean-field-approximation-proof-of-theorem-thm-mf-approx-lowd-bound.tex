@@ -43,12 +43,12 @@ Let $U$ be a linear transformation, and assume that the initial measure $\mu_0$,
 
 Write $\mathbb R^d = V^\star \oplus V^\bot$, where $V^\star$ is the span of $W^\star$ and $V^\bot$ is its orthogonal subspace. Proposition \ref{2302:prop:app:chizat_symmetry} then implies immediately that $\mu_t$ is rotation-invariant on $V^\bot$. Hence, if we define the following function:
 \begin{equation}
-h(\vec{w}) =  \left(\frac{W^\star \vec{w}}d, \lVert \vec{w}^\bot \rVert^2\right)
+h(\vec{w}) =  \left(\frac{W^\star \vec{w}}d, \frac{\lVert \vec{w}^\bot \rVert^2}d\right)
 \end{equation}
 where $\vec{w}^\bot$ is the projection of $\vec{w}$ on $V^\bot$, then $\mu_t$ is only determined by its pushforward $\tilde \mu_t = h_\#\mu_t$. 
 Conversely, for a set of reduced parameters $(\vec{m}, q)\in\mathbb{R}^d$, and $\vec{g} \in \mathbb{S}^{d-k-1}$, we define
 \begin{equation}
-    \tilde{\vec{w}} = W^{\star \top}P^{-1}\vec{m} + \sqrt{q} \cdot \vec{g},
+    \tilde{\vec{w}} = W^{\star \top}P^{-1}\vec{m} + \sqrt{d q} \cdot \vec{g},
 \end{equation}
 where $\vec{g}$ is a uniform unit vector in $V^\bot$. Then $\mu_t$ is the measure of $\tilde{\vec{w}}$ when $(\vec{m}, q) \sim \tilde \mu_t$ and $\vec{g}\sim \mathrm{Unif}(\mathbb{S}^{d-k-1})$. This allows us to write the reduced equations for $\tilde{\mu_t}$:
 \begin{equation}
