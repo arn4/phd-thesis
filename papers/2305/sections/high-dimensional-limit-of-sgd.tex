@@ -25,7 +25,7 @@ The explicit expression of the population risk is:
     \end{split}
 \end{equation}
 
-Notice that the matrices $M, Q$ are precisely the second moments of the pre-activations $(\lambda_{\star},\lambda) = (w_{\star}^{\top}x, Wx)\in\mathbb{R}^{p+1}$. Therefore, to characterize the evolution of the risk throughout SGD, it is sufficient to track the evolution of the first layer weights $a_{i}$ and the correlation matrices $m, Q$, which consists of $p(p+1)$ parameters. As shown in Appendix~\ref{2305:app:square_equations}, starting from Equation~\eqref{2305:eq:sgd} we can derive a set of self-consistent stochastic processes describing the evolution of $(a,m,Q)$:
+Notice that the matrices $M, Q$ are precisely the second moments of the pre-activations $(\lambda_{\star},\lambda) = (w_{\star}^{\top}x, Wx)\in\mathbb{R}^{p+1}$. Therefore, to characterize the evolution of the risk throughout SGD, it is sufficient to track the evolution of the second layer weights $a_{i}$ and the correlation matrices $m, Q$, which consists of $p(p+1)$ parameters. As shown in Appendix~\ref{2305:app:square_equations}, starting from Equation~\eqref{2305:eq:sgd} we can derive a set of self-consistent stochastic processes describing the evolution of $(a,m,Q)$:
 \begin{align}
 \label{2305:eq:def:overlap_process}
     a_{j}^{\nu+1}-a_{j}^{\nu} &= \frac{\gamma}{pd}\mathcal{E}^{\nu}\lambda_{j}^2 \\
