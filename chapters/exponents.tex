@@ -247,7 +247,21 @@ Targets all of whose directions are linearly connected (leap one) are recovered 
         \item with \(m_1, m_2 = \mathcal{O}(1)\), the cubic rung reads as \(\lambda^\star_1 \lambda^\star_2 \lambda^\star_3 \approx m_1 m_2\, \lambda^\star_3\) and \(m_3\) follows in a final \(\mathcal{O}(d)\). The three phases climb the staircase in \(\mathcal{O}(d)\) samples in total.
     \end{enumerate}
     Even though the target has degree three: each overlap, once recovered, lowers the effective degree of the rung above it to one. The intermediate rungs are precisely what make the climb cheap: strip them away and the bare top monomial \(\lambda^\star_1 \lambda^\star_2 \lambda^\star_3\) has leap three, costing \(\mathcal{O}(d^2)\).
+    Figure~\ref{fig:intro:staircase} illustrates both regimes numerically.
 \end{example}
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[height=0.49\textwidth]{chapters/figs/staircase/staircase}
+    \caption[Learning a staircase function.]{%
+        Learning the staircase \(\lambda^\star_1 + \lambda^\star_1\lambda^\star_2 + \lambda^\star_1\lambda^\star_2\lambda^\star_3\)
+        with a matched student architecture: online SGD (dots) matches the corresponding
+        Saad \& Solla equations (lines). \emph{Left}, overlaps \(m_r\); \emph{right},
+        population risk. The staircase (solid) is an effective staircase---learned one
+        direction after another (\(m_1\), then \(m_2\), then \(m_3\)); the bare monomial
+        \(\lambda^\star_1\lambda^\star_2\lambda^\star_3\) (dashed) is too hard and learns nothing.}
+    \label{fig:intro:staircase}
+\end{figure}
 
 
 
