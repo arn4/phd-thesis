@@ -15,7 +15,7 @@ We make one more assumption on top of the setting of Section~\ref{intro:sec:sett
     \[\vec{w}^{\tau+1} = \sqrt{d}\,\frac{\vec{w}^{\tau} - \gamma \nabla_{\vec{w}}\ell(f(\vec{x}^{\tau}), y^{\tau})}{\norm{\vec{w}^{\tau} - \gamma \nabla_{\vec{w}}\ell(f(\vec{x}^{\tau}), y^{\tau})}}.\]
 \end{assumption}
 The effect of this is to keep the norm of the student weights fixed, \(q = 1\), so that the only degree of freedom is the teacher overlap \(m\).
-This technical simplification lets us focus on the true signal --- the correlation with the teacher direction --- by decoupling it from changes in the student-weight norm, which can alter the risk without contributing to recovery; see Chapter~\ref{chap:paper-2305} for a detailed discussion.
+This technical simplification lets us focus on the true signal, the correlation with the teacher direction, by decoupling it from changes in the student-weight norm, which can alter the risk without contributing to recovery; see Chapter~\ref{chap:paper-2305} for a detailed discussion.
 The Saad \& Solla equations~\eqref{eq:intro:ss-odes} then reduce to a single ODE for \(m\) that naturally encodes the spherical constraint
 \addnote{We are actually neglecting the \emph{variance term} \(\Psi\) in the self-overlap equation, which is subleading in the small-learning-rate regime that governs the escape from initialization; in Chapter~\ref{chap:paper-2305} we keep it and show that the derivation goes through.}
 \begin{equation} \label{eq:intro:m-ode-sphere}
@@ -220,14 +220,14 @@ and the overlap vector follows by projection onto the teacher directions,
     \label{eq:intro:leap-drift-overlap}
     \dod{m_r}{t} = \frac{1}{d}\left\langle \vec{w}^\star_r,\, \dod{\vec{w}}{t} \right\rangle, \qquad r \in [k].
 \end{equation}
-Here \(b_\ell\) is the \(\ell\)-th Hermite coefficient of \(\sigma\), and \(T_\ell[\vec{w}^{\otimes(\ell-1)}] \in \mathbb{R}^d\) denotes the contraction of \(T_\ell\) with \((\ell-1)\) copies of \(\vec{w}\); each such contraction brings down a factor \(\langle \vec{w}^\star_s, \vec{w}\rangle = d\,m_s\), so the drift of \(\vec{m}\) is a polynomial of degree \(\ell-1\) in the overlaps---the multi-index counterpart of the \(m^{\ell-1}\) drift of~\eqref{eq:intro:drift-ie}. The integer \(\ell\) is the \emph{leap exponent} (or leap complexity) of \citet{abbe2022merged, abbe2023sgd}: the lowest degree of the non-trivial Hermite tensors of \(f^\star\).
+Here \(b_\ell\) is the \(\ell\)-th Hermite coefficient of \(\sigma\), and \(T_\ell[\vec{w}^{\otimes(\ell-1)}] \in \mathbb{R}^d\) denotes the contraction of \(T_\ell\) with \((\ell-1)\) copies of \(\vec{w}\); each such contraction brings down a factor \(\langle \vec{w}^\star_s, \vec{w}\rangle = d\,m_s\), so the drift of \(\vec{m}\) is a polynomial of degree \(\ell-1\) in the overlaps---the multi-index counterpart of the \(m^{\ell-1}\) drift of~\eqref{eq:intro:drift-ie}. The integer \(\ell = \min\{|\alpha| : a_\alpha \neq 0\}\) is the multi-index analogue of the information exponent, the lowest degree of the nontrivial Hermite tensors of \(f^\star\), and, exactly as in the single-index case, it fixes the cost \(\mathcal{O}(d^{\ell-1})\) of the \emph{first} escape from the flat saddle.
 
-An equivalent formulation, direction by direction, makes the analogy with the single-index case fully explicit. For each direction \(\vec{v}\) in the teacher subspace \(V^\star = \mathrm{span}(\vec{w}^\star_1,\ldots,\vec{w}^\star_k)\), define the \emph{directional information exponent} \citep{arnaboldi2024repetita}
+An equivalent formulation, direction by direction, makes the analogy with the single-index case fully explicit. For each direction \(\vec{v}\) in the teacher subspace \(V^\star = \mathrm{span}(\vec{w}^\star_1,\ldots,\vec{w}^\star_k)\), define the \emph{directional information exponent} (see Chapter~\ref{chap:paper-2405}) as
 \begin{equation}
     \label{eq:intro:dir-info-exponent}
     \ell_{\vec{v}} = \min\!\left\{j \geq 1 : \mathbb{E}\!\left[y\,\mathrm{He}_j\!\left(\langle \vec{v}, \vec{x}\rangle\right)\right] \neq 0\right\};
 \end{equation}
-then the leap exponent is \(\ell = \min_{\vec{v} \in V^\star} \ell_{\vec{v}}\), and the direction achieving the minimum is the one the student aligns with first.
+then \(\ell = \min_{\vec{v} \in V^\star} \ell_{\vec{v}}\), and the direction achieving the minimum is the one the student aligns with first. When a single escape suffices, this exponent already coincides with the \emph{leap complexity} of \citet{abbe2022merged, abbe2023sgd}; in general, as we see next, the leap can exceed \(\ell\).
 
 \paragraph{Staircase dynamics} Capturing the staircase dynamics requires the student to also have \(p \geq k\) neurons,
 \begin{equation}
@@ -237,10 +237,8 @@ then the leap exponent is \(\ell = \min_{\vec{v} \in V^\star} \ell_{\vec{v}}\), 
 each with its own overlap vector \(\vec{m}_j = W^\star\vec{w}_j/d \in \mathbb{R}^k\). Every neuron starts from an independent random initialization and evolves according to Equation~\eqref{eq:intro:leap-drift}, so different neurons can specialize to different teacher directions.
 
 Multi-index learning then unfolds as a \emph{staircase} \citep{abbe2021staircase}. At initialization all overlaps are \(\mathcal{O}(1/\sqrt{d})\), so all terms in the expansion~\eqref{eq:intro:multi-index-hermite} vanish and the dynamics is flat in every direction. Neurons first align with the direction \(\vec{v}\) achieving the minimum \(\ell_{\vec{v}} = \ell\), requiring \(\mathcal{O}(d^{\ell-1})\) samples. Once that direction is weakly recovered, its overlap \(m_r\) reaches an \(\mathcal{O}(1)\) value and henceforth acts as a constant multiplier: every coefficient \(a_\alpha\) with \(\alpha_r > 0\) in~\eqref{eq:intro:multi-index-hermite} now contributes a finite term to the correlation rather than vanishing. This lowers the effective directional information exponent of the remaining directions: the exponent that was \(\ell_{\vec{v}'}\) (minimum total degree with \(\alpha_{v'} > 0\)) becomes the minimum degree in direction \(\vec{v}'\) alone, which can be strictly smaller, and the next escape costs fewer samples. The dynamics progresses from saddle to saddle in turn.
-Targets all of whose directions are linearly connected (leap one) are recovered in \(\mathcal{O}(d)\) samples, while each additional unit of leap raises the cost in direct analogy with~\eqref{eq:intro:info-scaling}.
-
 \begin{example}[The staircase \(\lambda^\star_1 + \lambda^\star_1 \lambda^\star_2 + \lambda^\star_1 \lambda^\star_2 \lambda^\star_3\)]
-    Consider the \(k = 3\) target \[h^\star(\vec{\lambda}^\star) = \lambda^\star_1 + \lambda^\star_1 \lambda^\star_2 + \lambda^\star_1 \lambda^\star_2 \lambda^\star_3.\] Its only nonzero coefficients in~\eqref{eq:intro:multi-index-hermite} sit at \[\alpha \in \{(1,0,0),\,(1,1,0),\,(1,1,1)\}.\] The leap exponent is \(\ell = 1\), set by the linear rung \(\lambda^\star_1\); the learning happens in 3 steps:
+    Consider the \(k = 3\) target \[h^\star(\vec{\lambda}^\star) = \lambda^\star_1 + \lambda^\star_1 \lambda^\star_2 + \lambda^\star_1 \lambda^\star_2 \lambda^\star_3.\] Its only nonzero coefficients in~\eqref{eq:intro:multi-index-hermite} sit at \[\alpha \in \{(1,0,0),\,(1,1,0),\,(1,1,1)\}.\] Here \(\ell = 1\), set by the linear rung \(\lambda^\star_1\), and since every rung adds a single new direction the leap is \(\mathrm{Leap} = 1\) as well; the learning happens in 3 steps:
     \begin{enumerate}
         \item the dynamics escapes the flat saddle along \(\vec{w}^\star_1\) in \(\mathcal{O}(d)\) samples;
         \item once \(m_1 = \mathcal{O}(1)\), the quadratic rung reads as \(\lambda^\star_1 \lambda^\star_2 \approx m_1\, \lambda^\star_2\): a \emph{linear} signal in the second direction, whose effective degree has dropped to one. So \(\vec{w}^\star_2\) is now leap-one and \(m_2\) escapes in a further \(\mathcal{O}(d)\);
@@ -262,6 +260,25 @@ Targets all of whose directions are linearly connected (leap one) are recovered 
         \(\lambda^\star_1\lambda^\star_2\lambda^\star_3\) (dashed) is too hard and learns nothing.}
     \label{fig:intro:staircase}
 \end{figure}
+
+The overall cost is therefore set not by the first escape but by the \emph{hardest} step along the way. Following \citet{abbe2023sgd}, the \emph{leap} is the largest number of new teacher directions any single step must recover at once, minimized over the order in which the directions are learned, equivalently, the maximal effective directional exponent met along the staircase. Formally, for a set \(S\) of already-recovered directions, the effective exponent of a remaining \(\vec{v}\) is the degree carried by the not-yet-recovered coordinates of the lowest monomial involving \(\vec{v}\),
+\begin{equation}
+    \label{eq:intro:eff-exponent}
+    \ell^{S}_{\vec{v}} = \min\Big\{\textstyle\sum_{r:\,\vec{w}^\star_r \notin S}\alpha_r \;:\; a_\alpha \neq 0,\ \alpha_{\vec{v}} > 0\Big\},
+\end{equation}
+and the leap is the smallest achievable value of the worst step,
+\begin{equation}
+    \label{eq:intro:leap-complexity}
+    \mathrm{Leap} = \min_{\pi \in \mathfrak{S}_k}\ \max_{r \in [k]}\ \ell^{\,S_{r-1}}_{\vec{w}^\star_{\pi(r)}},
+    \qquad S_{r-1} = \{\vec{w}^\star_{\pi(1)},\ldots,\vec{w}^\star_{\pi(r-1)}\}.
+\end{equation}
+It is the leap, not the first-escape exponent \(\ell\), that fixes the total sample complexity \(\mathcal{O}(d^{\mathrm{Leap}-1})\): targets whose directions are all linearly connected (leap one) are recovered in \(\mathcal{O}(d)\) samples, while each additional unit of leap raises the cost in direct analogy with~\eqref{eq:intro:info-scaling}.
+\begin{example}[A disconnected leap: \(\lambda^\star_1 + \lambda^\star_2\lambda^\star_3\lambda^\star_4\)]
+    The rung \(\lambda^\star_1\) has directional exponent \(1\), while the block \(\lambda^\star_2\lambda^\star_3\lambda^\star_4\), sharing no coordinate with it, has exponent \(3\). The leap is the maximum, \(\mathrm{Leap} = 3\), so the cost is \(\mathcal{O}(d^2)\) even though \(\min_{\vec{v}}\ell_{\vec{v}} = 1\).
+\end{example}
+\begin{example}[A nested leap: \(\lambda^\star_1 + \lambda^\star_1\lambda^\star_2\lambda^\star_3\lambda^\star_4\)]
+    The first rung again has exponent \(1\), but conditioned on recovering \(\vec{w}^\star_1\) the block reduces to \(m_1\,\lambda^\star_2\lambda^\star_3\lambda^\star_4\), still three new directions at once, effective exponent \(3\). So again \(\mathrm{Leap} = 3\) and the cost is \(\mathcal{O}(d^2)\).
+\end{example}
 
 
 
