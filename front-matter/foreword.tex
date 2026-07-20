@@ -4,9 +4,9 @@
 In this thesis, we study the training dynamics of neural networks under stochastic gradient
 descent, with a focus on characterizing \emph{when} and \emph{how fast} learning happens.
 Our analysis is inspired by the statistical physics of high-dimensional systems: we work
-in the limit where both the input dimension and the dataset size are large and
-proportional, and we use low-dimensional equations that
-describe the full training trajectory.
+in the limit where the input dimension is large and the number of samples needed to
+learn grows with it at a rate set by the difficulty of the target, and we use
+low-dimensional equations that describe the full training trajectory.
 The central organizing concept is the \emph{information exponent}, an integer that measures
 the flatness of the loss landscape near initialization and sets the sample complexity of
 one-pass SGD. It is our point of departure rather than the final word: much of what follows
