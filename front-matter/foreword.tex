@@ -8,8 +8,11 @@ in the limit where both the input dimension and the dataset size are large and
 proportional, and we use low-dimensional equations that
 describe the full training trajectory.
 The central organizing concept is the \emph{information exponent}, an integer that measures
-the flatness of the loss landscape near initialization and turns out to control the sample
-complexity of learning across a wide range of architectures and training protocols.
+the flatness of the loss landscape near initialization and sets the sample complexity of
+one-pass SGD. It is our point of departure rather than the final word: much of what follows
+is devoted to charting where this baseline breaks down, showing how a change of training
+protocol or of architecture replaces the information exponent with a related quantity---a
+generative, leap, or sequence exponent---that governs learning in the new setting.
 
 To set the stage, Chapter~\ref{chap:introduction} develops the mathematical framework
 that underlies the subsequent chapters.
@@ -45,9 +48,9 @@ remaining hard directions are picked up sequentially, one at a time.
 Chapter~\ref{chap:paper-2506} extends the framework beyond fully connected two-layer
 networks to sequence models and single-layer attention networks.
 We derive the SGD asymptotics in this architecturally richer setting and show that
-analogous effective equations govern learning, with the information exponent retaining
-its organizing role even when the architecture introduces structured dependencies between
-tokens.
+analogous effective equations govern learning, with a \emph{sequence} information exponent
+taking over the organizing role once the architecture introduces structured dependencies
+between tokens.
 
 \subsection*{Publications}
 This thesis is a collection of 5 papers I have co-authored during my PhD.
