@@ -334,6 +334,7 @@ This result is formalized in the following theorem:
         \end{cases}
     \end{equation}
 \end{theorem}
+\addnote{The theorem is state only for \(\ell^\star \leq 2\) because if \(h^\star\) is a polynomial, then \(l^\star \leq 2\), as proved in Chapter~\ref{chap:paper-2405}. There is no  guarantee of the exact same sample complexity for \(\ell^\star > 2\), but is cannot be worse than the SQ bound \(d^{\ell^\star/2}\ge d^{\frac32}\).}
 This is the same sample-complexity table as~\eqref{eq:intro:sgd-sample-complexity}, with \(\ell\) replaced by \(\ell^\star\). Since \(\ell^\star \leq \ell\), the displaced gradient is always at least as efficient as one-pass SGD and strictly better whenever \(\ell^\star < \ell\).
 
 \begin{figure}[t]
