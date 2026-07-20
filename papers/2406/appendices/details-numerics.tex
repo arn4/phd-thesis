@@ -40,7 +40,7 @@ Finally, note that is is possible to introduce a \emph{Correlation Loss Spherica
     \centering
     \includegraphics[width=\textwidth]{figs/H3H3_m_vs_T_spherical}
     \caption{\textbf{{Correlation Loss SGD} weak recovery:} Comparison between the performance of plain SGD, the Correlation Loss SGD and Spherical SGD, in different regions of the phase diagram, and for different sizes \(d\).
-    The plot shows the test error as a function of the optimization steps. Both the teacher and the student activation functions are fixed to \(\sigma = h^\star =\text{He}_3\), so the information exponent is \(\ell=3\). In all the three plots we vary the value of \(\mu\), while \(\delta = \mu - \sfrac{\ell}{2}\).
+    The plot shows the test error as a function of the optimization steps. Both the teacher and the student activation functions are fixed to \(\sigma = h^\star =\text{He}_3\), so the information exponent is \(\ell=3\). In all the three plots we vary the value of \(\mu\), while \(\delta = \sfrac{\ell}{2} - \mu\).
     Spherical SGD learns even in regions forbidden for plain SGD, as the Correlation Loss does. Note that the Spherical Correlation Loss is equivalent to the Projected Correlation Loss in all the regimes.
     }
 \label{2406:fig:app:spherical}
