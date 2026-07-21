@@ -60,7 +60,7 @@ Two behavioral rules apply to everything under `arxiv-papers/`:
 
 Every chapter is extracted from the arXiv submission in `arxiv-papers/`, but arXiv does not carry post-acceptance camera-ready revisions. For **2506** the two have diverged: `arXiv-2506.02651v1` predates the NeurIPS 2025 camera-ready, which added a Proposition on the flatness index κ, restated the positional-encoding Lemma in terms of it, supplied that Lemma's previously missing proof, and added a Conclusion + Limitations section. Those were **imported by hand** into `papers/2506/` — see the published version at <https://proceedings.neurips.cc/paper_files/paper/2025/file/1d91d5689e251d27993a3c2182dddcf7-Paper-Conference.pdf>.
 
-The import was deliberately **curated, not a sync**: the camera-ready also carries regressions that were left out on purpose (grammar damage in the Related Works paragraph, the sample index `\tau` replaced by an inconsistent `i` in `setting.tex`, a bibliography entry downgraded from JMLR back to an arXiv preprint, and NeurIPS two-column layout hacks). So `papers/2506/` matches **neither** source exactly. Diff it against either tree only with that in mind, and never resolve a discrepancy by copying a file wholesale from `arxiv-papers/` or from the camera-ready.
+The import was deliberately **curated, not a sync**: the camera-ready also carries regressions that were left out on purpose. So `papers/2506/` matches **neither** source exactly. Diff it against either tree only with that in mind, and never resolve a discrepancy by copying a file wholesale from `arxiv-papers/` or from the camera-ready.
 
 ## Skills (editorial pipeline — now in maintenance mode)
 
