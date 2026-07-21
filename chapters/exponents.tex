@@ -354,7 +354,7 @@ This is the same sample-complexity table as~\eqref{eq:intro:sgd-sample-complexit
     \label{fig:intro:gen-exp}
 \end{figure}
 
-In the multi-index setting, data reuse extends the staircase hierarchy. One-pass SGD follows the \emph{CSQ staircase} of \citet{abbe2022merged, abbe2023sgd, dandi2023how}: each phase aligns with the direction of smallest \emph{directional information exponent} and the cost of each step scales as \(d^{\ell_{\vec{v}}-1}\). With the displaced gradient, the staircase is governed by the generative exponent instead, enabling an \emph{SQ staircase} over a strictly larger class of functions.
+In the multi-index setting, data reuse extends the staircase hierarchy. One-pass SGD follows the \emph{CSQ staircase} of \citet{abbe2023sgd}: each phase aligns with the direction of smallest \emph{directional information exponent} and the cost of each step scales as \(d^{\ell_{\vec{v}}-1}\). With the displaced gradient, the staircase is governed by the generative exponent instead, enabling an \emph{SQ staircase} over a strictly larger class of functions.
 \begin{example}[SQ staircase]
 A canonical example is \[h^\star(\vec{z}) = \mathrm{He}_4(z_1) + \mathrm{sign}(z_1 z_2 z_3).\]
 The \(\mathrm{He}_4\) component has \(\ell = 4\), \(\ell^\star = 2\), and the displaced gradient weakly recovers the first direction in \(\mathcal{O}(d\log d)\) steps; once \(m_1 = \mathcal{O}(1)\), the \(\mathrm{sign}\) component, which has \(\ell=\ell^\star = 3\), becomes learnable and is recovered in a second \(\mathcal{O}(d\log d)\) phase. The same function is invisible to the CSQ staircase because its first direction has \(\ell_{\vec{v}} = 4\). A numerical illustration is shown in Figure~\ref{fig:intro:gen-exp-staircase}.
