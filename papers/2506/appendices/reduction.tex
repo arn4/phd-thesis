@@ -5,14 +5,14 @@ Let \(X\in\mathbb{R}^{L\times d}\) denote a sequence of length \(L\) of \(d\)-di
 \label{2506:eq:attention}
     \mathrm{Attention}(X) = \SoftMax{\left(\frac{QK^\top}{\sqrt{d_\mathrm{head}}}\right)}V
 \end{equation}
-where \(Q = (X+P)W_Q, K = (X+P)W_K, V = (X+P)W_V \in \mathbb{R}^{L\times d_\mathrm{head}}\) are trainable weights known as the \emph{query}, \emph{key} and \emph{value} matrices, respectively. The matrix \(P\in\mathbb{R}^{L\times d}\) is the \emph{positional encoding}, a fixed matrix needed to inject a representation of the position of the tokens in the sequence. To make the analysis tractable, \citep{troiani2025fundamental} considered the following simplifying assumptions: 
+where \(Q = \left(X+\frac{P}{\sqrt{d}}\right)W_Q, K = \left(X+\frac{P}{\sqrt{d}}\right)W_K, V = \left(X+\frac{P}{\sqrt{d}}\right)W_V \in \mathbb{R}^{L\times d_\mathrm{head}}\) are trainable weights known as the \emph{query}, \emph{key} and \emph{value} matrices, respectively. The matrix \(P\in\mathbb{R}^{L\times d}\) is the \emph{positional encoding}, a fixed matrix needed to inject a representation of the position of the tokens in the sequence. To make the analysis tractable, \citep{troiani2025fundamental} considered the following simplifying assumptions: 
 \begin{itemize}
-    \item Key and query matrix are tied, and \(d_\mathrm{head}= 1\): \(Q=K=X\cdot \vec{w}\in \mathbb{R}^{L\times1}\);
+    \item Key and query matrix are tied, and \(d_\mathrm{head}= 1\): \(Q=K=\left(X+\frac{P}{\sqrt{d}}\right)\cdot \vec{w}\in \mathbb{R}^{L\times1}\);
     \item Identity value matrix \(V=I_{L}\). 
 \end{itemize}
 Note the second assumption is mild for single-layer attention, since we do not need to learn a new representation of the sequence. Under these assumptions, \cref{2506:eq:attention} reduces to:
 \begin{equation}
-    \mathrm{TiedAttention}(X) =  \SoftMax{\left(X\vec{w}\vec{w}^\top X^\top\right)}
+    \mathrm{TiedAttention}(X) =  \SoftMax{\left(\left(X+\frac{P}{\sqrt{d}}\right)\vec{w}\vec{w}^\top\left(X+\frac{P}{\sqrt{d}}\right)^\top\right)}
 \end{equation}
 This is a map from sequences $X\in\mathbb{R}^{L\times d}$ to $L\times L$ matrices. Further adding the reduction map $\Pi:\mathbb{R}^{L\times L}\to \mathbb{R}^{k_\mathrm{out}}$, we get the model in \cref{2506:eq:model-definition}. Finally, to get the reduction to a sequence single-index model, it suffices to consider $P=0$ and the map on real-valued sequences $\vec{s}\in\mathbb{R}^{L}$:
 \begin{align}
