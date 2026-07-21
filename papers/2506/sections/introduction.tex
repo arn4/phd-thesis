@@ -9,7 +9,7 @@ The main goal of this work is to extend our theoretical understanding of learnin
         \SoftMax{\left(\left(X+\frac{P}{\sqrt{d}}\right)\vec{w}\vec{w}^\top\left(X+\frac{P}{\sqrt{d}}\right)^\top\right)}
     \right],
 \end{equation}
-where $\vec{w}\in \mathbb{R}^{d}$ are the trainable weights and $\Pi$ is the \emph{reduction map}, which allows passing from an $L\times L$ matrix to a $k$-dimensional vector. As detailed in \Cref{2506:app:reduction}, this model is a reduction of the standard attention mechanism, where
+where $\vec{w}\in \mathbb{R}^{d}$ are the trainable weights and $\Pi$ is the \emph{reduction map}, which allows passing from an $L\times L$ matrix to a $k_\mathrm{out}$-dimensional vector. As detailed in \Cref{2506:app:reduction}, this model is a reduction of the standard attention mechanism, where
 \begin{enumerate}
     \item key and query matrix are tied, and $d_\mathrm{head} = 1$: $Q=K=X\cdot \vec{w}\in \mathbb{R}^{L\times 1}$ ; 
     \item since we are considering a single layer attention, and we do not need to learn a new representation of the sequence, the value matrix is the identity: $V=I_{L}$.
@@ -25,19 +25,19 @@ with the squared loss:
 \begin{equation}
     \ell(X, \vec{y}; f_{\vec{w}}) =
         \left\lVert\vec{y} - f_{\vec{w}}(X)\right\rVert^2_{\rm F} =
-        \sum_{i=1}^k \left(y_i - f_{\vec{w}}(X)_i\right)^2.
+        \sum_{i=1}^{k_\mathrm{out}} \left(y_i - f_{\vec{w}}(X)_i\right)^2.
 \end{equation}
 Note that for one-pass (a.k.a. \emph{online} or \emph{streaming}) SGD each sample is only seen once, meaning that the sample complexity of the algorithm coincides with the convergence rate. The spherical constraint is considered to simplify the mathematical analysis, a common assumption in the analysis of SGD for single-index models \citep{arous2021online,damian2022neural}. 
 
 To derive a sharp characterization of the sample complexity and convergence rate of SGD for the single-layer attention mechanism in~\cref{2506:eq:model-definition}, we assume that the sequence data $(X, \vec{y})$ is generated from the following Gaussian \emph{sequence single-index} (SSI) model:
 \begin{assumption}[Data distribution] 
 \label{2506:def:gsim}
-We assume training data $(X, \vec{y})\in\mathbb{R}^{L\times d}\times \mathbb{R}^{k}$ is independently drawn from a Gaussian {\emph Sequence Single Index (SSI)} model:
+We assume training data $(X, \vec{y})\in\mathbb{R}^{L\times d}\times \mathbb{R}^{k_\mathrm{out}}$ is independently drawn from a Gaussian {\emph Sequence Single Index (SSI)} model:
     \begin{equation}
     \label{2506:eq:gssim}
         \vec{f}^\mathrm{SSI}_{\vec w_{\star}}(X) = \vec{g}{\left(X\cdot \vec{w}_{\star}\right)}
     \end{equation}
-    where $X\in\mathbb{R}^{L\times d}$ is a Gaussian matrix with entries $\mathcal{N}(0,\sfrac{1}{d})$, \(\vec{g}\colon \mathbb{R}^L\to\mathbb{R}^k\) is a vector-valued link function that depends only on the scalar product of the input with a fixed vector \(\vec{w}_\star\in\mathbb{S}^{d-1}(\sqrt{d})\) and \(k\) is a integer that does not depend on \(d\) nor \(L\).  
+    where $X\in\mathbb{R}^{L\times d}$ is a Gaussian matrix with entries $\mathcal{N}(0,\sfrac{1}{d})$, \(\vec{g}\colon \mathbb{R}^L\to\mathbb{R}^{k_\mathrm{out}}\) is a vector-valued link function that depends only on the scalar product of the input with a fixed vector \(\vec{w}_\star\in\mathbb{S}^{d-1}(\sqrt{d})\) and \(k_\mathrm{out}\) is a integer that does not depend on \(d\) nor \(L\).  
 \end{assumption}  
 Recent work by \citep{cui2024phase,troiani2025fundamental,cui2025high} has shown that the single-layer tied attention model in \cref{2506:eq:model-definition} is a particular instance of a class of \emph{sequence multi-index (SMI) models}, creating a bridge between single-index analysis and attention-based learning. This mapping implies that model \cref{2506:eq:model-definition} can learn at best a predictor in this class, justifying the choice for training data. The SSI model class was introduced by \cite{cui2024phase} in the context of studying phase transitions for the attention mechanism. These results position the SMI model as a signature synthetic model to study the interplay between attention mechanisms, data structure, and the dynamics of learning algorithms. Despite this progress, the learning dynamics of SMI models under SGD remain unexplored. Prior studies \citep{cui2025high,cui2024phase} analyzed the empirical risk minimizer through the heuristic replica method, while \citep{troiani2025fundamental} rigorously studied the Bayes-optimal estimator for SMI models. However, a theoretical understanding of the population landscape and SGD dynamics in this model is missing. Our work addresses this gap, providing the first rigorous characterization of SGD dynamics in SMI models by leveraging techniques developed for single and multi-index models. 
 

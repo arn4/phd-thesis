@@ -14,7 +14,7 @@ Note the second assumption is mild for single-layer attention, since we do not n
 \begin{equation}
     \mathrm{TiedAttention}(X) =  \SoftMax{\left(X\vec{w}\vec{w}^\top X^\top\right)}
 \end{equation}
-This is a map from sequences $X\in\mathbb{R}^{L\times d}$ to $L\times L$ matrices. Further adding the reduction map $\Pi:\mathbb{R}^{L\times L}\to \mathbb{R}^{k}$, we get the model in \cref{2506:eq:model-definition}. Finally, to get the reduction to a sequence single-index model, it suffices to consider $P=0$ and the map on real-valued sequences $\vec{s}\in\mathbb{R}^{L}$:
+This is a map from sequences $X\in\mathbb{R}^{L\times d}$ to $L\times L$ matrices. Further adding the reduction map $\Pi:\mathbb{R}^{L\times L}\to \mathbb{R}^{k_\mathrm{out}}$, we get the model in \cref{2506:eq:model-definition}. Finally, to get the reduction to a sequence single-index model, it suffices to consider $P=0$ and the map on real-valued sequences $\vec{s}\in\mathbb{R}^{L}$:
 \begin{align}
     g(\vec{s}) = \Pi\left[\SoftMax{(\vec{s}\vec{s}^{\top})}\right]
 \end{align}

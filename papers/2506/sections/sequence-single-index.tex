@@ -1,5 +1,5 @@
 \section{The sample complexity of SGD}
-In this section, we focus on understanding the complexity of the SGD algorithm, i.e., how the number of total gradient steps \(n\) scales with the dimension \(d\) of the token embeddings, in the high-dimensional limit \(d\gg 1\); for simplicity of exposition, we focus on the case \(k=1\), but the same arguments can be repeated for each of the components of the output.  
+In this section, we focus on understanding the complexity of the SGD algorithm, i.e., how the number of total gradient steps \(n\) scales with the dimension \(d\) of the token embeddings, in the high-dimensional limit \(d\gg 1\); for simplicity of exposition, we focus on the case \(k_\mathrm{out}=1\), but the same arguments can be repeated for each of the components of the output.  
 
 \paragraph{No positional encoding ---} We first focus on the case without positional encoding: \(P=0\) implies that the only relevant sufficient statistic is \(m\). An analogy with single-index models for networks can be done: For single-index models, the \emph{information exponent} fully characterizes the sample complexity of the SGD algorithm \cite{arous2021online}. The definition can be generalized for sequential data.
 \begin{definition}[Sequence Information Exponent (SIE)] \label{2506:def:sie}
