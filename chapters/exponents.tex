@@ -123,6 +123,8 @@ We can now state the original definition of the information exponent.
     \end{equation}
 \end{definition}
 
+This Hermite-degree characterization has an early precursor in the Gaussian-space analysis of single- and multi-index models by \citet{dudeja2018learning}, who showed that for Gaussian covariates the population landscape of the maximum-likelihood objective is free of spurious minima and gave an iterative procedure recovering the index space with a sample complexity governed by the degree of its first informative Hermite component.
+
 The last piece of the puzzle is to understand how the information exponent controls the sample complexity of learning. Integrating the deterministic drift~\eqref{eq:intro:drift-ie} from \(m^0 = \mathcal{O}(1/\sqrt{d})\) gives the escape time, hence the number of samples:
 \begin{equation} \label{eq:intro:info-scaling}
     t_\text{escape} \asymp \begin{cases}
