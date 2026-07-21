@@ -15,7 +15,7 @@ and reduction map \(\Pi\) the identity function. We focus on the \emph{gradient 
 
 The sequential information exponent of this setting is \(\mathrm{SIE}=2\) (see Appendix~\ref{2506:app:further-positional-demantic} for the explicit derivation), thus by Theorem~\ref{2506:thm:sie} the sample complexity for escaping the initialization is \(\mathcal{O}(d \log d)\).
 After the initial phase, SGD fast converges to the minimum of the population loss that is fully aligned with either the semantic or the positional sufficient statistic, i.e. \(\norm{(\vec{e},m)} = 1\), but is not guaranteed to be the global minimum. 
-Figure~\ref{2506:fig:positional-semantic-trajectories-a1} shows an example where the population loss has 2 minimums, one semantic with \((e,m)=(1,0)\) and one positional with \((e,m)=(0,1)\), and the steepest direction at initialization, namely the eigenvector associated with the lowest eigenvalue of the Hessian, points towards the local one; in this case, the gradient flow will converge to the wrong minima.
+Figure~\ref{2506:fig:positional-semantic-trajectories-a1} shows an example where the population loss has two minima, one semantic with \((e,m)=(1,0)\) and one positional with \((e,m)=(0,1)\), and the steepest direction at initialization, namely the eigenvector associated with the lowest eigenvalue of the Hessian, points towards the local one; in this case, the gradient flow will converge to the wrong minimum.
 
 Varying the parameters, \(\omega\) and \(a\) the high-dimensional SGD dynamics from random initialization exhibits a rich phenomenology. In Figure~\ref{2506:fig:phase-diagram-postional-semantic} we show the phase diagram with all the possible behaviors:
 \begin{itemize}
