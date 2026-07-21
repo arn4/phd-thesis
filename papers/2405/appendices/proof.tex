@@ -109,7 +109,7 @@ In \cite{arous2021online}, the function $\Psi(\vec{u})$ can be written as $\Psi(
   \[ \norm{ W^\star \Psi(\vec{u}) - \psi(W^\star \vec{u})} \leq \left( \norm{W^\star \vec{u}} \vee \frac1{\sqrt{d}} \right) \cdot q. \]
 \end{assumption}
 
-By an abuse of notation, we shall sometimes view $\psi$ as a function from $V^\star$ to itself, where $V^\star$ is the span of the columns of $W^\star$. However, Assumption~\ref{2405:assump:app:low_dim} ensures that all quantities related to $\psi$ are only depending on the (oftentimes fixed) dimension $k$ instead of $d$.
+By an abuse of notation, we shall sometimes view $\psi$ as a function from $V^\star$ to itself, where $V^\star$ is the span of the rows of $W^\star$. However, Assumption~\ref{2405:assump:app:low_dim} ensures that all quantities related to $\psi$ are only depending on the (oftentimes fixed) dimension $k$ instead of $d$.
 
 It turns out that in this case, we can control accurately the trajectory of $W^\star \vec{u}$, at least when $f$ is not too flat around $\vec{0}$. Let $\Pi^\star = (W^{\star})^{\top}W^\star$ be the projection operator on $V^\star$, and define the stopping time
 \[ \tau_\theta = \min \{t \geq 0 : \norm{\Pi^\star \vec{u}} \geq \theta \}. \]
