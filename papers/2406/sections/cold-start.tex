@@ -36,9 +36,9 @@ Consider the gradient descent dynamics defined on the hidden layer weights by Eq
 \end{align}
 Our first main result is to characterize the time to achieve weak recovery of the target direction $\vec w^\star$ as a function of the batch size and the information exponent of the target. We make very weak assumptions on the activation and labeling functions, namely only assuming a sub-polynomial growth:
 \begin{assumption}[Polynomial growth]\label{2406:assump:poly_growth}
-    The activation function $\sigma$ is differentiable everywhere, except maybe at a finite set of points. Both $\sigma'$ and $f^\star$ are sub-polynomial, i.e. there exists a $k > 0$ and a constant $C$ such that for any $x\in \mathbb R$
+    The activation function $\sigma$ is differentiable everywhere, except maybe at a finite set of points. Both $\sigma'$ and $f^\star$ are sub-polynomial, i.e. there exists a $q > 0$ and a constant $C$ such that for any $x\in \mathbb R$
     \begin{equation}
-        |\sigma'(x)|\leq C(1+x)^k \quad \text{and} \quad |f^\star(x)|\leq C(1+x)^k
+        |\sigma'(x)|\leq C(1+x)^q \quad \text{and} \quad |f^\star(x)|\leq C(1+x)^q
     \end{equation}
 \end{assumption}
 
