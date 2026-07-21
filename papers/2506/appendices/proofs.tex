@@ -93,23 +93,23 @@ We turn our attention to the inhibitive terms in Proposition~\ref{2506:prop:app:
 \end{lemma}
 \begin{proof}
     We only treat the tied case; the untied one is done similarly. Differentiating the loss w.r.t $\vec{w}$, we find
-    \[ \nabla_{\vw} \cL(X, y, f) = 2\sigma'\left( \frac{\langle \vw_{\text{tied}}, \Flatten(X)\rangle}{\sqrt{L}} \right)\left(\sigma'\left( \frac{\langle \vw_{\text{tied}}, \Flatten(X)\rangle}{\sqrt{L}} \right) - y(X)\right) \cdot \frac{\sum_{i} \vec{x}_i }{\sqrt{L}} \]
-\end{proof}
+    \[ \nabla_{\vw} \cL(X, y, f) = 2\sigma'\left( \frac{\langle \vw_{\text{tied}}, \Flatten(X)\rangle}{\sqrt{L}} \right)\left(\sigma\left( \frac{\langle \vw_{\text{tied}}, \Flatten(X)\rangle}{\sqrt{L}} \right) - y(X)\right) \cdot \frac{\sum_{i} \vec{x}_i }{\sqrt{L}} \]
 
 We write $\vec{x}_i = \vec{x}_i^\parallel + \vec{x}_i^\bot$, where $\vec{x}_i^\parallel$ is the projection on $\vec{x}_i$ on the subspace spanned by $\vw$ and $\vw^\star$.
 Then
 \[
     \resizebox{\linewidth}{!}{$\displaystyle
-      \nabla_{\vw}^\bot \cL(X, y, f) = 2\sigma'\left( \frac{\langle \vw_{\text{tied}}, \Flatten(X)\rangle}{\sqrt{L}} \right)\left(\sigma'\left( \frac{\langle \vw_{\text{tied}}, \Flatten(X)\rangle}{\sqrt{L}} \right) - y(X)\right) \cdot \frac{\sum_{i} (I - \vw \vw^\bot) \vec{x}_i^\parallel + \sum_i \vec{x}_i^\bot }{\sqrt{L}}
+      \nabla_{\vw}^\bot \cL(X, y, f) = 2\sigma'\left( \frac{\langle \vw_{\text{tied}}, \Flatten(X)\rangle}{\sqrt{L}} \right)\left(\sigma'\left( \frac{\langle \vw_{\text{tied}}, \Flatten(X)\rangle}{\sqrt{L}} \right) - y(X)\right) \cdot \frac{\sum_{i} (I - \vw \vw^\top) \vec{x}_i^\parallel + \sum_i \vec{x}_i^\bot }{\sqrt{L}}
     $}
   \]
-Importantly, the vector $x_i^\bot$ is independent from any of the prefactors, and has norm $d-2$, while the first vector is a fixed-dimensional Gaussian. As a result, we have
+Importantly, the vector $x_i^\bot$ is independent from any of the prefactors, and has squared norm $d-2$, while the first vector is a fixed-dimensional Gaussian. As a result, we have
 \[ \E*{\norm{\nabla_{\vw}^\bot \cL(X, y, f)}^2} = \E*{f_{\vw}(X)^2(y(X) - f_{\vw}(X))^2}(d-2) + O(1) \]
 It remains to show that the expectation above is bounded away from zero. Assuming that the labels are centered for simplicity, when $m = 0$ the expectation simplifies to
 \[ L_0 = \E*{f_{\vw}(X)^2}\E*{y(X)^2} + \E*{f_{\vw}(X)^4} > 0. \]
 By continuity, we can choose $\eta > 0$ such that if $|m| \leq \eta$
 \[ \frac{L_0}2 \leq \E*{f_{\vw}(X)^2(y(X) - f_{\vw}(X))^2} \leq 2L_0, \]
 which ends the proof.
+\end{proof}
 
 \subsection{Hitting time for the tied dynamics}
 
