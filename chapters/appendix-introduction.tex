@@ -176,7 +176,7 @@ stochastic theory.
 \section{The partial-trace algorithm}
 \label{app:intro:partial-trace}
 
-This appendix describes the spectral algorithm of \citet{damian2024computational} that achieves weak recovery of the teacher direction \(\vec{w}^\star\) from \(n \asymp d^{\ell/2}\) samples, matching the CSQ lower bound discussed in Section~\ref{sec:intro:exponents}. We work in the single-index setting: \(\vec{x} \sim \mathcal{N}(0, I_d)\), \(\vec{w}^\star \in \mathbb{S}^{d-1}(\sqrt{d})\), \(\lambda^\star = \langle \vec{w}^\star, \vec{x}\rangle / \sqrt{d} \sim \mathcal{N}(0,1)\), and \(y = h^\star(\lambda^\star) = \sum_{k \geq \ell} a_k\,\mathrm{He}_k(\lambda^\star)\) with information exponent \(\ell\) and \(a_\ell \neq 0\). Let \(\hat{\vec{w}}^\star = \vec{w}^\star / \sqrt{d}\) denote the unit teacher direction.
+This appendix describes the spectral algorithm of \citet{pmlr-v65-anandkumar17a}, in the form used by \citet{damian2024computational}, that achieves weak recovery of the teacher direction \(\vec{w}^\star\) from \(n \asymp d^{\ell/2}\) samples, matching the CSQ lower bound discussed in Section~\ref{sec:intro:exponents}. We work in the single-index setting: \(\vec{x} \sim \mathcal{N}(0, I_d)\), \(\vec{w}^\star \in \mathbb{S}^{d-1}(\sqrt{d})\), \(\lambda^\star = \langle \vec{w}^\star, \vec{x}\rangle / \sqrt{d} \sim \mathcal{N}(0,1)\), and \(y = h^\star(\lambda^\star) = \sum_{k \geq \ell} a_k\,\mathrm{He}_k(\lambda^\star)\) with information exponent \(\ell\) and \(a_\ell \neq 0\). Let \(\hat{\vec{w}}^\star = \vec{w}^\star / \sqrt{d}\) denote the unit teacher direction.
 
 \subsection{The population identity}
 
