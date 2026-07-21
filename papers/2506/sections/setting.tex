@@ -3,7 +3,7 @@
 
 Let $(X^{\tau},\vec{y}^{\tau})\in\mathbb{R}^{L\times d}\times \mathbb{R}^{k_\mathrm{out}}$ denote $\tau=1,\dots,n$ samples drawn from the Gaussian sequence single-index model with weights $\vec{w}_{\star}\in\mathbb{R}^{d}$ and link function $\vec{g}$, defined in \cref{2506:eq:gssim}. As motivated in the introduction, our goal in this work is to characterize the sample complexity of learning the sequence task $(X^{\tau},\vec{y}^{\tau})$ with a tied single-layer attention trained under one-pass (spherical) SGD defined in \cref{2506:eq:normalized-SGD-w}. Note that while the model might appear as too simplified because of the lack of correlation between the tokens, we will show that it is sufficient to capture the main features of sequence models. 
 
-As shown in the classical result by \cite{chung1954stochastic}, one-pass SGD can be understood as a noisy discretization of gradient flow on the \emph{population risk} (often refereed also as \emph{population loss}):
+As shown in the classical result by \cite{chung1954stochastic}, one-pass SGD can be understood as a noisy discretization of gradient flow on the \emph{population risk} (also referred to as \emph{population loss}):
 \begin{equation}
     R(\vec{w}) =
         \mathbb{E}_{X\sim\mathcal{N}(0,\sfrac{I_d}{d})}\left[\ell(X, \vec{f}^\mathrm{SSI}_{\vec w_\star}(X); \vec{f}_{\vec{w}})\right].
@@ -49,7 +49,7 @@ Namely, the initial value of the sufficient statistic is \((\vec{e}^0, m^0)\appr
     \item The escape from the initial condition, where the model develops a weak correlation with the target direction \(\vec{w}_\star\) and/or the positional embedding \(P\);
     \item Full recovery where it reaches a complete overlap with either the target direction \(\vec{w}_\star\) and/or the positional embedding \(P\): \(\norm{(\vec{e}, m)}\approx 1\). 
 \end{itemize}
-As previously discussed, the first phase is the one that requires the most number of gradient steps \cite{arous2021online,arnaboldi2024escaping}: the sample complexity required for the first phase is always greater or equal to the one required for the second phase; after having reached a small correlation with the target, the attention decay exponentially fast to a complete overlapped state.
+As previously discussed, the first phase is the one that requires the most number of gradient steps \cite{arous2021online,arnaboldi2024escaping}: the sample complexity required for the first phase is always greater or equal to the one required for the second phase; after having reached a small correlation with the target, the attention decays exponentially fast to a complete overlapped state.
 \begin{definition}[Weak recovery] \label{2506:def:weak-recovery}
     Let \(\eta\in(0,1)\) a parameter independent from \(d\). We say that the model has \emph{weakly recovered} the target when \(\norm{(\vec{e}, m)}\geq \eta\). The weak recovery time is then
     \[ \tau^\mathrm{weak}_\eta = \min\left\{\tau\ge0\colon \norm{(\vec{e}^\tau, m^\tau)}\geq \eta\right\}.\]

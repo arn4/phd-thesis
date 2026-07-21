@@ -1,5 +1,5 @@
 \section{The role of the sequence length}
-In this section, we focus a first new emerging characteristic of the \emph{sequence single-index models} over the vanilla \emph{single-index models}: the sequence length \(L\). Therefore, we neglect the effect of the positional encoding, by setting \(P=0\), in order to isolate just the effect of the sequence length. The goal of the section is to measure the speed-up that a model like Equation~\eqref{2506:eq:model-definition} can achieve over the plain \emph{single-index models} when processing sequential data with length \(L\).
+In this section, we focus on a first new emerging characteristic of the \emph{sequence single-index models} over the vanilla \emph{single-index models}: the sequence length \(L\). Therefore, we neglect the effect of the positional encoding, by setting \(P=0\), in order to isolate just the effect of the sequence length. The goal of the section is to measure the speed-up that a model like Equation~\eqref{2506:eq:model-definition} can achieve over the plain \emph{single-index models} when processing sequential data with length \(L\).
 
 \paragraph{Linear attention ---} 
 Our first goal is to understand the dependence of the convergence rate of SGD on the sequence length. For that, consider the particular case of \emph{linear attention}, given by the reduction map:
@@ -10,11 +10,11 @@ Rearranging the terms
 \begin{equation}
     f_{\vec{w}}(\vec{z}) = \vec{a}_\mathrm{left}^\top \left(\vec{z}\vec{z}^\top\right) \vec{a}_\mathrm{right} = \frac{1}{L} \sum_{i=1}^L \sum_{j=1}^L z_i z_j = \left(\sum_{i=1}^L \frac{z_i}{\sqrt{L}}\right)^2 = \left(\frac{\Flatten(X)\cdot \vec{w}_\mathrm{tied}}{\sqrt{L}}\right)^2,
 \end{equation}
-where \(\vec{w}_\mathrm{tied} \coloneqq \mathrm{concat}(\vec{w}, \dots, \vec{w}) \in \mathbb{R}^{Ld}\) is the concatenation of \(L\) copies of \(\vec{w}\). This model is equivalent to a \emph{generalized linear model} with \emph{tied weights}, and activation function \(\sigma(x) = x^2\). In terms of performance, taking a general activation \(\sigma\) will at worst be the same of the \emph{attention mechanism} originally considered, if not better. More precisely, we consider:
+where \(\vec{w}_\mathrm{tied} \coloneqq \mathrm{concat}(\vec{w}, \dots, \vec{w}) \in \mathbb{R}^{Ld}\) is the concatenation of \(L\) copies of \(\vec{w}\). This model is equivalent to a \emph{generalized linear model} with \emph{tied weights}, and activation function \(\sigma(x) = x^2\). In terms of performance, taking a general activation \(\sigma\) will at worst be the same as the \emph{attention mechanism} originally considered, if not better. More precisely, we consider:
 \begin{equation} \label{2506:eq:tied-network-definition}
     f_{\vec{w}}(X) = \sigma\left(\frac{\Flatten(X)\cdot \vec{w}_\mathrm{tied}}{\sqrt{L}}\right).
 \end{equation}
-This is the most generic model we study in this section. Further numerical experiments elucidating the equivalence of the speed-up for this \emph{tied network} and for the attention models can be found in Appendix~\ref{2506:app:further-sequence-length}. Note that \emph{tied networks} are not restricted to learn even function only, differently from the model in Equation~\eqref{2506:eq:model-definition}.
+This is the most generic model we study in this section. Further numerical experiments elucidating the equivalence of the speed-up for this \emph{tied network} and for the attention models can be found in Appendix~\ref{2506:app:further-sequence-length}. Note that \emph{tied networks} are not restricted to learn even functions only, differently from the model in Equation~\eqref{2506:eq:model-definition}.
 
 \paragraph{The corresponding untied network ---} Given the model in Equation~\eqref{2506:eq:tied-network-definition}, a natural benchmark is the model with untied weights. Let \(W \in \mathbb{R}^{L\times d}\) be the matrix of weights, whose rows are all updated with Equation~\eqref{2506:eq:normalized-SGD-w}, the untied network is given by
 \begin{equation} \label{2506:eq:untied-network-definition}
