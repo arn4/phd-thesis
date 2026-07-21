@@ -42,7 +42,7 @@ case; we add this to simulate the noise and imperfections of real data.
 The teacher models the hidden rule that generates the data.
 We would like it to be non-trivial but not arbitrary; the right compromise is to
 suppose that the labels depend on the input only through a few
-directions.
+directions---the canonical form of low-dimensional structure.
 More precisely, we take the teacher to be a \emph{multi-index model}:
 \begin{equation}
 \label{eq:intro:multi-index}
@@ -56,7 +56,16 @@ nonlinear \emph{link function}.
 The special case $k = 1$ is the \emph{single-index model}, with a single relevant
 direction $\vec{w}^\star$.
 The subspace $V^\star = \operatorname{span}(\vec{w}^\star_1, \ldots, \vec{w}^\star_k)$ in a
-$d$-dimensional space is the \emph{teacher subspace}, and the learning process can be thought of as the discovery of this subspace and aligning with it.
+$d$-dimensional space is the \emph{teacher subspace}.
+These $k \ll d$ directions \emph{are} the features of the problem: they are the only
+aspect of the input on which the label depends, and the entire learning process can be
+thought of as the discovery of this subspace and the alignment of the student's weights
+with it.
+This is precisely what \emph{feature learning} means here, in an unambiguous and
+measurable sense, and it is what makes the multi-index model the right laboratory for the
+rest of the thesis: the difficulty of recovering $V^\star$ is exactly what the
+information, leap, and generative exponents of Section~\ref{sec:intro:exponents} will
+quantify.
 
 \paragraph{What model do we use?}
 Deep learning is a broad family of models, often designed towards a specific data modality or task.
