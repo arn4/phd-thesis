@@ -61,7 +61,7 @@ Then there exists a constant $C > 0$ such that for any $\i \geq 0$,
 \end{equation}
 \end{theorem}
 
-\cite{veiga2022phase} also described the behavior of $\Omega$ for various choices of $\gamma$ and $p$. In particular, when $\gamma / p \ll 1$, equations \eqref{2302:eq:def:ss_ode} reduce to the following simpler ones:
+\cite{veiga2022phase} also described the behavior of $\Omega$ for various choices of $\gamma$ and $p$. In particular, when $\gamma / p \ll 1$, Equations~\eqref{2302:eq:def:ss_ode} reduce to the following simpler ones:
 \begin{align}
 \label{2302:eq:def:gf_ode}
 \frac{\dd\mat{M}}{\dd t} = \Psi^{(\mathrm{M})}(\Omega), && 
@@ -82,7 +82,7 @@ Or in words: the effective SGD noise $\varepsilon_{\nu}$ in Equation~\eqref{2302
 \[ \frac{\dd  \langle \vec{w_i}, \vec{w_j} \rangle}{\dd{t}} = \left\langle \vec{w_i}, \frac{\dd\vec{w_j}}{\dd{t}} \right\rangle + \left\langle \frac{\dd\vec{w_i}}{\dd{t}}, \vec{w_j} \right\rangle \]
 This gives rise to ordinary differential equations in $\hids (\hidt+\hids)$ parameters. Therefore, depending on the values of $(d,\hids)$, it can offer a more compact description of the evolution of the performance of the predictor than Equation~\eqref{2302:eq:gf}. 
 
-As it was previously hinted by the notation, equation \eqref{2302:eq:def:gf_ode} also provides an intuitive interpretation of the right-hand side of the stochastic process \eqref{2302:eq:def:overlap_process}. Indeed, the terms proportional to $\sfrac{\gamma}{\hids d}$ in Equation~\eqref{2302:eq:def:overlap_process} correspond exactly to the terms inside the expectation in Equation~\eqref{2302:eq:def:gf_ode}, and correspond to the projection of the population gradient along the weights $(\Theta, \Theta_{\star})$. The remaining term, which is proportional to $\sfrac{\gamma^2}{\hids^2 d}$, comes from the variance of the effective noise $\varepsilon$, which is subleading in the limit $\gamma\to 0^{+}$. This agrees with the characterization of the terms given in \cite{arous2022high}, where an additional Brownian motion correction term at finer scales is also derived.
+As it was previously hinted by the notation, Equation~\eqref{2302:eq:def:gf_ode} also provides an intuitive interpretation of the right-hand side of the stochastic process \eqref{2302:eq:def:overlap_process}. Indeed, the terms proportional to $\sfrac{\gamma}{\hids d}$ in Equation~\eqref{2302:eq:def:overlap_process} correspond exactly to the terms inside the expectation in Equation~\eqref{2302:eq:def:gf_ode}, and correspond to the projection of the population gradient along the weights $(\Theta, \Theta_{\star})$. The remaining term, which is proportional to $\sfrac{\gamma^2}{\hids^2 d}$, comes from the variance of the effective noise $\varepsilon$, which is subleading in the limit $\gamma\to 0^{+}$. This agrees with the characterization of the terms given in \cite{arous2022high}, where an additional Brownian motion correction term at finer scales is also derived.
 
 In Figure~\ref{2302:fig:classic-limit}~(left) we plot the trajectories of individual neurons in the space spanned by the two target neurons (\(k=2\)); \(\sfrac{\M_{jr}}{\sqrt{\Q_{jj}\P_{rr}}}\) is the (normalized) scalar product between \(\w_j\) and \(\w^*_r\). While, initially, all neurons are moving towards the superposition of the two teacher weights (\((\sfrac{\sqrt2}{2},\sfrac{\sqrt2}{2})\), yellow dot), in the last phase of learning they ``specialize'' and split evenly to one of the two (\((1,0),(0,1)\), red squares). Note how the ODE trajectories closely follow the simulated ones, given the specific initialization.
 
@@ -133,7 +133,7 @@ Similar to \eqref{2302:eq:def:pre_activations}, we can then define the orthogona
     \label{2302:eq:def:Qorth}
     Q^\bot &= \sfrac{1}{d} W^\bot (W^\bot)^\top = Q - MP^{-1}M^\top  .
 \end{align}
-Since we are in a regime where $\gamma / p \ll 1$, the ODE approximation of SGD corresponds to equations \eqref{2302:eq:def:gf_ode}. From there, with a little algebra (see Appendix~\ref{2302:app:mean_field_orthogonal_derivation}), we can derive the corresponding equations for $Q^\bot$:
+Since we are in a regime where $\gamma / p \ll 1$, the ODE approximation of SGD corresponds to Equation~\eqref{2302:eq:def:gf_ode}. From there, with a little algebra (see Appendix~\ref{2302:app:mean_field_orthogonal_derivation}), we can derive the corresponding equations for $Q^\bot$:
 \begin{equation} \label{2302:eq:def:mf_orthogonal}
     \frac{dQ_{ij}^\bot}{dt} =  \mathbb E_{(\vec{\lambda}^{\bot},\vec{\lambda})}\left[\left( \sigma'(\lambda_i)\lambda_j^\bot + \sigma'(\lambda_j)\lambda_i^\bot \right) \mathcal{E} \right] \coloneqq \Psi^\bot_{ij}(\Omega).
 \end{equation}
