@@ -2,9 +2,9 @@
 
 \label{2305:app:SDE_with_generic_width}
 In this appendix we generalize the discussion of the spherical constrained SDE to network of arbitrary width.
-As we already did at beginning of Section~\ref{2305:sec:width}, we fix the second layer to \(a_j=1\) for everything follow.
+As we already did at beginning of Section~\ref{2305:sec:width}, we fix the second layer to \(a_j=1\) for everything that follows.
 \subsection{Unconstrained SDE with $p>1$}
-The updates of overlapping matrixes elements can be written as
+The updates of overlapping matrix elements can be written as
 \[\begin{split}
   \dif \Q_{jl} &= \frac{-\gamma (\w_j\cdot\nabla_{\w_l}{\ell}+\w_l\cdot\nabla_{\w_j}{\ell}) + \gamma^2\nabla_{\w_j}{\loss}\cdot\nabla_{\w_l}{\loss}}{d} = \frac{\gamma}{pd} \mathcal{Q}_{jl}, \\
   \dif m_{j} &= \frac{-\gamma \w_\star\cdot\nabla_{\w_j}\ell}{d}  = \frac{\gamma}{pd} \mathcal{M}_{j}.
@@ -80,7 +80,7 @@ The \(\vec{\sigma}^\M_{j}\) and \(\vec{\sigma}^\Q_{jl}\) are the rows of the mat
 and  \(\dif \b_t\) is a \(p(1+p)\)-dimensional Wiener process.
 
 \subsection{Spherical Constrained SDE}
-Let's move now to the actual spherical derivation. The steps used are exaclty the same we did in \ref{2305:app:spherical_constraint},  Since we are forcing the weight on the sphere, the update rule that has to be used is
+Let's move now to the actual spherical derivation. The steps used are exactly the same we did in \ref{2305:app:spherical_constraint},  Since we are forcing the weight on the sphere, the update rule that has to be used is
 \[
   \w_j^{\i+1} =\frac{\w^\i_j - \gamma \nabla_{\w_j}{\loss}}{\left\|\w^\nu_j - \gamma \nabla_{\w_j}{\loss}\right\|}\sqrt{d};
 \]
