@@ -185,19 +185,19 @@ We consider a separable teacher, more precisely it is a committee machine with $
 
 As we discussed in Section~\ref{2406:sec:app:derivation_of_lb_equations}, the activation and the target appear just in the expected values of Equations~\eqref{2406:eq:app:psi_def},\eqref{2406:eq:app:phigf_def}~and~\eqref{2406:eq:app:phihd_def}, that can be further simplified for matching architectures
 \[\begin{split}
-    \psi_{jr,t} = \mathbb{E}_{\Omega_t}\left[ \sigma'(\lambda_j)\lambda^{\star}_{r} \mathcal{E} \right] =& \frac{1}{k}\sum_{t=1}^k a^*_t \mathbb{E}_{\Omega_t}\left[
-\sigma^\prime(\lambda_j)\lambda^*_r \sigma(\lambda^*_t)
+    \psi_{jr,t} = \mathbb{E}_{\Omega_t}\left[ \sigma'(\lambda_j)\lambda^{\star}_{r} \mathcal{E} \right] =& \frac{1}{k}\sum_{t'=1}^k a^*_{t'} \mathbb{E}_{\Omega_t}\left[
+\sigma^\prime(\lambda_j)\lambda^*_r \sigma(\lambda^*_{t'})
     \right] \\
     &- \frac{1}{p}\sum_{s=1}^p a_s \mathbb{E}_{\Omega_t}\left[
 \sigma^\prime(\lambda_j)\lambda^*_r \sigma(\lambda_s)
     \right] \\
-\phi^{\rm{GF}}_{jl,t} = \mathbb{E}_{\Omega_t}\left[ \sigma'(\lambda_j)\lambda_{l} \mathcal{E} \right] =&  \frac{1}{k}\sum_{t=1}^k a^*_t \mathbb{E}_{\Omega_t}\left[
-\sigma^\prime(\lambda_j)\lambda_l \sigma(\lambda^*_t)
+\phi^{\rm{GF}}_{jl,t} = \mathbb{E}_{\Omega_t}\left[ \sigma'(\lambda_j)\lambda_{l} \mathcal{E} \right] =&  \frac{1}{k}\sum_{t'=1}^k a^*_{t'} \mathbb{E}_{\Omega_t}\left[
+\sigma^\prime(\lambda_j)\lambda_l \sigma(\lambda^*_{t'})
     \right] \\
     &- \frac{1}{p}\sum_{s=1}^p a_s \mathbb{E}_{\Omega_t}\left[
 \sigma^\prime(\lambda_j)\lambda_l \sigma(\lambda_s)
     \right] \\ 
-\phi^{\rm{HD}}_{jl,t} = \mathbb{E}_{\Omega_t}\left[ \sigma'(\lambda_j)\sigma'(\lambda_l)\mathcal{E}^2  \right] =& \frac{1}{k^2} \sum_{r, t=1}^{k} a^*_r a^*_{t} \mathbb{E}_{\Omega_t}\left[\sigma^{\prime}\left(\lambda_j\right) \sigma^{\prime}\left(\lambda_l\right) \sigma\left(\lambda_r^*\right) \sigma\left(\lambda_{t}^*\right)\right] \\
+\phi^{\rm{HD}}_{jl,t} = \mathbb{E}_{\Omega_t}\left[ \sigma'(\lambda_j)\sigma'(\lambda_l)\mathcal{E}^2  \right] =& \frac{1}{k^2} \sum_{r, t'=1}^{k} a^*_r a^*_{t'} \mathbb{E}_{\Omega_t}\left[\sigma^{\prime}\left(\lambda_j\right) \sigma^{\prime}\left(\lambda_l\right) \sigma\left(\lambda_r^*\right) \sigma\left(\lambda_{t'}^*\right)\right] \\
 & +\frac{1}{p^2} \sum_{s,u=1}^p a_s a_{u}\mathbb{E}_{\Omega_t}\left[\sigma^{\prime}\left(\lambda_j\right) \sigma^{\prime}\left(\lambda_l\right) \sigma\left(\lambda_s\right) \sigma\left(\lambda_{u}\right)\right] \\
 & -\frac{2}{pk} \sum_{s=1}^p \sum_{r=1}^k a^*_r a_s \mathbb{E}_{\Omega_t}\left[\sigma^{\prime}\left(\lambda_j\right) \sigma^{\prime}\left(\lambda_l\right) \sigma\left(\lambda_r^*\right) \sigma\left(\lambda_{s}\right)\right] \\
 & +\Delta  \mathbb{E}_{\Omega_t}\left[\sigma^{\prime}\left(\lambda_j\right) \sigma^{\prime}\left(\lambda_l\right)\right]
