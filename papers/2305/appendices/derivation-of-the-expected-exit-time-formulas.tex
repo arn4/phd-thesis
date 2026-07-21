@@ -128,22 +128,22 @@ In this case \(\tau_0\) does not appear, and from Eq.~\eqref{2305:eq:initial_dis
 \end{equation}
 
 \subsection{Overparameterization Gain} \label{2305:app:overp_gain}
-Let introduce the number of gradient step needed to escape the threshold. Remembering \(t=\sfrac{\nu\gamma}{pd}\), we define
+Let us introduce the number of gradient steps needed to escape the threshold. Remembering \(t=\sfrac{\nu\gamma}{pd}\), we define
 \begin{equation}
     s_\text{ext}{(p,d,\gamma,\Delta,T)} \coloneqq \frac{pd}{\gamma} t_\text{ext}.
 \end{equation}
-In the domain of our interest, namely \(s_\text{ext}>0\),  \(s_\text{ext}\) is and convex function in \(\gamma\). Therefore, it exist a unique minimum that correspond to the minimum number of steps required to cross the threshold when \(p, d\) are fixed
+In the domain of our interest, namely \(s_\text{ext}>0\),  \(s_\text{ext}\) is a convex function in \(\gamma\). Therefore, there exists a unique minimum that corresponds to the minimum number of steps required to cross the threshold when \(p, d\) are fixed
 \[
     0=\eval{\dpd{s_\text{ext}{(p,d,\gamma,\Delta,T)}}{\gamma}}_{\gamma = \gamma_\text{opt}{(p,d,\Delta)}}
     \quad \implies \quad
     \gamma_\text{opt}{(p,d,\Delta)} = \frac{p^3}{8+2p+(2+\Delta)p^2}
 \]
 Note that this learning rate correspond to an exit time whose log's prefactor is constant to \(\frac{1}{4}\), as reported in the main.
-We can also compute the optimal number of steps; we choose to stick with the \emph{annealed formula}: for large \(p\) both the estimation lead to the same result, while for small \(p\) we are underestimating the exit time of a small factor. Hence, the annealed minimum number of steps is
+We can also compute the optimal number of steps; we choose to stick with the \emph{annealed formula}: for large \(p\) both estimations lead to the same result, while for small \(p\) we are underestimating the exit time of a small factor. Hence, the annealed minimum number of steps is
 \[\begin{split}
     s^\text{min}_\text{ext}{(p,d,\Delta,T)}\coloneqq& s^\text{anl}_\text{ext}{(p,d,\gamma_\text{opt}{(p,d,\Delta)},\Delta,T)} = \\ =& \frac{d\left[8+2p+(2+\Delta)p^2\right]\log\left[\frac{T(p+1)d+(p+1)(1-T)}{2 p}\right]}{4p^2}.
 \end{split}\]
-This formula can be used to estimate the overparameterization gain. Noting that \(s^\text{min}_\text{ext}\) is monotonically decrising in \(p\), we can define the gain as
+This formula can be used to estimate the overparameterization gain. Noting that \(s^\text{min}_\text{ext}\) is monotonically decreasing in \(p\), we can define the gain as
 \[
     \lim_{d\to+\infty} \frac{s^\text{min}_\text{ext}{(p=1,d,\Delta,T)}}{\lim_{p\to+\infty}s^\text{min}_\text{ext}{(p,d,\Delta,T)}} = \frac{12+\Delta}{2+\Delta}.
 \]
