@@ -12,10 +12,10 @@ The main goal of this work is to extend our theoretical understanding of learnin
 where $\vec{w}\in \mathbb{R}^{d}$ are the trainable weights and $\Pi$ is the \emph{reduction map}, which allows passing from an $L\times L$ matrix to a $k$-dimensional vector. As detailed in \Cref{2506:app:reduction}, this model is a reduction of the standard attention mechanism, where
 \begin{enumerate}
     \item key and query matrix are tied, and $d_\mathrm{head} = 1$: $Q=K=X\cdot \vec{w}\in \mathbb{R}^{L\times 1}$ ; 
-    \item since we are considering a single layer attention, we take the value matrix to be the identity: $V=I_{L}$, since we do not need to learn a new representation of the sequence. 
+    \item since we are considering a single layer attention, and we do not need to learn a new representation of the sequence, the value matrix is the identity: $V=I_{L}$.
 \end{enumerate}
 
-In this work, we will be interested in the optimization properties of the model in \cref{2506:eq:model-definition} when trained under (spherical) one-pass stochastic gradient descent (SGD) from a random initial condition $\vec{w}^0 \sim {\rm Unif}(\mathbb{S}^{d-1}(\sqrt{d})$: 
+In this work, we will be interested in the optimization properties of the model in \cref{2506:eq:model-definition} when trained under (spherical) one-pass stochastic gradient descent (SGD) from a random initial condition $\vec{w}^0 \sim {\rm Unif}(\mathbb{S}^{d-1}(\sqrt{d}))$:
 \begin{equation}\label{2506:eq:normalized-SGD-w}
 \begin{split}
     \vec{w}^{\tau+1} &= \frac{\vec{w}^\tau - \gamma \nabla_{\vec{w}} \ell(X^\tau, \vec{y}^\tau; f_{\vec{w}})}{\left\lVert \vec{w}^\tau - \gamma \nabla_{\vec{w}} \ell(X^\tau, \vec{y}^\tau; f_{\vec{w}})\right\rVert}
@@ -48,7 +48,7 @@ Recent work by \citep{cui2024phase,troiani2025fundamental,cui2025high} has shown
     \item We analyze the speed-up introduced by the attention mechanism when learning sequential data, compared to models  not adapted to treat sequence structures, e.g. fully connected networks. For many problems, we show that the gain is proportional to the sequence length \(L\) and in some cases even larger. 
     \item We investigate the interplay between the positional  and semantic structure of the data following the setting from \cite{cui2024phase}, showing that SGD dynamics is not always able to disentangle the two and that a rich phase diagram arises describing the structure of the corresponding population loss and the performance of SGD. 
 \end{itemize}
-All our formal claim are supported by rigorous proofs, as well as numerical experiments; the code developed is available at this \href{https://github.com/IdePHICS/Sequence-Single-Index}{GitHub repository}.
+All our formal claim are supported by rigorous proofs, as well as numerical experiments; the code developed is available at \url{https://github.com/IdePHICS/Sequence-Single-Index}.
 
 \paragraph{Further Related works ---} There has been much activity discussing {\bf SGD with synthetic data on multi-index models} over the last decades or so, see e.g. \citep{arous2021online,veiga2022phase,arnaboldi2023high,collinswoodfin2023hitting,marion2023leveraging,berthier2023learning,montanari2025dynamical} and reference there in. {\bf Information} and  {\bf generative} exponent have been the topic of many works over the last few years \citep{arous2021online,abbe2022merged,damian2024computational,troiani2024fundamental,defilippis2025optimal}. Here we discuss and adapt these notions for sequence models \cite{troiani2025fundamental}.
 

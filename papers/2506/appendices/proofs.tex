@@ -170,3 +170,13 @@ Since $\norm{m} \geq m^{(1)}$ by the Cauchy-Schwarz inequality, the hitting time
     \end{cases}
 \]
 This closes the upper bound of Theorem~\ref{2506:thm:sequencelength-gain}.
+
+\subsection{The effect of positional encoding on the flatness}
+
+We conclude with the proof of Lemma~\ref{2506:lem:positional-sie}.
+
+\begin{proof}
+    Let $R^{\mathrm{new}}(\vec{e}, m)$ and $R(m)$ be the reduced population losses of Equation~\eqref{2506:eq:population-loss_sufficient-statistic} for the model with and without positional encoding, respectively, so that $R(m) = R^{\mathrm{new}}(\vec{0}, m)$. Then
+    \[ \frac{\partial^k R^{\mathrm{new}}}{\partial m^k}(\vec{0}, 0) = \frac{d^k R}{dm^k}(0), \]
+    and hence $\nabla^k R(0) \neq 0$ implies that $\nabla^k R^{\mathrm{new}}(\vec{0}, 0) \neq 0$. The first non-vanishing derivative of $R^{\mathrm{new}}$ at the origin therefore appears at an order no larger than that of $R$, which is exactly $\kappa(f_{\vec{w}}^{\mathrm{new}}, \vec{f}^\mathrm{SSI}_{\vec w_{\star}}) \leq \kappa(f_{\vec{w}}, \vec{f}^\mathrm{SSI}_{\vec w_{\star}})$.
+\end{proof}

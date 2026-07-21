@@ -3,9 +3,9 @@ In this section, we focus on understanding the complexity of the SGD algorithm, 
 
 \paragraph{No positional encoding ---} We first focus on the case without positional encoding: \(P=0\) implies that the only relevant sufficient statistic is \(m\). An analogy with single-index models for networks can be done: For single-index models, the \emph{information exponent} fully characterizes the sample complexity of the SGD algorithm \cite{arous2021online}. The definition can be generalized for sequential data.
 \begin{definition}[Sequence Information Exponent (SIE)] \label{2506:def:sie}
-    Given \(\vec{f}^\mathrm{SSI}_{\vec w_{\star}}(X)\) a sequence single-index model, let \(g\) be the function that acts on the local field \(\vec{z}_\star\), we define the \emph{sequence information exponent} as
+    Given \(\vec{f}^\mathrm{SSI}_{\vec w_{\star}}\) a sequence single-index model, let \(g\) be the function that acts on the local field \(\vec{z}_\star\), we define the \emph{sequence information exponent} as
     \[
-        \text{SIE}(\vec{f}^\mathrm{SSI}_{\vec w_{\star}}(X)) \coloneqq
+        \text{SIE}(\vec{f}^\mathrm{SSI}_{\vec w_{\star}}) \coloneqq
             \min \left\{
                 \sum^L_{l=1}k_l > 0 \colon
                     \vec{k}\in\mathbb{N}^L,
@@ -36,7 +36,14 @@ The main feature of the information exponent is that it can be connected to the 
         \end{cases}.
     \]
 \end{theorem}
-A formal statement of the Theorem and the proof are given in the Appendix~\ref{2506:app:proofs}. 
+A formal statement of the Theorem and the proof are given in the Appendix~\ref{2506:app:proofs}. It relies on the following connection between the \emph{flatness} of the landscape near initialization and the sequence information exponent:
+\begin{proposition} \label{2506:prop:flatness}
+    Define the \emph{flatness} index \(\kappa(f_{\vec{w}}, \vec{f}^\mathrm{SSI}_{\vec w_{\star}})\) of the model as
+    \[ \kappa(f_{\vec{w}}, \vec{f}^\mathrm{SSI}_{\vec w_{\star}}) = \min \left\{ k > 0 \colon \nabla^{k}R(\vec{0}, 0) \neq 0 \right\}, \]
+    where \(R\) is the reduced population loss defined in Equation~\eqref{2506:eq:population-loss_sufficient-statistic}. Then, if the model \(f_{\vec{w}}\) has a rich enough Hermite expansion,
+    \[ \kappa\left(f_{\vec{w}}, \vec{f}^\mathrm{SSI}_{\vec w_{\star}}\right) = \text{SIE}\left(\vec{f}^\mathrm{SSI}_{\vec w_{\star}}\right). \]
+\end{proposition}
+Intuitively, a higher value of \(\kappa\) implies that the landscape of \(R\) is flatter around the initialization point \((\vec{0}, 0)\), and thus the number of gradient steps needed to build a weak correlation along either the \(\vec{e}\) or \(m\) directions is higher.
 
 \begin{figure}
     \centering
@@ -56,19 +63,19 @@ A formal statement of the Theorem and the proof are given in the Appendix~\ref{2
     }
     \label{2506:fig:loss_surface}
 \end{figure}
-In Figure~\ref{2506:fig:loss_surface}, we show some examples of the population loss landscape for different values of the SIE. The SIE can also be interpreted as the first non-null order in Taylor expansion of the loss at the initialization point, and consequently the number of gradient steps needed to build up a weak correlation is higher. Figure~\ref{2506:fig:loss_surface} focuses on even SIE because the symmetry of Equation~\eqref{2506:eq:model-definition} restricts the possible targets to even functions; in the Appendix~\ref{2506:app:sie-extra} we discuss how to surpass this limitation, and we present settings with odd SIE. 
+In Figure~\ref{2506:fig:loss_surface}, we show some examples of the population loss landscape for different values of the SIE. Figure~\ref{2506:fig:loss_surface} focuses on even SIE because the symmetry of Equation~\eqref{2506:eq:model-definition} restricts the possible targets to even functions; in the Appendix~\ref{2506:app:sie-extra} we discuss how to surpass this limitation, and we present settings with odd SIE. 
 
 
 \paragraph{The effect of positional encoding ---}
 Despite the fact that positional encoding only acts on the trained model, and not the target function, it changes the population loss, potentially changing the dynamic at initialization.
 In particular, adding  positional encoding increase the expressivity of the model, and  can ultimately lead to faster weak-recovery of the SGD.
-\begin{lemma}
-    Let \(f_{\vec{w}}\) be a model with \(P=0\) that learns a target \(\vec{f}^\mathrm{SSI}_{\vec w_{\star}}(X)\) with a given \(\mathrm{SIE}\). If we add a positional encoding \(P\) to the model, and let \(\mathrm{SIE}_\mathrm{positional}\) be the SIE of the new model, then
+\begin{lemma} \label{2506:lem:positional-sie}
+    Let \(f_{\vec{w}}\) be a model with \(P=0\) that learns a target \(\vec{f}^\mathrm{SSI}_{\vec w_{\star}}(X)\) with a given \(\mathrm{SIE}\). If we add a positional encoding \(P\) to the model, and let \(f_{\vec{w}}^{\mathrm{new}}\) be the new model, then
     \[
-        \mathrm{SIE}_\mathrm{positional} \le \mathrm{SIE}.
+        \kappa\left(f_{\vec{w}}^{\mathrm{new}}, \vec{f}^\mathrm{SSI}_{\vec w_{\star}}\right) \leq \kappa\left(f_{\vec{w}}, \vec{f}^\mathrm{SSI}_{\vec w_{\star}}\right) = \text{SIE}\left(\vec{f}^\mathrm{SSI}_{\vec w_{\star}}\right).
     \]
 \end{lemma}
-In other words, the positional encoding can only decrease the SIE of the model, thus the sample complexity of the SGD algorithm could be reduced. The proof of this lemma is given in the Appendix~\ref{2506:app:proofs}.
+In other words, the positional encoding can only decrease the flatness of the loss landscape, thus the sample complexity of the SGD algorithm could be reduced. The proof of Lemma~\ref{2506:lem:positional-sie} is given in Appendix~\ref{2506:app:proofs}.
 \begin{figure}
     
     \centering
@@ -81,5 +88,5 @@ In other words, the positional encoding can only decrease the SIE of the model, 
     % 
 \end{figure}
 In the right part of Figure~\ref{2506:fig:loss_surface_pe}, we present an example  where adding the positional encoding can improve the sample complexity of the SGD algorithm. The left part of Figure~\ref{2506:fig:loss_surface_pe} shows that the population loss landscape at initialization is flat, and the hessian is null: the first non-null term in the Taylor expansion is at order 4, hence the SIE is 4. The right part of Figure~\ref{2506:fig:loss_surface_pe} shows instead that when we add the positional encoding, a non-null term appears at order 2, and \(\mathrm{SIE}_\mathrm{positional} = 2\). 
-Note that the position of the global minima is not affected by the positional encoding, but SGD can converge to the new local minima; more discussion on this point is given in Section~\ref{2506:sec:positional_encoding}.
+Note that while the positions of the global minima are not affected by the positional encoding, SGD can converge to the new local minima instead; more discussion on this point is given in Section~\ref{2506:sec:positional_encoding}.
 In contrast, the right part of Figure~\ref{2506:fig:loss_surface} shows that the positional encoding is not necessarily beneficial: there are cases for which the loss landscape changes, but not the sample complexity.
