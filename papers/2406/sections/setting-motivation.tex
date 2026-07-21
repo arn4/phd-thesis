@@ -42,12 +42,12 @@ Note that the setting above where we assume a generative model for the data and 
 \paragraph{Training algorithm ---} Given the training data $\mathcal{D}$, we consider the training of $(W,\vec{a})$ under a \emph{sample splitting} scheme: the data is partitioned $\mathcal{D} = \bigcup_{t=1}^{T}\mathcal{D}_{t}$ into $T =  \left \lfloor \sfrac{N}{n_{b}} \right \rfloor$ disjoint batches $\mathcal{D}_{t}$ of size $n_{b}$, which are used, one every iteration, to train the network. We consider a common assumption for the training algorithm that is to decouple the training of the hidden weights $W$ and the second layer weights $\vec a$.
 By keeping fixed the second layer weights at initialization $\vec a = \vec a_0$, the hidden layer weights $W$ are estimated using (projected) SGD: 
 \begin{align}
-    \vec w_{j,t+1} =  \frac{\vec{w}_{j,t} - \gamma \nabla_{\vec w_{j,t}}\ell_t}{\norm{\vec{w}_{j,t} - \gamma \nabla_{\vec w_{j,t}}\ell_t}} \qquad \forall t \in [T],   \forall j \in [p]
+    \vec w_{j,t+1} =  \frac{\vec{w}_{j,t} - \gamma \nabla_{\vec w_{j,t}}\hat{\mathcal{R}}_t}{\norm{\vec{w}_{j,t} - \gamma \nabla_{\vec w_{j,t}}\hat{\mathcal{R}}_t}} \qquad \forall t \in [T],   \forall j \in [p]
     \label{2406:eq:main:gd_update_weights}
 \end{align}
 where:
 \begin{align} \label{2406:eq:main:projected_sgd}
-    \ell_t = \frac{1}{2n_{b}} \sum_{\nu = 1}^{n_b}(y^\nu-f(\vec z^\nu))^2, \qquad \forall t \in [T]
+    \hat{\mathcal{R}}_t = \frac{1}{2n_{b}} \sum_{\nu = 1}^{n_b}(y^\nu-f(\vec z^\nu))^2, \qquad \forall t \in [T]
 \end{align}
 is the empirical risk over a batch of data. Two comments are in place. First, the gradient at each step is computed using the empirical loss given by fresh, previously, unseen samples coming from $\mathcal{D}_{t}$. Each gradient is thus an unbiased estimator of the true gradient, which means that on average this algorithm minimizes the population risk over $W$:
 \begin{align}

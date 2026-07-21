@@ -35,11 +35,11 @@ These is the low-dimensional matrix (its dimensions stay finite even when \(d\to
 
 We are going to train the network with layer-wise SGD without replacement, using at each time step \(t\) a fresh new batch of size $n_b$: 
 \[
-    \ell_t = \frac{1}{2n_b} \sum_{\nu=1}^{n_b}(y^\nu_t - f(\vec z^\nu_t))^2
+    \hat{\mathcal{R}}_t = \frac{1}{2n_b} \sum_{\nu=1}^{n_b}(y^\nu_t - f(\vec z^\nu_t))^2
 \]
 A stated in the main text, we are interested in the \emph{representation learning} phase. The gradient of the first layer weights
 \[
-    \nabla_{\vec w_j} \ell_t = -\frac{1}{pn_b} \sum_{\nu=1}^{n_b} a_j \sigma'(\lambda^\nu_{j,t})\mathcal{E}_t^\nu \vec{z}^\nu_t \qquad \forall j \in [p]
+    \nabla_{\vec w_j} \hat{\mathcal{R}}_t = -\frac{1}{pn_b} \sum_{\nu=1}^{n_b} a_j \sigma'(\lambda^\nu_{j,t})\mathcal{E}_t^\nu \vec{z}^\nu_t \qquad \forall j \in [p]
 \]
 where we defined for convenience the displacement vector 
 \begin{equation*}
@@ -47,7 +47,7 @@ where we defined for convenience the displacement vector
 \end{equation*}
 Initially, we focus on plain SGD, without normalizing the weights at every step. Let us take now one gradient step with learning rate $\gamma$:
 \begin{align}
-    \vec w_{j,t + 1} = \vec w_{j,t } - \gamma  \nabla_{\vec w_j} \ell_t
+    \vec w_{j,t + 1} = \vec w_{j,t } - \gamma  \nabla_{\vec w_j} \hat{\mathcal{R}}_t
     \label{2406:eq:gd_update_weight}
  \end{align}
 By combining the gradient update equation with the definitions of the matrices $(W,W^*)$ we obtain the following dynamics:
@@ -162,8 +162,8 @@ On the other hand, when can also assume \(\psi_{jr,t}, \phi_{jl,t}^\text{GF}, \p
 \paragraph{Spherical projection} When we consider the spherical gradient descent, i.e., the modification of eq.~\eqref{2406:eq:gd_update_weight} 
 \begin{align*}
     \vec w_{j,t + 1} = \frac{
-    \vec w_{j,t } - \gamma  \nabla_{\vec w_j} \ell_t}
-    {|| \vec w_{j,t } - \gamma  \nabla_{\vec w_j}\ell_t||},
+    \vec w_{j,t } - \gamma  \nabla_{\vec w_j} \hat{\mathcal{R}}_t}
+    {|| \vec w_{j,t } - \gamma  \nabla_{\vec w_j}\hat{\mathcal{R}}_t||},
 \end{align*}
 the overlap dynamics for the spherical large batch SGD can be then approximated as 
 \begin{equation*}

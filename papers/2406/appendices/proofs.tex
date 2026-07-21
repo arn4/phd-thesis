@@ -11,7 +11,7 @@ Throughout this section, the update process on $\vec{w}_t$ will be written as
 \begin{equation}\label{2406:eq:app:one_step_w}
     \vec{w}_{t+1} = \frac{\vec{w}_t - \gamma  \vec{g}_t}{\norm{\vec{w}_t - \gamma  \vec{g}_t}},
 \end{equation}
-where $\vec{g}_t$ is the gradient at time $t$: $\vec{g}_t = \nabla_{w_{t}} \ell_t$, and $\ell_t$ is the empirical loss at time $t$, that can be either the correlation or the square loss. When considering the update of the process $(\vec{w}_t)_{t \geq 0}$, it will be useful to distinguish between the randomness in $\vec{w}_t$ and the one introduced by the batch drawn at time $t$. To this end, we introduce the filtration $(\cF_t)_{t\geq 0}$ adapted to the process $\vec{w}_t$, and we shall denote by $\dP_t$ (resp. $\dE_t$) the probability (resp. expectation) conditioned on $\cF_t$.
+where $\vec{g}_t$ is the gradient at time $t$: $\vec{g}_t = \nabla_{w_{t}} \hat{\mathcal{R}}_t$, and $\hat{\mathcal{R}}_t$ is the empirical loss at time $t$, that can be either the correlation or the square loss. When considering the update of the process $(\vec{w}_t)_{t \geq 0}$, it will be useful to distinguish between the randomness in $\vec{w}_t$ and the one introduced by the batch drawn at time $t$. To this end, we introduce the filtration $(\cF_t)_{t\geq 0}$ adapted to the process $\vec{w}_t$, and we shall denote by $\dP_t$ (resp. $\dE_t$) the probability (resp. expectation) conditioned on $\cF_t$.
 
 \paragraph{Concentration in Orlicz spaces} We first recall some fact about Orlicz spaces that will be useful for our concentration bounds.
  \begin{definition}
