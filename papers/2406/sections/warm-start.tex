@@ -82,10 +82,10 @@ and auxiliary integrals bearing expectations over $\mathcal{N}(\vec 0, \Omega)$:
 Then, there exists a constant $C$ independent from the input data dimension, such that the discrete stochastic process for the covariance \(\{\Omega_t\}_{t\in\mathbb{N}}\) in Equation~\eqref{2406:eq:main:covariance_def} induced by projected SGD dynamics is approximated by the deterministic covariance matrix \(\bar\Omega(t)\) with precision:
 \begin{equation}
 \label{2406:eq:main:time_horizon}
-    \mathbb{E} \norm{\Omega_t - \bar \Omega(t\Delta \tau)} \le e^{Ct}\sqrt{\Delta \tau} 
+    \mathbb{E} \norm{\Omega_t - \bar \Omega(t\Delta \tau)} \le e^{C\tau}\sqrt{\Delta \tau}
 \end{equation}
 with
-    $\Delta \tau = d^{\max(-\delta,-2\delta+1-\mu)}$.
+    $\tau = t\Delta\tau$ and $\Delta \tau = d^{\max(-\delta,-2\delta+1-\mu)}$.
 \end{proposition}
 We refer to Appendix~\ref{2406:sec:app:derivation_of_lb_equations} for the informal derivation of the above result. 
 
