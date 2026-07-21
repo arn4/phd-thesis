@@ -17,7 +17,7 @@ f_{\Theta}(\vec{x}) = \frac{1}{p}\sum\limits_{i=1}^{\hids}a_{i}\act(\vec{w}_{i}^
 \label{2302:eq:def:sgd}
 \Theta^{\i+1} = \Theta^{\i} -\gamma\nabla_{\Theta}\ell(f_{\Theta^{\i}}(\vec{x}^{\i}),y^{\i}), && \i \leq n
 \end{align}
-Note that in one-pass SGD, a fresh sample of data is used to estimate the gradient at each step, and therefore the quantity of data seen by the algorithm coincides with the number of steps. In particular, this means that at each step $\i$ we have a random unbiased estimation of the population gradient which is uncorrelated to the previous step, defining a Markov chain. It is useful to rewrite eq.~\eqref{2302:eq:def:sgd} by making explicit the effective noise of the process:
+Note that in one-pass SGD, a fresh sample of data is used to estimate the gradient at each step, and therefore the quantity of data seen by the algorithm coincides with the number of steps. In particular, this means that at each step $\i$ we have a random unbiased estimation of the population gradient which is uncorrelated to the previous step, defining a Markov chain. It is useful to rewrite Equation~\eqref{2302:eq:def:sgd} by making explicit the effective noise of the process:
 
 \begin{align}
 \label{2302:eq:sgd:noise}
@@ -25,12 +25,12 @@ Note that in one-pass SGD, a fresh sample of data is used to estimate the gradie
 \end{align}
 which is a zero mean random variable. Therefore, characterizing the training dynamics of one-pass SGD translates into characterizing this stochastic process.
 
-\paragraph{Data model: } Stochasticity in eq.~\eqref{2302:eq:def:sgd} is induced by the draw of samples $(\vec{x}, y)\sim \rho$. In the following, we will assume that the input $\vec{x}^\i$ are Gaussian $\vec{x}^{\i}\sim\mathcal{N}\left(\vec{0}_{d}, \sfrac{1}{d}\mat{I}_{d}\right)$ while $y^\i$ is drawn from the following generative model:
+\paragraph{Data model: } Stochasticity in Equation~\eqref{2302:eq:def:sgd} is induced by the draw of samples $(\vec{x}, y)\sim \rho$. In the following, we will assume that the input $\vec{x}^\i$ are Gaussian $\vec{x}^{\i}\sim\mathcal{N}\left(\vec{0}_{d}, \sfrac{1}{d}\mat{I}_{d}\right)$ while $y^\i$ is drawn from the following generative model:
 \begin{align}
 \label{2302:eq:target}
 y^{\i} = \frac{1}{\hidt} \sum\limits_{r=1}^{k}a^{\star}_{r}\sigma^{\star}({\vec{w}_{r}^{\star}}^{\top}\vec{x}^{\i}) + \sqrt{\noise}z^{\i},  \qquad z^{\i}\sim\mathcal{N}(0,1)
 \end{align}
-In other words, the target function $f_{\Theta^{\star}}$ is itself a two-layer neural network with parameters $\Theta^{\star}=(\vec{a}^{\star}, \mat{W}^{\star})\in\mathbb{R}^{k(d+1)}$ and activation $\sigma^{\star}$. This setting, commonly refereed to as the \emph{teacher-student} scenario, provides a rich data model for studying generalization, and has been employed both in the analysis of one-pass SGD \citep{saad1996dynamics,goldt2019dynamics,veiga2022phase} but also more broadly in high-dimensional statistics \citep{loureiro2021learning}. In particular, we will be mostly interested in the realizable scenario where $k\leq p$, and therefore the minimum of the population risk in eq.~\eqref{2302:eq:def:poprisk} is achieved by perfectly learning the target.
+In other words, the target function $f_{\Theta^{\star}}$ is itself a two-layer neural network with parameters $\Theta^{\star}=(\vec{a}^{\star}, \mat{W}^{\star})\in\mathbb{R}^{k(d+1)}$ and activation $\sigma^{\star}$. This setting, commonly refereed to as the \emph{teacher-student} scenario, provides a rich data model for studying generalization, and has been employed both in the analysis of one-pass SGD \citep{saad1996dynamics,goldt2019dynamics,veiga2022phase} but also more broadly in high-dimensional statistics \citep{loureiro2021learning}. In particular, we will be mostly interested in the realizable scenario where $k\leq p$, and therefore the minimum of the population risk in Equation~\eqref{2302:eq:def:poprisk} is achieved by perfectly learning the target.
 
 \paragraph{Technical assumptions:} We assume that the SGD dynamics remains in a bounded subset of $\mathbb{R}^{p \times d}$:
 \begin{assump}\label{2302:assump:boundedness}
