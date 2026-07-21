@@ -42,7 +42,10 @@ it is a Hilbert space w.r.t the scalar product
 We follow the conventions of \cite{grad1949note}. Define the $k$-th Hermite tensor $\cH_k$ as
 \[ \cH_k = \frac{(-1)^k}{\omega_p} \nabla^k \omega_p,\]
 where $\nabla^k$ is the $k$-th order derivative. This results in a $k$-th order symmetric tensor of size $p \times \dots \times p$. The Hermite tensors are orthogonal, in the sense that
-\[ \langle (\cH_k)_{i_1\dots i_k}, (\cH_\ell)_{j_1\dots j_\ell} \rangle_\omega \neq 0 \, \text{if and only if} \, k=\ell \text{ and } (i_1, \dots, i_k) \text{ is a permutation of } (j_1, \dots, j_\ell) . \]
+\begin{multline*}
+  \langle (\cH_k)_{i_1\dots i_k}, (\cH_\ell)_{j_1\dots j_\ell} \rangle_\omega \neq 0 \, \text{if and only if} \, k=\ell \\
+  \text{and } (i_1, \dots, i_k) \text{ is a permutation of } (j_1, \dots, j_\ell) .
+\end{multline*}
 When $p = 1$, all Hermite tensors are scalars, and we get the usual Hermite polynomials:
 \begin{align}
     \mathrm{He}_0(x) &= 1, \\
