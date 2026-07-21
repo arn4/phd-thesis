@@ -15,14 +15,14 @@ while for \(\Phi\) we distinguish the cases \(j=l\) or not
       2\left( - 2\frac{\Q_{jl}}{p}\right)
   \right] +\\
   &\quad+\frac{4 \gamma}{p} \Biggr\{
-        3 \Q_{jl} -\frac2{p}\Biggl[p \Q_{jl} + 4 \Q_{jl} \Biggl] + 
-        \frac1{p^2}\left[\left(p^2+2p\right)\Q_{jl} +
-        8p \Q_{jl} + 24\Q_{jl} \right] + \Delta \Q_{jl}\Biggr\} \\ 
-  &= -\frac{16}{p} \Q_{jl} 
-    +\frac{4 \gamma}{p} \left\{
+        3 \Q_{jl} -\frac2{p}\Biggl[p \Q_{jl} + 4 \Q_{jl} \Biggl] + \\
+  &\qquad\frac1{p^2}\left[\left(p^2+2p\right)\Q_{jl} +
+        8p \Q_{jl} + 24\Q_{jl} \right] + \Delta \Q_{jl}\Biggr\} \\
+  &= -\frac{16}{p} \Q_{jl} \\
+    &\quad+\frac{4 \gamma}{p} \left\{
       3 -2 -\frac{8}{p} +1 +\frac2p +\frac8p + \frac{24}{p^2} + \Delta \right\}\Q_{jl} \\
-  &= -\frac{16}{p} \Q_{jl} 
-  +\frac{4 \gamma}{p} \left\{2 +\frac{2}{p} + \frac{24}{p^2} + \Delta \right\}\Q_{jl}
+  &= -\frac{16}{p} \Q_{jl} \\
+  &\quad+\frac{4 \gamma}{p} \left\{2 +\frac{2}{p} + \frac{24}{p^2} + \Delta \right\}\Q_{jl}
 \end{split}\end{equation}
 \begin{equation}\begin{split}
   j = l \quad \Phi_{jj} &= 4\left[
@@ -109,11 +109,12 @@ Following from the choosen initial conditions, and taking into account the depen
     \mathcal{P}^d_p \equiv \left(d\sum_{j=1}^{p}(u_j\cdot v)^2, 2d\sum_{j=1}^{p}\sum_{l=j+1}^{p}(u_j\cdot u_l)^2\right)\text{ with } v,u_j\sim\mathbb S^{d-1}(1).
 \]
 We have now two possibility to get the expectation of \(t_\text{ext}\). The first one is known in statistical physics literature as \emph{quenched formula} leaves us with an unexpressed expected value
-\begin{equation}
-    t_\text{ext}^\text{(qnc)} = \mathbb E_{\mu_0,\tau_0 \sim \mathcal{P}^d_p} \left[
+\begin{equation}\begin{split}
+    t_\text{ext}^\text{(qnc)} &= \mathbb E_{\mu_0,\tau_0 \sim \mathcal{P}^d_p} \\
+    &\quad\left[
         \frac{\log\left[\frac{Tp(p+1)d+(2\mu_0p-\tau_0)(1-T)}{2\mu_0 p}\right]}{2\omega_\M}
     \right].
-\end{equation}
+\end{split}\end{equation}
 The second one, often referred as the \emph{annealed formula}, is obtain by simply replacing the random variables with their expected values
 \begin{equation}
     t_\text{ext}^\text{(anl)} = \frac{\log\left[\frac{T(p+1)d+(p+1)(1-T)}{2 p}\right]}{2\omega_\M}.
