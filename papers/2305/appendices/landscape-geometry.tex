@@ -64,7 +64,7 @@ Finally, let's compute the expected Hessian. For that, we will need the followin
     \begin{align}
         \nabla_{w}^{2}\mathcal{R}(0) = -2(\rho I_{d}+w_{\star}w_{\star}^{\top}) \prec 0
     \end{align}
-    This is a negative-definite matrix with $d-1$ negative eigenvalues $-2\rho$ and one negative eigenvalue $-2(\rho+1)$ with eigenvector $\theta_{\star}$. Therefore, this is a local maximum. The risk associated is given by: 
+    This is a negative-definite matrix with $d-1$ negative eigenvalues $-2\rho$ and one negative eigenvalue $-2(\rho+1)$ with eigenvector $w_{\star}$. Therefore, this is a local maximum. The risk associated is given by: 
     \begin{align}
         \mathcal{R}(0) = \frac{\Delta}{2}+\frac{3}{2}\rho^2
     \end{align}
@@ -113,7 +113,7 @@ Therefore, the gradient on the sphere is given by:
 Similarly, the Hessian on the sphere can be written as:
 \begin{align}
     {\rm Hess}_{\mathcal{S}^{d-1}}\ell(w) &= {\rm Proj}_{\mathbb{S}^{d-1}}\left(\nabla_{w}^{2}\ell(w)\right)-\langle w, \nabla_{w}\ell(w)\rangle I_{d}\notag\\
-    &=(3\lambda^2-\lambda_{\star}^{2})(xx^{\top}-\lambda\theta x^{\top})+\mathcal{E}(w)\lambda^2 I_{d}
+    &=(3\lambda^2-\lambda_{\star}^{2})(xx^{\top}-\lambda w x^{\top})+\mathcal{E}(w)\lambda^2 I_{d}
 \end{align}
 \begin{figure}
     \centering
