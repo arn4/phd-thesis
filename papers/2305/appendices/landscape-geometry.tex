@@ -42,9 +42,9 @@ And the Euclidean Hessian is:
 \begin{align}
     \mathcal{R}(m,q) =\sfrac{\Delta}{2}+ \frac{3}{2}\rho^2+\frac{3}{2}q^2-2m^2-\rho q
 \end{align}
-In order to compute the expected gradient, we need the following moments:
+In order to compute the expected gradient, we need the following moments (for readability we omit throughout the overall factor \(\sfrac1d\) coming from the covariance \(\Sigma=\sfrac1d I\), which rescales the gradient and Hessian but changes neither the critical points nor the signs of the Hessian eigenvalues):
 \begin{align}
-    \mathbb{E}[\lambda_{\star}^2\lambda x] = \rho\theta+2m w_{\star}, && \mathbb{E}[\lambda_{\star}^3 x] = 3q w
+    \mathbb{E}[\lambda_{\star}^2\lambda x] = \rho w+2m w_{\star}, && \mathbb{E}[\lambda^3 x] = 3q w
 \end{align}
 Which gives:
 \begin{align}
