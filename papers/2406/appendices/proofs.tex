@@ -211,7 +211,7 @@ The contribution of the terms $Z_t$ is bounded by the following lemma:
 \begin{lemma}\label{2406:lem:app:bound_corrections}
     Let $T \geq 0$, and $\eta < 1$. There exists a constant $C > 0$ such that for any $t \leq T$
     \begin{equation}
-        \mathbb{P}\left(\norm{\vec{g}_t^\bot}^2 \leq C\left(\phi(m_t)^2(1 - m_t)^2  + \frac {d\log(d)^C} {n_b}\right) \quad \forall t \leq t_\eta^+ \wedge T \right) \geq 1 - cTe^{-c\log(d)^2}
+        \mathbb{P}\left(\norm{\vec{g}_t^\bot}^2 \leq C\left(\phi(m_t)^2(1 - m_t^2)^2  + \frac {d\log(d)^C} {n_b}\right) \quad \forall t \leq t_\eta^+ \wedge T \right) \geq 1 - cTe^{-c\log(d)^2}
     \end{equation}
 \end{lemma}
 
@@ -226,7 +226,7 @@ The contribution of the terms $Z_t$ is bounded by the following lemma:
     hence
     \[ \norm{ \vec{g}_t^\bot}^2 \leq \frac1{1 - m_t^2} \langle \vec{g}_t^\bot, \vec{w}_t^\star \rangle^2 + C \frac{d\log(d)^C}{n_b}.  \]
     It remains to notice that 
-    \[ \langle \vec{g}_t^\bot, \vec{w}_t^\star \rangle^2 = (\langle \vec{w}^\star, \Et{\vec{g}_t^\bot} \rangle + Z_t)^2 \leq 2(\langle \vec{w}^\star, \Et{\vec{g}_t^\bot} \rangle^2 + Z_t^2) \leq \phi(m_t)(1 - m_t^2)^2 + O\left(\frac{d}{n_b}\right).\] 
+    \[ \langle \vec{g}_t^\bot, \vec{w}_t^\star \rangle^2 = (\langle \vec{w}^\star, \Et{\vec{g}_t^\bot} \rangle + Z_t)^2 \leq 2(\langle \vec{w}^\star, \Et{\vec{g}_t^\bot} \rangle^2 + Z_t^2) \leq \phi(m_t)^2(1 - m_t^2)^2 + O\left(\frac{d}{n_b}\right).\] 
 \end{proof}
 
 
