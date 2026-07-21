@@ -67,7 +67,7 @@ Define
     Then the gradient of the correlation loss $\ell^{\mathrm{corr}}$ is $- \vec{g}_t^\star$, while the gradient of the square loss $\ell^{\mathrm{sq}}$ is $\hat{\vec{g}}_t - \vec{g}_t^\star$.
 \end{lemma}
 
-Hence, the main difference between the gradients of the correlation and square loss is a so-called \emph{interaction term} $\hat{\vec{g}}$, that only depends on the learned vector $\vec{w}_t$. Notice that $\vec{g}_t^\star$ is an average of $n_b$ independent variables of the form
+Hence, the main difference between the gradients of the correlation and square loss is a so-called \emph{self-interaction term} $\hat{\vec{g}}$, that only depends on the learned vector $\vec{w}_t$. Notice that $\vec{g}_t^\star$ is an average of $n_b$ independent variables of the form
 \begin{equation}
     \vec{g}_t^{\star\nu} := f^\star(\langle \vec{w}^\star, \vec{z}^\nu \rangle) \sigma'(\langle \vec{w}_t, \vec{z}^\nu \rangle) \vec{z}^\nu,
 \end{equation}

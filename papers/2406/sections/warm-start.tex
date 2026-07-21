@@ -114,7 +114,7 @@ In Appendix~\ref{2406:sec:app:hyperparams} we study the tightness of the exponen
 
 
 \paragraph{Non-asymptotic corrections ---}
-Proposition~\ref{2406:prop:main:exact_asympt} unveils a surprising result for the exact asymptotic description of two-layer networks. Indeed, the ODEs written in Equation~\eqref{2406:eq:spherical_closed_form_ode} coincide with the analogous ones for the single sample per batch case ($n_b=1$), modulo trivial rescaling of the parameters \cite{veiga2022phase}.  However, a careful consideration of the ``intra-batch correlations'' in the gradient is needed for correctly describing the low-dimensional process of the order parameters:
+Proposition~\ref{2406:prop:main:exact_asympt} unveils a surprising result for the exact asymptotic description of two-layer networks. Indeed, the ODEs written in Equation~\eqref{2406:eq:spherical_closed_form_ode} coincide with the analogous ones for the single sample per batch case ($n_b=1$), modulo trivial rescaling of the parameters \cite{veiga2022phase}.  However, a careful consideration of the self-interaction term in the gradient is needed for correctly describing the low-dimensional process of the order parameters:
 \begin{align}
     \sum_{\nu' = 1, \nu'\neq\nu}^{n_b} \sigma'(\lambda_j^\nu)\sigma'(\lambda_l^{\nu'})\mathcal{E}^\nu\mathcal{E}^{\nu'} \langle \vec z^{\nu}, \vec z^{\nu'} \rangle 
 \end{align}
