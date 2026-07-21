@@ -181,7 +181,7 @@ This derivation follows from a Taylor expansion of the denominator needed to pro
 \end{equation}
 
 \section[Committee machine with matching architecture]{Special case: committee machine with matching architecture} \label{2406:sec:app:matching_architectures}
-We consider a separable teacher, more precisely it is a committee machine with $k$ hidden units, i.e., $$f_*(\vec z) = \frac{1}{k} \sum_{r=1}^k a^*_r \sigma(\lambda^\star_r)$$ where we additionally consider a matched architecture in which the student and teacher share the same activation function $\sigma$.
+We consider a separable teacher, more precisely it is a committee machine with $k$ hidden units, i.e., \[f_*(\vec z) = \frac{1}{k} \sum_{r=1}^k a^*_r \sigma(\lambda^\star_r)\] where we additionally consider a matched architecture in which the student and teacher share the same activation function $\sigma$.
 
 As we discussed in Section~\ref{2406:sec:app:derivation_of_lb_equations}, the activation and the target appear just in the expected values of Equations~\eqref{2406:eq:app:psi_def},\eqref{2406:eq:app:phigf_def}~and~\eqref{2406:eq:app:phihd_def}, that can be further simplified for matching architectures
 \[\begin{split}
