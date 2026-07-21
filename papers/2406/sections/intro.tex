@@ -9,8 +9,7 @@ Our work follows this thread, focusing instead on the effect of batch size $n_b$
 Our central goal is to paint a complete picture 
 of how fast generalized linear models and two-layer neural networks adapt to the features of training data as a function of $n_b$, and the structure of the target function. 
 
-Our analysis sheds light on a fundamental limitation of one-pass (or online) SGD, namely that for batch sizes larger than the input dimension, the dynamics of the training algorithm is dominated by negative feedback terms that do not permit to reduce the time iterations needed to learn the target. Therefore, we provide a rigorous solution to this fundamental limitation of SGD by considering gradient updates on the correlation loss. 
-% This assumption has been used in similar context \cite{damian_2023_smoothing}, and we refer to this modified training protocol as \emph{Correlation Loss SGD}. 
+Our analysis sheds light on a fundamental limitation of one-pass (or online) SGD, namely that for batch sizes larger than the input dimension, the dynamics of the training algorithm is dominated by negative feedback terms that do not permit to reduce the time iterations needed to learn the target. Therefore, we provide a rigorous solution to this fundamental limitation of SGD by considering gradient updates on the correlation loss.
 Our approach, drawing inspiration from the \textit{summary statistics} method employed by \cite{saad1995line,arous2021online,arous2022high}, concentrates on the overlaps of neurons with the target subspace and their norms. This differs from recent studies, such as those by \cite{abbe2022merged} and \cite{damian2022neural}, which focus on the full gradient vector.
 
 % Removing the self-interaction term from the loss is often presented as a necessary mathematical assumptions for the analysis.
