@@ -21,6 +21,11 @@
 \setcounter{biburlucpenalty}{7000}
 \setcounter{biburllcpenalty}{7000}
 
+% Remaining smaller overfull hboxes come from long venue/conference names and
+% URLs that still don't hyphenate cleanly; let the bibliography paragraphs
+% stretch as a last resort instead of overflowing the right margin.
+\AtBeginBibliography{\sloppy}
+
 \title{Effective Dynamics of Stochastic Gradient Descent in High-Dimensional Neural Networks}
 \author{Luca Arnaboldi}
 
