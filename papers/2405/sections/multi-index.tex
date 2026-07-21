@@ -79,7 +79,7 @@ We illustrate the results of Theorem~\ref{2405:thm:multi_index_recovery} numeric
     \caption{\textbf{Learning multi-index targets --}
     Evolution of the maximum Cosine Similarities attained by EgD (crosses) and SGD (dots) as a function of the normalized iteration time. The Different directions $\{\vec w^\star_r\}_{r \in [k]}$ are identified by colors: $\vec w^\star_1$ (blue), $\vec w^\star_2$ (orange), $\vec w^\star_3$ (green).
      (dashed horizontal line $\frac{1}{\sqrt{d}}$ is a visual guide to place random performance). 
-    \textbf{(a)~$(\ell,\ell^\star)=(1,1)$:} both  algorithms learn the first direction in linear time, as well the second one in $O(d)$ steps using the staircase mechanism.
+    \textbf{(a)~$(\ell,\ell^\star)=(1,1)$:} both  algorithms learn the first direction in linear time, as well as the second one in $O(d)$ steps using the staircase mechanism.
     \textbf{(b) $(\ell,\ell^\star)=(2,2)$:} both  algorithms learn the two directions simultaneously in $O(d\log d)$ steps.
     \textbf{(c)~$(\ell_{\vec w^\star_2},\ell_{\vec w^\star_2}^\star)=(3,1)$:} both algorithms learn $\vec w^\star_1$ in linear time, but only EgD learns $\vec w^\star_2$ in $O(d)$; SGD instead requires $O(d^2)$.
     \textbf{(d) $(\ell,\ell^\star)=(3,2)$:} EgD learns all 3 directions simultaneously in $O(d\log d)$ steps, while SGD needs $O(d^2)$ time  (details in Appendix~\ref{2405:sec:app:implementation}).}
