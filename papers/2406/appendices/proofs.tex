@@ -62,7 +62,10 @@ A direct computation of both gradients implies the following lemma:
 \begin{lemma}
 Define
 \begin{equation}\label{2406:eq:app:def_ghat_gstar}
-    \vec{g}_t^\star = \frac{1}{n_b} \sum_{\nu=1}^{n_b} f^\star(\langle \vec{w}^\star, \vec{z}^\nu \rangle) \sigma'(\langle \vec{w}_t, \vec{z}^\nu \rangle) \vec{z}^\nu \quad \text{and} \quad \hat{\vec{g}}_t = \frac{1}{n_b} \sum_{\nu=1}^{n_b} \sigma(\langle \vec{w}_t, \vec{z}^\nu \rangle) \sigma'(\langle \vec{w}_t, \vec{z}^\nu \rangle) \vec{z}^\nu,
+    \begin{split}
+    \vec{g}_t^\star &= \frac{1}{n_b} \sum_{\nu=1}^{n_b} f^\star(\langle \vec{w}^\star, \vec{z}^\nu \rangle) \sigma'(\langle \vec{w}_t, \vec{z}^\nu \rangle) \vec{z}^\nu, \\
+    \hat{\vec{g}}_t &= \frac{1}{n_b} \sum_{\nu=1}^{n_b} \sigma(\langle \vec{w}_t, \vec{z}^\nu \rangle) \sigma'(\langle \vec{w}_t, \vec{z}^\nu \rangle) \vec{z}^\nu,
+    \end{split}
 \end{equation}
     Then the gradient of the correlation loss $\ell^{\mathrm{corr}}$ is $- \vec{g}_t^\star$, while the gradient of the square loss $\ell^{\mathrm{sq}}$ is $\hat{\vec{g}}_t - \vec{g}_t^\star$.
 \end{lemma}
@@ -225,8 +228,12 @@ The contribution of the terms $Z_t$ is bounded by the following lemma:
     \[ \langle \vec{g}_t^\bot, \vec{w}_t^\star \rangle^2 = a^2(1 - m_t^2)^2 \quad \text{and} \quad \norm{a(\vec{w}^\star - m\vec{w})}^2 = a^2 (1-m_t^2), \]
     hence
     \[ \norm{ \vec{g}_t^\bot}^2 \leq \frac1{1 - m_t^2} \langle \vec{g}_t^\bot, \vec{w}_t^\star \rangle^2 + C \frac{d\log(d)^C}{n_b}.  \]
-    It remains to notice that 
-    \[ \langle \vec{g}_t^\bot, \vec{w}_t^\star \rangle^2 = (\langle \vec{w}^\star, \Et{\vec{g}_t^\bot} \rangle + Z_t)^2 \leq 2(\langle \vec{w}^\star, \Et{\vec{g}_t^\bot} \rangle^2 + Z_t^2) \leq \phi(m_t)^2(1 - m_t^2)^2 + O\left(\frac{d}{n_b}\right).\] 
+    It remains to notice that
+    \begin{align*}
+        \langle \vec{g}_t^\bot, \vec{w}_t^\star \rangle^2 &= (\langle \vec{w}^\star, \Et{\vec{g}_t^\bot} \rangle + Z_t)^2 \\
+        &\leq 2(\langle \vec{w}^\star, \Et{\vec{g}_t^\bot} \rangle^2 + Z_t^2) \\
+        &\leq \phi(m_t)^2(1 - m_t^2)^2 + O\left(\frac{d}{n_b}\right).
+    \end{align*}
 \end{proof}
 
 
@@ -279,7 +286,11 @@ When $\gamma \leq c_\gamma n_b d^{-\ell/2} \log(d)^{-C_\gamma}$,
 when $t \leq t_{\kappa/2\sqrt{d}}^-$, $C_\gamma \geq C$ and $c_\gamma \leq c/2 (\kappa/2)^{\ell-2}$.
 
 Having shown $\Phi_{\mathrm{drift}}(m_t) \geq c m_t^{\ell-1}$, it remains to handle the constant terms in Proposition~\ref{2406:prop:app:diff_ineq_estimates}. We can compute directly $K(t_{\max})$, which yields
-\[K(t_{\max}) = \frac{\log(d)^{C - C_{\max}/2}}{C_{\max}\sqrt{d}} + C\gamma\log(d)^{C - C_{\max}}\frac d{n_b} \leq \frac{\log(d)^{C - C_{\max}/2}}{C_{\max}\sqrt{d}} + \frac{Cc_\gamma}{\log(d)^{C_{\max}}} d^{-\frac{\ell}{2}} \leq \frac{m_0}{4}, \]
+\begin{align*}
+    K(t_{\max}) &= \frac{\log(d)^{C - C_{\max}/2}}{C_{\max}\sqrt{d}} + C\gamma\log(d)^{C - C_{\max}}\frac d{n_b} \\
+    &\leq \frac{\log(d)^{C - C_{\max}/2}}{C_{\max}\sqrt{d}} + \frac{Cc_\gamma}{\log(d)^{C_{\max}}} d^{-\frac{\ell}{2}} \\
+    &\leq \frac{m_0}{4},
+\end{align*}
 by choosing $c_\gamma$ small enough and $C_{\max}$ large enough.
 
 Finally, we need to show that the events $\cE_t$ occur with high probability. This is covered by the following lemma:
