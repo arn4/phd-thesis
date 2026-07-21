@@ -58,12 +58,7 @@ As a result, any $\psi_\alpha$-norm bound yields exponential convergence tails. 
 
 \subsection{Computing the gradient at time $t$}
 
-Throughout this section, the update process on $\vec{w}_t$ will be written as
-\begin{equation}
-%\label{2406:eq:app:one_step_w}
-    \vec{w}_{t+1} = \frac{\vec{w}_t - \gamma  \vec{g}_t}{\norm{\vec{w}_t - \gamma  \vec{g}_t}},
-\end{equation}
-where $\vec{g}_t$ is the gradient at time $t$: $\vec{g}_t = \nabla_{w_{t}} \ell_t$, and $\ell_t$ is the empirical loss $t$, that can be either the correlation or the square loss. A direct computation of both gradients implies the following lemma:
+A direct computation of both gradients implies the following lemma:
 \begin{lemma}
 Define
 \begin{equation}\label{2406:eq:app:def_ghat_gstar}
