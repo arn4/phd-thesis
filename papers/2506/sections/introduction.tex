@@ -32,7 +32,7 @@ Note that for one-pass (a.k.a. \emph{online} or \emph{streaming}) SGD each sampl
 To derive a sharp characterization of the sample complexity and convergence rate of SGD for the single-layer attention mechanism in~\cref{2506:eq:model-definition}, we assume that the sequence data $(X, \vec{y})$ is generated from the following Gaussian \emph{sequence single-index} (SSI) model:
 \begin{assumption}[Data distribution] 
 \label{2506:def:gsim}
-We assume training data $(X, \vec{y})\in\mathbb{R}^{L\times d}\times \mathbb{R}^{k_\mathrm{out}}$ is independently drawn from a Gaussian {\emph Sequence Single Index (SSI)} model:
+We assume training data $(X, \vec{y})\in\mathbb{R}^{L\times d}\times \mathbb{R}^{k_\mathrm{out}}$ is independently drawn from a Gaussian \emph{Sequence Single Index (SSI)} model:
     \begin{equation}
     \label{2506:eq:gssim}
         \vec{f}^\mathrm{SSI}_{\vec w_{\star}}(X) = \vec{g}{\left(X\cdot \vec{w}_{\star}\right)}
