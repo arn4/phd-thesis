@@ -1,5 +1,5 @@
 \section{Implementation Details} \label{2405:sec:app:implementation}
-In this section. we provide all the implementation details needed to reproduce the Figures of the paper. The full detailed implementation can be repository linked in the main paper.
+In this section, we provide all the implementation details needed to reproduce the Figures of the paper. The full implementation can be found in the repository linked in the main paper.
 
 Unless explicitly stated, we always run the plain version of Algorithm~\ref{2405:algo:optimizer_main_step} with squared loss, as opposed to Assumption~\ref{2405:assump:spherical_corr} which requires \emph{correlation loss} and spherical gradient. We use the reLU function as an activation. Finally, we always run simulations with \(W^0\bot W^\star\), which does not fall under Assumption~\ref{2405:assump:init}. Indeed, our numerical simulations deviate from the theoretical assumptions needed for the formal proofs, but the aim here is to show that our claims are valid beyond the technical limitations of the theory and that they can allow us to understand settings closer to what is used in practice.
 
