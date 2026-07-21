@@ -4,7 +4,7 @@ In this section, we present further numerical investigation to support our theor
 
 \subsection{Testing wider range of Algorithm~\ref{2405:algo:optimizer_main_step}}
 In the main we presented all the numerical simulation using \(\rho>0\), i.e. \emph{ExtraGradient method/descent}. 
-In Figure~\ref{2405:fig:app:other-algos}~Left, we repeat one of the experiment of Figure~\ref{2405:fig:main:single_index_complete} in the case \(\rho<0\), the \emph{Sharpe Aware Minimization}. The two algorithms are based on very different principle, but in our context they behave in the same way: the reusing of the data makes high information exponent function easily learnable. The global picture for \(\rho\neq0\) is the same regardless of its sign. 
+In Figure~\ref{2405:fig:app:other-algos}~Left, we repeat one of the experiment of Figure~\ref{2405:fig:main:single_index_complete} in the case \(\rho<0\), the \emph{Sharpness-Aware Minimization}. The two algorithms are based on very different principle, but in our context they behave in the same way: the reusing of the data makes high information exponent function easily learnable. The global picture for \(\rho\neq0\) is the same regardless of its sign. 
 
 \begin{figure}
     \centering
@@ -18,7 +18,7 @@ In Figure~\ref{2405:fig:app:other-algos}~Left, we repeat one of the experiment o
     }
     \label{2405:fig:app:other-algos}
 \end{figure}
-Altought Algorithm~\ref{2405:algo:optimizer_main_step} includes a broad variety of algorithm, it is not the most general domain of validity of our theory. Simple algorithms such as repeating the gradient step twice on the same data before discarding it (also known as \emph{2-lookahead optimizer} \citep{zhang2019lookahead}) are not part of Algorithm~\ref{2405:algo:optimizer_main_step}, yet our considerations are still valid. In fact, the data repetition is sufficient to introduce correlations across two consecutive steps, whose effect builds up along the dynamics causing the network to learn hard targets. A simple illustration of this claim is available in Figure~\ref{2405:fig:app:other-algos}~Right.
+Although Algorithm~\ref{2405:algo:optimizer_main_step} includes a broad variety of algorithms, it is not the most general domain of validity of our theory. Simple algorithms such as repeating the gradient step twice on the same data before discarding it (also known as \emph{2-lookahead optimizer} \citep{zhang2019lookahead}) are not part of Algorithm~\ref{2405:algo:optimizer_main_step}, yet our considerations are still valid. In fact, the data repetition is sufficient to introduce correlations across two consecutive steps, whose effect builds up along the dynamics causing the network to learn hard targets. A simple illustration of this claim is available in Figure~\ref{2405:fig:app:other-algos}~Right.
 
 \subsection{Extensive batch size}
 In this section, we want to present some evidence that our result does not change when the batch size is $1 < n_b \le O(d^{\frac{\ell^\star}{2}})$. The formal proof we presented in the paper is valid in the case where the batch size is \(n_b=1\), but we strongly believe it is the case when training with larger batches.
