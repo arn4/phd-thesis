@@ -115,14 +115,15 @@ The above-described protocol is equivalent to consider a vanishing initializatio
 \begin{center}
 \setlength{\tabcolsep}{5pt}
 \setlength\extrarowheight{5pt}
-\begin{tabular}{c| c | c | c |c}
+\begin{tabular}{ccccc}
+\toprule
   \multirow{2}{*}{$\ell$} & SGD & SGD & Correlation loss SGD & One step  \\
   &{\scriptsize with $n_b \lesssim d^{\sfrac{\ell}{2}}$} &{\scriptsize with $d^{\sfrac{\ell}{2}} \ll n_b \lesssim d^{\max (\ell-1,1)}$} &{\scriptsize with $n_b=o\left(d^{\max(\ell-1, 1)}\right)$} &{\scriptsize with $n_b = O(d^\ell)$} \\
- \hline  $1$ & $\begin{array}{@{}l@{}} T = O(\sfrac{d}{n_b}) \\[2pt] N = O(d) \end{array}$ & $\begin{array}{@{}l@{}} T = O(1) \\[2pt] N = O(d) \end{array}$ & $\begin{array}{@{}l@{}} T = O(\sfrac{d}{n_b}) \\[2pt] N = O(d) \end{array}$ & $\begin{array}{@{}l@{}} T = 1 \\[2pt] N = O(d) \end{array}$ \\
- \hline  $2$ & $\begin{array}{@{}l@{}} T = O(\sfrac{d \log{d}}{n_b}) \\[2pt] N = O(d \log{d}) \end{array}$ & $\begin{array}{@{}l@{}} T = O(\log{d}) \\[2pt] N = O(d \log{d}) \end{array}$ & $\begin{array}{@{}l@{}} T = O(\sfrac{d\log{d}}{n_b}) \\[2pt] N = O(d \log{d}) \end{array}$ & $\begin{array}{@{}l@{}} T = 1 \\[2pt] N = O(d^2) \end{array}$ \\
- \hline
+\midrule
+  $1$ & $\begin{array}{@{}l@{}} T = O(\sfrac{d}{n_b}) \\[2pt] N = O(d) \end{array}$ & $\begin{array}{@{}l@{}} T = O(1) \\[2pt] N = O(d) \end{array}$ & $\begin{array}{@{}l@{}} T = O(\sfrac{d}{n_b}) \\[2pt] N = O(d) \end{array}$ & $\begin{array}{@{}l@{}} T = 1 \\[2pt] N = O(d) \end{array}$ \\
+  $2$ & $\begin{array}{@{}l@{}} T = O(\sfrac{d \log{d}}{n_b}) \\[2pt] N = O(d \log{d}) \end{array}$ & $\begin{array}{@{}l@{}} T = O(\log{d}) \\[2pt] N = O(d \log{d}) \end{array}$ & $\begin{array}{@{}l@{}} T = O(\sfrac{d\log{d}}{n_b}) \\[2pt] N = O(d \log{d}) \end{array}$ & $\begin{array}{@{}l@{}} T = 1 \\[2pt] N = O(d^2) \end{array}$ \\
  $>2$ & $\begin{array}{@{}l@{}} T = O(\sfrac{d^{\ell -1}}{n_b}) \\[2pt] N = O(d^{\ell-1}) \end{array}$ & $\begin{array}{@{}l@{}} T = O(d^{\sfrac{\ell}{2} - 1}) \\[2pt] N = O(n_b d^{\sfrac{\ell}{2} - 1}) \end{array}$ & $\begin{array}{@{}l@{}} T = O(\sfrac{d^{\ell-1}}{n_b}) \\[2pt] N = O(d^{\ell-1}) \end{array}$ & $\begin{array}{@{}l@{}} T = 1 \\[2pt] N = O(d^{\ell}) \end{array}$ \\
- \hline
+\bottomrule
 \end{tabular}
 \caption{\textbf{Time~/~Complexity tradeoffs:} Number of iterations $T$ and the total number of samples $N$ needed to achieve weak recovery of the target for different training protocols in high dimensions. \textbf{Left:} One-pass SGD of batch size $n_b = d^{\sfrac{\ell}{2}}$, in this regime the optimal time complexity is obtained rescaling by $n_b$ the result of \cite{arous2021online} for $n_b=1$, i.e. by choosing the optimal learning rate $\gamma = O(n_b d^{-\sfrac{\ell}{2}})$. \textbf{Center-left:} One-pass SGD with batch size $d^{\sfrac{\ell}{2}} \ll n_b \lesssim d^{\max (\ell-1,1)}$, for hard problems ($\ell > 2$) the sample complexity is significantly increased with respect to the $n_b=1$ case up to $N = O(n_bd^{\sfrac{\ell}{2}-1})$. The learning rate cannot be increased proportionally to $n_b$ in this region, fixed to be $\gamma = O(1)$. \textbf{Center-Right:} Correlation loss SGD with $n_b = o(d^{\max(\ell-1, 1)})$, this training protocol overcomes the limitation of SGD when $n_b \gg d^{\sfrac{\ell}{2}}$ and $\ell >2$; the total sample complexity is $N=O(d^{\ell-1})$. The learning rate is fixed again to be proportional to the batch size $\gamma = O(n_bd^{-\sfrac{\ell}{2}})$. \textbf{Right:} The target is weakly recovered with one GD step of $n_b=O(d^\ell)$ batch. The learning rate is chosen as $\gamma = O( d^{\sfrac{(\ell-1)}{2}})$ for the One Step routine \cite{dandi2023how}.
 } 
