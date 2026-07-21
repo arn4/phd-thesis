@@ -68,7 +68,7 @@ There, online one-pass SGD is considered, meaning \(n_b=1 \implies \mu = 0\) in 
 \[
 m_0^{\ell-1} >  > d^{-\delta+1}m_0 \implies (\ell-1)\log_d m_0 \ge -\delta + 1 + \log_d m_0 \implies \delta \ge 1 + (2-\ell)\log_d m_0
 \]
-Plugging in \(m_0 = \sfrac{1}{\sqrt{d}}\)  we finally get \(\delta \ge \sfrac{\ell}{2}\), where the equality is the best possible value of the learning rate in order to make the escaping faster. Note that for \(\ell=1\) we are also bounded from Lemma~\ref{2406:lem:app:boundongamma}, so \(\delta\ge1\). Combining with \eqref{2406:eq:app:escapingtimes}, finally gives us the the minimal number of steps needed
+Plugging in \(m_0 = \sfrac{1}{\sqrt{d}}\)  we finally get \(\delta \ge \sfrac{\ell}{2}\), where the equality is the best possible value of the learning rate in order to make the escaping faster. Note that for \(\ell=1\) we are also bounded from Lemma~\ref{2406:lem:app:boundongamma}, so \(\delta\ge1\). Combining with \eqref{2406:eq:app:escapingtimes}, finally gives us the minimal number of steps needed
 \begin{equation}
     T \sim \begin{cases}
         d & \ell =1 \\
