@@ -9,7 +9,7 @@ All the plot of population loss we showed are a numerical integration of the los
 
 Let \(f\colon \mathbb{R}^{2L} \to \mathbb{R}\) be a function of \(2L\) variables to be integrated, and let \(\mu\in\mathbb{R}^{2L}\) and \(\Sigma\in\mathbb{R}^{2L\times 2L}\) be the mean and covariance of the multivariate Gaussian distribution. The integral we want to compute is
 \begin{equation}
-    I=\int_{\mathbb{R}^{2L}} f(x) \frac{1}{(2\pi)^{L}} \exp\left(-\frac{1}{2} (x - \mu)^\top \Sigma^{-1} (x - \mu)\right) dx
+    I=\int_{\mathbb{R}^{2L}} f(x) \frac{1}{(2\pi)^{L}\sqrt{\det \Sigma}} \exp\left(-\frac{1}{2} (x - \mu)^\top \Sigma^{-1} (x - \mu)\right) dx
 \end{equation}
 The numerical procedure is as follows:
 \begin{enumerate}
@@ -19,7 +19,7 @@ The numerical procedure is as follows:
           \]
           where \(x_i\) are the nodes given by the roots of the Hermite polynomial \(H_{N_\mathrm{int}}(x)\) and \(w_i\) are the corresponding weights, computed as
             \[
-                w_i = \frac{2^{N_\mathrm{int}} \sqrt{\pi}}{N_\mathrm{int}!} \frac{1}{H_{N_\mathrm{int}}'(x_i)^2}
+                w_i = \frac{2^{N_\mathrm{int}+1} N_\mathrm{int}! \sqrt{\pi}}{H_{N_\mathrm{int}}'(x_i)^2}
             \]
     \item Compute the \(2L\) dimensional nodes and weights by taking the Kronecker product of the 1D nodes and weights
           \[
@@ -27,7 +27,7 @@ The numerical procedure is as follows:
           \]
     \item Let \(T\) be the Cholesky decomposition of \(\Sigma\), i.e. \(\Sigma = T^\top T\). We can then change the variable to \(y = T^{-1}(x - \mu)\) and compute the integral as
           \[\begin{split}
-            I=&\int_{\mathbb{R}^{2L}} f(x) \frac{1}{(2\pi)^{L}} \exp\left(-\frac{1}{2} (x - \mu)^\top \Sigma^{-1} (x - \mu)\right) dx \\=& \int_{\mathbb{R}^{2L}} f(Ty + \mu) \frac{1}{(2\pi)^{L}} \exp\left(-\frac{1}{2} y^\top y\right) dy
+            I=&\int_{\mathbb{R}^{2L}} f(x) \frac{1}{(2\pi)^{L}\sqrt{\det \Sigma}} \exp\left(-\frac{1}{2} (x - \mu)^\top \Sigma^{-1} (x - \mu)\right) dx \\=& \int_{\mathbb{R}^{2L}} f(Ty + \mu) \frac{1}{(2\pi)^{L}} \exp\left(-\frac{1}{2} y^\top y\right) dy
           \end{split}\]
     \item The integral can then be approximated, as
           \[
