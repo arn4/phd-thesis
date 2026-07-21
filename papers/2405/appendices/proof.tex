@@ -105,7 +105,7 @@ We fix a vector $\vec{v}$ and consider the random process $m_t(\vec{v}) := \lang
 In \cite{arous2021online}, the function $\Psi(\vec{u})$ can be written as $\Psi(\vec{u}) = \phi(\langle \vec{u}, \vec{v} \rangle)\vec{v}$. As a result, the bounds of Proposition~\ref{2405:prop:app:diff_equation} are actually a closed function of $m_t(\vec{v})$. We generalize this phenomenon to a larger class:
 
 \begin{assumption}\label{2405:assump:app:low_dim}
-  There exists a $q > 0$ such that the function $\Psi$ is $q$-approximately $k$-dimensional, in the sense that there exist a function $\psi: \R^k \to \R^k$ and an orthonormal matrix $W^\star \in \R^{k \times d}$ such that for any $\vec{u}\in\R^d$,
+  There exists a $q > 0$ such that the function $\Psi$ is $q$-approximately $k$-dimensional, in the sense that there exist a function $\psi: \R^k \to \R^k$ and a matrix $W^\star \in \R^{k \times d}$ with orthonormal rows such that for any $\vec{u}\in\R^d$,
   \[ \norm{ W^\star \Psi(\vec{u}) - \psi(W^\star \vec{u})} \leq \left( \norm{W^\star \vec{u}} \vee \frac1{\sqrt{d}} \right) \cdot q. \]
 \end{assumption}
 
