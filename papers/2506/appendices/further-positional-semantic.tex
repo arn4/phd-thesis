@@ -97,7 +97,7 @@ where in the last step we used again the small learning rate limit.
  \frac{e^{\tau+1} - e^\tau}{\sfrac{\gamma}{d}} =
     -e\left.\frac{\partial^2 \mathcal{L}}{\partial e^2}\right|_{m,e=0} - m \left.\frac{\partial^2 \mathcal{L}}{\partial m\partial e}\right|_{m,e=0}.
  \]
- Since the hessian of the loss has always a negative eigenvalue, both these equations need \(\tau = O(d\log d)\) steps of population gradient descent at constant learning rate \(\gamma\) to escape a neighborhood of initialization, leading to \(\mathrm{SIE}=2\). This step count is not the sample complexity of online SGD: controlling the gradient noise forces \(\gamma = O(\sfrac{1}{\log d})\), and the same estimate \(\tau \asymp \sfrac{d}{\gamma}\cdot\log d\) then returns \(\mathcal{O}(d\log^2 d)\) --- the extra logarithmic factor that Theorem~\ref{2506:thm:sie} suppresses when it quotes the sharp \(\mathcal{O}(d\log d)\).
+ Since the Hessian of the loss has always a negative eigenvalue, both these equations need \(\tau = O(d\log d)\) steps of population gradient descent at constant learning rate \(\gamma\) to escape a neighborhood of initialization, leading to \(\mathrm{SIE}=2\). This step count is not the sample complexity of online SGD: controlling the gradient noise forces \(\gamma = O(\sfrac{1}{\log d})\), and the same estimate \(\tau \asymp \sfrac{d}{\gamma}\cdot\log d\) then returns \(\mathcal{O}(d\log^2 d)\) --- the extra logarithmic factor that Theorem~\ref{2506:thm:sie} suppresses when it quotes the sharp \(\mathcal{O}(d\log d)\).
 
 \subsection{Numerical experiments on the transition}
 In this Appendix we would like to provide more details on the phase diagram of Figure~\ref{2506:fig:phase-diagram-postional-semantic}. 
@@ -106,7 +106,7 @@ In Figure \ref{2506:fig:app:trajectories-d100-positional-semantic} we reproduce 
 \begin{figure}
     \centering
     \includegraphics[width=0.4\textwidth]{figs/positional-semantic/trajecttories-probability-d100-a1}
-    \caption{reproduction of Figure~\ref{2506:fig:positional-semantic-trajectories-a1} for \(d=100\). The transition is smoother than in the \(d=1000\). Averaged over 25 runs.
+    \caption{Reproduction of Figure~\ref{2506:fig:positional-semantic-trajectories-a1} for \(d=100\). The transition is smoother than in the \(d=1000\). Averaged over 25 runs.
     }
     \label{2506:fig:app:trajectories-d100-positional-semantic}
 \end{figure}
