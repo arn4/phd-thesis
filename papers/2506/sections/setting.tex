@@ -8,7 +8,7 @@ As shown in the classical result by \cite{chung1954stochastic}, one-pass SGD can
     R(\vec{w}) =
         \mathbb{E}_{X\sim\mathcal{N}(0,\sfrac{I_d}{d})}\left[\ell(X, \vec{f}^\mathrm{SSI}_{\vec w_\star}(X); \vec{f}_{\vec{w}})\right].
 \end{equation}
-Therefore, in order to understand the dynamics in \cref{2506:eq:normalized-SGD-w} it is important to understand the landscape of the risk above. The key property of single-index models underlying the convergence rate analysis of \cite{arous2021online} is that rotation invariance of the population risk implies that it only depends on a single parameter: the correlation between the target weights and the predictor weight, also known as an \emph{order parameter} or \emph{sufficient statistic}. A similar property holds for the family of SSI models defined by Assumption \ref{2506:def:gsim}. Indeed, conditionally on the weights, the following projections
+Therefore, in order to understand the dynamics in \cref{2506:eq:normalized-SGD-w} it is important to understand the landscape of the risk above. The key property of single-index models underlying the convergence rate analysis of \cite{arous2021online} is that rotation invariance of the population risk implies that it only depends on a single parameter: the correlation between the target weights and the predictor weight, also known as an \emph{order parameter} or \emph{sufficient statistic}. A similar property holds for the family of SSI models defined by Assumption~\ref{2506:def:gsim}. Indeed, conditionally on the weights, the following projections
 \begin{equation}
     \vec{z}_\star = X\cdot \vec{w}_\star \in \mathbb{R}^L
     \quad \text{and} \quad

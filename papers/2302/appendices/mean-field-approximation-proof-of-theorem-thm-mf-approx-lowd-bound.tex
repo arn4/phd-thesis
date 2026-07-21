@@ -1,4 +1,4 @@
-\section{Mean-field approximation: proof of Theorem \ref{2302:thm:mf_approx_lowd_bound}}
+\section{Mean-field approximation: proof of Theorem~\ref{2302:thm:mf_approx_lowd_bound}}
 
 \label{2302:sec:app:mf}
 \paragraph{Preliminaries} We begin by recalling the results of \cite{mei2019mean}. For any distribution $\mu$ on $\mathbb R^d$, we define the network function
@@ -36,12 +36,12 @@ Through conservation of matter arguments, the evolution of the empirical measure
 
 As we have already mentioned in the section devoted to the gradient flow regime, the solution $\Omega(t)$ of \eqref{2302:eq:def:gf_ode} is exactly the overlap matrix of $W(t)$, and hence the term $\mathcal{R}(W(t))$ can be replaced by $\mathcal{R}(\Omega(t))$ in \eqref{2302:eq:app:mei_mf_bound}.
 
-\paragraph{Rotation invariance} The crux of Theorem \ref{2302:thm:mf_approx_lowd_bound} lies in the rotation invariance of $\mu_0$. Indeed, as noticed in \cite{abbe2022merged,hajjar2023symmetries}, such symmetries are conserved throughout the mean-field dynamics.
+\paragraph{Rotation invariance} The crux of Theorem~\ref{2302:thm:mf_approx_lowd_bound} lies in the rotation invariance of $\mu_0$. Indeed, as noticed in \cite{abbe2022merged,hajjar2023symmetries}, such symmetries are conserved throughout the mean-field dynamics.
 \begin{proposition}[\cite{hajjar2023symmetries}, Proposition 2.1]\label{2302:prop:app:chizat_symmetry}
 Let $U$ be a linear transformation, and assume that the initial measure $\mu_0$, the teacher function $f_\star$ and the data measure $\rho$ are all invariant under $U$. Let $\mu_t$ be the solution to \eqref{2302:eq:def:gf_pde} with initial condition $\mu_0$. Then $\mu_t$ is $U$-invariant for all $t \geq 0$.
 \end{proposition}
 
-Write $\mathbb R^d = V^\star \oplus V^\bot$, where $V^\star$ is the span of $W^\star$ and $V^\bot$ is its orthogonal subspace. Proposition \ref{2302:prop:app:chizat_symmetry} then implies immediately that $\mu_t$ is rotation-invariant on $V^\bot$. Hence, if we define the following function:
+Write $\mathbb R^d = V^\star \oplus V^\bot$, where $V^\star$ is the span of $W^\star$ and $V^\bot$ is its orthogonal subspace. Proposition~\ref{2302:prop:app:chizat_symmetry} then implies immediately that $\mu_t$ is rotation-invariant on $V^\bot$. Hence, if we define the following function:
 \begin{equation}
 h(\vec{w}) =  \left(\frac{W^\star \vec{w}}d, \frac{\lVert \vec{w}^\bot \rVert^2}d\right)
 \end{equation}
@@ -91,7 +91,7 @@ We have therefore shown the following proposition:
 \end{equation}
 where $\tilde\mu_p(t)$ is the empirical distribution of the population:
 \[ \tilde \mu_p(t) = \frac1p \sum_{i=1}^p \delta_{\vec{m}_i(t), q_i(t)}. \]
-Then, by the same arguments as Theorem \ref{2302:thm:mei_mf_bound}, we have:
+Then, by the same arguments as Theorem~\ref{2302:thm:mei_mf_bound}, we have:
 \begin{proposition}\label{2302:prop:mf_approx_reduced}
     Assume that $\tilde\mu_0$ is a $K^2/d$-subgaussian distribution, and consider the two processes:
     \begin{itemize}
@@ -123,7 +123,7 @@ In conclusion, we have shown the following:
      with probability at least $1 - e^{-z^2}$.
 \end{theorem}
 
-\paragraph{Matching the equations} To show that Theorem \ref{2302:thm:app:mf_approx_bound} implies Theorem \ref{2302:thm:mf_approx_lowd_bound}, we need to show the following:
+\paragraph{Matching the equations} To show that Theorem~\ref{2302:thm:app:mf_approx_bound} implies Theorem~\ref{2302:thm:mf_approx_lowd_bound}, we need to show the following:
 \begin{itemize}
     \item the update equations for \eqref{2302:eq:def:mf_ode} and \eqref{2302:eq:app:df_ode} are the same
     \item the risk definitions for $\tilde{\mathcal{R}}(\tilde\Theta)$ matches the one from \eqref{2302:eq:def:mf_risk}.
@@ -146,5 +146,5 @@ For $i \neq j$ and a given realization of $\vec{g}_i, \vec{g}_j$, the covariance
     \vec{m}_i^\top P^{-1} \vec{m_j} + \sqrt{q_i q_j} \xi_{ij} & \vec{m}_i^\top P^{-1} \vec{m_i} + q_i &  m_{jr} \\
     m_{ir} & m_{jr} & p_{rr}
 \end{pmatrix} \]
-where $\xi_{ij} = \langle \vec{g_i}, \vec{g_j} \rangle$. It is easy to check that this is exactly equal to $\tilde\Omega^{ijr}$, where $\tilde\Omega$ is defined in \eqref{2302:eq:def:overlaps_mf}. Finally, by linearity of expectation, since we never have a three-way correlation term between $\vec{g}_i, \vec{g}_j, \vec{g}_\ell$, we can consider all the $\xi_{ij}$ to be independent. This ends the proof of Theorem \ref{2302:thm:mf_approx_lowd_bound}.
+where $\xi_{ij} = \langle \vec{g_i}, \vec{g_j} \rangle$. It is easy to check that this is exactly equal to $\tilde\Omega^{ijr}$, where $\tilde\Omega$ is defined in \eqref{2302:eq:def:overlaps_mf}. Finally, by linearity of expectation, since we never have a three-way correlation term between $\vec{g}_i, \vec{g}_j, \vec{g}_\ell$, we can consider all the $\xi_{ij}$ to be independent. This ends the proof of Theorem~\ref{2302:thm:mf_approx_lowd_bound}.
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -118,7 +118,7 @@ Similarly, the Hessian on the sphere can be written as:
 \begin{figure}
     \centering
     \includegraphics[width=0.8\textwidth]{figs/landscape}
-    \caption{Low-dimensional illustration of mediocrity at initialization. As discussed in Sec. \ref{2305:sec:app:spherical}, the expected Hessian at initialization is a strict saddle-point with $d-1$ flat directions and a single negative direction pointing towards the global minimum. This scenario is particularly hard for descent based algorithms such as SGD, that require $n=d\log{d}$ samples / steps to develop significant correlation with the signal.}
+    \caption{Low-dimensional illustration of mediocrity at initialization. As discussed in Section~\ref{2305:sec:app:spherical}, the expected Hessian at initialization is a strict saddle-point with $d-1$ flat directions and a single negative direction pointing towards the global minimum. This scenario is particularly hard for descent based algorithms such as SGD, that require $n=d\log{d}$ samples / steps to develop significant correlation with the signal.}
     \label{2305:fig:app:landscape}
 \end{figure}
 \paragraph{Averaged geometry ---} Recall that in the sphere we have $\rho=q=1$. Therefore, the population risk now only depends on the correlation $m=\langle w_{\star}, w\rangle$, and reads:
@@ -151,7 +151,7 @@ As before, we can now analyze the critical points and their nature.
     \end{align}
    which is positive-define.
 \end{itemize}
-Therefore, the landscape now resembles a golf course: completely flat with a single whole corresponding with the global minimum $w_{\star}$, see Fig.~\ref{2305:fig:app:landscape} for an illustration. This is the prototypical image of mediocrity. In particular, differently from the unconstrained case, random initialization
+Therefore, the landscape now resembles a golf course: completely flat with a single whole corresponding with the global minimum $w_{\star}$, see Figure~\ref{2305:fig:app:landscape} for an illustration. This is the prototypical image of mediocrity. In particular, differently from the unconstrained case, random initialization
 \begin{align}
     w^{0}\sim {\rm Unif}(\mathbb{S}^{d-1}(\sqrt{d})) 
 \end{align}

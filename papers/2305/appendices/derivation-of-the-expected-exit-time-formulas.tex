@@ -76,11 +76,11 @@ These equations admit a simple solution given by
  
 
 \subsection{Solving the approximated risk equation}
-From Eq.~\eqref{2305:eq:risk_square} when the weights are on the sphere, it follows that the risk is given by
+From Equation~\eqref{2305:eq:risk_square} when the weights are on the sphere, it follows that the risk is given by
 \begin{equation}
   \risk{(\Q,\M)}-\frac\Delta2 = 1 + \frac1p + \frac{1}{p^2}\sum_{j,l=1;j\neq l}^p \Q^2_{jl} - \frac2p \sum_{j=1}^p \M^2_{j}
 \end{equation}
-Eqs.~\eqref{2305:eq:approx_suff_stat} can be used to obtain a deterministic time evolution of the risk. The only source of randomness left is from the initial conditions, we can define two random variables as
+Equations~\eqref{2305:eq:approx_suff_stat} can be used to obtain a deterministic time evolution of the risk. The only source of randomness left is from the initial conditions, we can define two random variables as
 \begin{equation}
     \frac{\mu_0}{d} \coloneqq \sum_{j=1}^p \left[\M_{j}(0)\right]^2 \quad\text{and}\quad
     \frac{\tau_0}{d} \coloneqq \sum_{j,l=1;j\neq l}^p \left[\Q_{jl}(0)\right]^2,
@@ -93,7 +93,7 @@ This equation is not polished enough to be solved analytically yet. First of all
 \(\omega_\M > 0\). Secondly, we want the exponential proportional to \(\tau_0\) to be negligible when \(t>0\): this follow from \(\omega_\Q>0\).
 In principle, this last condition is not needed for the process to converge like the first one, but without it is not possible to find an analytical solution for the cross -threshold equation. Moreover, when \(p>6\): \(\omega_\M>0 \implies \omega_\Q>0\), so we can see that the request is not unreasonable.
 
-Wrapping all this consideration together, Eq.~\eqref{2305:eq:exit_time_implicit_equation} is
+Wrapping all this consideration together, Equation~\eqref{2305:eq:exit_time_implicit_equation} is
 \begin{equation}
     (1-T)\left(1+\frac1p+\frac{\tau_0}{dp^2}-\frac{2\mu_0}{dp}\right) = 1+\frac1p-\frac{2\mu_0}{dp}\exp[2\omega_M t_\text{ext}],
 \end{equation}
@@ -120,7 +120,7 @@ The second one, often referred as the \emph{annealed formula}, is obtain by simp
 \end{equation}
 
 \paragraph{Case \(p=1\)} For completeness, let's reduce these formulas to the simplest case \(p=1\).
-In this case \(\tau_0\) does not appear, and from Eq.~\eqref{2305:eq:initial_distribution_QM} we find that \(\mu_0 \sim \chi^2(1)\), so the quenched formula reduces to
+In this case \(\tau_0\) does not appear, and from Equation~\eqref{2305:eq:initial_distribution_QM} we find that \(\mu_0 \sim \chi^2(1)\), so the quenched formula reduces to
 \begin{equation}
     t_\text{ext}^\text{(qnc)} = \mathbb E_{\mu_0 \sim \chi^2(1)} \left[
         \frac{\log\left[\frac{Td}{\mu_0}+(1-T)\right]}{8(1-6\gamma)-4\gamma\Delta}

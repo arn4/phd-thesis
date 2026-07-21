@@ -52,12 +52,12 @@ Our first main result is to characterize the time to achieve weak recovery of th
 \end{assumption}
 Assumption 2 ensures that the optimization problem is achievable for gradient flow on the population loss $\mathcal{R}$. Indeed, one can show that when $m \approx 0$,
 \[ \mathcal{R} = 2(1 - c_\ell c_\ell^\star m^\ell) + o(m^\ell); \]
-as a result, if $\ell$ is even and $c_\ell c_\ell^\star < 0$, then $m = 0$ is a local maximum of $\mathcal{R}$ and weak recovery is impossible. When $\ell$ is odd, the point $m=0$ is always a strict saddle, so Assumption \ref{2406:assump:init} ensures that we start on the correct side of the saddle. Under the initialization scheme described by Equation~\ref{2406:eq:initial_conditions_unconstrainted}, the first condition is satisfied with arbitrarily high probability upon decreasing $\kappa$, while the second is a $1/2$-probability event.
+as a result, if $\ell$ is even and $c_\ell c_\ell^\star < 0$, then $m = 0$ is a local maximum of $\mathcal{R}$ and weak recovery is impossible. When $\ell$ is odd, the point $m=0$ is always a strict saddle, so Assumption~\ref{2406:assump:init} ensures that we start on the correct side of the saddle. Under the initialization scheme described by Equation~\ref{2406:eq:initial_conditions_unconstrainted}, the first condition is satisfied with arbitrarily high probability upon decreasing $\kappa$, while the second is a $1/2$-probability event.
 
 We are now in the position to formally state the result:
 \begin{theorem} [Projected SGD weak recovery]
 \label{2406:thm:main:sgd_weak_recovery}
-   Consider the projected SGD algorithm with square loss  (Equations~\eqref{2406:eq:main:gd_update_weights}, \eqref{2406:eq:main:projected_sgd}), and suppose that Assumptions \ref{2406:assump:poly_growth}-\ref{2406:assump:init} hold. There exist absolute constants $c_\gamma, C_\gamma$ such that if
+   Consider the projected SGD algorithm with square loss  (Equations~\eqref{2406:eq:main:gd_update_weights}, \eqref{2406:eq:main:projected_sgd}), and suppose that Assumptions~\ref{2406:assump:poly_growth}-\ref{2406:assump:init} hold. There exist absolute constants $c_\gamma, C_\gamma$ such that if
    \[ \gamma\leq c_\gamma \min\left(1, n_b d^{-\left(\frac\ell2\vee 1\right)} \log(d)^{-C_\gamma}\right), \]
     then for large enough $d$ we have with probability $1-ce^{-c\log(n)^2}$
    \begin{equation}
@@ -68,7 +68,7 @@ We are now in the position to formally state the result:
 
 
  
- \subsection{Illustration of Theorem \ref{2406:thm:main:sgd_weak_recovery}} The phase diagram in Figure~\ref{2406:fig:cold_start_pd} exemplifies Theorem~\ref{2406:thm:main:sgd_weak_recovery}. We identify three \textit{learning phases}: SGD learning, Correlation Loss SGD learning, and SGD impossible. These regions are explored by varying the batch size and learning rate exponents $\delta,\mu$. Our theory characterizes the optimal learning rate to achieve the lowest possible time iterations of SGD to weakly recover the target direction $\vec w^\star$ when the batch size respects $n_b = o(d^{\ell -1})$:
+ \subsection{Illustration of Theorem~\ref{2406:thm:main:sgd_weak_recovery}} The phase diagram in Figure~\ref{2406:fig:cold_start_pd} exemplifies Theorem~\ref{2406:thm:main:sgd_weak_recovery}. We identify three \textit{learning phases}: SGD learning, Correlation Loss SGD learning, and SGD impossible. These regions are explored by varying the batch size and learning rate exponents $\delta,\mu$. Our theory characterizes the optimal learning rate to achieve the lowest possible time iterations of SGD to weakly recover the target direction $\vec w^\star$ when the batch size respects $n_b = o(d^{\ell -1})$:
  \begin{align}
      \delta^\star(\mu) = 
      \begin{cases}
@@ -102,7 +102,7 @@ where $\vec{g}_t, \vec{g}_t^\bot$ are the gradient at time $t$ and its component
 The above-described protocol is equivalent to consider a vanishing initialization scale for the second layer weights $\vec a_0$ of the network~\ref{2406:eq:main:newtwork_def}. Such assumptions are often considered in different theoretical efforts (see e.g. \cite{abbe2022merged,berthier2023learning,abbe2023sgd}). However, Figure~\ref{2406:fig:cold_start_pd} illustrates that a careful analysis of the initialization scale $\vec a_0$ is needed to paint an exhaustive description of the SGD dynamics. Indeed, considering Correlation loss SGD allows to overcome the limitations highlighted by Theorem~\ref{2406:thm:main:sgd_weak_recovery} for projected SGD. In particular, Correlation loss SGD is able to access the yellow region depicted in Figure~\ref{2406:fig:cold_start_pd} where the time complexity can be reduced again to $\Tilde{T}(n_b) = \sfrac{I(\ell)}{n_b}$ using the optimal learning rate $\Tilde{\delta}^\star(\mu) = \sfrac{\ell}{2} - \mu$ even for $\mu > \sfrac{\ell}{2}$. This is precisely stated in the following theorem. 
 \begin{theorem} [\emph{Correlation Loss SGD} weak recovery]
 \label{2406:thm:main:no_yhat_weak_recovery}
-   Consider the projected SGD algorithm with correlation loss (Equations~\eqref{2406:eq:main:gd_update_weights}, \eqref{2406:eq:main:correlation_loss}), and suppose that Assumptions \ref{2406:assump:poly_growth}-\ref{2406:assump:init} hold. There exists absolute constants $c_\gamma, C_\gamma$ such that if
+   Consider the projected SGD algorithm with correlation loss (Equations~\eqref{2406:eq:main:gd_update_weights}, \eqref{2406:eq:main:correlation_loss}), and suppose that Assumptions~\ref{2406:assump:poly_growth}-\ref{2406:assump:init} hold. There exists absolute constants $c_\gamma, C_\gamma$ such that if
    \[ \gamma \leq c_\gamma \log(d)^{-C_\gamma} \min\left( n_b d^{-\left(\frac\ell2\vee 1\right)}, \sqrt{\frac{n_b}d} \right) \]
     
    Then if $d$ is large enough, we have with probability $1-ce^{-c\log(n)^2}$
@@ -110,7 +110,7 @@ The above-described protocol is equivalent to consider a vanishing initializatio
       t_\eta^+ \leq C \max\left(1, \gamma^{-1}d^{\left(\frac{\ell}2 - 1 \right) \vee 0}\log(d)\right).
    \end{equation}
 \end{theorem}
- The derivation of Theorems \ref{2406:thm:main:sgd_weak_recovery} and \ref{2406:thm:main:no_yhat_weak_recovery} generalizes \cite{arous2021online} which studies the $n_b =1$ case. Informally, the result is obtained by analyzing the stability of the equation for the correlation \(m_t\), along with the requirement on the step-size for the suppression of the effects of the noise across time. However, there is a major difficulty introduced by the large step-size regime: when the gradient updates become larger, the Taylor-inspired bounds used in \cite{arous2021online} become vacuous. We work around this problem by showing that in this regime, there is a \emph{one-step improvement} which jumps directly to meaningful correlation with the target vector. All details can be found in App. \ref{2406:sec:app:proofs}. We provide in Table~\ref{2406:table:weak_recovery} a representative summary of the results in Theorems~(\ref{2406:thm:main:sgd_weak_recovery}.~\ref{2406:thm:main:no_yhat_weak_recovery}) characterizing the time/complexity tradeoffs to achieve weak recovery of general single index target $f^\star$.
+ The derivation of Theorems~\ref{2406:thm:main:sgd_weak_recovery} and \ref{2406:thm:main:no_yhat_weak_recovery} generalizes \cite{arous2021online} which studies the $n_b =1$ case. Informally, the result is obtained by analyzing the stability of the equation for the correlation \(m_t\), along with the requirement on the step-size for the suppression of the effects of the noise across time. However, there is a major difficulty introduced by the large step-size regime: when the gradient updates become larger, the Taylor-inspired bounds used in \cite{arous2021online} become vacuous. We work around this problem by showing that in this regime, there is a \emph{one-step improvement} which jumps directly to meaningful correlation with the target vector. All details can be found in Appendix~\ref{2406:sec:app:proofs}. We provide in Table~\ref{2406:table:weak_recovery} a representative summary of the results in Theorems~(\ref{2406:thm:main:sgd_weak_recovery}.~\ref{2406:thm:main:no_yhat_weak_recovery}) characterizing the time/complexity tradeoffs to achieve weak recovery of general single index target $f^\star$.
  \begin{table*}
 \begin{center}
 \setlength{\tabcolsep}{5pt}

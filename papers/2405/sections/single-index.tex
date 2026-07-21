@@ -15,7 +15,7 @@ We define $\ell^\star_p$ as the smallest integer $k$ such that there exists a po
 
 Our assumptions on the SGD implementation and the target function are as follows:
 \begin{assumption}\label{2405:assump:spherical_corr}
-    Algorithm \ref{2405:algo:optimizer_main_step} is run with single-sample steps ($n_b = 1$), and uses the correlation loss
+    Algorithm~\ref{2405:algo:optimizer_main_step} is run with single-sample steps ($n_b = 1$), and uses the correlation loss
     \[ \cL(y, \hat y) = 1 - y\hat y.\]
     We also consider a spherical version of Algorithm~\ref{2405:algo:optimizer_main_step}, with
     \begin{equation}\label{2405:eq:spherical_sam}
@@ -40,7 +40,7 @@ Our assumptions on the SGD implementation and the target function are as follows
 We are now ready to state our main result.
 \begin{theorem}
 \label{2405:thm:single_index_recovery}
-    Suppose that Assumptions \ref{2405:assump:poly_growth}-\ref{2405:assump:derivatives} hold, and let $\rho = \rho_0 d^{-1}$. Then, under an event of probability $1/2$ on the initialization $(a_0, \vec{w}_0)$, for each $\delta > 0$, there exist constants $\gamma_0(\delta)$ and $C(\delta)$ such that the following holds:
+    Suppose that Assumptions~\ref{2405:assump:poly_growth}-\ref{2405:assump:derivatives} hold, and let $\rho = \rho_0 d^{-1}$. Then, under an event of probability $1/2$ on the initialization $(a_0, \vec{w}_0)$, for each $\delta > 0$, there exist constants $\gamma_0(\delta)$ and $C(\delta)$ such that the following holds:
     \begin{itemize}
         \item If $\ell_p^\star = 1$, choosing $\gamma = \gamma_0(\delta)d^{-1}$, then
 $
@@ -73,11 +73,11 @@ The latter property enables us to show that the dynamics driven by equation \eqr
 \subsection{Discussion}\label{2405:subsec:single_index_discussion}
 
 \paragraph{Significance and necessity of the assumptions --}
-Assumption \ref{2405:assump:spherical_corr} simplifies Algorithm\ref{2405:algo:optimizer_main_step} to a more tractable version. In particular, the normalization step allows us to keep track of only one parameter, the overlap between $\vec{w}_t$ and $\vec{w}^\star$. We expect however Theorem~\ref{2405:thm:single_index_recovery} to hold in the general setting of Algorithm~\ref{2405:algo:optimizer_main_step}.
+Assumption~\ref{2405:assump:spherical_corr} simplifies Algorithm~\ref{2405:algo:optimizer_main_step} to a more tractable version. In particular, the normalization step allows us to keep track of only one parameter, the overlap between $\vec{w}_t$ and $\vec{w}^\star$. We expect however Theorem~\ref{2405:thm:single_index_recovery} to hold in the general setting of Algorithm~\ref{2405:algo:optimizer_main_step}.
 
 Assumption~\ref{2405:assump:derivatives} is a regularity Assumption, ensuring that some quantities of interest in the proof are non-zero. The first part is satisfied by virtually every activation function; the second is more restrictive, but we show that it is satisfied for biased activations:
 \begin{lemma}\label{2405:lem:bias_activation}
-    Let $\sigma$ be a non-polynomial analytic function. Then the second part of Assumption \ref{2405:assump:derivatives} is true for the function $x \mapsto \sigma(x + b)$ for almost every choice of $b$ (according to the Lebesgue measure).
+    Let $\sigma$ be a non-polynomial analytic function. Then the second part of Assumption~\ref{2405:assump:derivatives} is true for the function $x \mapsto \sigma(x + b)$ for almost every choice of $b$ (according to the Lebesgue measure).
 \end{lemma}
 
 Finally, although we state our result as an almost sure event over $\rho_0$, it can be reformulated into an event on the second layer weight $a_0$, in which the randomness comes from the initialization step.

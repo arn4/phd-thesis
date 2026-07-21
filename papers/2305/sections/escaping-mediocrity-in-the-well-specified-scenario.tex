@@ -15,7 +15,7 @@ As previously discussed, one-pass stochastic gradient descent can be seen as a d
 \begin{align}
     \mathcal{R}(w) - \frac{\Delta}{2} = 2(1-m^2)
 \end{align}
-From this expression, it is easy to see that we have two global minima $m=\pm 1$ (corresponding to $w=\pm w_{\star}$) and one global maximum $m=0$ (corresponding to $w\perp w_{\star}$). Indeed, the spherical gradient of the population risk can also be computed explicitly (see Appendix \ref{2305:sec:app:spherical} for details):
+From this expression, it is easy to see that we have two global minima $m=\pm 1$ (corresponding to $w=\pm w_{\star}$) and one global maximum $m=0$ (corresponding to $w\perp w_{\star}$). Indeed, the spherical gradient of the population risk can also be computed explicitly (see Appendix~\ref{2305:sec:app:spherical} for details):
 \begin{align}
    {\rm grad}_{\mathbb{S}^{d-1}}\mathcal{R}(w) = 4m\left(m w-w_{\star}\right)
 \end{align}
@@ -29,12 +29,12 @@ This provides a typical picture of mediocrity in high-dimensions, where the land
 
 \subsection{Exit time from deterministic limit}
 \label{2305:sec:exit:deterministic}
-We now move to the description of the one-pass SGD dynamics. Our key goal in this section is to determine how much data / how long SGD takes in order to find the signal in the high-dimensional limit $d\to\infty$. As we have discussed in Section \ref{2305:sec:odes}, in this limit the sufficient statistics concentrate, with its evolution being described by the following deterministic ODE:
+We now move to the description of the one-pass SGD dynamics. Our key goal in this section is to determine how much data / how long SGD takes in order to find the signal in the high-dimensional limit $d\to\infty$. As we have discussed in Section~\ref{2305:sec:odes}, in this limit the sufficient statistics concentrate, with its evolution being described by the following deterministic ODE:
 \begin{align} \label{2305:eq:spherical-p1-ode}
   \dod{\bar{m}{(t)}}{t} &= \bar{m}{(t)}\left[4(1-6\gamma)(1-\bar{m}^2{(t)})-2\gamma\Delta\right]\quad\text{with}\quad
   \bar{m}(t)\in[-1,1]
 \end{align}
- with initial condition $\bar{m}(0)=\sfrac{1}{d}w_{\star}^{\top}w^{0}$. See Appendix \ref{2305:app:spherical_constraint} for an explicit derivation. Figure \ref{2305:fig:sde_p1} (left) compares the evolution of the risk predicted from solving the high-dimensional ODEs \eqref{2305:eq:spherical-p1-ode} with different finite size ($d=3000$) simulated instances of the problem, showing a good agreement between the theory and the averaged population risk over the different runs. 
+ with initial condition $\bar{m}(0)=\sfrac{1}{d}w_{\star}^{\top}w^{0}$. See Appendix~\ref{2305:app:spherical_constraint} for an explicit derivation. Figure~\ref{2305:fig:sde_p1} (left) compares the evolution of the risk predicted from solving the high-dimensional ODEs \eqref{2305:eq:spherical-p1-ode} with different finite size ($d=3000$) simulated instances of the problem, showing a good agreement between the theory and the averaged population risk over the different runs. 
 
 Given the spherical constraint, the population risk is now simply given by $\risk{(m)} = 2 \left(1-m^2\right)+\sfrac{\Delta}{2}$. From this expression, it is clear that $m=\pm 1$ are global minima and $m=0$ is a global maximum. Therefore, the information theoretically minimum achievable risk is $\mathcal{R}(\pm 1) = \min \mathcal{R}(m) = \sfrac{\Delta}{2}$. 
 
@@ -114,13 +114,13 @@ where \(\dif \b_t\) is a 2-dimensional Wiener process, and \(\vec{\sigma}_M\) an
     \label{2305:fig:sde_p1}
 \end{figure}
 The stochastic corrections are analogous with the ones obtained by \cite{arous2022high}; in Appendix~\ref{2305:app:match_with_GBA} we present an alternative derivation of them, following their approach, and we highlight the fact that our formulae generalize their result.
-Notice that the stochastic correction is proportional to \(\sqrt{\sfrac{\gamma}{d}}\), consistent to a first order correction to the deterministic limit. Similarly to the discussion in Section \ref{2305:sec:exit:deterministic}, the spherical constraint can be imposed by projecting the process in the sphere. This is discussed in detail in App.~\ref{2305:app:spherical_constraint}, and for $p=1$ reads:
+Notice that the stochastic correction is proportional to \(\sqrt{\sfrac{\gamma}{d}}\), consistent to a first order correction to the deterministic limit. Similarly to the discussion in Section~\ref{2305:sec:exit:deterministic}, the spherical constraint can be imposed by projecting the process in the sphere. This is discussed in detail in Appendix~\ref{2305:app:spherical_constraint}, and for $p=1$ reads:
 \begin{equation}
 \label{2305:eq:sde:p1}
 \begin{split}
  \dod{\M_1}{t} &= \left(\Psi_{1}{(\Omega)} - \frac{\M_{1}}{2}\Phi_{11}{(\Omega)}\right)\dif t + \sqrt{\frac{\gamma}{d}}   \left(\vec{\sigma}_\M-\frac{m_1}{2}\vec{\sigma}_\Q\right)\cdot\dif\b_t 
 \end{split}
 \end{equation}
-Figure~\ref{2305:fig:sde_p1} compares different instances of finite size simulations with instances of the SDE \eqref{2305:eq:sde:p1} with the same initial condition. Although the stochastic correction offers a better description of the process at large but finite dimensions, we find that quite surprisingly they have a small impact in the exit time. Hence, the formulas \eqref{2305:eq:exit_time_p1} \& \eqref{2305:eq:exit:quenched} derived in the Section \ref{2305:sec:exit:deterministic} for random initialization provide a good approximation to the exit time. In Appendix ~\ref{2305:app:SDE_exit_time} we discuss how to derive an exit time formulae with the stochastic corrections, both annealed and quenched one. As just shown, the new formulas do not offer any improvements compared to the deterministic ones, nevertheless the stochastic process can describe the dynamics even when the initialization is exactly \(m=0\), that is a fixed point of the ODE.
+Figure~\ref{2305:fig:sde_p1} compares different instances of finite size simulations with instances of the SDE \eqref{2305:eq:sde:p1} with the same initial condition. Although the stochastic correction offers a better description of the process at large but finite dimensions, we find that quite surprisingly they have a small impact in the exit time. Hence, the formulas \eqref{2305:eq:exit_time_p1} \& \eqref{2305:eq:exit:quenched} derived in the Section~\ref{2305:sec:exit:deterministic} for random initialization provide a good approximation to the exit time. In Appendix ~\ref{2305:app:SDE_exit_time} we discuss how to derive an exit time formulae with the stochastic corrections, both annealed and quenched one. As just shown, the new formulas do not offer any improvements compared to the deterministic ones, nevertheless the stochastic process can describe the dynamics even when the initialization is exactly \(m=0\), that is a fixed point of the ODE.
 
 To summarize, in this section we have shown that the deterministic ODEs provides a good approximation for the precise number of samples required for escaping mediocrity in high-dimensions. In other words, stochasticity \emph{does not help} in navigating the flat directions at initialization and correlating with the signal.

@@ -87,7 +87,7 @@ We fix a vector $\vec{v}$ and consider the random process $m_t(\vec{v}) := \lang
   \]
   The bound~\eqref{2405:eq:app:bound_gamma_T} on $T$ implies that we can choose $c(\delta, \alpha)$ small enough so that
   \[ C(\delta)\gamma\sqrt{T} \leq \frac{C(\delta) \sqrt{c(\delta, \alpha)}}{\sqrt{d}} \leq \frac{\alpha\kappa}{2\sqrt{d}}.\]
-  Combining all those inequalities with a union bound, under the event of Eq.~\eqref{2405:eq:app:large_init_event},
+  Combining all those inequalities with a union bound, under the event of Equation~\eqref{2405:eq:app:large_init_event},
   \begin{equation}\label{2405:eq:app:diff_equation_lower}
     \dP\left( m_t(\vec{v}) \geq (1 - \alpha) m_0(\vec{v}) + \gamma\sum_{s=0}^{t-1} \langle \Psi^+(\vec{u}_s), \vec{v} \rangle \quad \forall t < T \wedge \tau_0^-(\vec{v})\right) \geq 1 - \frac\delta3,
   \end{equation}
@@ -97,7 +97,7 @@ We fix a vector $\vec{v}$ and consider the random process $m_t(\vec{v}) := \lang
   \begin{equation}\label{2405:eq:app:diff_equation_upper}
     \dP\left( m_t(\vec{v}) \leq (1 + \alpha) m_0(\vec{v}) + \gamma\sum_{s=0}^{t-1} \langle \Psi(\vec{u}_s), \vec{v} \rangle \quad \forall t < T \wedge \tau_0^-(\vec{v})\right) \geq 1 - \frac\delta3.
   \end{equation}
-  A union bound between the events of Eqs.~\eqref{2405:eq:app:large_init_event}, \eqref{2405:eq:app:diff_equation_lower}, \eqref{2405:eq:app:diff_equation_upper} concludes the proof.
+  A union bound between the events of Equations~\eqref{2405:eq:app:large_init_event}, \eqref{2405:eq:app:diff_equation_lower}, \eqref{2405:eq:app:diff_equation_upper} concludes the proof.
 \end{proof}
 
 \subsection{Low-dimensional sufficient statistics}
@@ -229,9 +229,9 @@ Define $\bar\Pi^\star$ the projection on the eigenspace associated to $\bar\lamb
 
 \subsection{Bounding the hitting times}
 
-It finally remains to show how the bounds of Propositions \ref{2405:prop:app:low_dim_linear} and \ref{2405:prop:app:low_dim_exp} allow us to bound the hitting times $\tau_\eta$. We summarize those in the following proposition:
+It finally remains to show how the bounds of Propositions~\ref{2405:prop:app:low_dim_linear} and \ref{2405:prop:app:low_dim_exp} allow us to bound the hitting times $\tau_\eta$. We summarize those in the following proposition:
 \begin{proposition}\label{2405:prop:app:hitting_times}
-    Let $\vec{u}$ be a process that satisfies Assumptions \ref{2405:assump:app:initialization}-\ref{2405:assump:app:low_dim} for low enough $q$. Then for any $\delta, \epsilon > 0$, there exist constants $\gamma_0(\delta, \epsilon), \eta(\epsilon), \kappa(\delta), K(\delta), C(\delta, \epsilon)$ such that, with probability $1 - \delta$:
+    Let $\vec{u}$ be a process that satisfies Assumptions~\ref{2405:assump:app:initialization}-\ref{2405:assump:app:low_dim} for low enough $q$. Then for any $\delta, \epsilon > 0$, there exist constants $\gamma_0(\delta, \epsilon), \eta(\epsilon), \kappa(\delta), K(\delta), C(\delta, \epsilon)$ such that, with probability $1 - \delta$:
     \begin{enumerate}
         \item if $\psi(\vec{0}) \neq \vec{0}$ and $\langle \vec{u}_0, \psi(\vec{0}) \rangle > 0$, letting $\gamma = \gamma_0 d^{-1}$,
         \[ \frac{\eta(1 - \sqrt{k}\epsilon)}{\gamma \norm{\psi(\vec{0})}} \leq \tau_\eta \leq \frac{\eta(1 + \sqrt{k}\epsilon)}{\gamma \norm{\psi(\vec{0})}} \]
@@ -249,7 +249,7 @@ It finally remains to show how the bounds of Propositions \ref{2405:prop:app:low
 \end{proposition}
 
 \begin{proof}
-    The proof for the linear case is almost immediate. From Proposition \ref{2405:prop:app:low_dim_linear}, with probability $1 - \delta$, we have for all $t \leq T \wedge \tau_\eta$
+    The proof for the linear case is almost immediate. From Proposition~\ref{2405:prop:app:low_dim_linear}, with probability $1 - \delta$, we have for all $t \leq T \wedge \tau_\eta$
     \[ \gamma t \norm{\psi(\vec{0})} - \sqrt{k}\eta\epsilon \leq \norm{\Pi^\star\vec{u}_t} \leq \gamma t \norm{\psi(\vec{0})} + \sqrt{k}\eta\epsilon \]
     Define
     \[ \bar t_\epsilon = \frac{\eta(1 + \sqrt{k}\epsilon)}{\gamma \norm{\psi(\vec{0})}} \quad \text{and} \quad \underline t_\epsilon = \frac{\eta(1 - \sqrt{k}\epsilon)}{\gamma \norm{\psi(\vec{0})}}. \]
@@ -262,7 +262,7 @@ It finally remains to show how the bounds of Propositions \ref{2405:prop:app:low
     to conclude that
     \[ \norm{\frac{\Pi^\star \vec{u}_{\tau_\eta}}{\eta} - \frac{\psi(\vec{0})}{\norm{\psi(\vec{0})}}} \leq 2\sqrt{k}\epsilon. \]
 
-    We now move on to the quadratic case. By Proposition \ref{2405:prop:app:low_dim_exp} and the same reasoning as in the proof of \eqref{2405:eq:app:bad_upper_bound}, we have with probability $1 - \delta$, for all $t \leq T \wedge \tau_\eta$,
+    We now move on to the quadratic case. By Proposition~\ref{2405:prop:app:low_dim_exp} and the same reasoning as in the proof of \eqref{2405:eq:app:bad_upper_bound}, we have with probability $1 - \delta$, for all $t \leq T \wedge \tau_\eta$,
     \[ c' \norm{\Pi^\star \vec{u}_0} e^{\gamma(\bar\lambda - Ck(\epsilon + q))t} \leq \norm{\Pi^\star \vec{u}_t} \leq (1 + \epsilon)\norm{\Pi^\star \vec{u}_0} e^{\gamma(\bar\lambda + k(\epsilon + q))t} \]
     Upon redefining $\delta$, we can assume that the ``good'' event implies that
     \[ \frac{\kappa(\delta)}{\sqrt{d}} \leq \norm{\Pi^\star \vec{u}_0} \leq \frac{K(\delta)}{\sqrt{d}} \]
@@ -281,9 +281,9 @@ It finally remains to show how the bounds of Propositions \ref{2405:prop:app:low
 \section{Proof of the Main Results}
 \label{2405:sec:app:proofs}
 
-\subsection{Proof of Theorem \ref{2405:thm:single_index_recovery}}
+\subsection{Proof of Theorem~\ref{2405:thm:single_index_recovery}}
 
-We formalize here the proof sketch of Theorem \ref{2405:thm:single_index_recovery}.  We track the dynamics of $\vec{w}_t$ through the following sufficient statistic:
+We formalize here the proof sketch of Theorem~\ref{2405:thm:single_index_recovery}.  We track the dynamics of $\vec{w}_t$ through the following sufficient statistic:
 \begin{equation}
   m_t := \langle \vec{w}_t, \vec{w}^\star \rangle.
 \end{equation}
@@ -297,7 +297,7 @@ hence plugging in the expression for $\tilde{\vec{w}}(\rho)$
 \begin{equation}\label{2405:eq:app:phi_expression}
     \Phi(\vec{w}) = a_0 h^\star(\langle \vec{w}^\star, \vec{z} \rangle) \sigma'\left(\langle \vec{w}, \vec{z} \rangle + a_0\rho h^\star(\langle \vec{w}^\star, \vec{z} \rangle) \sigma'(\langle \vec{w}, \vec{z} \rangle) \cdot \norm{\vec{z}}^2\right) \left(\vec{z} - \langle \vec{z}, \vec{w} \rangle \vec{w} \right).
 \end{equation} 
-Assumptions  \ref{2405:assump:poly_growth} and \ref{2405:assump:init} on $\sigma$ and $h^\star$ then directly imply Assumptions \ref{2405:assump:app:initialization} and \ref{2405:assump:app:concentration} in the Appendix. As a result, we only need to study the quantity $\Psi(\vec{w}) = \Ea{\Phi(\vec{w})}$.
+Assumptions~\ref{2405:assump:poly_growth} and \ref{2405:assump:init} on $\sigma$ and $h^\star$ then directly imply Assumptions~\ref{2405:assump:app:initialization} and \ref{2405:assump:app:concentration} in the Appendix. As a result, we only need to study the quantity $\Psi(\vec{w}) = \Ea{\Phi(\vec{w})}$.
 We show the following:
 \begin{lemma}\label{2405:lem:app:psi_low_rank}
     The function $\Psi$ is approximately one-dimensional: there exists a function $\phi$ such that for any $\vec{w} \in \mathbb{S}^{d-1}$, we have
@@ -357,7 +357,7 @@ Define the following quantities:
   where we used that $\vec{z}'$ is a $(d-2)$-dimensional Gaussian variable. This concludes the proof.
 \end{proof}
 
-Lemma \ref{2405:lem:app:psi_low_rank} implies that Assumption~\ref{2405:assump:app:low_dim} holds for $\Psi$ and any choice of $q$, as long as $d$ is large enough.  As a result, the proof of Theorem~\ref{2405:thm:single_index_recovery} hinges on the following facts about $\phi$:
+Lemma~\ref{2405:lem:app:psi_low_rank} implies that Assumption~\ref{2405:assump:app:low_dim} holds for $\Psi$ and any choice of $q$, as long as $d$ is large enough.  As a result, the proof of Theorem~\ref{2405:thm:single_index_recovery} hinges on the following facts about $\phi$:
 \begin{proposition}\label{2405:prop:app:phi_phip_nnz}
   For almost any choice of $\rho_0$ (w.r.t to the Lebesgue measure),
   \begin{itemize}
@@ -366,8 +366,8 @@ Lemma \ref{2405:lem:app:psi_low_rank} implies that Assumption~\ref{2405:assump:a
   \end{itemize}
 \end{proposition}
 
-\begin{proof}[of Theorem \ref{2405:thm:single_index_recovery}]
-    Our goal is to apply Proposition~\ref{2405:prop:app:hitting_times} to the function $\phi$. If $\ell_p^\star = 1$, then $\phi(0) \neq 0$ by the previous lemma, and with a uniform initialization of $\vec{w}^\star$ we have $m_0 \phi(0) > 0$ with probability $1/2$.  Combining this with the $(1- \delta)$ probability event of Proposition \ref{2405:prop:app:hitting_times} for small enough $\epsilon$, with probability $1/2 - \delta$, we have $t_\eta \leq C(\delta) d$.
+\begin{proof}[of Theorem~\ref{2405:thm:single_index_recovery}]
+    Our goal is to apply Proposition~\ref{2405:prop:app:hitting_times} to the function $\phi$. If $\ell_p^\star = 1$, then $\phi(0) \neq 0$ by the previous lemma, and with a uniform initialization of $\vec{w}^\star$ we have $m_0 \phi(0) > 0$ with probability $1/2$.  Combining this with the $(1- \delta)$ probability event of Proposition~\ref{2405:prop:app:hitting_times} for small enough $\epsilon$, with probability $1/2 - \delta$, we have $t_\eta \leq C(\delta) d$.
     We now move to the proof of the case where $\ell_p^\star =2$. In this case, Proposition~\ref{2405:prop:app:hitting_times} implies the desired result as soon as $\phi'(0) > 0$ (which corresponds in the $k = 1$ setting to the only eigenvalue of $d\phi(0)$ being positive). Since the Lebesgue measure is invariant w.r.t multiplication by $\pm 1$, the factor $a_0 \rho_0$ in the definition of $\phi'(0)$ has the same distribution as $\rho_0$, hence we can write $\phi'(0) = a'_0 |\phi'(0)|$ where $a'_0$ is also uniform in $\{-1, 1\}$. The event $\phi'(0) > 0$ therefore also has probability $1/2$, and we conclude as before.
 \end{proof}
 
@@ -375,7 +375,7 @@ Lemma \ref{2405:lem:app:psi_low_rank} implies that Assumption~\ref{2405:assump:a
 
 The main ingredient here is to write $\phi(m) = \phi(m; \rho_0)$ and differentiate w.r.t $\rho_0$. For simplicity, we take $a_0 = 1$ in the definition of $\phi$. We show the following:
 \begin{lemma}\label{2405:lem:app:phi_diff}
-  Under Assumption \ref{2405:assump:derivatives}, the function $\phi(m; \rho_0)$ is analytic in $\rho_0$. Further, we have
+  Under Assumption~\ref{2405:assump:derivatives}, the function $\phi(m; \rho_0)$ is analytic in $\rho_0$. Further, we have
   \begin{equation}
     \left.\frac{\partial^k \phi(m; \rho_0)}{\partial \rho_0^k}\right|_{\rho_0 = 0} = \Ea{h^\star(x^\star)^{k+1} x^\bot \sigma^{(k+1)}(x) \sigma'(x)^k}
   \end{equation}
@@ -404,7 +404,7 @@ Then, by Proposition 11.37 from \cite{odonnell2014analysis}, and using $x^\bot =
     \end{aligned}
   $}
 \]
-This allows us to show Proposition \ref{2405:prop:app:phi_phip_nnz}:
+This allows us to show Proposition~\ref{2405:prop:app:phi_phip_nnz}:
 \begin{proof}
   Assume first that $\ell_p^\star = 1$. Then $\phi(0; \rho_0)$ is an analytic function of $\rho_0$ with
   \[ \left.\frac{\partial^k \phi(0; \rho_0)}{\partial \rho_0^k}\right|_{\rho_0 = 0} = u_{0}^{(k)}v_{0}^{(k)}. \]
@@ -412,7 +412,7 @@ This allows us to show Proposition \ref{2405:prop:app:phi_phip_nnz}:
   \[ \left.\frac{\partial^k \phi'(0; \rho_0)}{\partial \rho_0^k}\right|_{\rho_0 = 0} = u_{1}^{(k)}v_{1}^{(k)}. \]
 \end{proof}
 
-\subsection{Proof of Theorem \ref{2405:thm:multi_index_recovery}}
+\subsection{Proof of Theorem~\ref{2405:thm:multi_index_recovery}}
 
 The proof of Theorem~\ref{2405:thm:multi_index_recovery} follows in the same way as the one of Theorem~\ref{2405:thm:single_index_recovery}. Recall the definition of $\Phi$ in eq.~\eqref{2405:eq:app:phi_expression}, and define
 \begin{align}
@@ -492,7 +492,7 @@ We are now ready to prove Theorem~\ref{2405:thm:multi_index_recovery}.
 \begin{proof}[of Theorem~\ref{2405:thm:multi_index_recovery}]
     We begin with the case $\ell_p^\star = 1$. Fix a $p = p(\delta)$ to be chosen later, and let $\psi_i(\vec{p}) = \psi(\vec{p}; a_{0, i}, \rho_{0, i})$ for $i \in [p]$. With probability $1/2$ on $\vec{w}_{0, i}$, we have $\langle \vec{w}_{0, i}, \psi_i(\vec{0}) \rangle$; let $p_+$ be the number of such neurons. For $p = O(\log(1/\delta))$, we have $p_+ > \max(p/4, k)$ with probability at least $1 - \frac\delta2$.
 
-    In particular, with probability one, the set $\{ \psi_i(\vec{0}) \}_{i\in [p_+]}$ spans $U^\star$. Let $\epsilon > 0$ to be chosen later, $\eta_i(\epsilon)$ adapted to $\psi_i$ in Proposition~\ref{2405:prop:app:hitting_times}, $\tau_i$ the hitting time for $\eta_i$ in the $i$-th neuron. Consider the time $\tau = \min_i \tau_i$; applying Proposition \ref{2405:prop:app:hitting_times} to $\delta' = \delta/p$, we have
+    In particular, with probability one, the set $\{ \psi_i(\vec{0}) \}_{i\in [p_+]}$ spans $U^\star$. Let $\epsilon > 0$ to be chosen later, $\eta_i(\epsilon)$ adapted to $\psi_i$ in Proposition~\ref{2405:prop:app:hitting_times}, $\tau_i$ the hitting time for $\eta_i$ in the $i$-th neuron. Consider the time $\tau = \min_i \tau_i$; applying Proposition~\ref{2405:prop:app:hitting_times} to $\delta' = \delta/p$, we have
     \[ \tau \leq \max_{i \in [p_+]} \frac{\eta_i(1 + \sqrt{k}\epsilon)}{\gamma_0 \norm{\psi_i(\vec{0})}} d \leq C(\delta) d. \]
     However, we also have $\tau > c(\delta) \gamma^{-1}$, and hence from Proposition~\ref{2405:prop:app:low_dim_linear}, for any $i \in [p_+]$
     \[ \norm{\vec{w}_{t, i}} \geq \gamma \tau \norm{\psi_i(\vec{0})} - \sqrt{k}\eta_i\epsilon \geq c'(\delta) \]
@@ -517,7 +517,7 @@ We are now ready to prove Theorem~\ref{2405:thm:multi_index_recovery}.
 
 \subsection{Proof of Lemma~\ref{2405:lem:bias_activation}}
 
-Let $\sigma$ be an analytic function which is not a polynomial. Then for any $k \geq 0$, the function $\sigma^{(k)}$ is also analytic and non-identically zero, and hence so is the function $f_n = \sigma^{(k)} \cdot (\sigma')^k$. Lemma \ref{2405:lem:bias_activation} thus ensues from the following result:
+Let $\sigma$ be an analytic function which is not a polynomial. Then for any $k \geq 0$, the function $\sigma^{(k)}$ is also analytic and non-identically zero, and hence so is the function $f_n = \sigma^{(k)} \cdot (\sigma')^k$. Lemma~\ref{2405:lem:bias_activation} thus ensues from the following result:
 \begin{lemma}
   Let $f$ be an analytic and non-identically zero function. Then
   \[ \Ea{f(x+b)} \neq 0 \quad \text{and} \quad \Ea{x f(x+b)} \neq 0 \]

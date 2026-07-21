@@ -47,7 +47,7 @@ We measure the speed-up of tied networks with respect to untied networks, as mea
 where \(\tau^\mathrm{weak}_{\eta,\mathrm{untied}}\) is given by Definition~\ref{2506:def:weak-recovery} where \(m\) is replaced by \(m_\mathrm{untied}\); the dependence of \(\mathrm{gain}\) on \(\eta\) is subleading, and we will neglect it in the following. 
 
 \begin{theorem} \label{2506:thm:sequencelength-gain}
-    Let $C_{\sie} \in \dR^{L^\sie}$ be the first non-zero tensor in the Hermite expansion of $g$ (see Appendix \ref{2506:app:hermite-polynomials}). Then the gain satisfies with high probability
+    Let $C_{\sie} \in \dR^{L^\sie}$ be the first non-zero tensor in the Hermite expansion of $g$ (see Appendix~\ref{2506:app:hermite-polynomials}). Then the gain satisfies with high probability
     \[ \mathrm{gain} \gtrsim \left(\frac{C_{\sie} \times (\mathbf{1}, \dots, \mathbf{1})}{\norm{C_\sie}_{\mathrm{op}}}\right)^2 \cdot \begin{cases}
         L & \text{if } \sie = 1 \\
         1 & \text{otherwise}
@@ -62,7 +62,7 @@ By definition of the operator norm, we have
 \[ C_{\sie} \times (\mathbf{1}, \dots, \mathbf{1}) \leq \norm{C_\sie}_{\mathrm{op}} L^{\sie/2},
 \quad\text{and hence}\quad
 0 \leq \mathrm{gain} \lesssim L^{\sie \vee 2}.\]
-Since the untied network has \(L\) times the number of parameters compared to the tied one, a naive parameter counting argument would yield a \(\mathrm{gain}=L^{(SIE-1) \vee 1}\) expected gain. Counter-intuitively, the actual gain of using a tied network can either exceed or fall short of this naive value, depending on the function $g$. In pathological cases (see Appendix \ref{2506:app:further-sequence-length}), the tied network can even either fail to learn the target, or do so slower than its untied counterpart.
+Since the untied network has \(L\) times the number of parameters compared to the tied one, a naive parameter counting argument would yield a \(\mathrm{gain}=L^{(SIE-1) \vee 1}\) expected gain. Counter-intuitively, the actual gain of using a tied network can either exceed or fall short of this naive value, depending on the function $g$. In pathological cases (see Appendix~\ref{2506:app:further-sequence-length}), the tied network can even either fail to learn the target, or do so slower than its untied counterpart.
 
 \paragraph{Example for ${\rm SIE}=2$ ---}
 Let's assume to have a target function \(g(\vec{z}_\star)= \sum_{i=1}^L \mathrm{He}_2(z_{\star,i})\). In this case, the SIE is \(2\) and the tensor \(C_2\) is simply the identity matrix \(I_L\). The gain is by

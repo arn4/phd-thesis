@@ -43,7 +43,7 @@ This assumption can be easily checked on either the simulations or their determi
 \begin{assump}\label{2302:assump:activation}
     The student activation function $\sigma$ is twice differentiable, with $\lVert \sigma^{(i)} \rVert_\infty \leq K$ for $i = 0, 1, 2$. The teacher activation $\sigma^\star$ is also upper bounded by $K$.
 \end{assump}
-Note that in some plots, we will sometimes use the function $\sigma(x) = x^2$, which does not satisfy this assumption. However, Assumption \ref{2302:assump:boundedness} ensures that we stay in a bounded subset of $\mathbb R^d$, hence we can replace $\sigma$ by $\sigma \wedge K$ for $K$ sufficiently large.
+Note that in some plots, we will sometimes use the function $\sigma(x) = x^2$, which does not satisfy this assumption. However, Assumption~\ref{2302:assump:boundedness} ensures that we stay in a bounded subset of $\mathbb R^d$, hence we can replace $\sigma$ by $\sigma \wedge K$ for $K$ sufficiently large.
 
 \paragraph{Simplifying assumptions: } Since most of the interesting phenomenology happens at the hidden-layer, to lighten the discussion in the following we will focus on the case in which $a_{r}^{\star} = 1$ and $a^{\i}_{i}=1$ are fixed throughout learning and $p$ is divisible by $k$. All of the discussion that follows can be readily generalized to the case in which $\vec{a}^{\i}$ is learned and $p\geq k$ generically. We shall also assume that the teacher matrix $\mat{W}^\star$ is full rank; this can be avoided with a more careful definition of projections, but complicates the analysis. 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

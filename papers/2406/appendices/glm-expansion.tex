@@ -4,7 +4,7 @@ Finally, the training algorithm is \emph{projected SGD}, given by Equation~\eqre
 We will also assume that \(a=a_\star=1\) throughout all the dynamics.
 
 Let us start by noticing that the set of sufficient statistics reduces to just one single parameter \(m=\langle\vec w,\vec w_\star\rangle\).
-Retracing backward all the steps of the Sections \ref{2406:sec:app:matching_architectures}~and~\ref{2406:sec:app:derivation_of_lb_equations} up to \eqref{2406:eq:app:generallowerbound}, we can obtain the lower bound for the update of \(m\). As examples the explicit equation for \(\sigma = \text{He}_2\) is
+Retracing backward all the steps of the Sections~\ref{2406:sec:app:matching_architectures}~and~\ref{2406:sec:app:derivation_of_lb_equations} up to \eqref{2406:eq:app:generallowerbound}, we can obtain the lower bound for the update of \(m\). As examples the explicit equation for \(\sigma = \text{He}_2\) is
 \[\begin{split}
     m_{t+1}-m_t \ge& \gamma_0 d^{-\delta}\Bigg[4m_t - 4m_t^3 - d^{-\delta}\gamma_0\mathbf{1}_{\{\mu\neq0\}}\left(8m_t-8m_t^3\right) +\\ 
         &+d^{-\delta+1-\mu}\frac{\gamma_0}{n_0}\left(24m_t-24m_t^3+2m_t^2\Delta\right)\Bigg],
@@ -78,7 +78,7 @@ Plugging in \(m_0 = \sfrac{1}{\sqrt{d}}\)  we finally get \(\delta \ge \sfrac{\e
 \end{equation}
 This result matches \cite{arous2021online}.
 \subsection{Extension to \texorpdfstring{$p>1$}{p>1}}
-The extension to general two-layer network student functions ($p>1$), while keeping always the target fixed to be a single-index one, can be readily done by performing an analysis similar to the above. The considerations on the weak recovery trade-offs done in the previous sections are not changed upon re-scaling the learning rate with the hidden layer size $p=O(1)$, i.e. $\sfrac{\gamma_{\rm 2LNN}}{p} = \gamma_{\rm GLM}$. Therefore, the scaling laws detailed in the phase diagram (Fig.~\ref{2406:fig:cold_start_pd}) are not modified, and only prefactors, i.e. quantity not scaling with the input dimension, change with respect to the $p=1$ case. We illustrate this phenomenon numerically in Fig.~\ref{2406:fig:app:k1p4singleindex}. We leave the detailed theoretical analysis of the $p>1$ case for future work, with particular attention to the limit $p \to \infty$ which we believe is an interesting avenue of future research.
+The extension to general two-layer network student functions ($p>1$), while keeping always the target fixed to be a single-index one, can be readily done by performing an analysis similar to the above. The considerations on the weak recovery trade-offs done in the previous sections are not changed upon re-scaling the learning rate with the hidden layer size $p=O(1)$, i.e. $\sfrac{\gamma_{\rm 2LNN}}{p} = \gamma_{\rm GLM}$. Therefore, the scaling laws detailed in the phase diagram (Figure~\ref{2406:fig:cold_start_pd}) are not modified, and only prefactors, i.e. quantity not scaling with the input dimension, change with respect to the $p=1$ case. We illustrate this phenomenon numerically in Figure~\ref{2406:fig:app:k1p4singleindex}. We leave the detailed theoretical analysis of the $p>1$ case for future work, with particular attention to the limit $p \to \infty$ which we believe is an interesting avenue of future research.
 
 
 \begin{figure}

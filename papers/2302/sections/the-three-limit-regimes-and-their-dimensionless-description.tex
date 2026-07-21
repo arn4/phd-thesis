@@ -1,7 +1,7 @@
 \section[The three limit regimes]{The three limit regimes and their dimensionless description}
 
 \label{2302:sec:regimes}
-As discussed before, the optimization problem introduced in Sec.~\ref{2302:sec:setting} defines a non-convex optimization problem. Moreover, modern neural networks operate in a regime where both the data dimension $d$ and the number of parameters in the network $\hids$ are large. Therefore, characterizing the evolution of the weights $\Theta^{\i}\in\mathbb{R}^{\hids(d+1)}$ amounts to studying $\hids(d+1)$ non-linear, coupled, non-convex stochastic process - a challenging problem even for numerical methods. As motivated in the introduction Sec.~\ref{2302:sec:intro}, in this section we derive a \emph{tractable}, \emph{low-dimensional} description for SGD in different regimes of practical interest. 
+As discussed before, the optimization problem introduced in Section~\ref{2302:sec:setting} defines a non-convex optimization problem. Moreover, modern neural networks operate in a regime where both the data dimension $d$ and the number of parameters in the network $\hids$ are large. Therefore, characterizing the evolution of the weights $\Theta^{\i}\in\mathbb{R}^{\hids(d+1)}$ amounts to studying $\hids(d+1)$ non-linear, coupled, non-convex stochastic process - a challenging problem even for numerical methods. As motivated in the introduction Section~\ref{2302:sec:intro}, in this section we derive a \emph{tractable}, \emph{low-dimensional} description for SGD in different regimes of practical interest. 
 
 \subsection{Main concepts}
 
@@ -52,9 +52,9 @@ where the right-hand side functions are defined by the following equations.
 \Psi^{(\mathrm{Var})}_{ij}(\Omega) &= \mathbb E_{(\vec{\lambda},\vec{\lambda}^{\star})\sim\mathcal{N}(\vec{0}_{\hids+\hidt}, \Omega)} \left[\sigma'(\lambda_i)\sigma'(\lambda_j) {\mathcal{E}}^2 \right]
 \end{split}
 \end{equation}
-As will be discussed later in Section \ref{2302:sec:classic}, the superscript notation for the right-hand side is suggestive of their interpretation. This convergence was made rigorous by \cite{goldt2019dynamics} and \cite{veiga2022phase}, who showed the following non-asymptotic result:
+As will be discussed later in Section~\ref{2302:sec:classic}, the superscript notation for the right-hand side is suggestive of their interpretation. This convergence was made rigorous by \cite{goldt2019dynamics} and \cite{veiga2022phase}, who showed the following non-asymptotic result:
 
-\begin{theorem} [\cite{veiga2022phase}] \label{2302:th:conv_eps} We place ourselves under Assumptions \ref{2302:assump:boundedness}-\ref{2302:assump:activation}. Let $\Omega^\i$ be the random process of Equation~\eqref{2302:eq:def:overlap_process}, and $\Omega(t)$ the solution to the ODE \eqref{2302:eq:def:ss_ode} with starting point $\Omega(0) = \Omega^0$. Define the step-size $\delta t = \sfrac{\gamma}{pd}$, and assume that $\gamma / p = O(1)$.
+\begin{theorem} [\cite{veiga2022phase}] \label{2302:th:conv_eps} We place ourselves under Assumptions~\ref{2302:assump:boundedness}-\ref{2302:assump:activation}. Let $\Omega^\i$ be the random process of Equation~\eqref{2302:eq:def:overlap_process}, and $\Omega(t)$ the solution to the ODE \eqref{2302:eq:def:ss_ode} with starting point $\Omega(0) = \Omega^0$. Define the step-size $\delta t = \sfrac{\gamma}{pd}$, and assume that $\gamma / p = O(1)$.
 Then there exists a constant $C > 0$ such that for any $\i \geq 0$,
 \begin{equation}
     \lVert \Omega^{\nu} - \Omega(\nu\delta t) \rVert_\infty \leq e^{C\i \delta t} \sqrt{\frac{\gamma}{pd}}
@@ -67,7 +67,7 @@ Then there exists a constant $C > 0$ such that for any $\i \geq 0$,
 \frac{\dd\mat{M}}{\dd t} = \Psi^{(\mathrm{M})}(\Omega), && 
 \frac{\dd\mat{Q}}{\dd t} =  \Psi^{(\mathrm{GF})}(\Omega)
 \end{align}
-Our key observation is that the deterministic description above is valid beyond the high-dimensional limit $d\to\infty$ on which previous works \citep{saad1995line,goldt2019dynamics,veiga2022phase} have focused. Indeed, Theorem~\ref{2302:th:conv_eps} is non-asymptotic in $(d,\hids,\gamma)$, and can thus be applied in any setting where $\sfrac{\gamma}{pd} \ll 1$. This is leveraged to provide a tractable, low-dimensional description of SGD in different scenarios of interest which we summarize in Fig.~\ref{2302:fig:triangle}. 
+Our key observation is that the deterministic description above is valid beyond the high-dimensional limit $d\to\infty$ on which previous works \citep{saad1995line,goldt2019dynamics,veiga2022phase} have focused. Indeed, Theorem~\ref{2302:th:conv_eps} is non-asymptotic in $(d,\hids,\gamma)$, and can thus be applied in any setting where $\sfrac{\gamma}{pd} \ll 1$. This is leveraged to provide a tractable, low-dimensional description of SGD in different scenarios of interest which we summarize in Figure~\ref{2302:fig:triangle}. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{The classical regime}
@@ -133,7 +133,7 @@ Similar to \eqref{2302:eq:def:pre_activations}, we can then define the orthogona
     \label{2302:eq:def:Qorth}
     Q^\bot &= \sfrac{1}{d} W^\bot (W^\bot)^\top = Q - MP^{-1}M^\top  .
 \end{align}
-Since we are in a regime where $\gamma / p \ll 1$, the ODE approximation of SGD corresponds to equations \eqref{2302:eq:def:gf_ode}. From there, with a little algebra (see Appendix \ref{2302:app:mean_field_orthogonal_derivation}), we can derive the corresponding equations for $Q^\bot$:
+Since we are in a regime where $\gamma / p \ll 1$, the ODE approximation of SGD corresponds to equations \eqref{2302:eq:def:gf_ode}. From there, with a little algebra (see Appendix~\ref{2302:app:mean_field_orthogonal_derivation}), we can derive the corresponding equations for $Q^\bot$:
 \begin{equation} \label{2302:eq:def:mf_orthogonal}
     \frac{dQ_{ij}^\bot}{dt} =  \mathbb E_{(\vec{\lambda}^{\bot},\vec{\lambda})}\left[\left( \sigma'(\lambda_i)\lambda_j^\bot + \sigma'(\lambda_j)\lambda_i^\bot \right) \mathcal{E} \right] \coloneqq \Psi^\bot_{ij}(\Omega).
 \end{equation}
@@ -171,10 +171,10 @@ The consistency of this approximation is given by the following theorem:
  Under Assumptions~\ref{2302:assump:activation}~and~\ref{2302:assump:init}, let $\mat{\Omega}(t)$ and $\tilde{\mat{\Theta}}(t)$ denote the solutions of the ODES \eqref{2302:eq:def:gf_ode} and \eqref{2302:eq:def:mf_ode}, respectively. Then with probability at least $1 - e^{-z^2}$ on the initialization:
     \[ \sup_{t \in [0, T]} \left| \mathcal R(\mat{\Omega}(t)) - \mathcal R(\tilde{\mat{\Theta}}(t)) \right| \leq {Ce^{CT} \left(\sqrt{\log(pT)} + z \right)}/{\sqrt{p}} .\]
 \end{theorem}
-The proof is given in Appendix \ref{2302:sec:app:mf}. It uses key elements from the mean-field study of \cite{mei2019mean}. Indeed, both the solutions of \eqref{2302:eq:def:gf_ode} \& \eqref{2302:eq:def:mf_ode} can be viewed as the ``particle dynamics'' approximations (see e.g. \cite{chertock2017practical}) of two mean-field PDEs $\mu_t, \tilde\mu_t$ on the space of network weights $\vec{w} \in \mathbb{R}^{d}$ and the space or reduced parameters $(\vec{m}, q) \in \mathbb{R}^{k+1}$, respectively. In turn, the invariance property of $\mu_0$ extends to $\hat\mu_t$ for every $t \geq 0$, which implies that $\mathcal R(\mu_t) = \mathcal R(\tilde\mu_t)$. 
+The proof is given in Appendix~\ref{2302:sec:app:mf}. It uses key elements from the mean-field study of \cite{mei2019mean}. Indeed, both the solutions of \eqref{2302:eq:def:gf_ode} \& \eqref{2302:eq:def:mf_ode} can be viewed as the ``particle dynamics'' approximations (see e.g. \cite{chertock2017practical}) of two mean-field PDEs $\mu_t, \tilde\mu_t$ on the space of network weights $\vec{w} \in \mathbb{R}^{d}$ and the space or reduced parameters $(\vec{m}, q) \in \mathbb{R}^{k+1}$, respectively. In turn, the invariance property of $\mu_0$ extends to $\hat\mu_t$ for every $t \geq 0$, which implies that $\mathcal R(\mu_t) = \mathcal R(\tilde\mu_t)$. 
 
 \begin{remark}
-    We do not imply in any way, shape or form that Equation \eqref{2302:eq:mf_approx_lowd} represents the actual distribution of the $\vec{w}_i^\bot$, or that (as in \eqref{2302:eq:def:overlaps_mf}) then entries of $Q^\bot$ are independent. Rather, it is the structure of the update equations that allows for this approximation to hold.
+    We do not imply in any way, shape or form that Equation~\eqref{2302:eq:mf_approx_lowd} represents the actual distribution of the $\vec{w}_i^\bot$, or that (as in \eqref{2302:eq:def:overlaps_mf}) then entries of $Q^\bot$ are independent. Rather, it is the structure of the update equations that allows for this approximation to hold.
 \end{remark}
 \begin{figure}
     \centering
@@ -207,23 +207,23 @@ We thus define the high-dimensional equivalent of \eqref{2302:eq:def:mf_ode}:
 \end{equation}
 The same propagation of perturbations arguments discussed in Appendix B of \cite{veiga2022phase}, and the Lipschitz property of the risk, easily imply the following theorem:
 \begin{theorem}
-    Under Assumptions \ref{2302:assump:activation} \& \ref{2302:assump:init}, let $\Omega(t)$ and $\bar{\Theta}(t)$ denote the solutions of the ODES \eqref{2302:eq:def:gf_ode} and \eqref{2302:eq:def:ode_mf_highdim}, respectively. Then with probability at least $1 - e^{-z^2}$ on the initialization:
+    Under Assumptions~\ref{2302:assump:activation} \& \ref{2302:assump:init}, let $\Omega(t)$ and $\bar{\Theta}(t)$ denote the solutions of the ODES \eqref{2302:eq:def:gf_ode} and \eqref{2302:eq:def:ode_mf_highdim}, respectively. Then with probability at least $1 - e^{-z^2}$ on the initialization:
     \[ \sup_{t \in [0, T]} \left| \mathcal R(\Omega(t)) - \mathcal R(\bar{\Theta}(t)) \right| \leq Ce^{CT}\left(\frac{\sqrt{\log(pT)} + z}{\sqrt{p}} + \frac1{\sqrt{d}} \right) \]
 \end{theorem}
-This approximation eliminates the need to compute expectations in \eqref{2302:eq:def:mf_ode}. We now argue that this phenomenon is not only a consequence of rotation invariance, but also a simple concentration result. Indeed, irrespective of Assumption \ref{2302:assump:init}, we show the following result:
+This approximation eliminates the need to compute expectations in \eqref{2302:eq:def:mf_ode}. We now argue that this phenomenon is not only a consequence of rotation invariance, but also a simple concentration result. Indeed, irrespective of Assumption~\ref{2302:assump:init}, we show the following result:
 \begin{equation}\label{2302:eq:mf:concentration}
     \left|\mathbb E_{\vec{\lambda^\star}, \vec{\lambda^\bot} \sim \mathcal{N}(\vec{0}, \Omega)}\left[\sigma(\lambda_i)\lambda_i^\bot \mathcal E \right] - \mathbb E_{\vec{\lambda^\star}, \vec{\lambda^\bot} \sim \mathcal{N}(\vec{0}, \bar\Omega)}\left[\sigma(\lambda_i)\lambda_i^\bot \mathcal E \right]\right| \leq c \sqrt{Q^\bot_{ii} \cdot \frac{\lVert Q^\bot \rVert_{\mathrm{op}}}{p}},
 \end{equation}
 For a random sub-gaussian initialization, classical matrix concentration arguments (see \cite{vershynin2018high}, Theorem 4.4.5) imply
 \[ \lVert Q^\bot \rVert_{\mathrm{op}} = O\left(1 + \frac pd \right) \]
-and common sense arguments (the presence of an attracting force towards $Q^\bot = 0$) indicates that this quantity stays within the same order of magnitude. On the other hand, by Assumption \ref{2302:assump:boundedness}, the $Q_{ii}$ (and hence the $Q_{ii}^\bot$) remain bounded by an absolute constant during the trajectory. We therefore expect, using standard results from ODE perturbation, that
+and common sense arguments (the presence of an attracting force towards $Q^\bot = 0$) indicates that this quantity stays within the same order of magnitude. On the other hand, by Assumption~\ref{2302:assump:boundedness}, the $Q_{ii}$ (and hence the $Q_{ii}^\bot$) remain bounded by an absolute constant during the trajectory. We therefore expect, using standard results from ODE perturbation, that
 
 \begin{equation}
     \lVert \bar\Omega(t) - \tilde\Omega(t) \rVert_\infty \leq e^{Ct}\left(\sqrt{\frac1p}+\sqrt{\frac1d}\right).
 \end{equation}
 Contrary to the low-dimensional regime and the theorem above, this derivation does not require any rotation invariance of the $\vec{w}_i^\bot$; simply, the averaging properties of $\Psi^{(M)}$ are enough to show direct concentration properties on the dynamics.
 
-It is instructive to look at a concrete example where the phenomenology discussed above becomes explicit. Perhaps the simplest one  is given by the square activation $\sigma(x)=x^2$, for which the expectation in Equation~\eqref{2302:eq:def:Psi} can be explicitly expressed in terms of polynomials of the covariance matrices $(\mat{Q}^{\nu},\mat{M}^{\nu}, \mat{P})$ (see Appendix \ref{2302:sec:app:squared} for the derivation):
+It is instructive to look at a concrete example where the phenomenology discussed above becomes explicit. Perhaps the simplest one  is given by the square activation $\sigma(x)=x^2$, for which the expectation in Equation~\eqref{2302:eq:def:Psi} can be explicitly expressed in terms of polynomials of the covariance matrices $(\mat{Q}^{\nu},\mat{M}^{\nu}, \mat{P})$ (see Appendix~\ref{2302:sec:app:squared} for the derivation):
 \begin{equation}
 \label{2302:eq:squared_ODE}
 \begin{split}
