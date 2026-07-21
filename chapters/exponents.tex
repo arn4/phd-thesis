@@ -156,7 +156,7 @@ Capturing the search phase therefore demands tools that go beyond the determinis
     \end{equation}
 \end{theorem}
 
-The concept of information exponent is actually more general than one presented here. Every problem where the loss function depends only on the scalar product \(\langle \vec{w}, \vec{x}\rangle\), and it is optimized by one-pass spherical SGD, has a well-defined information exponent that controls the sample complexity of learning. This includes, for example, online PCA or spiked matrix/tensor estimation, or Gaussian mixture clustering, as in the seminal work of \citet{arous2021online}.
+The concept of information exponent is actually more general than one presented here. Every problem where the loss function depends only on the scalar product \(\langle \vec{w}, \vec{x}\rangle\), and it is optimized by one-pass spherical SGD, has a well-defined information exponent that controls the sample complexity of learning. This includes, for example, online PCA, spiked matrix/tensor estimation, or Gaussian mixture clustering, as in the seminal work of \citet{arous2021online}.
 
 Chapter~\ref{chap:paper-2406} extends the exponent to the single-index case where \(n_b\) and \(\gamma\) scale with \(d\).
 The chapter reveals a sharp threshold at \(n_b \sim d^{\ell/2}\): below it, larger mini-batches reduce the number of gradient steps proportionally while keeping the total sample complexity \(N = n_b T = \mathcal{O}(d^{\ell-1})\) unchanged, offering a practical speed-up through parallelism; above it, the gradient signal is dominated by self-interaction terms and standard SGD fails to achieve weak recovery altogether.
