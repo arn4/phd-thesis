@@ -275,7 +275,7 @@ It finally remains to show how the bounds of Propositions \ref{2405:prop:app:low
     This condition can again be ensured by decreasing $\gamma_0(\delta, \epsilon)$ as needed. Finally, let 
     \[ \beta = \frac{\tilde\lambda}{\bar\lambda - Ck(\epsilon+q)}, \]
     where $\tilde \lambda$ is the one of Proposition~\ref{2405:prop:app:low_dim_exp}. Then $\beta < 1$ and we have at $t = \tau_\eta$
-    \[ \norm{\vec{u}_{\tau_\eta} - \bar\Pi^\star \vec{u}_{\tau_\eta}} \leq \frac{K}{\sqrt{d}} \exp\left(\beta \log\left(\frac{\eta\sqrt{d}}{\kappa c'}\right)\right) \leq C''(\delta, \epsilon) d^{\frac{1 - \beta}{2}}. \]
+    \[ \norm{\Pi^\star \vec{u}_{\tau_\eta} - \bar\Pi^\star \vec{u}_{\tau_\eta}} \leq \frac{K}{\sqrt{d}} \exp\left(\beta \log\left(\frac{\eta\sqrt{d}}{\kappa c'}\right)\right) \leq C''(\delta, \epsilon) d^{-\frac{1 - \beta}{2}}. \]
 \end{proof}
 
 \section{Proof of the Main Results}
@@ -368,7 +368,7 @@ Lemma \ref{2405:lem:app:psi_low_rank} implies that Assumption~\ref{2405:assump:a
 
 \begin{proof}[of Theorem \ref{2405:thm:single_index_recovery}]
     Our goal is to apply Proposition~\ref{2405:prop:app:hitting_times} to the function $\phi$. If $\ell_p^\star = 1$, then $\phi(0) \neq 0$ by the previous lemma, and with a uniform initialization of $\vec{w}^\star$ we have $m_0 \phi(0) > 0$ with probability $1/2$.  Combining this with the $(1- \delta)$ probability event of Proposition \ref{2405:prop:app:hitting_times} for small enough $\epsilon$, with probability $1 - \delta$, we have $t_\eta \leq C(\delta) d$ with probability $1/2 - \delta$.
-    We now move to the proof of the case where $\ell_p^\star =1$. In this case, Proposition~\ref{2405:prop:app:hitting_times} implies the desired result as soon as $\phi'(0) > 0$ (which corresponds in the $k = 1$ setting to the only eigenvalue of $d\phi(0)$ being positive). Since the Lebesgue measure is invariant w.r.t multiplication by $\pm 1$, the factor $a_0 \rho_0$ in the definition of $\phi'(0)$ has the same distribution as $\rho_0$, hence we can write $\phi'(0) = a'_0 |\phi'(0)|$ where $a'_0$ is also uniform in $\{-1, 1\}$. The event $\phi'(0) > 0$ therefore also has probability $1/2$, and we conclude as before.
+    We now move to the proof of the case where $\ell_p^\star =2$. In this case, Proposition~\ref{2405:prop:app:hitting_times} implies the desired result as soon as $\phi'(0) > 0$ (which corresponds in the $k = 1$ setting to the only eigenvalue of $d\phi(0)$ being positive). Since the Lebesgue measure is invariant w.r.t multiplication by $\pm 1$, the factor $a_0 \rho_0$ in the definition of $\phi'(0)$ has the same distribution as $\rho_0$, hence we can write $\phi'(0) = a'_0 |\phi'(0)|$ where $a'_0$ is also uniform in $\{-1, 1\}$. The event $\phi'(0) > 0$ therefore also has probability $1/2$, and we conclude as before.
 \end{proof}
 
 \subsubsection*{Analysis of $\phi$: proof of Proposition~\ref{2405:prop:app:phi_phip_nnz}}
@@ -598,13 +598,13 @@ Using this property on every monomial in $H_k(\langle \vec{v}, \vec{x} \rangle)$
 \begin{equation}
   \Ea{f(h^\star(x)) H_k(\langle \vec{v}, \vec{x} \rangle)} = \frac{f(1)+f(-1)}{2}\Ea{H_k(\langle \vec{v}, \vec{x} \rangle)}
 \end{equation}
-But the latter is zero when $k\geq 1$ by orthogonality of the Hermite polynomials. This shows that $\ell_{\vec{v}}^\star \geq m$ for all $\vec{v}\in\R^k$, and therefore $m \leq \ell^\star \leq \ell$.
+But the latter is zero when $k\geq 1$ by orthogonality of the Hermite polynomials. This shows that $\ell_{\vec{v}}^\star \geq m$ for all $\vec{v}\in\R^m$, and therefore $m \leq \ell^\star \leq \ell$.
 
 For the upper bound, let $\vec{v} = \vec{e}_1 + \dots + \vec{e_m}$. Then
-\[ H_k(\langle \vec{v}, \vec{x} \rangle) = m!   x_1\dots x_m + Q(\vec{x}), \]
+\[ H_m(\langle \vec{v}, \vec{x} \rangle) = m!   x_1\dots x_m + Q(\vec{x}), \]
 where $Q$ is a polynomial where each monomial has a missing variable. As a result,
 \begin{align*}
-  \Ea{h^\star(\vec{x}) H_k(\langle \vec{v}, \vec{x} \rangle)} &= m!  \Ea{h^\star(\vec{x}) x_1\dots x_m} \\
+  \Ea{h^\star(\vec{x}) H_m(\langle \vec{v}, \vec{x} \rangle)} &= m!  \Ea{h^\star(\vec{x}) x_1\dots x_m} \\
   &= m!  \Ea{|x_1\dots x_m|} \\
   &= m! \left( \sqrt{\frac2\pi} \right)^m
 \end{align*}
