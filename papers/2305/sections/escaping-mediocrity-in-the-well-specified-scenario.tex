@@ -25,7 +25,7 @@ From this expression, it is easy to see that we have two global minima $m=\pm 1$
 \end{align}
 Note that for $w=\pm w_{\star}$ $(m=\pm 1)$ the Hessian is proportional to the identity, hence positive definite as expected for a minimum. Instead, for $w \perp w_{\star}$ $(m=0)$, the Hessian becomes a rank-one matrix with $d-1$ zero eigenvalues and a single negative eigenvalue with eigenvector proportional to $w_{\star}$. Hence, $m=0$ also corresponds to a \emph{strict saddle}, i.e. the landscape is flat along most of the directions, except for one that points towards the signal. Note that with high probability, we have precisely $m\approx 0$ for an uninformed random initialization in high-dimensions $d\to\infty$.
 
-This provides a typical picture of mediocrity in high-dimensions, where the landscape resembles a flat golf course with a single hole, see Fig. \ref{2305:fig:app:landscape}.
+This provides a typical picture of mediocrity in high-dimensions, where the landscape resembles a flat golf course with a single hole, see Figure~\ref{2305:fig:app:landscape} in Appendix~\ref{2305:app:landscape}.
 
 \subsection{Exit time from deterministic limit}
 \label{2305:sec:exit:deterministic}
@@ -45,7 +45,7 @@ We start with two immediate observations that can be drawn from \eqref{2305:eq:s
 The presence of an asymptotic risk plateau for the excess risk is consistent with previous results for the high-dimensional limit of two-layers neural networks \citep{saad1996dynamics,goldt2019dynamics}. Note that in the population gradient flow limit $\gamma\to 0^{+}$, SGD converges to the minimal risk \cite{robbins1951stochastic}. Indeed, the presence of a finite excess risk even in the well-specified setting is an intrinsic correction from the SGD noise in the high-dimensional regime where $\sfrac{1}{d}\ll \gamma$ \citep{veiga2022phase}, and can be related to the radius of the asymptotic stationary distribution of the weights around the global minima \citep{pflug1986stochastic,dieuleveut2020bridging}.
 
 
-We now move to our main problem: estimating the time SGD takes to escape mediocrity at initialization. Let $T\in[0,1]$ be the relative difference with respect to the initial value of the risk, and let \(t_\text{ext}\) be the time when the risk exits the region above the threshold \(T\), see Fig. \ref{2305:fig:sde_p1} (right) for an illustration. By construction, \(t_\text{ext}\) can be found by solving the following equation:
+We now move to our main problem: estimating the time SGD takes to escape mediocrity at initialization. Let $T\in[0,1]$ be the relative difference with respect to the initial value of the risk, and let \(t_\text{ext}\) be the time when the risk exits the region above the threshold \(T\), see Figure~\ref{2305:fig:sde_p1} (right) for an illustration. By construction, \(t_\text{ext}\) can be found by solving the following equation:
 \begin{equation} \label{2305:eq:exit_time_implicit_equation}
   (1-T)\left(\risk{\left(\bar{m}(0)\right)}-\frac{\Delta}{2}\right) = \risk\left({\bar{m}\left(t_\text{ext}\right)}\right)-\frac{\Delta}{2}.
 \end{equation}
