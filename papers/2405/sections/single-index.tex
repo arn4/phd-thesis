@@ -4,8 +4,8 @@ We first consider, for simplicity, the class of single-index models, in which $k
 \[ y = h^\star(\langle \vec{w^\star}, \vec{z} \rangle), \quad \text{with} \quad f(\vec{z}, \vec{w}, a) = a\sigma(\langle \vec{w}, \vec{z} \rangle). \]
 In this section we rigorously characterize the number of iterations needed for the class of Algorithms~\ref{2405:algo:optimizer_main_step} to perform weak recovery (as in Definition~\ref{2405:def:weak_recovery}) in the context of single-index targets. We establish a clear separation between the learning efficiency of the algorithmic  family~\ref{2405:algo:optimizer_main_step} and One-Pass SGD, limited by the Information Exponent of the target to be learned \citep{arous2021online}.
 
-We start by introducing a restriction of the generative information exponent in \cite{damian2024computational} to polynomial transformations.
-\begin{definition}[Polynomial Generative Information exponent]
+We start by introducing a restriction of the generative exponent in \cite{damian2024computational} to polynomial transformations.
+\begin{definition}[Polynomial Generative Exponent]
 \label{2405:def:lstar_damian2024}
 Furthermore, we define $\ell^\star_p$ as the smallest integer $k$ such that there exists a polynomial $p: \R \rightarrow \R$ with:
 \begin{equation}\label{2405:eq:f_hard_gen}
@@ -82,9 +82,9 @@ Assumption~\ref{2405:assump:derivatives} is a regularity Assumption, ensuring th
 
 Finally, although we state our result as an almost sure event over $\rho_0$, it can be reformulated into an event on the second layer weight $a_0$, in which the randomness comes from the initialization step.
 
-\paragraph {Learning polynomial functions --} Although our definition of the Polynomial Generative Information exponent is more restrictive than the one in \cite{damian2024computational}, we show that it is enough to allow learning of a large class of functions, namely polynomials:
+\paragraph {Learning polynomial functions --} Although our definition of the Polynomial Generative Exponent is more restrictive than the one in \cite{damian2024computational}, we show that it is enough to allow learning of a large class of functions, namely polynomials:
 \begin{theorem}\label{2405:thm:poly_pge}
-    Assume that $h^\star$ is a polynomial function. Then the Polynomial Generative Information exponent of $h^\star$ is always at most 2, and is equal to 1 whenever $h^\star$ is not even.
+    Assume that $h^\star$ is a polynomial function. Then the Polynomial Generative Exponent of $h^\star$ is always at most 2, and is equal to 1 whenever $h^\star$ is not even.
 \end{theorem}
 This theorem implies that the Extragradient algorithm class allows us to match the sample complexity of the algorithm of \cite{chen2020learning}, without the need for \emph{ad hoc} preprocessing.
 
