@@ -3,10 +3,10 @@
 \label{2305:app:match_with_GBA}
 In this Appendix we compute the diffusion correction term of the deterministic dynamic using the formalism introduced in \cite{arous2022high}; we use the notation of that paper to make the comparison easier.
 
-We are going to analyze the plain phase retrieval problem (\(k=p=1\), no spherical constraint), using a slightly different scaling as the one we introduced in the main, in accordance with the hypothesis required by \cite{arous2022high}. Our goal is to to show that our formalism contains the one presented in the paper we are analyzing here. We want to learn a predictor of the form \(f(x)=(w\cdot x)^2\), using online SGD on the data
+We are going to analyze the plain phase retrieval problem (\(k=p=1\), no spherical constraint), using a slightly different scaling as the one we introduced in the main, in accordance with the hypothesis required by \cite{arous2022high}. Our goal is to show that our formalism contains the one presented in the paper we are analyzing here. We want to learn a predictor of the form \(f(x)=(w\cdot x)^2\), using online SGD on the data
 \[x\sim \mathcal N (0,I_d) \qquad y = (w^\star \cdot x)^2 + \sqrt{\Delta} \xi, \]
 with both \(w\) and \(w^\star\) with \(O_d(1)\) norm, in contrast to what we used in the main where the norm of the weights were \(O_d(\sqrt{d})\).
-The SGD process writes has
+The SGD process is written as
 \[
 w^{\nu+1} = w^{\nu} - \delta_d \nabla_w L(y,w),
 \]
@@ -17,7 +17,7 @@ We omit the verification of \(\delta\)-localizability for brevity.
 
 The loss and its expectation are
 \[\begin{split}
-L(y,w) =& \frac{1}{2} \left[(w^\star \cdot x)^2 - (w \cdot x)^2 + \sqrt{\Delta}d \xi\right]^2 \\
+L(y,w) =& \frac{1}{2} \left[(w^\star \cdot x)^2 - (w \cdot x)^2 + \sqrt{\Delta} \xi\right]^2 \\
        =& \frac12 (w^\star \cdot x)^4 + \frac12 (w \cdot x)^4 + \frac\Delta2 \xi^2 + \left[(w^\star \cdot x)^2 - (w \cdot x)^2\right] \sqrt{\Delta}\xi - \left((w^\star \cdot x)(w \cdot x)\right)^2, \\
 \Phi(w) \coloneqq& \mathbb E_{x,\xi} \left[L(y,w)\right] = \frac{3}{2}\norm{w^\star}^4 + \frac{3}{2}\norm{w}^4 +\frac32\Delta  - \norm{w^\star}^2\norm{w}^2 - 2(w^\star\cdot w)^2
 \end{split}\]
