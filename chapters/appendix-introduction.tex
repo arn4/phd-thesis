@@ -13,24 +13,24 @@ which we obtain in two complementary ways: directly from the discrete projected 
 \subsection{Derivation as a spherical gradient flow}
 \label{app:intro:gradient-flow}
 
-We start from the projected update of the main text: at step \(\tau\), on a fresh sample \((\vec{x}, y)\),
+We start from the projected update of the main text: at step \(\nu\), on a fresh sample \((\vec{x}, y)\),
 \begin{equation} \label{app:intro:eq:proj-update}
-    \vec{w}^{\tau+1} = \sqrt{d}\,\frac{\vec{w}^{\tau} - \gamma\,\nabla_{\vec{w}}\ell}{\norm{\vec{w}^{\tau} - \gamma\,\nabla_{\vec{w}}\ell}}, \qquad \nabla_{\vec{w}}\ell = \big(\sigma(\lambda) - y\big)\,\sigma'(\lambda)\,\frac{\vec{x}}{\sqrt{d}}.
+    \vec{w}^{\nu+1} = \sqrt{d}\,\frac{\vec{w}^{\nu} - \gamma\,\nabla_{\vec{w}}\ell}{\norm{\vec{w}^{\nu} - \gamma\,\nabla_{\vec{w}}\ell}}, \qquad \nabla_{\vec{w}}\ell = \big(\sigma(\lambda) - y\big)\,\sigma'(\lambda)\,\frac{\vec{x}}{\sqrt{d}}.
 \end{equation}
 Renormalizing onto the sphere makes the increment tangential to leading order in the step size,
 \begin{equation} \label{app:intro:eq:tangent-step}
-    \vec{w}^{\tau+1} - \vec{w}^{\tau} = -\gamma\,P_{\vec{w}}^{\perp}\,\nabla_{\vec{w}}\ell + O(\gamma^2), \qquad P_{\vec{w}}^{\perp} = I - \frac{\vec{w}\vec{w}^\top}{d},
+    \vec{w}^{\nu+1} - \vec{w}^{\nu} = -\gamma\,P_{\vec{w}}^{\perp}\,\nabla_{\vec{w}}\ell + O(\gamma^2), \qquad P_{\vec{w}}^{\perp} = I - \frac{\vec{w}\vec{w}^\top}{d},
 \end{equation}
 the discarded \(O(\gamma^2)\) carrying the retraction's curvature together with the gradient fluctuations---the \emph{variance term} \(\Psi\), one power of \(\gamma\) down and neglected throughout, as in the main text. Since the sample is fresh the gradient is unbiased for the population risk, \(\mathbb{E}[\nabla_{\vec{w}}\ell] = \nabla_{\vec{w}}\mathcal{R}\), and---the projector depending on \(\vec{w}\) alone---
 \begin{equation}
-    \mathbb{E}[\vec{w}^{\tau+1} - \vec{w}^{\tau}] = -\gamma\,P_{\vec{w}}^{\perp}\,\nabla_{\vec{w}}\mathcal{R} + O(\gamma^2).
+    \mathbb{E}[\vec{w}^{\nu+1} - \vec{w}^{\nu}] = -\gamma\,P_{\vec{w}}^{\perp}\,\nabla_{\vec{w}}\mathcal{R} + O(\gamma^2).
 \end{equation}
 On the sphere \(q = 1\) is frozen, so \(\mathcal{R}\) depends on the weights only through \(m = \sfrac{\langle \vec{w}, \vec{w}^\star\rangle}{d}\), and \(\mathcal{R}(m) = \mathrm{const} - C(m)\) as in Equation~\eqref{eq:intro:correlation-potential}. The chain rule gives the radial gradient \(\nabla_{\vec{w}}\mathcal{R} = \sfrac{\mathcal{R}'(m)}{d}\,\vec{w}^\star\); projecting it leaves \(P_{\vec{w}}^{\perp}\vec{w}^\star = \vec{w}^\star - m\,\vec{w}\), and reading off the overlap increment \(\mathbb{E}[\Delta m] = \sfrac1d\,\langle \vec{w}^\star,\,\mathbb{E}[\Delta \vec{w}]\rangle\),
 \begin{equation}
     \mathbb{E}[\Delta m] = -\frac{\gamma}{d^2}\,\mathcal{R}'(m)\,\big(\norm{\vec{w}^\star}^2 - m\,\langle \vec{w}^\star, \vec{w}\rangle\big) = -\frac{\gamma}{d}\,\mathcal{R}'(m)\,(1 - m^2),
 \end{equation}
-using \(\norm{\vec{w}^\star}^2 = d\) and \(\langle \vec{w}^\star, \vec{w}\rangle = d\,m\). The Saad \& Solla time scaling now makes the dimension factor meaningful: measuring time as \(t = \tau\,\sfrac{\gamma}{d}\),
-\addnote{In the single-index setting the time scaling is \(t = \tau\,\sfrac{\gamma}{d}\) because \(p=1\).}
+using \(\norm{\vec{w}^\star}^2 = d\) and \(\langle \vec{w}^\star, \vec{w}\rangle = d\,m\). The Saad \& Solla time scaling now makes the dimension factor meaningful: measuring time as \(t = \nu\,\sfrac{\gamma}{d}\),
+\addnote{In the single-index setting the time scaling is \(t = \nu\,\sfrac{\gamma}{d}\) because \(p=1\).}
 so that one sample advances \(t\) by \(\delta t = \sfrac{\gamma}{d}\), the overlap concentrates in the high-dimensional limit on the deterministic trajectory \(\dod{m}{t} = \mathbb{E}[\Delta m]/\delta t\). With \(\mathcal{R}'(m) = -C'(m)\) this is
 \begin{equation}
     \dod{m}{t} = -(1 - m^2)\,\mathcal{R}'(m) = (1 - m^2)\,C'(m),

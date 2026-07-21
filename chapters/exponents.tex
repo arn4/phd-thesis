@@ -12,7 +12,7 @@ and the pre-activations are jointly Gaussian, \((\lambda, \lambda^\star) \sim \m
 We make one more assumption on top of the setting of Section~\ref{intro:sec:settings}:
 \begin{assumption}[Projected SGD]
     The student is trained with projected SGD, where each step is projected back onto the sphere \(\mathbb{S}^{d-1}(\sqrt{d})\); in other words, the update rule
-    \[\vec{w}^{\tau+1} = \sqrt{d}\,\frac{\vec{w}^{\tau} - \gamma \nabla_{\vec{w}}\ell(f(\vec{x}^{\tau}), y^{\tau})}{\norm{\vec{w}^{\tau} - \gamma \nabla_{\vec{w}}\ell(f(\vec{x}^{\tau}), y^{\tau})}}.\]
+    \[\vec{w}^{\nu+1} = \sqrt{d}\,\frac{\vec{w}^{\nu} - \gamma \nabla_{\vec{w}}\ell(f(\vec{x}^{\nu}), y^{\nu})}{\norm{\vec{w}^{\nu} - \gamma \nabla_{\vec{w}}\ell(f(\vec{x}^{\nu}), y^{\nu})}}.\]
 \end{assumption}
 The effect of this is to keep the norm of the student weights fixed, \(q = 1\), so that the only degree of freedom is the teacher overlap \(m\).
 This technical simplification lets us focus on the true signal, the correlation with the teacher direction, by decoupling it from changes in the student-weight norm, which can alter the risk without contributing to recovery; see Chapter~\ref{chap:paper-2305} for a detailed discussion.
