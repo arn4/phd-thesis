@@ -1,4 +1,4 @@
-\section{Further discussion on the positional-semantic transition} \label{2506:app:further-positional-demantic}
+\section{Further discussion on the positional-semantic transition} \label{2506:app:further-positional-semantic}
 % \subsection{Adding the value matrix}
 % So far we have considered the case where the value matrix is the identity matrix
 % \(
@@ -100,7 +100,7 @@ where in the last step we used again the small learning rate limit.
  Since the Hessian of the loss has always a negative eigenvalue, both these equations need \(\tau = O(d\log d)\) steps of population gradient descent at constant learning rate \(\gamma\) to escape a neighborhood of initialization, leading to \(\mathrm{SIE}=2\). This step count is not the sample complexity of online SGD: controlling the gradient noise forces \(\gamma = O(\sfrac{1}{\log d})\), and the same estimate \(\tau \asymp \sfrac{d}{\gamma}\cdot\log d\) then returns \(\mathcal{O}(d\log^2 d)\) --- the extra logarithmic factor that Theorem~\ref{2506:thm:sie} suppresses when it quotes the sharp \(\mathcal{O}(d\log d)\).
 
 \subsection{Numerical experiments on the transition}
-In this Appendix we would like to provide more details on the phase diagram of Figure~\ref{2506:fig:phase-diagram-postional-semantic}. 
+In this Appendix we would like to provide more details on the phase diagram of Figure~\ref{2506:fig:phase-diagram-positional-semantic}. 
 
 In Figure~\ref{2506:fig:app:trajectories-d100-positional-semantic} we reproduce Figure~\ref{2506:fig:positional-semantic-trajectories-a1} for \(d=100\), clarifying the \emph{finite size} effects we claimed in the main text. Smaller values of \(d\) lead to a smoother transition, since the gradient flow assumption is less valid. In the limit \(d\to\infty\) we expect to see a step function.
 \begin{figure}
@@ -111,7 +111,7 @@ In Figure~\ref{2506:fig:app:trajectories-d100-positional-semantic} we reproduce 
     \label{2506:fig:app:trajectories-d100-positional-semantic}
 \end{figure}
 
-The yellow region in the phase diagram of Figure~\ref{2506:fig:phase-diagram-postional-semantic} is predicted to have a unique global semantic minimum, while SGD is aligned with the positional direction at initialization. The resulting trajectories are shown in Figure~\ref{2506:fig:app:phase-diagram-yellow-region}: the dynamics moves towards the minima direction, get stuck in the local flat (but not critical) region around \((e,m)=(1,0)\), and then it moves towards the global minima. In this region the convergence is very slow.
+The yellow region in the phase diagram of Figure~\ref{2506:fig:phase-diagram-positional-semantic} is predicted to have a unique global semantic minimum, while SGD is aligned with the positional direction at initialization. The resulting trajectories are shown in Figure~\ref{2506:fig:app:phase-diagram-yellow-region}: the dynamics moves towards the minima direction, get stuck in the local flat (but not critical) region around \((e,m)=(1,0)\), and then it moves towards the global minima. In this region the convergence is very slow.
 \begin{figure}
     \centering
     \includegraphics[width=0.4\textwidth]{figs/positional-semantic/loss_surface_omega0.95_a0.76}

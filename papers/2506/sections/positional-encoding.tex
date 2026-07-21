@@ -13,11 +13,11 @@ We shall train the model in Equation~\eqref{2506:eq:model-definition} with posit
 \(P_1 = -P_2\)
 and reduction map \(\Pi\) the identity function. We focus on the \emph{gradient flow} limit where $\eta$ is sufficiently small \citep{chung1954stochastic}. Our analysis will focus on the population loss given by Equation~\eqref{2506:eq:population-loss_sufficient-statistic}, since it completely characterize the behavior of SGD in this regime; the sufficient statistics \((\vec{e},m)\) are the only free variables of the setting.
 
-The sequential information exponent of this setting is \(\mathrm{SIE}=2\) (see Appendix~\ref{2506:app:further-positional-demantic} for the explicit derivation), thus by Theorem~\ref{2506:thm:sie} the sample complexity for escaping the initialization is \(\mathcal{O}(d \log d)\).
+The sequential information exponent of this setting is \(\mathrm{SIE}=2\) (see Appendix~\ref{2506:app:further-positional-semantic} for the explicit derivation), thus by Theorem~\ref{2506:thm:sie} the sample complexity for escaping the initialization is \(\mathcal{O}(d \log d)\).
 After the initial phase, SGD fast converges to the minimum of the population loss that is fully aligned with either the semantic or the positional sufficient statistic, i.e. \(\norm{(\vec{e},m)} = 1\), but is not guaranteed to be the global minimum. 
 Figure~\ref{2506:fig:positional-semantic-trajectories-a1} shows an example where the population loss has two minima, one semantic with \((e,m)=(1,0)\) and one positional with \((e,m)=(0,1)\), and the steepest direction at initialization, namely the eigenvector associated with the lowest eigenvalue of the Hessian, points towards the local one; in this case, the gradient flow will converge to the wrong minimum.
 
-Varying the parameters, \(\omega\) and \(a\) the high-dimensional SGD dynamics from random initialization exhibits a rich phenomenology. In Figure~\ref{2506:fig:phase-diagram-postional-semantic} we show the phase diagram with all the possible behaviors:
+Varying the parameters, \(\omega\) and \(a\) the high-dimensional SGD dynamics from random initialization exhibits a rich phenomenology. In Figure~\ref{2506:fig:phase-diagram-positional-semantic} we show the phase diagram with all the possible behaviors:
 \begin{itemize}
     \item \textbf{\color{UniquePositionalMinima} Unique Positional Minima}: the population loss has unique positional minima, and the SGD converges to it. This is the case for \(\omega=1\) and \(a=1\).
     \item \textbf{\color{GlobalPositionalMinima} Global Positional Minima}: the population loss has both a semantic and a positional minimum, and SGD converges to the global positional one.
@@ -31,10 +31,10 @@ Varying the parameters, \(\omega\) and \(a\) the high-dimensional SGD dynamics f
     \centering
     \includegraphics[width=0.49\textwidth]{figs/positional-semantic/phase_diagram}
     \caption{Different behaviors of SGD depending on the parameters \(\omega\) and \(a\).}
-    \label{2506:fig:phase-diagram-postional-semantic}
+    \label{2506:fig:phase-diagram-positional-semantic}
 \end{figure}
 We verify this by simulating many runs of SGD with different initializations and data samples. In Figure~\ref{2506:fig:positional-semantic-trajectories-a1} we compute the empirical probability of convergence to the semantic minima, for \(a=1\) and varying \(\omega\).
-The theoretical value of \(\omega\) where we have a transition from  sematic to positional dynamics is \(\omega_\mathrm{trans} = 0.64\), which is in good agreement with the transition observed in the measured probabilities; the transition becomes sharper as \(d\) increases: ideally, in the limit \(d\to\infty\) we expect a step function. The simulations in Figure~\ref{2506:fig:positional-semantic-trajectories-a1} are performed with \(d=1000\), and some finite size effects are still present. In Appendix~\ref{2506:app:further-positional-demantic} we show present a more detailed analysis, including different values of \(d\).
+The theoretical value of \(\omega\) where we have a transition from  sematic to positional dynamics is \(\omega_\mathrm{trans} = 0.64\), which is in good agreement with the transition observed in the measured probabilities; the transition becomes sharper as \(d\) increases: ideally, in the limit \(d\to\infty\) we expect a step function. The simulations in Figure~\ref{2506:fig:positional-semantic-trajectories-a1} are performed with \(d=1000\), and some finite size effects are still present. In Appendix~\ref{2506:app:further-positional-semantic} we show present a more detailed analysis, including different values of \(d\).
 
 \begin{figure}
     \centering
