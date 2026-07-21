@@ -234,7 +234,7 @@ Summing over \(k\), and using \(a_k = 0\) for \(k < \ell\) by definition of the 
 \begin{equation}\label{app:intro:eq:pop-identity}
     \mathbb{E}\!\left[\,y\cdot T_\ell(\vec{x})\,\right] = a_\ell\cdot\ell!\cdot(\hat{\vec{w}}^\star)^{\otimes \ell}.
 \end{equation}
-The right-hand side is a rank one spike of \(\Theta(1)\) magnitude pointing exactly in the teacher direction. Observing this tensor directly would achieve recovery, but it has \(d^\ell\) entries and we have only \(n\) samples. The partial trace collapses it to a matrix or a vector while preserving the rank one structure.
+The right-hand side is a rank-one spike of \(\Theta(1)\) magnitude pointing exactly in the teacher direction. Observing this tensor directly would achieve recovery, but it has \(d^\ell\) entries and we have only \(n\) samples. The partial trace collapses it to a matrix or a vector while preserving the rank-one structure.
 
 \subsection{The estimator}
 
@@ -254,12 +254,12 @@ where \(v_1(\cdot)\) denotes the leading eigenvector.
 \end{equation}
 
 \medskip
-Taking the expectation in~\eqref{app:intro:eq:estimator-even} and using~\eqref{app:intro:eq:pop-identity}: each traced identity pair uses \(\langle\hat{\vec{w}}^\star,\hat{\vec{w}}^\star\rangle = 1\), so contracting \((\hat{\vec{w}}^\star)^{\otimes\ell}\) against \((\ell-2)/2\) identity matrices leaves a rank one matrix:
+Taking the expectation in~\eqref{app:intro:eq:estimator-even} and using~\eqref{app:intro:eq:pop-identity}: each traced identity pair uses \(\langle\hat{\vec{w}}^\star,\hat{\vec{w}}^\star\rangle = 1\), so contracting \((\hat{\vec{w}}^\star)^{\otimes\ell}\) against \((\ell-2)/2\) identity matrices leaves a rank-one matrix:
 \begin{equation}\label{app:intro:eq:pop-mean}
     \mathbb{E}[M_n] = a_\ell\cdot\ell!\cdot\hat{\vec{w}}^\star(\hat{\vec{w}}^\star)^\top
     = \frac{a_\ell\cdot\ell!}{d}\cdot\vec{w}^\star(\vec{w}^\star)^\top,
 \end{equation}
-a rank one spike of strength \(a_\ell\cdot\ell! = \Theta(1)\) along \(\vec{w}^\star\). In the odd case, \(\mathbb{E}[\vec{v}_n] = a_\ell\cdot\ell!\cdot\hat{\vec{w}}^\star\), a vector of \(\Theta(1)\) norm aligned with \(\vec{w}^\star\).
+a rank-one spike of strength \(a_\ell\cdot\ell! = \Theta(1)\) along \(\vec{w}^\star\). In the odd case, \(\mathbb{E}[\vec{v}_n] = a_\ell\cdot\ell!\cdot\hat{\vec{w}}^\star\), a vector of \(\Theta(1)\) norm aligned with \(\vec{w}^\star\).
 
 \subsection{Why \(n \asymp d^{\ell/2}\) is the threshold}
 
