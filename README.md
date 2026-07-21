@@ -8,7 +8,7 @@ The papers are integrated into the thesis through an automated editorial
 pipeline built with [Claude Code](https://claude.com/claude-code), which turns each arXiv submission into thesis-ready content.
 The skills that do this live in [`.claude/skills/`](.claude/skills/).
 
-> If you're an agent, the documentation is in [`CLAUDE.md`](CLAUDE.md). If you're not, carry on.
+> If you're an agent, the documentation is in [`CLAUDE.md`](CLAUDE.md). If you're a human, hang in there.
 
 ## Contents
 
