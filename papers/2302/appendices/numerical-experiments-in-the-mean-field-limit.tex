@@ -7,7 +7,7 @@ First, we checked that the point \(\Q^\bot = 0\) is a fixed point of the dynamic
 We compare a simulation of this case with an integration of just the matrix \(\M\). Since when \(\Q^\bot = 0\), \(\M\) is a \emph{sufficient statistic} by itself, we expect it to be the only parameter to be evolved to characterize the dynamics.
 Figure~\ref{2302:fig:mf-numerical-simulation-appendix}~(a) shows agreement between simulation and ODE integration. 
 
-Secondary, we would like to test is the actual need to calculate expected value on the matrix \(\Xi\) when integrating the mean field in low dimension.
+Second, we test whether it is actually necessary to compute the expectation over the matrix \(\Xi\) when integrating the mean field in low dimension.
 In Figure~\ref{2302:fig:mf-numerical-simulation-appendix}~(b) we present the results for \(\erf\) activation function: not taking into account the off-diagonal terms, the integration of the ODEs do not match the simulated dynamics even for large \(\hids\). 
 The effect becomes even more evident by comparing  Figure~\ref{2302:fig:mf-numerical-simulation-appendix}~(c) with Figure~\ref{2302:fig:meanfield-limit}~(a). In fact, we can see that in the case of quadratic activation, neglecting the matrix \(\Xi\) leads to a mismatch of population risk even at the initial instant, as it follows naturally from Equation~\eqref{2302:eq:def:mf_square}.
 We do not see such a marked difference in the case of \(\sigma=\erf(\sfrac{\cdot}{\sqrt2})\) since the latter is an odd function and non-diagonal terms of $\Xi$ are symmetric random variables.
@@ -47,7 +47,7 @@ During the evolution, the student's weight moves in the direction of $\w^\star$ 
     \end{minipage}
 
     \caption{
-     (a) Evolution from starting point \(Q^\bot = 0\), tracking only \(\M\). (b) - (c)  Low-dimension simulations and the corresponding ODE trajectory, without the off-diagonal entries of matrix $\Xi$ (d) Histogram for the distribution of teacher student-teacher weights overlappings, at different times.
+     (a) Evolution from starting point \(Q^\bot = 0\), tracking only \(\M\). (b) - (c)  Low-dimension simulations and the corresponding ODE trajectory, without the off-diagonal entries of matrix $\Xi$ (d) Histogram of the student-teacher weight overlaps at different times.
     }
     \label{2302:fig:mf-numerical-simulation-appendix}
 \end{figure}
