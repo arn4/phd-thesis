@@ -53,11 +53,11 @@ We can use the same computation technique to compute the Hessian of the populati
 \end{equation}
 
 \paragraph{The information exponent}
- We can also compute the \textit{information exponent} by looking at what rate \(m\) grows around initialization. We use \emph{spherical gradient descent} beacuse we assumed the norm of the vector \(\vec w\) to be costant (as Ben Arous also does in his paper on Information Exponent):
+ We can also compute the \textit{information exponent} by looking at what rate \(m\) grows around initialization. We use \emph{spherical gradient descent} because we assumed the norm of the vector \(\vec w\) to be constant (as Ben Arous also does in his paper on Information Exponent):
 
  The update rule of \(\vec w\) is
  \[
-    \vec{w}^{\tau+1} = \frac{\vec{w}^\tau - \gamma \nabla_{\vec{w}}\mathcal{L}}{\norm{\vec{w}^\tau - \gamma \nabla_{\vec{w}}\mathcal{L}}}_2\sqrt{d},
+    \vec{w}^{\tau+1} = \frac{\vec{w}^\tau - \gamma \nabla_{\vec{w}}\mathcal{L}}{\norm{\vec{w}^\tau - \gamma \nabla_{\vec{w}}\mathcal{L}}_2}\sqrt{d},
  \]
  multiplying both sides by \(\sfrac{\vec{w}_\star}{d}\) we get
   \[
@@ -102,7 +102,7 @@ where in the last step we used again the small learning rate limit.
 \subsection{Numerical experiments on the transition}
 In this Appendix we would like to provide more details on the phase diagram of Figure~\ref{2506:fig:phase-diagram-postional-semantic}. 
 
-In Figure \ref{2506:fig:app:trajectories-d100-positional-semantic} we reproduce Figure~\ref{2506:fig:positional-semantic-trajectories-a1} for \(d=100\), clarifying the \emph{finite size} effects we claimed in the main text. Smaller values of \(d\) lead to a more smooth transition, since the grndient flow assumption is less valid. In the limit \(d\to\infty\) we expect to see a step function.
+In Figure \ref{2506:fig:app:trajectories-d100-positional-semantic} we reproduce Figure~\ref{2506:fig:positional-semantic-trajectories-a1} for \(d=100\), clarifying the \emph{finite size} effects we claimed in the main text. Smaller values of \(d\) lead to a smoother transition, since the gradient flow assumption is less valid. In the limit \(d\to\infty\) we expect to see a step function.
 \begin{figure}
     \centering
     \includegraphics[width=0.4\textwidth]{figs/positional-semantic/trajecttories-probability-d100-a1}
@@ -139,4 +139,4 @@ P_\star = \begin{pmatrix} +\vec{p}_\star \\ -\vec{p}_\star \end{pmatrix}, \qquad
 \]
 \(\omega\) plays the same role as in the model \eqref{2506:eq:positional-semantic-label}, and we can set \(\omega=0\) to get the semantic model, or \(\omega=1\) to get the positional model. The difference is that in this case the positional encoding is added to the input of the softmax function, while in the previous model it was added to the output. This change has a significant impact on the behavior of the model.
 
-The gloabl minima of the population loss function does not transition from a positional to a semantic regime, but rather it smoothly move from the semantic to the positional regime as \(\omega\) increases. We leave the details and numerical experiments for future work.
+The global minima of the population loss function does not transition from a positional to a semantic regime, but rather it smoothly move from the semantic to the positional regime as \(\omega\) increases. We leave the details and numerical experiments for future work.

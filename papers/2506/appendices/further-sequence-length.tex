@@ -3,7 +3,7 @@ The aim of this Appendix is to clarify and give further examples on Theorem~\ref
 
 Let's start from the main result on the gain, that can be broken down in three parts:
 \begin{equation} \label{2506:eq:app:gain-breakdown}
-  \mathrm{gain} \sim \left(\text{gain at costant } \gamma\right) \cdot \left(\frac{\gamma_\mathrm{tied}}{\gamma_\mathrm{untied}}\right)\cdot \left(\text{special factor for SIE}=1\right)
+  \mathrm{gain} \sim \left(\text{gain at constant } \gamma\right) \cdot \left(\frac{\gamma_\mathrm{tied}}{\gamma_\mathrm{untied}}\right)\cdot \left(\text{special factor for SIE}=1\right)
 \end{equation}
 
 
@@ -43,7 +43,7 @@ The case \(\mathrm{SIE}=1\) is special because the dependence of the weak recove
 \subsection{Example at not optimal learning rate}
 In Figure~\ref{2506:fig:sequence-length-H2} we presented the speed up in the case of a target function with \(\mathrm{SIE}=2\), and optimal learning rate for both the tied and untied network. Here we want to show that our result predicts the gain well even when the learning rate are not scaled up optimally. In particular, consider the same setting as in Figure~\ref{2506:fig:sequence-length-H2}, but with the learning rates 
 \begin{equation}
-    \gamma_\mathrm{tied} = \gamma_\mathrm{untied} = \text{costant with } L =  \gamma_0.
+    \gamma_\mathrm{tied} = \gamma_\mathrm{untied} = \text{constant with } L =  \gamma_0.
 \end{equation}
 Using Equation~\eqref{2506:eq:app:gain-breakdown} we can predict the gain as
 \begin{equation}
@@ -116,7 +116,7 @@ Apparently, the untied network performance is matching the one of the tied netwo
     \centering
     \includegraphics[height=0.3\textwidth]{figs/sequence-lenght/comparison-attention-squarenetwork-overlap}
     \includegraphics[height=0.3\textwidth]{figs/sequence-lenght/comparison-attention-squarenetwork-crossing}
-    \caption{ comparison between the learning of the tied network with squared activation (orange), namely linear attention, and the single-layer softmax attention(green) (left) The evolution of the overlap; each symbol is a different value of \(L\). (right) the weak recovery time. The two networks learn at the same rate, but with different costants. \(g(\vec{z}_\star)=\sum_{i=1}^L\mathrm{He}_2(\vec{z}_{\star,i})\), \(d=1000\), \(\sigma=\ReLU\)}
+    \caption{Comparison between the learning of the tied network with squared activation (orange), namely linear attention, and the single-layer softmax attention (green). (left) The evolution of the overlap; each symbol is a different value of \(L\). (right) the weak recovery time. The two networks learn at the same rate, but with different constants. \(g(\vec{z}_\star)=\sum_{i=1}^L\mathrm{He}_2(\vec{z}_{\star,i})\), \(d=1000\), \(\sigma=\ReLU\)}
     \label{2506:fig:app:attention-squarenetwork}
 \end{figure}
 In the main paper we proved that the tied network model is a generalization of the single-layer attention model. In particular, if the activation function is  \(\sigma(x) = x^2\), the tied network is equivalent to the single-layer \emph{linear} attention. We also claimed that adding a non-linearity to the attention can only improve the performance of the network, although not affecting the scaling with the sequence length. In Figure~\ref{2506:fig:app:attention-squarenetwork} we show the comparison between the learning of the tied network with squared activation (orange), namely linear attention, and the single-layer softmax attention(green). The two networks learn at the same linear rate, but with different growth constants. Softmax attention performs better than the tied network with squared activation for sufficiently large sequence lengths.
@@ -142,7 +142,7 @@ where Theorem~\ref{2506:thm:sequencelength-gain} guarantees that the gain is 0. 
                 -1
             \end{pmatrix} \quad \text{and consequently } C_1 \times \vec{1} = 0.
           \]
-    \item \(\mathrm{SIE}=2\): anlogously, a possible pathological target could be
+    \item \(\mathrm{SIE}=2\): analogously, a possible pathological target could be
           \[
             g(\vec{z}_\star) = z^2_{\star,1} - z^2_{\star,2}.
           \]
@@ -167,4 +167,4 @@ The degeneracy of the tied network could be solved by weighting randomly the neu
 \begin{equation}
     C_\mathrm{SIE} \times (\vec{1},\dots,\vec{1}) \neq 0.
 \end{equation}
-Although this is a possible solution, we leave the study of the effect of random weights fro symmetry breaking for future work.
+Although this is a possible solution, we leave the study of the effect of random weights for symmetry breaking for future work.
