@@ -57,11 +57,11 @@ We can use the same computation technique to compute the Hessian of the populati
 
  The update rule of \(\vec w\) is
  \[
-    \vec{w}^{\tau+1} = \frac{\vec{w}^\tau - \gamma \nabla_{\vec{w}}\mathcal{L}}{\norm{\vec{w}^\tau - \gamma \nabla_{\vec{w}}\mathcal{L}}_2}\sqrt{d},
+    \vec{w}^{\nu+1} = \frac{\vec{w}^\nu - \gamma \nabla_{\vec{w}}\mathcal{L}}{\norm{\vec{w}^\nu - \gamma \nabla_{\vec{w}}\mathcal{L}}_2}\sqrt{d},
  \]
  multiplying both sides by \(\sfrac{\vec{w}_\star}{d}\) we get
   \[
-    m^{\tau+1} = \frac{m^\tau - \gamma \frac{\vec{w}_\star\cdot\nabla_{\vec{w}}\mathcal{L}}{d}}{\norm{\vec{w}^\tau - \gamma \nabla_{\vec{w}}\mathcal{L}}_2}\sqrt{d}.
+    m^{\nu+1} = \frac{m^\nu - \gamma \frac{\vec{w}_\star\cdot\nabla_{\vec{w}}\mathcal{L}}{d}}{\norm{\vec{w}^\nu - \gamma \nabla_{\vec{w}}\mathcal{L}}_2}\sqrt{d}.
  \]
 We can assume to be in the \emph{gradient flow regime}, where the learning rate \(\gamma \ll 1\)
 \[
@@ -71,8 +71,8 @@ We can assume to be in the \emph{gradient flow regime}, where the learning rate 
 \]
 that finally lead us to
 \begin{equation} \label{2506:eq:m-update-normalized-gradient}
-    m^{\tau+1} = \left(m^\tau - \gamma \frac{\vec{w}_\star\cdot\nabla_{\vec{w}}\mathcal{L}}{d}\right)\left(1+\gamma \frac{\vec{w}\cdot\nabla_w\mathcal{L}}{d}\right)
-    \approx m^\tau - \gamma \frac{\vec{w}_\star\cdot\nabla_{\vec{w}}\mathcal{L}}{d} + m^\tau\gamma \frac{\vec{w}\cdot\nabla_w\mathcal{L}}{d},
+    m^{\nu+1} = \left(m^\nu - \gamma \frac{\vec{w}_\star\cdot\nabla_{\vec{w}}\mathcal{L}}{d}\right)\left(1+\gamma \frac{\vec{w}\cdot\nabla_w\mathcal{L}}{d}\right)
+    \approx m^\nu - \gamma \frac{\vec{w}_\star\cdot\nabla_{\vec{w}}\mathcal{L}}{d} + m^\nu\gamma \frac{\vec{w}\cdot\nabla_w\mathcal{L}}{d},
 \end{equation}
 where in the last step we used again the small learning rate limit.
  
@@ -83,21 +83,21 @@ where in the last step we used again the small learning rate limit.
  \]
  We can rearrange the equation above as
  \[\begin{split}
-    \frac{m^{\tau+1} - m^\tau}{\sfrac{\gamma}{d}} =& -\vec{w}_\star \cdot \left(\frac{\partial \mathcal{L}}{\partial m}\cdot \frac{\vec{w}_\star}{d} + \frac{\partial \mathcal{L}}{\partial e}\cdot \frac{\vec p}{\sqrt{d}}\right) + \vec{w} \cdot \left(\frac{\partial \mathcal{L}}{\partial m}\cdot \frac{\vec{w}_\star}{d} + \frac{\partial \mathcal{L}}{\partial e}\cdot \frac{\vec p}{\sqrt{d}}\right) \\=& -\frac{\partial \mathcal{L}}{\partial m} + m\frac{\partial \mathcal{L}}{\partial m} + e\frac{\partial \mathcal{L}}{\partial e}
+    \frac{m^{\nu+1} - m^\nu}{\sfrac{\gamma}{d}} =& -\vec{w}_\star \cdot \left(\frac{\partial \mathcal{L}}{\partial m}\cdot \frac{\vec{w}_\star}{d} + \frac{\partial \mathcal{L}}{\partial e}\cdot \frac{\vec p}{\sqrt{d}}\right) + \vec{w} \cdot \left(\frac{\partial \mathcal{L}}{\partial m}\cdot \frac{\vec{w}_\star}{d} + \frac{\partial \mathcal{L}}{\partial e}\cdot \frac{\vec p}{\sqrt{d}}\right) \\=& -\frac{\partial \mathcal{L}}{\partial m} + m\frac{\partial \mathcal{L}}{\partial m} + e\frac{\partial \mathcal{L}}{\partial e}
  \end{split}\]
  where we used the fact \(\vec p \cdot \vec{w}_\star \approx 0\) in high dimension (as already assumed above), and \(\norm{\vec{w}_\star}=d\).
 
  We are interested in what is happening at initialization, therefore all the derivatives should be evaluated around \((e,m)=0\). We already know that \(\left.\nabla_{e,m}\mathcal{L}\right|_{e=m=0}=0,\) so we expand the at the next order in \(m\)
 \[
- \frac{m^{\tau+1} - m^\tau}{\sfrac{\gamma}{d}} =
+ \frac{m^{\nu+1} - m^\nu}{\sfrac{\gamma}{d}} =
     -m\left.\frac{\partial^2 \mathcal{L}}{\partial m^2}\right|_{m,e=0} - e \left.\frac{\partial^2 \mathcal{L}}{\partial m\partial e}\right|_{m,e=0}.
  \]
  We can repeat the same derivation for finding the analogous equation for \(e\):
  \[
- \frac{e^{\tau+1} - e^\tau}{\sfrac{\gamma}{d}} =
+ \frac{e^{\nu+1} - e^\nu}{\sfrac{\gamma}{d}} =
     -e\left.\frac{\partial^2 \mathcal{L}}{\partial e^2}\right|_{m,e=0} - m \left.\frac{\partial^2 \mathcal{L}}{\partial m\partial e}\right|_{m,e=0}.
  \]
- Since the Hessian of the loss has always a negative eigenvalue, both these equations need \(\tau = O(d\log d)\) steps of population gradient descent at constant learning rate \(\gamma\) to escape a neighborhood of initialization, leading to \(\mathrm{SIE}=2\). This step count is not the sample complexity of online SGD: controlling the gradient noise forces \(\gamma = O(\sfrac{1}{\log d})\), and the same estimate \(\tau \asymp \sfrac{d}{\gamma}\cdot\log d\) then returns \(\mathcal{O}(d\log^2 d)\) --- the extra logarithmic factor that Theorem~\ref{2506:thm:sie} suppresses when it quotes the sharp \(\mathcal{O}(d\log d)\).
+ Since the Hessian of the loss has always a negative eigenvalue, both these equations need \(\nu = O(d\log d)\) steps of population gradient descent at constant learning rate \(\gamma\) to escape a neighborhood of initialization, leading to \(\mathrm{SIE}=2\). This step count is not the sample complexity of online SGD: controlling the gradient noise forces \(\gamma = O(\sfrac{1}{\log d})\), and the same estimate \(\nu \asymp \sfrac{d}{\gamma}\cdot\log d\) then returns \(\mathcal{O}(d\log^2 d)\) --- the extra logarithmic factor that Theorem~\ref{2506:thm:sie} suppresses when it quotes the sharp \(\mathcal{O}(d\log d)\).
 
 \subsection{Numerical experiments on the transition}
 In this Appendix we would like to provide more details on the phase diagram of Figure~\ref{2506:fig:phase-diagram-positional-semantic}. 

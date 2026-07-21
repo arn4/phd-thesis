@@ -25,7 +25,7 @@ Since we have \(L\) independent weights (the rows of \(W\)) the sufficient stati
     \vec{m} = \frac{W\vec{w}_\star}{d} \in \mathbb{R}^L \quad\text{compacted to a scalar as}\quad m_\mathrm{untied} = \frac{\norm{\vec{m}} }{\sqrt{L}}.
 \end{equation}
 
-% % \paragraph{Beyond the sample complexity} A part from pathological choices of \(y^\mathrm{SSI}\) (see Appendix~\ref{2506:app:further-sequence-length}, the sample complexity of SGD is the same for both tied and untied networks. However, the scaling of \(\tau^\mathrm{weak}_\eta\) with \(L\) can sensibly change depending on the particular target. We need a result that could characterize precisely this scaling for the weak recovery.
+% % \paragraph{Beyond the sample complexity} A part from pathological choices of \(y^\mathrm{SSI}\) (see Appendix~\ref{2506:app:further-sequence-length}, the sample complexity of SGD is the same for both tied and untied networks. However, the scaling of \(\nu^\mathrm{weak}_\eta\) with \(L\) can sensibly change depending on the particular target. We need a result that could characterize precisely this scaling for the weak recovery.
 % % \begin{theorem}[Informal] \label{2506:thm:ode}
 % %     Let \(y^\mathrm{SSI}\) be a target function with sequence information exponent $\sie$, to be learned with an tied network.
 % %     Assume the activation function \(\sigma\) has a sufficiently rich Hermite expansion such that it matches the leading order of the \(y^\mathrm{SIE}\),  Then the overlap $m(t)$ of the solution to \eqref{2506:eq:ode_approx} before weak recovery is well approximated by the solution \(\bar{m}(t)\) of the following ODE
@@ -42,9 +42,9 @@ The learning rate plays an important role in determining the number of gradient 
 
 We measure the speed-up of tied networks with respect to untied networks, as measured in terms of number of gradient steps needed to reach weak recovery, by the ratio of the weak recovery times in the two cases
 \begin{equation}
-    \mathrm{gain}(L)  \coloneqq \frac{\tau^\mathrm{weak}_{\eta,\mathrm{untied}}}{\tau^\mathrm{weak}_\eta},
+    \mathrm{gain}(L)  \coloneqq \frac{\nu^\mathrm{weak}_{\eta,\mathrm{untied}}}{\nu^\mathrm{weak}_\eta},
 \end{equation}
-where \(\tau^\mathrm{weak}_{\eta,\mathrm{untied}}\) is given by Definition~\ref{2506:def:weak-recovery} where \(m\) is replaced by \(m_\mathrm{untied}\); the dependence of \(\mathrm{gain}\) on \(\eta\) is subleading, and we will neglect it in the following. 
+where \(\nu^\mathrm{weak}_{\eta,\mathrm{untied}}\) is given by Definition~\ref{2506:def:weak-recovery} where \(m\) is replaced by \(m_\mathrm{untied}\); the dependence of \(\mathrm{gain}\) on \(\eta\) is subleading, and we will neglect it in the following. 
 
 \begin{theorem} \label{2506:thm:sequencelength-gain}
     Let $C_{\sie} \in \dR^{L^\sie}$ be the first non-zero tensor in the Hermite expansion of $g$ (see Appendix~\ref{2506:app:hermite-polynomials}). Then the gain satisfies with high probability

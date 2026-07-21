@@ -1,7 +1,7 @@
 \section{Setting and definitions}
 \label{2506:sec:setting}
 
-Let $(X^{\tau},\vec{y}^{\tau})\in\mathbb{R}^{L\times d}\times \mathbb{R}^{k_\mathrm{out}}$ denote $\tau=1,\dots,n$ samples drawn from the Gaussian sequence single-index model with weights $\vec{w}_{\star}\in\mathbb{R}^{d}$ and link function $\vec{g}$, defined in \cref{2506:eq:gssim}. As motivated in the introduction, our goal in this work is to characterize the sample complexity of learning the sequence task $(X^{\tau},\vec{y}^{\tau})$ with a tied single-layer attention trained under one-pass (spherical) SGD defined in \cref{2506:eq:normalized-SGD-w}. Note that while the model might appear as too simplified because of the lack of correlation between the tokens, we will show that it is sufficient to capture the main features of sequence models. 
+Let $(X^{\nu},\vec{y}^{\nu})\in\mathbb{R}^{L\times d}\times \mathbb{R}^{k_\mathrm{out}}$ denote $\nu=1,\dots,n$ samples drawn from the Gaussian sequence single-index model with weights $\vec{w}_{\star}\in\mathbb{R}^{d}$ and link function $\vec{g}$, defined in \cref{2506:eq:gssim}. As motivated in the introduction, our goal in this work is to characterize the sample complexity of learning the sequence task $(X^{\nu},\vec{y}^{\nu})$ with a tied single-layer attention trained under one-pass (spherical) SGD defined in \cref{2506:eq:normalized-SGD-w}. Note that while the model might appear as too simplified because of the lack of correlation between the tokens, we will show that it is sufficient to capture the main features of sequence models. 
 
 As shown in the classical result by \cite{chung1954stochastic}, one-pass SGD can be understood as a noisy discretization of gradient flow on the \emph{population risk} (also referred to as \emph{population loss}):
 \begin{equation}
@@ -52,7 +52,7 @@ Namely, the initial value of the sufficient statistic is \((\vec{e}^0, m^0)\appr
 As previously discussed, the first phase is the one that requires the most number of gradient steps \cite{arous2021online,arnaboldi2024escaping}: the sample complexity required for the first phase is always greater or equal to the one required for the second phase; after having reached a small correlation with the target, the attention decays exponentially fast to a complete overlapped state.
 \begin{definition}[Weak recovery] \label{2506:def:weak-recovery}
     Let \(\eta\in(0,1)\) a parameter independent from \(d\). We say that the model has \emph{weakly recovered} the target when \(\norm{(\vec{e}, m)}\geq \eta\). The weak recovery time is then
-    \[ \tau^\mathrm{weak}_\eta = \min\left\{\tau\ge0\colon \norm{(\vec{e}^\tau, m^\tau)}\geq \eta\right\}.\]
+    \[ \nu^\mathrm{weak}_\eta = \min\left\{\nu\ge0\colon \norm{(\vec{e}^\nu, m^\nu)}\geq \eta\right\}.\]
 \end{definition}
 We use this definition of weak recovery as a proxy for identifying the learning has happened, since the subsequent \emph{strong recovery} will be faster. Figure~\ref{2506:fig:loss_surface} shows some examples of population loss surface: apart from initialization, there are no other critical points where the dynamic can get slowed down. 
 
@@ -62,7 +62,7 @@ Finally, for simplicity of the discussion we will make the following assumption 
 \begin{equation}\label{2506:eq:ode_approx}
     \frac{d\vw}{dt} = -\E\left[{\nabla_{\vw}^\bot \ell(X, y, f_{\vw})}\right] - \frac{\gamma}2  \E\left[{\norm{\nabla_{\vw}^\bot \ell(X, y, f_{\vw})}^2}\right] \vw,
 \end{equation}
-where $\nabla_{\vw}^\bot = (I - \vw\vw^\top)\nabla_{\vw}$ is the spherical gradient. The time scaling corresponds to $t = \tau/\gamma$.
+where $\nabla_{\vw}^\bot = (I - \vw\vw^\top)\nabla_{\vw}$ is the spherical gradient. The time scaling corresponds to $t = \nu/\gamma$.
 \end{assumption}
  As shown in 
 \cite{arous2021online,arnaboldi2024repetita}, such an ODE captures both the right weak recovery time for a fixed $\gamma$, and the maximal value of $\gamma$ for which the dynamics do not stay trapped in the uninformative region.

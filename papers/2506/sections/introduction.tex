@@ -18,8 +18,8 @@ where $\vec{w}\in \mathbb{R}^{d}$ are the trainable weights and $\Pi$ is the \em
 In this work, we will be interested in the optimization properties of the model in~\cref{2506:eq:model-definition} when trained under (spherical) one-pass stochastic gradient descent (SGD) from a random initial condition $\vec{w}^0 \sim {\rm Unif}(\mathbb{S}^{d-1}(\sqrt{d}))$:
 \begin{equation}\label{2506:eq:normalized-SGD-w}
 \begin{split}
-    \vec{w}^{\tau+1} &= \frac{\vec{w}^\tau - \gamma \nabla_{\vec{w}} \ell(X^\tau, \vec{y}^\tau; f_{\vec{w}})}{\left\lVert \vec{w}^\tau - \gamma \nabla_{\vec{w}} \ell(X^\tau, \vec{y}^\tau; f_{\vec{w}})\right\rVert}
-    \norm{\vec{w}^\tau}.
+    \vec{w}^{\nu+1} &= \frac{\vec{w}^\nu - \gamma \nabla_{\vec{w}} \ell(X^\nu, \vec{y}^\nu; f_{\vec{w}})}{\left\lVert \vec{w}^\nu - \gamma \nabla_{\vec{w}} \ell(X^\nu, \vec{y}^\nu; f_{\vec{w}})\right\rVert}
+    \norm{\vec{w}^\nu}.
 \end{split}\end{equation}
 with the squared loss:
 \begin{equation}
