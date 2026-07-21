@@ -51,7 +51,7 @@ We now move to our main problem: estimating the time SGD takes to escape mediocr
 \end{equation}
 The above can be exactly solved by numerically integrating \eqref{2305:eq:spherical-p1-ode} and then finding the root of \eqref{2305:eq:exit_time_implicit_equation}. However, an analytical expression for the ODE exit time can be found from the following two observations:
 \begin{itemize}
-    \item From the discussion around equation ~\eqref{2305:eq:initial_distribution_QM}, initializing at random in high-dimensions imply that \(\bar{m}(0)=\varepsilon \ll 1\), so we can consider the linearization of equation \eqref{2305:eq:spherical-p1-ode} in $\varepsilon$ and solve it analytically. For small enough \(T\), this will lead us to an accurate result;
+    \item From the discussion around Equation~\eqref{2305:eq:initial_distribution_QM}, initializing at random in high-dimensions imply that \(\bar{m}(0)=\varepsilon \ll 1\), so we can consider the linearization of equation \eqref{2305:eq:spherical-p1-ode} in $\varepsilon$ and solve it analytically. For small enough \(T\), this will lead us to an accurate result;
     \item Even if the ODE trajectories are deterministic, the exit time \(t_\text{ext}\) is a random variable of the random initialization.
 \end{itemize}
 Note that these lead to two natural notions of average exit time over the initial conditions. The first one is obtained by taking the expected value over initial conditions before solving the cross-threshold equation
