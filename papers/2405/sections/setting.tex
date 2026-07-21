@@ -5,7 +5,7 @@ Given a dataset of $N$ labeled examples $\{\vec z^\nu, y^\nu\}_{\nu \in [N]}$ in
 \begin{align}
     f(\vec z; W, \vec a) = \frac{1}{p} \sum_{j =1}^p a_j \sigma \left(\langle \vec z, \vec w_j \rangle \right) \label{2405:eq:def_nn}
 \end{align}
-We consider target functions that are dependent only on few orthogonal relevant directions $k=O_d(1)$ encoded in the target's weight matrix $W^\star = \{\vec w^\star_r\}_{r \in [k]} \in \mathbb{R}^{k\times d}$:
+We consider target functions that are dependent only on few orthogonal relevant directions $k=O_d(1)$ encoded in the target's weight matrix $W^\star = \{\vec w^\star_r\}_{r \in [k]} \in \mathbb{R}^{k\times d}$:\addnote{The target $f^\star$ plays the role of the teacher and the network $f$ that of the student from Section~\ref{intro:sec:settings}; we switch to \emph{target}/\emph{network} here because $f^\star$ and $f$ no longer share the same architecture.}
 \begin{align}
     y^\nu = f^\star(\vec z^\nu) = h^\star(W^\star \vec z^\nu)
 \end{align}
