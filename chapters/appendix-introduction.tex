@@ -21,7 +21,7 @@ Renormalizing onto the sphere makes the increment tangential to leading order in
 \begin{equation} \label{app:intro:eq:tangent-step}
     \vec{w}^{\tau+1} - \vec{w}^{\tau} = -\gamma\,P_{\vec{w}}^{\perp}\,\nabla_{\vec{w}}\ell + O(\gamma^2), \qquad P_{\vec{w}}^{\perp} = I - \frac{\vec{w}\vec{w}^\top}{d},
 \end{equation}
-the discarded \(O(\gamma^2)\) carrying the curvature of the retraction together with the gradient fluctuations---the \emph{variance term} \(\Psi\), one power of \(\gamma\) down and neglected throughout, as in the main text. Since the sample is fresh the gradient is unbiased for the population risk, \(\mathbb{E}[\nabla_{\vec{w}}\ell] = \nabla_{\vec{w}}\mathcal{R}\), and---the projector depending on \(\vec{w}\) alone---
+the discarded \(O(\gamma^2)\) carrying the retraction's curvature together with the gradient fluctuations---the \emph{variance term} \(\Psi\), one power of \(\gamma\) down and neglected throughout, as in the main text. Since the sample is fresh the gradient is unbiased for the population risk, \(\mathbb{E}[\nabla_{\vec{w}}\ell] = \nabla_{\vec{w}}\mathcal{R}\), and---the projector depending on \(\vec{w}\) alone---
 \begin{equation}
     \mathbb{E}[\vec{w}^{\tau+1} - \vec{w}^{\tau}] = -\gamma\,P_{\vec{w}}^{\perp}\,\nabla_{\vec{w}}\mathcal{R} + O(\gamma^2).
 \end{equation}
