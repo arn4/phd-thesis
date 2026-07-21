@@ -62,7 +62,7 @@ When using \emph{Correlation Loss SGD}, Equation~\eqref{2406:eq:app:m_expansion}
 effectively removing a constraint on the possible values of \(\delta\). The modified version of SGD can use smaller values of \(\delta\) for escaping the initial condition, reaching regions in the phase diagram that are not allowed for SGD: this is colored in yellow in Figures~\ref{2406:fig:app:deltamu_phasediagram}~and~\ref{2406:fig:cold_start_pd}. Of course, if the learning rate becomes too large, all the theory does not work anymore (purple region in the diagram). In Figure~\ref{2406:fig:cold_start_pd} we show that the number of steps needed to weakly recover can be pushed down to be smaller than any power scaling with \(d\) (black and blue line on the x-axis). The picture becomes clearer if we look at the same diagram in terms of \((\mu,\delta)\): Correlation Loss SGD can be used with learning very large learning rates (\(1-\sfrac\ell2>\delta>-\sfrac{(\ell-1)}{2}\)) such that the escaping times is \(T=O(\mathrm{polylog}(d))\), as proved in Theorem~\ref{2406:thm:main:no_yhat_weak_recovery}.
 We believe that the true number of steps is actually \(T=O(\mathrm{log}(d))\), but we could not find any formal proof; in Section~\ref{2406:app:sec:polylog}, we were able to show that for \(\ell=2\) we have \(T=O(\mathrm{log}(d))\), relying the result on numerical integration of our asymptotic theory. Lastly, if the learning rate is of order \(\gamma=O(d^{-\delta})=O(d^{\sfrac{\ell-1}{2}})\) we recover the result of \cite{dandi2023how}: the target can be weakly recovered in just one step, when the batch size is \(n_b>O(d^\ell)\).
 
-\subsection{Simple example: retrieving \cite{arous2021online}}
+\subsection{Simple example: retrieving \texorpdfstring{\cite{arous2021online}}{[arous2021online]}}
 In this section, we want to show how to find the same result presented in \cite{arous2021online} starting from our formalism.
 There, online one-pass SGD is considered, meaning \(n_b=1 \implies \mu = 0\) in our context. Moreover, a vanishing learning rate is assumed, which implies \(\delta>0\), and all the bounds for the evolutions of \(m\) are tight. The condition for expansiveness of equation~\eqref{2406:eq:app:m_expansion} becomes
 \[
@@ -77,7 +77,7 @@ Plugging in \(m_0 = \sfrac{1}{\sqrt{d}}\)  we finally get \(\delta \ge \sfrac{\e
  \end{cases}.
 \end{equation}
 This result matches \cite{arous2021online}.
-\subsection{Extension to $p>1$}
+\subsection{Extension to \texorpdfstring{$p>1$}{p>1}}
 The extension to general two-layer network student functions ($p>1$), while keeping always the target fixed to be a single-index one, can be readily done by performing an analysis similar to the above. The considerations on the weak recovery trade-offs done in the previous sections are not changed upon re-scaling the learning rate with the hidden layer size $p=O(1)$, i.e. $\sfrac{\gamma_{\rm 2LNN}}{p} = \gamma_{\rm GLM}$. Therefore, the scaling laws detailed in the phase diagram (Fig.~\ref{2406:fig:cold_start_pd}) are not modified, and only prefactors, i.e. quantity not scaling with the input dimension, change with respect to the $p=1$ case. We illustrate this phenomenon numerically in Fig.~\ref{2406:fig:app:k1p4singleindex}. We leave the detailed theoretical analysis of the $p>1$ case for future work, with particular attention to the limit $p \to \infty$ which we believe is an interesting avenue of future research.
 
 
