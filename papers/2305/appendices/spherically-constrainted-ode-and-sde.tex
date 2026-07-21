@@ -98,7 +98,7 @@ we can find an expression for the two unconstrained differentials
 \end{split}\end{equation}
 Since we are forcing the weight on the sphere, the update rule that actually has to be used is
 \[
-  \w^{\nu+1}_j =\frac{\w^{\nu}_j - \gamma \nabla_{\w_j}{\loss}}{\w^{\nu}_j - \gamma \nabla_{\w_j}{\loss}}\sqrt{d};
+  \w^{\nu+1}_j =\frac{\w^{\nu}_j - \gamma \nabla_{\w_j}{\loss}}{\left\lVert \w^{\nu}_j - \gamma \nabla_{\w_j}{\loss} \right\rVert}\sqrt{d};
 \]
 multiplying both sides by \(\w_\star\) and subtracting \(m\) we get
 \[
