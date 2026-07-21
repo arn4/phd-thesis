@@ -126,7 +126,7 @@ converge to their expected value
     \\
     \frac{1}{n_b} \sum_{\nu = 1}^{n_b} \sigma'(\lambda_{j,t}^\nu)\lambda_{l,t}^{\nu} \to& \mathbb{E}_{\Omega_t}\left[ \sigma'(\lambda_j)\lambda_{l} \mathcal{E} \right] = \phi^{\rm{GF}}_{jl,t} \label{2406:eq:app:phigf_def}
     \\
-    \frac{1}{n_b}\sum_{\nu = 1}^{n_b} \sigma'(\lambda_{j,t}^\nu) \sigma'(\lambda_{l,t}^\nu){\mathcal{E}_t^\nu}^2 \vec z^{\nu\top}_t \vec z^{\nu} \to& d\mathbb{E}_{\Omega_t}\left[ \sigma'(\lambda_j)\sigma'(\lambda_l)\mathcal{E}^2\right] = d\phi_{jl,t}^\text{GF} \label{2406:eq:app:phihd_def}
+    \frac{1}{n_b}\sum_{\nu = 1}^{n_b} \sigma'(\lambda_{j,t}^\nu) \sigma'(\lambda_{l,t}^\nu){\mathcal{E}_t^\nu}^2 \vec z^{\nu\top}_t \vec z^{\nu} \to& d\mathbb{E}_{\Omega_t}\left[ \sigma'(\lambda_j)\sigma'(\lambda_l)\mathcal{E}^2\right] = d\phi_{jl,t}^\text{HD} \label{2406:eq:app:phihd_def}
     \\
     \sum_{\nu = 1}^{n_b} \sum_{\beta=1}^{d-k-p} \langle \vec v_{\beta, t}, \vec z_t^\nu\rangle \to& 0 \notag
 \end{align}
@@ -149,13 +149,13 @@ where the indicator function \(\mathbf{1}_{\{\mu\neq0\}}\) indicates that the la
 \begin{equation} \label{2406:eq:app:process}\begin{split}
 M_{jr,t+1} - M_{jr,t} \approx&  d^{-\delta}\frac{\gamma_0}{p}a_j \psi_{jr,t} = \Psi_{jr,t}\\
 Q_{jl,t+1} - Q_{jl,t} \approx& d^{-\delta}\frac{\gamma_0}{p}\left(a_j\phi_{jl,t}^\text{GF} + a_l^\tau\phi_{lj,t}^\text{GF}\right)  \\
-    &+d^{-2\delta+1-\mu}\frac{\gamma_0^2}{p^2n_0}a_j a_l \phi^\text{HD}_{jr} \\
+    &+d^{-2\delta+1-\mu}\frac{\gamma_0^2}{p^2n_0}a_j a_l \phi^\text{HD}_{jl} \\
     &+d^{-2\delta}\frac{\gamma_0^2}{p^2} a_j a_l \vec \psi_{j} P^{-1} (\vec\psi_{l})^\top\\
     &+d^{-2\delta}\frac{\gamma_0^2}{p^2} a_j a_l \left(\vec\phi_{j,t}^\text{GF} - M_tP^{-1}\vec \psi_{j,t}\right)(Q_t - M_tP^{-1}M_t^\top)^{-1}\left(\vec\phi^\text{GF}_l - M_tP^{-1}\vec \psi_{l}\right)^\top \\ &\eqqcolon \Phi_{jl,t}
 \end{split}\end{equation}
 These equations are the starting point for all our considerations, both when investigating weakly correlation and when characterizing the exact dynamics.
 
-Indeed, when we have a cold start we have to take into account that \(\psi_{jr,t}, \phi_{jl,t}^\text{GF}, \phi^\text{HD}_{jl}\) can also go to 0 when \(d\to+\infty\). A careful analysis for the leading terms of these equations around initializations will also give us infromation on the behaviour of the system, and ultimately it will allow to have rules on how to scale \(\delta\) and \(\mu\) to have the best performance. An example for these analysis for \emph{generalized linear model} is provided in Appendix \ref{2406:sec:app:derivation_of_lb_equations}.
+Indeed, when we have a cold start we have to take into account that \(\psi_{jr,t}, \phi_{jl,t}^\text{GF}, \phi^\text{HD}_{jl}\) can also go to 0 when \(d\to+\infty\). A careful analysis for the leading terms of these equations around initializations will also give us infromation on the behaviour of the system, and ultimately it will allow to have rules on how to scale \(\delta\) and \(\mu\) to have the best performance. An example for these analysis for \emph{generalized linear model} is provided in Appendix \ref{2406:app:sec:weakrecoveryglm}.
 
 On the other hand, when can also assume \(\psi_{jr,t}, \phi_{jl,t}^\text{GF}, \phi^\text{HD}_{jl} = O_d(1)\) for all the dynamics\footnote{This happens if \(\ell\le1\) or when we provide an informed initialization.} and use the equations for an asymptotic description. Clearly, depending on the values of \(\delta\) and \(\mu\), not all terms are present in the limiting equations. A detailed discussion about this is provided in Section~\ref{2406:sec:main:warm_start}.
 
@@ -225,14 +225,14 @@ I_3(\omega_{\alpha\alpha},\omega_{\alpha\beta}, \omega_{\alpha\gamma},\omega_{\b
       \omega_{\gamma\gamma},
       \omega_{\gamma\delta},
       \omega_{\delta\delta}
-    ) &= \mathbb E\left[\sigma^\prime(\lambda_\alpha) \sigma^\prime(\lambda_\beta)\sigma(\lambda_\alpha)\sigma(\lambda_\beta)\right]  \\
+    ) &= \mathbb E\left[\sigma^\prime(\lambda_\alpha) \sigma^\prime(\lambda_\beta)\sigma(\lambda_\gamma)\sigma(\lambda_\delta)\right]  \\
 I^\text{noise}_2(\omega_{\alpha\alpha},\omega_{\alpha\beta},\omega_{\beta\beta}) &= \mathbb E\left[\sigma^\prime(\lambda_\alpha) \sigma^\prime(\lambda_\beta)\right] .
 \end{align*}
  where we introduced the correlation $\omega_{\alpha\beta} = \mathbb E [\lambda_\alpha \lambda_\beta]$, where $(\alpha , \beta)$ are indices running on either the teacher or the student components. Dropping the time index for clarity, we finally obtain:
 \[\begin{split}
     \psi_{jr} =& \frac{1}{k}\sum_{t=1}^k a^*_t I_3(Q_{jj}, M_{jr}, M_{jt}, P_{rr}, P_{rt}, P_{tt}) -\\ &- \frac{1}{p}\sum_{s=1}^p a_sI_3(Q_{jj}, M_{jr}, Q_{js}, P_{rr}, M_{sr}, Q_{ss}) \\
     \phi^{\rm{GF}}_{jl} =&  \frac{1}{k}\sum_{t=1}^k a^*_t I_3(Q_{jj}, Q_{jl}, M_{jt}, Q_{ll}, M_{lt}, P_{tt}) -\\ &- \frac{1}{p}\sum_{s=1}^p a_s I_3(Q_{jj}, Q_{jl}, Q_{js}, Q_{ll}, Q_{ls}, Q_{ss}) \\
-    \phi^{\rm{HD}}_{jr} =&
+    \phi^{\rm{HD}}_{jl} =&
     \frac{1}{k^2} \sum_{r, t=1}^{k} a^*_r a^*_{t} I_4(Q_{jj}, Q_{jl}, M_{jr}, M_{jt}, Q_{ll}, M_{lr}, M_{lt}, P_{rr}, P_{rt}, P_{tt})\\
     & +\frac{1}{p^2} \sum_{s,u=1}^p a_s a_{u} I_4(Q_{jj}, Q_{jl}, Q_{js}, Q_{ju}, Q_{ll}, Q_{ls}, Q_{lu}, Q_{ss}, Q_{su}, Q_{uu})\\
     & -\frac{2}{pk} \sum_{s=1}^p \sum_{r=1}^k a^*_r a_s  I_4(Q_{jj}, Q_{jl}, Q_{js}, M_{jr}, Q_{ll}, Q_{ls}, M_{lr}, Q_{ss}, M_{sr}, P_{rr})\\
