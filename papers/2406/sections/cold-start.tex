@@ -52,7 +52,7 @@ Our first main result is to characterize the time to achieve weak recovery of th
 \end{assumption}
 Assumption 2 ensures that the optimization problem is achievable for gradient flow on the population loss $\mathcal{R}$. Indeed, one can show that when $m \approx 0$,
 \[ \mathcal{R} = 2(1 - c_\ell c_\ell^\star m^\ell) + o(m^\ell); \]
-as a result, if $\ell$ is even and $c_\ell c_\ell^\star < 0$, then $m = 0$ is a local maximum of $\mathcal{R}$ and weak recovery is impossible. When $\ell$ is odd, the point $m=0$ is always a strict saddle, so Assumption \ref{2406:assump:init} that we start on the correct side of the saddle. Under the initialization scheme described by Equation~\ref{2406:eq:initial_conditions_unconstrainted}, the first condition is satisfied with arbitrarily high probability upon decreasing $\kappa$, while the second is a $1/2$-probability event.
+as a result, if $\ell$ is even and $c_\ell c_\ell^\star < 0$, then $m = 0$ is a local maximum of $\mathcal{R}$ and weak recovery is impossible. When $\ell$ is odd, the point $m=0$ is always a strict saddle, so Assumption \ref{2406:assump:init} ensures that we start on the correct side of the saddle. Under the initialization scheme described by Equation~\ref{2406:eq:initial_conditions_unconstrainted}, the first condition is satisfied with arbitrarily high probability upon decreasing $\kappa$, while the second is a $1/2$-probability event.
 
 We are now in the position to formally state the result:
 \begin{theorem} [Projected SGD weak recovery]
