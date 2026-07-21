@@ -367,7 +367,7 @@ Lemma \ref{2405:lem:app:psi_low_rank} implies that Assumption~\ref{2405:assump:a
 \end{proposition}
 
 \begin{proof}[of Theorem \ref{2405:thm:single_index_recovery}]
-    Our goal is to apply Proposition~\ref{2405:prop:app:hitting_times} to the function $\phi$. If $\ell_p^\star = 1$, then $\phi(0) \neq 0$ by the previous lemma, and with a uniform initialization of $\vec{w}^\star$ we have $m_0 \phi(0) > 0$ with probability $1/2$.  Combining this with the $(1- \delta)$ probability event of Proposition \ref{2405:prop:app:hitting_times} for small enough $\epsilon$, with probability $1 - \delta$, we have $t_\eta \leq C(\delta) d$ with probability $1/2 - \delta$.
+    Our goal is to apply Proposition~\ref{2405:prop:app:hitting_times} to the function $\phi$. If $\ell_p^\star = 1$, then $\phi(0) \neq 0$ by the previous lemma, and with a uniform initialization of $\vec{w}^\star$ we have $m_0 \phi(0) > 0$ with probability $1/2$.  Combining this with the $(1- \delta)$ probability event of Proposition \ref{2405:prop:app:hitting_times} for small enough $\epsilon$, with probability $1/2 - \delta$, we have $t_\eta \leq C(\delta) d$.
     We now move to the proof of the case where $\ell_p^\star =2$. In this case, Proposition~\ref{2405:prop:app:hitting_times} implies the desired result as soon as $\phi'(0) > 0$ (which corresponds in the $k = 1$ setting to the only eigenvalue of $d\phi(0)$ being positive). Since the Lebesgue measure is invariant w.r.t multiplication by $\pm 1$, the factor $a_0 \rho_0$ in the definition of $\phi'(0)$ has the same distribution as $\rho_0$, hence we can write $\phi'(0) = a'_0 |\phi'(0)|$ where $a'_0$ is also uniform in $\{-1, 1\}$. The event $\phi'(0) > 0$ therefore also has probability $1/2$, and we conclude as before.
 \end{proof}
 
