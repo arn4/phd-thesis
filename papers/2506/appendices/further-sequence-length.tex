@@ -8,13 +8,13 @@ Let's start from the main result on the gain, that can be broken down in three p
 
 
 \paragraph{The gain constant \(\gamma\)}
-This speedup comes from the different structure of the two networks, the tied one can built up correlation faster than the tied one because it compose \(L\) different signals. The strength of this effect is strongly dependent on the target function, the overall result is
+This speedup comes from the different structure of the two networks, the tied one can build up correlation faster than the untied one because it composes \(L\) different signals. The strength of this effect is strongly dependent on the target function, the overall result is
 \begin{equation}
     \text{gain at constant } \gamma \sim \frac{C_\mathrm{SIE} \times (\vec{1},\dots,\vec{1})}{\norm{C_\mathrm{SIE}}_\mathrm{op}}.
 \end{equation}
 
 \paragraph{The ratio of the learning rates}
-In Appendix~\ref{2506:app:proofs}, we showed that the the learning rate can grow with the sequence length \(L\) at most as
+In Appendix~\ref{2506:app:proofs}, we showed that the learning rate can grow with the sequence length \(L\) at most as
 \begin{itemize}
     \item for the tied network
           \[ 
