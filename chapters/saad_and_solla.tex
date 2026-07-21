@@ -120,7 +120,7 @@ Assume for simplicity that the \emph{teacher} is itself a two-layer network, wit
     \quad\text{or equivalently}\quad
     h^\star(\vec{\lambda}^\star) = \frac1k \sum_{j=1}^k a_j^\star \sigma(\lambda_j^\star)
 \end{equation}
-The integrability of Equation~\eqref{eq:intro:ss-odes} then boils down to whether we can compute, for a generic covariance \(C_s \in PSD\mathbb{R}^{p \times p}\), the following expectations:
+The integrability of Equation~\eqref{eq:intro:ss-odes} then boils down to whether we can compute, for a generic covariance \(C_p \in PSD\mathbb{R}^{p \times p}\), the following expectations:
 \begin{align}
     I_2^\text{risk}(C_2) &\coloneqq \mathbb{E}_{(z_1, z_2) \sim \mathcal{N}(0, C_2)}\left[ \sigma(z_1) \sigma(z_2) \right], \\
     I_2^\text{noise}(C_2) &\coloneqq \mathbb{E}_{(z_1, z_2) \sim \mathcal{N}(0, C_2)}\left[ \sigma'(z_1) \sigma'(z_2) \right], \\
