@@ -33,7 +33,7 @@ In practice, only the gradient component orthogonal to the weights is taken into
 \]
 while its analogous for Projected SGD does not hold.
 
-In this section, we want to show that \emph{Spherical SGD} is behaving like \emph{Correlation Loss SGD} when \(\gamma\) is not vanishing, namely that is possible to escape mediocrity when the batch size is sufficiently large. For small batch size, Projected SGD and Spherical SGD coincide, while when \(\gamma<0\) their behaviors are drastically different, and only the latter is able to escape mediocrity taking advantage of the large learning rate; a gap between the two is already noticeable at the \emph{Optimal Point}, where they both escape but the spherical is slightly faster.
+In this section, we want to show that \emph{Spherical SGD} is behaving like \emph{Correlation Loss SGD} when \(\gamma\) is not vanishing, namely that is possible to escape mediocrity when the batch size is sufficiently large. For small batch size, Projected SGD and Spherical SGD coincide, while when \(\delta<0\) their behaviors are drastically different, and only the latter is able to escape mediocrity taking advantage of the large learning rate; a gap between the two is already noticeable at the \emph{Optimal Point}, where they both escape but the spherical is slightly faster.
 Finally, note that is is possible to introduce a \emph{Correlation Loss Spherical SGD}, by changing the loss in the same way as the usual \emph{Correlation Loss SGD}. There is no practical difference between the two algorithms when working with correlation loss.
 
 \begin{figure}
