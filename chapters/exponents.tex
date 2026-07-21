@@ -307,7 +307,7 @@ where the minimization now ranges over all label transformations \(g\) as well a
 Since the choice \(g = \mathrm{id}\) recovers Equation~\eqref{eq:intro:info-exponent}, one always has \(\ell^\star \leq \ell\); a nonlinear \(g\) can only lower the exponent, and frequently does so strictly.
 \addnote{The transfoemation \(g\) is target-dependent, but can be estimated from the data with few guesses, as exposed in the original work.}
 \citet{damian2024computational} showed that, when the \emph{partial-trace} algorithm is run on a transformed label \(g(y)\), the sample complexity of recovering the hidden direction is governed by \(\ell^\star\) rather than \(\ell\): weak recovery is achieved in \(d^{\ell^\star/2}\) samples, saturating the \emph{Statistical Query} (SQ) lower bound.
-The algorithmic counterpart of this easy class was characterized concurrently by \citet{dandi2024benefits}: reusing each batch of an extensive (\(\mathcal{O}(d)\)) dataset even twice lets a two-layer network weakly recover any non-even single-index target---exactly the generative-exponent-one (\(\ell^\star = 1\)) family---in \(\mathcal{O}(d)\) samples, whereas single-pass SGD requires polynomially many more steps.
+The algorithmic counterpart of this easy class was characterized concurrently by \citet{dandi2024benefits}: reusing each batch of an extensive (\(\mathcal{O}(d)\)) dataset even twice lets a two-layer network weakly recover any non-even single-index target (exactly the generative-exponent-one \(\ell^\star = 1\) family) in \(\mathcal{O}(d)\) samples, whereas single-pass SGD requires polynomially many more steps.
 The separation between \(\ell\) and \(\ell^\star\) can be substantial, as the following examples show.
 \begin{example}[\(\mathrm{He}_3\)]
  \(\mathrm{He}_3\) has information exponent \(\ell = 3\), yet because it is odd one can take \(g(y) = \mathrm{sign}(y)\) and correlate the transformed label with \(\mathrm{He}_1\), giving \(\ell^\star = 1\).
@@ -328,6 +328,8 @@ With \(\rho \sim 1/d\), the inner product \(\langle\tilde{\vec{w}},\vec{x}\rangl
     \nabla_{\vec{w}}\ell\!\left(f(\vec{x};\tilde{\vec{w}}),\,y\right) = -y \left(\sigma'(\langle\vec{w},\vec{x}\rangle) + \,y\,\sigma''(\langle\vec{w},\vec{x}\rangle) + y^2\,\sigma'''(\langle\vec{w},\vec{x}\rangle) + \cdots \right)\,\vec{x},
 \] so the network implicitly synthesizes the label transformation, provided \(\sigma\) has higher-order derivatives.
 This result is formalized in the following theorem:
+\addnote{The theorem is stated only for \(\ell^\star \leq 2\) because if \(h^\star\) is a polynomial, then \(\ell^\star \leq 2\), as proved in Chapter~\ref{chap:paper-2405}. There is no guarantee of the exact same sample complexity for \(\ell^\star > 2\), but it cannot be worse than the SQ bound \(d^{\ell^\star/2}\ge d^{\frac32}\).}
+This is the same sample-complexity table as~\eqref{eq:intro:sgd-sample-complexity}, with \(\ell\) replaced by \(\ell^\star\). Since \(\ell^\star \leq \ell\), the displaced gradient is always at least as efficient as one-pass SGD and strictly better whenever \(\ell^\star < \ell\).
 \begin{theorem}[Informal version of Chapter~\ref{chap:paper-2405}]
     The displaced gradient algorithm of Chapter~\ref{chap:paper-2405}, which sees each sample exactly twice, achieves weak recovery of any polynomial single-index target with generative exponent \(\ell^\star\) in
     \begin{equation}
@@ -337,8 +339,7 @@ This result is formalized in the following theorem:
         \end{cases}
     \end{equation}
 \end{theorem}
-\addnote{The theorem is state only for \(\ell^\star \leq 2\) because if \(h^\star\) is a polynomial, then \(l^\star \leq 2\), as proved in Chapter~\ref{chap:paper-2405}. There is no  guarantee of the exact same sample complexity for \(\ell^\star > 2\), but is cannot be worse than the SQ bound \(d^{\ell^\star/2}\ge d^{\frac32}\).}
-This is the same sample-complexity table as~\eqref{eq:intro:sgd-sample-complexity}, with \(\ell\) replaced by \(\ell^\star\). Since \(\ell^\star \leq \ell\), the displaced gradient is always at least as efficient as one-pass SGD and strictly better whenever \(\ell^\star < \ell\).
+
 
 \begin{figure}[t]
     \centering
