@@ -92,7 +92,7 @@ However, this Information Exponent is not the right measure of complexity for lo
 \end{equation}
 which allows for the application of arbitrary transformations of the labels before performing the queries. Under this definition, the ``hard'' problems with $\ell^\star > 2$ are also impossible to learn for the best first-order algorithm, \emph{Approximate Message Passing} \citep{troiani2024fundamental}. 
 
-We discuss in this work the extension of the generative exponent to the multi-index setting and investigate the dynamics of specific gradient-based programs (Algorithm~\ref{2405:algo:optimizer_main_step}) as a function of the freshly defined hardness exponent $\ell^*$. 
+We discuss in this work the extension of the generative exponent to the multi-index setting and investigate the dynamics of specific gradient-based programs (Algorithm~\ref{2405:algo:optimizer_main_step}) as a function of the freshly defined hardness exponent $\ell^\star$.
 These theoretical findings match the recent one of \cite{kou2024matching} on the computational efficiency of SGD in learning sparse $k-$parity (associated with $\ell^\star = k$).
 
 When the optimal transformation $f$ is known, a simple SGD algorithm on $(\vec{z}, f(y))$ achieves the Generative Exponent lower bound. However, one problem remains: does there exist a class of SGD-like algorithms that can achieve this lower bound agnostically?
