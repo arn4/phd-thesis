@@ -37,8 +37,8 @@ the accounts for \(\Q\) are similar, just a bit more tedious.
 \begin{equation}\label{2305:eq:app:m_update_process}
 \begin{split}
   \M^{\nu+1}_{j} &= \frac{\w^{\nu+1}_j\cdot\w^*}{d} \\
-    &= \left(\M^{\nu}_{j} - \frac{\gamma\w^*\cdot\nabla_{\w_l}{\loss}}{d}\right)\left[1+ \frac{1}{2d}\left(2\gamma\w^{\nu}_j\cdot \nabla_{\w_j}{\loss}-\gamma^2\left\|\nabla_{\w_j}{\loss}\right\|^2\right)+\smallo{d^{-1}}\right]\\
-    &= \M^{\nu}_{j} - \frac{\gamma\w^*\cdot\nabla_{\w_l}{\loss}}{d} + \frac{\M^{\nu}_{jr}}{2d}\left(2\gamma\w^{\nu}_j\cdot \nabla_{\w_j}{\loss}-\gamma^2\left\|\nabla_{\w_j}{\loss}\right\|^2\right)+\smallo{d^{-1}} \\
+    &= \left(\M^{\nu}_{j} - \frac{\gamma\w^*\cdot\nabla_{\w_j}{\loss}}{d}\right)\left[1+ \frac{1}{2d}\left(2\gamma\w^{\nu}_j\cdot \nabla_{\w_j}{\loss}-\gamma^2\left\|\nabla_{\w_j}{\loss}\right\|^2\right)+\smallo{d^{-1}}\right]\\
+    &= \M^{\nu}_{j} - \frac{\gamma\w^*\cdot\nabla_{\w_j}{\loss}}{d} + \frac{\M^{\nu}_{j}}{2d}\left(2\gamma\w^{\nu}_j\cdot \nabla_{\w_j}{\loss}-\gamma^2\left\|\nabla_{\w_j}{\loss}\right\|^2\right)+\smallo{d^{-1}} \\
     &= \M^{\nu}_{j} +\frac{1}{d}\left[
       \frac{\gamma}{p} \lf_\star\dsp^\nu\lf^\nu_j -
       \frac{\M^{\nu}_{j}}{2}\left(2\frac{\gamma}{p}\dsp^\nu\lf^\nu_j\lf^\nu_j + \frac{\gamma^2}{p^2} {\dsp^\nu\lf^\nu_j}^2\right)
