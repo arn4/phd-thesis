@@ -5,7 +5,7 @@ In this appendix we provide an informal derivation of the low-dimensional determ
 \begin{align*}
     y^\nu = f^\star(W^\star z^\nu) + \sqrt{\Delta} \xi^\nu,
 \end{align*}
-where \(W^\star \in \mathbb R^{k\times d} \) where we assume \(k =O(1)\). We are implying that \(y^{\nu}\) depends on \(\vec z^\nu \sim \mathcal{N}(0,I_d)\) just throught a low-dimensional representation (linear latent variable). \(\xi^\nu\sim \mathcal{N}{(0,1)}\) is the artificial noise.
+where \(W^\star \in \mathbb R^{k\times d} \) where we assume \(k =O(1)\). We are implying that \(y^{\nu}\) depends on \(\vec z^\nu \sim \mathcal{N}(0,I_d)\) just through a low-dimensional representation (linear latent variable). \(\xi^\nu\sim \mathcal{N}{(0,1)}\) is the artificial noise.
 
 We can track the overlap matrix using standard manipulation. 
 We introduce the local fields as:
@@ -31,7 +31,7 @@ W^{\star}W^{\top} & W^{\star} W^{\star T}
 \end{pmatrix}
 \in\mathbb{R}^{(p+k)\times (p+k)}
 \end{equation*}
-These is the low-dimensional matrix (its dimensions stay finite even when \(d\to+\infty\)) that contains all the information needed for the dynamics.
+This is the low-dimensional matrix (its dimensions stay finite even when \(d\to+\infty\)) that contains all the information needed for the dynamics.
 
 We are going to train the network with layer-wise SGD without replacement, using at each time step \(t\) a fresh new batch of size $n_b$: 
 \[
@@ -59,12 +59,12 @@ Q_{jl,t+1} - Q_{jl,t} =& \frac{\gamma}{pn_b} \sum_{\nu = 1}^{n_b} \left(a_j\sigm
 % \label{2406:eq:overlaPraining}
 \end{aligned}
 \end{equation}
-These equations introduce a discrete stochastic process \(\{\Omega_t\}_{t\in \mathbb{N}}\) that describes the dynamics in alow-dimensional way.
+These equations introduce a discrete stochastic process \(\{\Omega_t\}_{t\in \mathbb{N}}\) that describes the dynamics in a low-dimensional way.
 We also introduce the population loss as
 \begin{equation*}
     \mathcal R_t = \frac12 \mathbb{E}_{\Omega_t}\left[\mathcal E^2\right],
 \end{equation*}
-since it is the quantity telling us the performace of our trained network.
+since it is the quantity telling us the performance of our trained network.
 
 
 \paragraph{Handling the intra-batch correlations}
@@ -75,7 +75,7 @@ Up to now, we have followed the same derivation as the original Saad\&Solla equa
     + \\ & \quad +
     \sum_{\nu = 1}^{n_b} \sum_{\nu' = 1, \nu'\neq\nu}^{n_b} \sigma'(\lambda_{j,t}^\nu)\sigma'(\lambda_{l,t}^{\nu'})\mathcal{E}_t^\nu\mathcal{E}_t^{\nu'} \vec z^{\nu\top}_t \vec z_t^{\nu'}
 \end{split}\]
-The first term is the standard gradient noise term that appears in Sadd\&Solla equations, while the second emerge from the large-batch, and has to be treated with new considerations.
+The first term is the standard gradient noise term that appears in Saad\&Solla equations, while the second emerges from the large-batch, and has to be treated with new considerations.
 Let's introduce now the component of the student vectors orthogonal to the teacher space 
 \[
 W_t^\bot \coloneqq W_t - M_tP^{-1}W^\star \text{ and consequently }
@@ -110,7 +110,7 @@ Now, exploiting the relation:
 \[
    \vec \lambda_t^\bot = \vec \lambda_t - M_tP^{-1} \vec \lambda^\star,
 \]
-and noting that the indeces \(\nu\) and \(\nu'\) are independent, all the sum we need to compute are just
+and noting that the indices \(\nu\) and \(\nu'\) are independent, all the sum we need to compute are just
 \[
  \sum_{\nu = 1}^{n_b} \sigma'(\lambda_{j,t}^\nu)\lambda^{\star}_{r} \mathcal{E}_t^{\nu} \qquad 
  \sum_{\nu = 1}^{n_b} \sigma'(\lambda_{j,t}^\nu)\lambda_{l,t}^{\nu}
@@ -155,7 +155,7 @@ Q_{jl,t+1} - Q_{jl,t} \approx& d^{-\delta}\frac{\gamma_0}{p}\left(a_j\phi_{jl,t}
 \end{split}\end{equation}
 These equations are the starting point for all our considerations, both when investigating weakly correlation and when characterizing the exact dynamics.
 
-Indeed, when we have a cold start we have to take into account that \(\psi_{jr,t}, \phi_{jl,t}^\text{GF}, \phi^\text{HD}_{jl}\) can also go to 0 when \(d\to+\infty\). A careful analysis for the leading terms of these equations around initializations will also give us infromation on the behaviour of the system, and ultimately it will allow to have rules on how to scale \(\delta\) and \(\mu\) to have the best performance. An example for these analysis for \emph{generalized linear model} is provided in Appendix \ref{2406:app:sec:weakrecoveryglm}.
+Indeed, when we have a cold start we have to take into account that \(\psi_{jr,t}, \phi_{jl,t}^\text{GF}, \phi^\text{HD}_{jl}\) can also go to 0 when \(d\to+\infty\). A careful analysis for the leading terms of these equations around initializations will also give us information on the behaviour of the system, and ultimately it will allow to have rules on how to scale \(\delta\) and \(\mu\) to have the best performance. An example for these analysis for \emph{generalized linear model} is provided in Appendix \ref{2406:app:sec:weakrecoveryglm}.
 
 On the other hand, when can also assume \(\psi_{jr,t}, \phi_{jl,t}^\text{GF}, \phi^\text{HD}_{jl} = O_d(1)\) for all the dynamics\footnote{This happens if \(\ell\le1\) or when we provide an informed initialization.} and use the equations for an asymptotic description. Clearly, depending on the values of \(\delta\) and \(\mu\), not all terms are present in the limiting equations. A detailed discussion about this is provided in Section~\ref{2406:sec:main:warm_start}.
 
@@ -172,7 +172,7 @@ the overlap dynamics for the spherical large batch SGD can be then approximated 
     Q_{jl,t+1} - Q_{jl,t} \approx& \Phi_{jl,t}{(\Omega)} - \frac{1}{2}Q_{jl,t}\left(\Phi_{jj,t}{(\Omega)}+\Phi_{ll,t}{(\Omega)}\right) \\
 \end{split}
 \end{equation*}
-This derivation follows from a Taylor expansion of the denominator needed to project the update equations on the sphere. As final note, this aproximation only holds when \(\gamma\) is vanishing when \(d\to+\infty\): that's why we need \(\gamma = o_d(1)\) in Propposition~\ref{2406:prop:main:exact_asympt}. When \(\gamma\) is too large, all the other orders of Taylor expansion play a role, and we can't have a simple expression for the exact evoluton, even near initialization. Neverthless, the first order expansion is a lower bound of the true dynamic that can provided guarantee of learning in some cases:
+This derivation follows from a Taylor expansion of the denominator needed to project the update equations on the sphere. As final note, this approximation only holds when \(\gamma\) is vanishing when \(d\to+\infty\): that's why we need \(\gamma = o_d(1)\) in Proposition~\ref{2406:prop:main:exact_asympt}. When \(\gamma\) is too large, all the other orders of Taylor expansion play a role, and we can't have a simple expression for the exact evolution, even near initialization. Nevertheless, the first order expansion is a lower bound of the true dynamic that can provided guarantee of learning in some cases:
 \begin{equation}\label{2406:eq:app:generallowerbound}
 \begin{split}
     M_{jr,t+1} - M_{jr,t} \ge& \Psi_{jr,t}{(\Omega)} - \frac{M_{jr,t}}{2}\Phi_{jj,t}{(\Omega)} \\
@@ -242,7 +242,7 @@ I^\text{noise}_2(\omega_{\alpha\alpha},\omega_{\alpha\beta},\omega_{\beta\beta})
 \\
 &-\frac{2}{pk} \sum_{s,r=1}^{p,k} a_s a^\star_r I_2(Q_{ss},M_{sr},P_{rr})
 \end{split}\]
-When analizing a matching architecture setting, we just need to specify \(I_2,I_3,I_4\) and \(I^\text{noise}_2\). In the following sections we provide the explicit expersion for all the case used in numerical simulation inside this paper.
+When analyzing a matching architecture setting, we just need to specify \(I_2,I_3,I_4\) and \(I^\text{noise}_2\). In the following sections we provide the explicit expression for all the cases used in numerical simulation inside this paper.
 
 \subsection{Analytic case $\sigma =\erf\left(\sfrac{\cdot}{\sqrt{2}}\right)$}
 The expressions can be found in the appendix of \cite{veiga2022phase}.
