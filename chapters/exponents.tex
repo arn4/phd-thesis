@@ -159,8 +159,8 @@ Capturing the search phase therefore demands tools that go beyond the determinis
 The concept of information exponent is actually more general than one presented here. Every problem where the loss function depends only on the scalar product \(\langle \vec{w}, \vec{x}\rangle\), and it is optimized by one-pass spherical SGD, has a well-defined information exponent that controls the sample complexity of learning. This includes, for example, online PCA, spiked matrix/tensor estimation, or Gaussian mixture clustering, as in the seminal work of \citet{arous2021online}.
 
 Chapter~\ref{chap:paper-2406} extends the exponent to the single-index case where \(n_b\) and \(\gamma\) scale with \(d\).
-The chapter reveals a sharp threshold at \(n_b \sim d^{\ell/2}\): below it, larger mini-batches reduce the number of gradient steps proportionally while keeping the total sample complexity \(N = n_b T = \mathcal{O}(d^{\ell-1})\) unchanged, offering a practical speed-up through parallelism; above it, the gradient signal is dominated by self-interaction terms and standard SGD fails to achieve weak recovery altogether.
-Failing to scale the learning rate appropriately at large \(n_b\) degrades the sample complexity: there is only a curve in the space of \((n_b, \gamma)\) that achieves weak recovery with the optimal sample complexity.
+The chapter reveals a sharp threshold at \(n_b \sim d^{\ell/2}\): below it, scaling the learning rate proportionally to the batch size reduces the number of gradient steps proportionally while keeping the total sample complexity \(N = n_b T = \mathcal{O}(d^{\ell-1})\) unchanged, offering a practical speed-up through parallelism. Above the threshold, continuing to scale the learning rate this way makes the gradient signal dominated by self-interaction terms that contract the correlation to zero, and standard SGD fails to achieve weak recovery; holding the learning rate fixed at \(\gamma = \mathcal{O}(1)\) instead, SGD still weakly recovers the target, but the number of steps stops decreasing with \(n_b\) and the sample complexity grows to \(N = \mathcal{O}(n_b d^{\ell/2-1})\), so the extra samples per step are wasted rather than traded for speed.
+A modified algorithm, Correlation Loss SGD, suppresses this self-interaction term and restores the optimal sample complexity \(N = \mathcal{O}(d^{\ell-1})\) up to \(n_b \sim d^{\ell-1}\).
 Figure~\ref{fig:intro:cold_start_pd} shows the resulting phase diagram.
 \begin{figure}[t]
     \centering
@@ -169,7 +169,7 @@ Figure~\ref{fig:intro:cold_start_pd} shows the resulting phase diagram.
     Phase diagram of the weak-recovery time exponent \(\theta = \log_d T\) as a function of the batch-size exponent \(\mu = \log_d n_b\), for a target with information exponent \(\ell \ge 3\).
     At \(\mu = 0\) (one sample per step) the time exponent is \(\ell - 1\), the top of the accessible region.
     Increasing \(n_b\) up to the {\color{optimalcolor}optimal} point \(n_b \sim d^{\ell/2}\) trades iterations for parallelism at constant total sample cost \(N = \mathcal{O}(d^{\ell-1})\).
-    Beyond this, standard SGD enters the {\color{noyhatcolor}self-interaction regime} and can no longer achieve weak recovery; the {\color{notallowedcolor}not correlating region} is forbidden entirely.
+    Beyond this, standard SGD's optimal time plateaus at \(T = \mathcal{O}(d^{\ell/2-1})\) rather than continuing to fall, so the extra samples per step are wasted; pushing the learning rate to shrink \(T\) further enters the {\color{noyhatcolor}self-interaction regime} and {\color{notallowedcolor}not correlating region}, where standard SGD cannot achieve weak recovery at all.
     Correlation Loss SGD extends the accessible region to its {\color{optimalcolor}optimal} point at \(n_b \sim d^{\ell-1}\).}
     \label{fig:intro:cold_start_pd}
 \end{figure}
