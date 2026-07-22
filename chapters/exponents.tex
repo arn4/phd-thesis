@@ -246,7 +246,7 @@ Multi-index learning unfolds as a \emph{staircase} \citep{abbe2022merged, abbe20
         \item once \(m_1 = \mathcal{O}(1)\), the quadratic rung reads as \(\lambda^\star_1 \lambda^\star_2 \approx m_1\, \lambda^\star_2\): a \emph{linear} signal in the second direction, whose effective degree has dropped to one. So \(\vec{w}^\star_2\) is now leap-one and \(m_2\) escapes in a further \(\mathcal{O}(d)\);
         \item with \(m_1, m_2 = \mathcal{O}(1)\), the cubic rung reads as \(\lambda^\star_1 \lambda^\star_2 \lambda^\star_3 \approx m_1 m_2\, \lambda^\star_3\) and \(m_3\) follows in a final \(\mathcal{O}(d)\). The three phases climb the staircase in \(\mathcal{O}(d)\) samples in total.
     \end{enumerate}
-    Even though the target has degree three: each overlap, once recovered, lowers the effective degree of the rung above it to one. The intermediate rungs are precisely what make the climb cheap: strip them away and the bare top monomial \(\lambda^\star_1 \lambda^\star_2 \lambda^\star_3\) has leap three, costing \(\mathcal{O}(d^2)\).
+    The leap stays at one even though the target has degree three: each overlap, once recovered, lowers the effective degree of the rung above it to one. The intermediate rungs are precisely what make the climb cheap: strip them away and the bare top monomial \(\lambda^\star_1 \lambda^\star_2 \lambda^\star_3\) has leap three, costing \(\mathcal{O}(d^2)\).
     Figure~\ref{fig:intro:staircase} illustrates both regimes numerically.
 \end{example}
 
