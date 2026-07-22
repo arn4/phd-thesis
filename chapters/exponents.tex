@@ -305,7 +305,7 @@ Both one-pass SGD and the partial-trace algorithm are restricted to querying the
 where the minimization now ranges over all label transformations \(g\) as well as over the Hermite degree.
 \end{definition}
 Since the choice \(g = \mathrm{id}\) recovers Equation~\eqref{eq:intro:info-exponent}, one always has \(\ell^\star \leq \ell\); a nonlinear \(g\) can only lower the exponent, and frequently does so strictly.
-\addnote{The transfoemation \(g\) is target-dependent, but can be estimated from the data with few guesses, as exposed in the original work.}
+\addnote{The transformation \(g\) is target-dependent, but can be estimated from the data with a few guesses, as explained in the original work.}
 \citet{damian2024computational} showed that, when the \emph{partial-trace} algorithm is run on a transformed label \(g(y)\), the sample complexity of recovering the hidden direction is governed by \(\ell^\star\) rather than \(\ell\): weak recovery is achieved in \(d^{\ell^\star/2}\) samples, saturating the \emph{Statistical Query} (SQ) lower bound.
 The algorithmic counterpart of this easy class was characterized concurrently by \citet{dandi2024benefits}: reusing each batch of an extensive (\(\mathcal{O}(d)\)) dataset even twice lets a two-layer network weakly recover any non-even single-index target (exactly the generative-exponent-one \(\ell^\star = 1\) family) in \(\mathcal{O}(d)\) samples, whereas single-pass SGD requires polynomially many more steps.
 The separation between \(\ell\) and \(\ell^\star\) can be substantial, as the following examples show.
