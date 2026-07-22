@@ -1,65 +1,103 @@
 \section{Further analysis on the effect of sequence length} \label{2506:app:further-sequence-length}
 The aim of this Appendix is to clarify and give further examples on Theorem~\ref{2506:thm:sequencelength-gain}. Here we provide an intuitive explanation of the result, while the mathematical details can be found in Appendix~\ref{2506:app:proofs}. 
 
-Let's start from the main result on the gain, that can be broken down in three parts:
-\begin{equation} \label{2506:eq:app:gain-breakdown}
-  \mathrm{gain} \sim \left(\text{gain at constant } \gamma\right) \cdot \left(\frac{\gamma_\mathrm{tied}}{\gamma_\mathrm{untied}}\right)\cdot \left(\text{special factor for SIE}=1\right)
+\subsection{Anatomy of the gain}
+The gain counts \emph{gradient steps} (Definition~\ref{2506:def:weak-recovery}), while the analysis of Appendix~\ref{2506:app:proofs} is carried out on the gradient flow of Equation~\eqref{2506:eq:ode_approx}, which lives in continuous time. The learning rate is what converts one into the other, and it is precisely this conversion that decides whether the sequence length enters the gain once or twice. In this Appendix we write \(t_\mathrm{tied}\) and \(t_\mathrm{untied}\) for the weak recovery times of the gradient flow, and keep \(\nu^\mathrm{weak}_\eta\) for the number of gradient steps.\addnote{Appendix~\ref{2506:app:proofs} uses the opposite letters: what is called \(\nu_\eta\) and \(\nu_{\eta,\mathrm{untied}}\) there is written \(t_\mathrm{tied}\) and \(t_\mathrm{untied}\) here, while its \(t^+_\eta\) is a number of gradient steps.}
+
+\paragraph{From continuous time to gradient steps}
+Theorem~\ref{2506:thm:app:ben_arous_meta} relates the two, for a network whose gradient flow reaches weak recovery at time \(t\). As long as the learning rate obeys
+\begin{equation} \label{2506:eq:app:gamma-max}
+    \gamma \lesssim \gamma^\mathrm{max} \sim \frac{1}{d\,t},
 \end{equation}
-
-
-\paragraph{The gain constant \(\gamma\)}
-This speedup comes from the different structure of the two networks, the tied one can build up correlation faster than the untied one because it composes \(L\) different signals. The strength of this effect is strongly dependent on the target function, the overall result is
-\begin{equation}
-    \text{gain at constant } \gamma \sim \frac{C_\mathrm{SIE} \times (\vec{1},\dots,\vec{1})}{\norm{C_\mathrm{SIE}}_\mathrm{op}}.
+weak recovery is reached after
+\begin{equation} \label{2506:eq:app:steps-from-flow}
+    \nu^\mathrm{weak}_\eta \sim \frac{t}{\gamma}
 \end{equation}
+gradient steps, whereas above \(\gamma^\mathrm{max}\) the inhibitive term of Equation~\eqref{2506:eq:ode_approx} dominates at initialization and the network never leaves the uninformative region. The key observation is that \(t\) appears in \emph{both} equations: saturating Equation~\eqref{2506:eq:app:gamma-max} gives \(\nu^\mathrm{weak}_\eta \sim d\,t^2\), so the weak recovery time of the flow is paid twice when the learning rate is itself scaled up with \(L\), and only once when it is held fixed. This is the whole origin of the two regimes discussed below.
 
-\paragraph{The ratio of the learning rates}
-In Appendix~\ref{2506:app:proofs}, we showed that the learning rate can grow with the sequence length \(L\) at most as
-\begin{itemize}
-    \item for the tied network
-          \[ 
-            \gamma_\mathrm{tied} \lesssim C_\mathrm{SIE} \times (\vec{1},\dots,\vec{1}),
-          \]
-    \item for the untied network
-            \[
-                \gamma_\mathrm{untied} \lesssim \norm{C_\mathrm{SIE}}_\mathrm{op}.
-            \]
-\end{itemize}
-It is clear that saturating the bounds above leads to a factor
-\begin{equation}
-    \frac{\gamma_\mathrm{tied}}{\gamma_\mathrm{untied}}\lesssim\frac{\max \gamma_\mathrm{tied}}{\max \gamma_\mathrm{untied}} \sim \frac{C_\mathrm{SIE} \times (\vec{1},\dots,\vec{1})}{\norm{C_\mathrm{SIE}}_\mathrm{op}},
+\paragraph{The two weak recovery times}
+Close to initialization, both networks follow a flow of the same shape (Appendix~\ref{2506:app:proofs}),
+\begin{equation} \label{2506:eq:app:generic-flow}
+    \frac{dm}{dt} \sim \alpha\, m^{\mathrm{SIE}-1},
 \end{equation}
-that is exactly the same as the gain at constant \(\gamma\). Obviously the gain measure is fair only if the learning rates bounds are saturated, but our result predict the speed-up factor even in the case where the optimal learning rates are not used.
+and differ only through the drift constant \(\alpha\) and the threshold \(\theta\) that the overlap has to reach:
+\begin{equation} \label{2506:eq:app:drift-threshold}
+    \begin{aligned}
+        \alpha_\mathrm{tied} &= C_\mathrm{SIE} \times (\vec{1},\dots,\vec{1}), &\qquad \theta_\mathrm{tied} &= \eta, \\
+        \alpha_\mathrm{untied} &= \norm{C_\mathrm{SIE}}_\mathrm{op}, &\qquad \theta_\mathrm{untied} &= \eta\sqrt{L}.
+    \end{aligned}
+\end{equation}
+The drifts differ because of the structure of the two networks: the tied network builds up correlation faster than the untied one, since its single weight vector composes the \(L\) signals of the sequence coherently and therefore feels the target through its contraction along \((\vec{1},\dots,\vec{1})\); the untied network, having \(L\) independent weights, can only follow the leading direction of the tensor \(C_\mathrm{SIE}\), whose strength is measured by the operator norm. The thresholds differ for a purely geometric reason: weak recovery of the untied network is expressed through \(m_\mathrm{untied} = \sfrac{\norm{\vec{m}}}{\sqrt{L}}\), so its overlap \emph{vector} has to reach a norm \(\sqrt{L}\) times larger than the scalar overlap of the tied network.
 
-\paragraph{The special factor for \(\mathrm{SIE}=1\)}
-The case \(\mathrm{SIE}=1\) is special because the dependence of the weak recovery time on the constant \(\eta\) is not negligible, differently from the cases \(\mathrm{SIE}\ge 2\). This slows down further the learning of the untied network, by a factor \(\sqrt{L}\), leading to a factor 
-\begin{equation}
-    \text{special factor for SIE}= \begin{cases}
-        1 & \mathrm{SIE} \ge 2\\
-        \sqrt{L} & \mathrm{SIE}=1
+Integrating Equation~\eqref{2506:eq:app:generic-flow} from the initial overlap \(m(0) \sim \sfrac{1}{\sqrt{d}}\) up to \(\theta\) gives
+\begin{equation} \label{2506:eq:app:hitting-times}
+    t \sim \frac{1}{\alpha}\cdot\begin{cases}
+        \theta & \mathrm{SIE} = 1,\\
+        \ln d & \mathrm{SIE} = 2,\\
+        d^{\frac{\mathrm{SIE}}{2}-1} & \mathrm{SIE} \ge 3,
+    \end{cases}
+\end{equation}
+and this is where the special role of \(\mathrm{SIE}=1\) is born. When \(\mathrm{SIE}=1\) the overlap grows linearly in time, so the weak recovery time is directly proportional to the threshold, and a threshold \(\sqrt{L}\) times larger costs exactly \(\sqrt{L}\) times more time. When \(\mathrm{SIE}\ge 2\) the growth is instead exponential (\(\mathrm{SIE}=2\)) or explosive (\(\mathrm{SIE}\ge 3\)), and the weak recovery time is dominated by the escape from the small initial overlap \(m(0)\): the threshold then enters only logarithmically, or through a bounded additive term, and its \(\sqrt{L}\) is subleading. Dividing the two hitting times,
+\begin{equation} \label{2506:eq:app:flow-ratio}
+    \frac{t_\mathrm{untied}}{t_\mathrm{tied}} \sim \frac{C_\mathrm{SIE} \times (\vec{1},\dots,\vec{1})}{\norm{C_\mathrm{SIE}}_\mathrm{op}} \cdot \begin{cases}
+        \sqrt{L} & \mathrm{SIE} = 1,\\
+        1 & \mathrm{SIE} \ge 2.
     \end{cases}
 \end{equation}
 
-\subsection{Example at not optimal learning rate}
-In Figure~\ref{2506:fig:sequence-length-H2} we presented the speed up in the case of a target function with \(\mathrm{SIE}=2\), and optimal learning rate for both the tied and untied network. Here we want to show that our result predicts the gain well even when the learning rate are not scaled up optimally. In particular, consider the same setting as in Figure~\ref{2506:fig:sequence-length-H2}, but with the learning rates 
-\begin{equation}
-    \gamma_\mathrm{tied} = \gamma_\mathrm{untied} = \text{constant with } L =  \gamma_0.
+\paragraph{Why the factor for \(\mathrm{SIE}=1\) is sometimes \(\sqrt{L}\) and sometimes \(L\)}
+Writing Equation~\eqref{2506:eq:app:steps-from-flow} for both networks, the gain splits into two factors,
+\begin{equation} \label{2506:eq:app:gain-breakdown}
+    \mathrm{gain} = \frac{\nu^\mathrm{weak}_{\eta,\mathrm{untied}}}{\nu^\mathrm{weak}_\eta} \sim \frac{t_\mathrm{untied}}{t_\mathrm{tied}} \cdot \frac{\gamma_\mathrm{tied}}{\gamma_\mathrm{untied}},
 \end{equation}
-Using Equation~\eqref{2506:eq:app:gain-breakdown} we can predict the gain as
+and everything hinges on how the two learning rates are chosen. If the networks are trained with the same learning rate --- or, more generally, with two rates whose ratio does not scale with \(L\) --- the second factor is \(1\). If instead each network is given the largest learning rate it can afford, Equation~\eqref{2506:eq:app:gamma-max} turns the second factor into a second copy of the first, because \(\gamma_\mathrm{tied}^\mathrm{max}/\gamma_\mathrm{untied}^\mathrm{max} = t_\mathrm{untied}/t_\mathrm{tied}\). Hence
+\begin{equation} \label{2506:eq:app:gain-two-regimes}
+    \mathrm{gain} \sim \begin{cases}
+        \dfrac{t_\mathrm{untied}}{t_\mathrm{tied}} & \text{equal learning rates},\\[2.5ex]
+        \left(\dfrac{t_\mathrm{untied}}{t_\mathrm{tied}}\right)^{2} & \text{optimal learning rates}.
+    \end{cases}
+\end{equation}
+Substituting Equation~\eqref{2506:eq:app:flow-ratio} in the second case gives
+\begin{equation} \label{2506:eq:app:gain-optimal}
+    \mathrm{gain} \sim \left(\frac{C_\mathrm{SIE} \times (\vec{1},\dots,\vec{1})}{\norm{C_\mathrm{SIE}}_\mathrm{op}}\right)^{2} \cdot \begin{cases}
+        L & \mathrm{SIE} = 1,\\
+        1 & \mathrm{SIE} \ge 2,
+    \end{cases}
+\end{equation}
+which is exactly the statement of Theorem~\ref{2506:thm:sequencelength-gain}: the theorem is formulated at the optimal learning rate, as announced when the gain was defined. The extra factor attached to \(\mathrm{SIE}=1\) is therefore \emph{not} a constant of the model: it is \(\sqrt{L}\) when the two networks share the same learning rate, and \(L\) when both rates are pushed to their maximum. It is one and the same effect --- the \(\sqrt{L}\) larger threshold of Equation~\eqref{2506:eq:app:drift-threshold} --- counted once or twice, exactly like the drift ratio next to it.
+
+For later use, combining Equations~\eqref{2506:eq:app:gamma-max} and~\eqref{2506:eq:app:hitting-times}, the largest admissible learning rates scale with the sequence length as
+\begin{equation} \label{2506:eq:app:gamma-max-scalings}
+    \begin{aligned}
+        \gamma_\mathrm{tied}^\mathrm{max} &\propto C_\mathrm{SIE} \times (\vec{1},\dots,\vec{1}),\\
+        \gamma_\mathrm{untied}^\mathrm{max} &\propto \norm{C_\mathrm{SIE}}_\mathrm{op}\cdot\begin{cases}
+            \sfrac{1}{\sqrt{L}} & \mathrm{SIE} = 1,\\
+            1 & \mathrm{SIE} \ge 2,
+        \end{cases}
+    \end{aligned}
+\end{equation}
+up to factors that do not depend on \(L\). Their ratio is again \(t_\mathrm{untied}/t_\mathrm{tied}\), as it must be.
+
+\subsection{Example at non-optimal learning rate}
+In Figure~\ref{2506:fig:sequence-length-H2} we presented the speed up in the case of a target function with \(\mathrm{SIE}=2\), and optimal learning rate for both the tied and untied network. Here we want to show that our result predicts the gain well even when the learning rates are not scaled up optimally. In particular, consider the same setting as in Figure~\ref{2506:fig:sequence-length-H2}, but with the learning rates
 \begin{equation}
-    \mathrm{gain} \sim L \cdot 1 \cdot 1 = L.
+    \gamma_\mathrm{tied} = \gamma_\mathrm{untied} = \gamma_0 \qquad\text{independent of } L.
+\end{equation}
+The target is \(g(\vec{z}_\star)= \sum_{i=1}^L \mathrm{He}_2(z_{\star,i})\), so that \(C_2 = I_L\), \(C_2 \times (\vec{1},\vec{1}) = L\) and \(\norm{C_2}_\mathrm{op} = 1\). Since \(\mathrm{SIE}=2\) there is no threshold correction, and Equation~\eqref{2506:eq:app:flow-ratio} gives \(t_\mathrm{untied}/t_\mathrm{tied} \sim L\). The two learning rates are equal, so we are in the first case of Equation~\eqref{2506:eq:app:gain-two-regimes} and the flow ratio is counted only once:
+\begin{equation}
+    \mathrm{gain} \sim \frac{t_\mathrm{untied}}{t_\mathrm{tied}} \sim L.
 \end{equation}
 \begin{figure}
     \centering
     \includegraphics[height=0.27\textwidth]{figs/sequence-lenght/H2-sequence-length-icoverlapped-overlap}
     \includegraphics[height=0.27\textwidth]{figs/sequence-lenght/H2-sequence-length-icoverlapped-crossing}
     \includegraphics[height=0.27\textwidth]{figs/sequence-lenght/H2-sequence-length-icoverlapped-gain}
-    \caption{The gain in the case of a target function with \(\mathrm{SIE}=2\), where both cases use the same learning rate \(\gamma_0 = 0.005\). (left) The evolution of the overlap, (middle) the weak recovery time and (right) the gain. The gain is proportional to \(L\), as predicted.}
+    \caption{The gain in the case of a target function with \(\mathrm{SIE}=2\), where both cases use the same learning rate \(\gamma_0 = 0.005\). (left) The evolution of the overlap, (middle) the weak recovery time and (right) the gain. The gain is proportional to \(L\), as predicted. \(d=3000\), \(\sigma=\ReLU\)}
     \label{2506:fig:app:sequence-length-H2_costantlrate}
 \end{figure}
-In Figure~\ref{2506:fig:app:sequence-length-H2_costantlrate} we show the result of the simulation, where we can see that the gain is indeed proportional to \(L\), as predicted.
+In Figure~\ref{2506:fig:app:sequence-length-H2_costantlrate} we show the result of the simulation, where we can see that the gain is indeed proportional to \(L\), as predicted. It is worth stressing that this is the very same target function as in Figure~\ref{2506:fig:sequence-length-H2}, where the measured gain is instead \(L^2\): the two experiments differ only in the choice of the learning rates, which decides whether the flow ratio is counted once or twice.
 
-\subsection{The upper bound of learning rate scaling}
+\subsection{The upper bound on the learning rate scaling}
 In this subsection we want to show an example proving that not all scalings of the learning rate are allowed: if it grows too fast with the sequence length, the network will not be able to learn.
 
 Let's take as example the \(\mathrm{SIE}=1\) target function
@@ -70,43 +108,45 @@ with the corresponding leading Hermite tensor
 \begin{equation}
     C_1 = \begin{pmatrix}
         \sfrac{1}{\sqrt{L}} & \dots & \sfrac{1}{\sqrt{L}}
-    \end{pmatrix} \in \mathbb{R}^{L}.
+    \end{pmatrix} \in \mathbb{R}^{L},
 \end{equation}
-We know that the maximum scaling for the learning rate of the untied network is
-\[\gamma_\mathrm{untied} \lesssim \norm{C_1}_\mathrm{op} = 1, \]
-thus we stick with a constant learning rate \(\gamma_0\) for both networks
-\begin{equation}
-    \gamma_\mathrm{tied} = \gamma_\mathrm{untied} = \gamma_0 \sim 1.
+for which \(C_1 \times \vec{1} = \sqrt{L}\) and \(\norm{C_1}_\mathrm{op} = 1\). This time \(\mathrm{SIE}=1\), so the threshold correction of Equation~\eqref{2506:eq:app:flow-ratio} is active and contributes a second \(\sqrt{L}\):
+\begin{equation} \label{2506:eq:app:H1-flow-ratio}
+    \frac{t_\mathrm{untied}}{t_\mathrm{tied}} \sim \frac{C_1 \times \vec{1}}{\norm{C_1}_\mathrm{op}} \cdot \sqrt{L} = \sqrt{L}\cdot\sqrt{L} = L.
 \end{equation}
-We can use Equation~\eqref{2506:eq:app:gain-breakdown} to have the theoretical prediction of the gain in this case:
+We train both networks with one and the same \(L\)-independent learning rate
 \begin{equation}
-    C_1 \times (\vec{1},\dots,\vec{1}) =  \sqrt{L}
-    \quad\implies\quad
-    \mathrm{gain} \sim \sqrt{L} \cdot 1 \cdot \sqrt{L} = L.
+    \gamma_\mathrm{tied} = \gamma_\mathrm{untied} = \gamma_0,
+\end{equation}
+so that, once again, the flow ratio is counted only once:
+\begin{equation}
+    \mathrm{gain} \sim \frac{t_\mathrm{untied}}{t_\mathrm{tied}} \sim L.
 \end{equation}
 \begin{figure}
     \centering
     \includegraphics[height=0.27\textwidth]{figs/sequence-lenght/H1-sequence-length-icoverlapped-overlap}
     \includegraphics[height=0.27\textwidth]{figs/sequence-lenght/H1-sequence-length-icoverlapped-crossing}
     \includegraphics[height=0.27\textwidth]{figs/sequence-lenght/H1-sequence-length-icoverlapped-gain}
-    \caption{The gain in the case of a target function with \(\mathrm{SIE}=1\), where both cases use the same learning rate \(\gamma_0 = 0.005\). (left) The evolution of the overlap, (middle) the weak recovery time. The gain is proportional to \(L\), as predicted. \(d=1000\), \(\sigma=\ReLU\)}
+    \caption{The gain in the case of a target function with \(\mathrm{SIE}=1\), where both cases use the same learning rate \(\gamma_0 = 0.015\). (left) The evolution of the overlap, (middle) the weak recovery time and (right) the gain. The gain is proportional to \(L\), as predicted. \(d=1000\), \(\sigma=\ReLU\)}
     \label{2506:fig:app:sequence-length-H1_base}
 \end{figure}
-In Figure~\ref{2506:fig:app:sequence-length-H1_base} we show the result of the simulation, where we can see that the gain is indeed proportional to \(L\), as predicted. We can now ask what happens if we push the learning rate scaling of the untied network beyond the limit of Theorem~\ref{2506:thm:sequencelength-gain}. If we set 
+In Figure~\ref{2506:fig:app:sequence-length-H1_base} we show the result of the simulation, where we can see that the gain is indeed proportional to \(L\), as predicted. Note that here the \(\mathrm{SIE}=1\) correction shows up as a \(\sqrt{L}\), and not as the \(L\) of Theorem~\ref{2506:thm:sequencelength-gain}, precisely because the learning rates are held fixed: had we instead scaled both of them up to their maximum, Equation~\eqref{2506:eq:app:gain-optimal} would have predicted \(\mathrm{gain} \sim (\sqrt{L})^2 \cdot L = L^2\). The two experiments of this Appendix therefore both measure a gain proportional to \(L\), but for different reasons: for \(\mathrm{SIE}=2\) the whole factor comes from the drift ratio, while for \(\mathrm{SIE}=1\) half of it comes from the drift ratio and half from the larger threshold of the untied network.
+
+We can now ask what happens if we push the learning rate scaling of the untied network beyond the limit of Theorem~\ref{2506:thm:sequencelength-gain}. If we keep \(\gamma_\mathrm{tied} = \gamma_0\) and set
 \begin{equation}
-  \gamma_\mathrm{untied} = \gamma_\mathrm{tied} = \gamma_0 \cdot L,
+  \gamma_\mathrm{untied} = \gamma_0 \cdot L,
 \end{equation}
-the ratio between the learning rates becomes now \(\sfrac{\gamma_\mathrm{tied}}{\gamma_\mathrm{untied}} = \sfrac{1}{L}\), and the gain 
+the ratio between the learning rates becomes now \(\sfrac{\gamma_\mathrm{tied}}{\gamma_\mathrm{untied}} = \sfrac{1}{L}\), and Equation~\eqref{2506:eq:app:gain-breakdown} would give
 \begin{equation}
-  \mathrm{gain} \sim \sqrt{L} \cdot \frac{1}{L} \cdot \sqrt{L} = 1.
+  \mathrm{gain} \sim L \cdot \frac{1}{L} = 1.
 \end{equation}
-Apparently, the untied network performance is matching the one of the tied network. Figure~\ref{2506:fig:app:sequence-length-H1_maxlrate} shows the result of the simulation of such a case: the learning rate of the untied network is too high, and the network is not able for large \(L\), and thus the gain diverges with a maximum value of . This plot proves our bounds on the learning rate scaling are indeed correct.
+Apparently, the untied network performance is matching the one of the tied network. The prediction is however void, because Equation~\eqref{2506:eq:app:steps-from-flow} only holds below the threshold of Equation~\eqref{2506:eq:app:gamma-max}: for this target the largest admissible rate of the untied network \emph{decreases} with the sequence length as \(\sfrac{1}{\sqrt{L}}\), by Equation~\eqref{2506:eq:app:gamma-max-scalings}, so a learning rate growing as \(\gamma_0 L\) overshoots it by a factor \(L^{\sfrac{3}{2}}\). Figure~\ref{2506:fig:app:sequence-length-H1_maxlrate} shows the result of the simulation of such a case: the learning rate of the untied network is too high, the untied network stops reaching weak recovery as \(L\) grows, and the measured gain diverges instead of settling to a constant. This plot proves our bounds on the learning rate scaling are indeed correct.
 \begin{figure}
   \centering
   \includegraphics[height=.3\textwidth]{figs/sequence-lenght/H1-sequence-length-maxlr-overlap}
   \includegraphics[height=.3\textwidth]{figs/sequence-lenght/H1-sequence-length-maxlr-crossing}
   \includegraphics[height=.3\textwidth]{figs/sequence-lenght/H1-sequence-length-maxlr-gain}
-  \caption{The gain in the case of a target function with \(\mathrm{SIE}=1\), where both cases use the same learning rate \(\gamma_0 = 0.005\). (left) The evolution of the overlap, (middle) the weak recovery time and (right) the gain. The gain diverges, as predicted. \(d=1000\), \(\sigma=\ReLU\)}
+  \caption{The gain in the case of a target function with \(\mathrm{SIE}=1\), where the untied network is trained with \(\gamma_\mathrm{untied} = \gamma_0 L\), beyond the bound of Equation~\eqref{2506:eq:app:gamma-max}, while the tied one keeps \(\gamma_\mathrm{tied} = \gamma_0 = 0.05\). (left) The evolution of the overlap, (middle) the weak recovery time and (right) the gain. The gain diverges, as predicted. \(d=3000\), \(\sigma=\ReLU\)}
   \label{2506:fig:app:sequence-length-H1_maxlrate}
 \end{figure}
 
