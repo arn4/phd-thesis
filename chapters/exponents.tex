@@ -291,7 +291,7 @@ It is the leap, not the first-escape exponent \(\ell\), that fixes the total sam
 
 Returning to the single-index setting, the population risk on the sphere is \(\mathcal{R}(m) = \mathrm{const} - C(m)\) (Equation~\eqref{eq:intro:correlation-potential}). The gradient with respect to the student weights is therefore
 \[
-    \nabla_{\vec{w}}\mathcal{R} = -\,\mathbb{E}\!\left[y\,\sigma'(\lambda)\,\vec{x}\right],
+    \nabla_{\vec{w}}\mathcal{R} = -\,\mathbb{E}\!\left[y\,\sigma'(\lambda)\,\frac{\vec{x}}{\sqrt{d}}\right],
 \]
 which is a \emph{correlational query}: a functional of the input that is \emph{linear} in the label \(y\). This is the fundamental constraint of one-pass SGD: each gradient step can only ask ``how correlated is \(y\) with this function of \(\vec{x}\)?''. It is shared by every algorithm that processes each sample exactly once.
 
@@ -321,11 +321,11 @@ The generative exponent is \emph{composition-invariant}: no further transformati
 \paragraph{Displaced gradient SGD achieves the generative exponent rate}
 The generative exponent sets the complexity lower bound, but can a gradient-based algorithm achieve it \emph{agnostically}, without prior knowledge of the optimal transformation \(g\)? The key mechanism is remarkably simple: \emph{data reuse}. When the gradient step uses the same sample twice, as in the displaced gradient algorithm of Chapter~\ref{chap:paper-2405}, the update direction becomes a nonlinear function of \(y\). Concretely, the displaced gradient first computes a perturbed weight \(\tilde{\vec{w}} = \vec{w} - \rho\,\nabla_{\vec{w}}\ell\) and then evaluates the gradient at \(\tilde{\vec{w}}\) on the same sample: \addnote{If \(\rho\) is positive the method is known as \emph{extragradient}, and if \(\rho\) is negative it is known as \emph{sharpness-aware minimization}.}
 \[
-    \nabla_{\vec{w}}\ell\!\left(f(\vec{x};\tilde{\vec{w}}),\,y\right) = -\,y\,\sigma'\!\big(\langle\tilde{\vec{w}},\vec{x}\rangle\big)\,\vec{x}.
+    \nabla_{\vec{w}}\ell\!\left(f(\vec{x};\tilde{\vec{w}}),\,y\right) = -\,y\,\sigma'(\tilde{\lambda})\,\frac{\vec{x}}{\sqrt{d}}, \qquad \tilde{\lambda} = \frac{\langle\tilde{\vec{w}},\vec{x}\rangle}{\sqrt{d}}.
 \]
-With \(\rho \sim 1/d\), the inner product \(\langle\tilde{\vec{w}},\vec{x}\rangle = \langle\vec{w},\vec{x}\rangle + \rho\,y\,\sigma'(\langle\vec{w},\vec{x}\rangle)\,\|\vec{x}\|^2\) receives an \(\mathcal{O}(1)\) perturbation that is a \emph{nonlinear} function of \(y\) (because \(\|\vec{x}\|^2 \approx d\) and the product \(\rho d\) yields an \(\mathcal{O}(1)\) contribution). Taylor-expanding \(\sigma'\) around \(\langle\vec{w},\vec{x}\rangle\) generates higher-order correlational queries \(\mathbb{E}[p(y)\,\varphi(\vec{x})]\) for a polynomial \(p\) determined by the activation
+With \(\rho = \Theta(1)\)\addnote{Chapter~\ref{chap:paper-2405} states the same perturbation with \(\rho = \rho_0/d\); that chapter works with the raw pre-activation \(\langle\vec{w},\vec{x}\rangle\) rather than the \(1/\sqrt{d}\)-normalized \(\lambda\) used here, and the two conventions agree once the extra factor of \(\sqrt{d}\) from \(\lambda = \langle\vec{w},\vec{x}\rangle/\sqrt{d}\) is accounted for.}, the perturbed pre-activation \(\tilde{\lambda} = \lambda + \rho\,y\,\sigma'(\lambda)\,\|\vec{x}\|^2/d\) receives an \(\mathcal{O}(1)\) perturbation that is a \emph{nonlinear} function of \(y\) (because \(\|\vec{x}\|^2/d \to 1\)). Taylor-expanding \(\sigma'\) around \(\lambda\) generates higher-order correlational queries \(\mathbb{E}[p(y)\,\varphi(\vec{x})]\) for a polynomial \(p\) determined by the activation
 \[
-    \nabla_{\vec{w}}\ell\!\left(f(\vec{x};\tilde{\vec{w}}),\,y\right) = -y \left(\sigma'(\langle\vec{w},\vec{x}\rangle) + \,y\,\sigma''(\langle\vec{w},\vec{x}\rangle) + y^2\,\sigma'''(\langle\vec{w},\vec{x}\rangle) + \cdots \right)\,\vec{x},
+    \nabla_{\vec{w}}\ell\!\left(f(\vec{x};\tilde{\vec{w}}),\,y\right) \approx -\,\frac{\vec{x}}{\sqrt{d}} \left(y\,\sigma'(\lambda) + \rho\,y^2\,\sigma'(\lambda)\sigma''(\lambda) + \frac{\rho^2}{2}\,y^3\,\sigma'(\lambda)^2\sigma'''(\lambda) + \cdots \right),
 \] so the network implicitly synthesizes the label transformation, provided \(\sigma\) has higher-order derivatives.
 This result is formalized in the following theorem:
 \addnote{The theorem is stated only for \(\ell^\star \leq 2\) because if \(h^\star\) is a polynomial, then \(\ell^\star \leq 2\), as proved in Chapter~\ref{chap:paper-2405}. There is no guarantee of the exact same sample complexity for \(\ell^\star > 2\), but it cannot be better than the SQ lower bound \(d^{\ell^\star/2} \ge d^{\frac32}\) (the last inequality holding because \(\ell^\star \geq 3\) in this regime).}
