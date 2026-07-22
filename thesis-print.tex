@@ -1,0 +1,13 @@
+% Print-ready variant of thesis.tex -- same body, no link coloring, external URLs
+% spelled out as footnotes, 5mm binding gutter for the spine.
+%
+% The flag below is the whole mechanism: thesis-style.sty is the only file that
+% branches on \ThesisPrintVariant, and thesis.tex itself is \input unmodified.
+%
+% Build:  latexmk -outdir=build/print thesis-print.tex  ->  build/print/thesis-print.pdf
+%
+% The separate -outdir is required, not cosmetic: \include{chapters/foo} writes
+% chapters/foo.aux -- named after the included file, not the jobname -- so sharing
+% build/ with the thesis.tex build would make the two clobber each other's aux.
+\def\ThesisPrintVariant{}
+\input{thesis.tex}

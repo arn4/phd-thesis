@@ -1,11 +1,38 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{thesis-style}[2026/05/27 Luca Arnaboldi thesis style]
 
+% --- Print variant -------------------------------------------------------
+% thesis-print.tex sets \ThesisPrintVariant before \input{thesis.tex}. This
+% package is the ONLY place in the build that branches on it: everything else
+% -- thesis.tex, the chapters, the papers -- is shared verbatim between the
+% digital and the printable PDF. Three things change, each marked \ifpc@print or
+% \pc@printalt below: hyperref coloring, \href, and \cvpersonal. Colors that
+% carry information (figures, the TikZ palette, color-keyed legend words) are
+% deliberately left alone -- blacking them out would unhook the legends.
+%
+% Deliberately NOT changed: the page geometry. A geometry bindingoffset was
+% tried and dropped -- see the margin-note budget below for why.
+\newif\ifpc@print
+\ifdefined\ThesisPrintVariant \pc@printtrue \fi
+
+% \pc@printalt{print version}{digital version} -- expands to exactly one of its
+% two arguments, leaving no \if/\fi tokens behind. Needed where a bare
+% conditional is unsafe, e.g. at the start of a tabular cell (\cvpersonal),
+% which TeX expands while looking ahead for \omit.
+\newcommand{\pc@printalt}{%
+  \ifpc@print\expandafter\@firstoftwo\else\expandafter\@secondoftwo\fi}
+
 % Options for packages that papers-dependencies.tex loads bare.
 % This .sty MUST be loaded before \input{papers-dependencies.tex}.
-\PassOptionsToPackage{%
-  colorlinks,linkcolor=blue,urlcolor=magenta,citecolor=green,bookmarks%
-}{hyperref}
+% Print: hidelinks keeps the PDF links (working ToC/bookmarks on screen) but
+% renders them with no color and no border, i.e. invisible on paper.
+\ifpc@print
+  \PassOptionsToPackage{hidelinks,bookmarks}{hyperref}
+\else
+  \PassOptionsToPackage{%
+    colorlinks,linkcolor=blue,urlcolor=magenta,citecolor=green,bookmarks%
+  }{hyperref}
+\fi
 \PassOptionsToPackage{section}{placeins}
 
 % Packages that papers-dependencies.tex deliberately skips.
@@ -25,6 +52,17 @@
 % Margin budget: outer margin = A4 210mm - textwidth 140mm = 70mm, split
 % 28:42 (inner:outer) by marginratio 4:6.  32mm + 5mm sep = 37mm, inside the
 % 42mm outer margin with a 5mm safety strip to the page edge.
+%
+% This budget is why the print variant carries NO geometry bindingoffset. On
+% fixed A4 with a fixed 140mm measure the two margins always sum to 70mm, so a
+% gutter at the spine can only be funded out of the outer margin -- and this
+% note block already claims 37 of its 42mm. A 5mm bindingoffset makes geometry
+% re-split the remaining 65mm as 26:39, leaving the notes a 2mm strip to the
+% page edge, inside the non-printable border of a typical office printer.
+% Shrinking \marginparwidth to buy it back would reflow every note and
+% invalidate the hand-tuned \addnote[nudge] offsets; shrinking \textwidth would
+% reflow the whole thesis. 28mm at the spine is generous enough for a ~270-page
+% block on its own, so the print variant keeps the digital geometry exactly.
 \setlength{\marginparwidth}{32mm}
 \setlength{\marginparsep}{5mm}
 
@@ -83,6 +121,21 @@
     \setmainfont{EB Garamond}%
   }{}%
 }
+
+% --- Print variant: spell out external URLs -----------------------------
+% On paper an \href is a dead phrase -- "our GitHub repository" with the
+% address nowhere on the page. In the print variant the link text stays put
+% and the bare URL follows as a footnote. Deferred to \AtEndPreamble because
+% hyperref defines \href and is loaded later, by papers-dependencies.tex.
+% The four \href calls in \cvpersonal sit inside a tabular, where \footnote is
+% swallowed; they are handled separately at the bottom of this file.
+\ifpc@print
+  \AtEndPreamble{%
+    % hyperref's signature is \href[options]{url}{text}; the optional argument
+    % is kept so a future \href[...] call site doesn't silently break.
+    \renewcommand{\href}[3][]{#3\footnote{\url{#2}}}%
+  }
+\fi
 
 % --- Figure palette + TikZ libraries ------------------------------------
 % Shared by the hand-drawn schematics under chapters/figs/ (e.g. the
@@ -308,15 +361,21 @@
 %   Labeled two-column Personal Information table (Luca's preferred version
 %   over the earlier flowing-text block). Deliberately not a full multi-line
 %   postal address.
+%   Print variant: these four \href calls are the one place the global
+%   "footnote the URL" rule above cannot reach -- \footnote inside a tabular is
+%   swallowed -- so each row is branched by hand instead. Three of them already
+%   read as their own address; only Google Scholar hid behind "Profile" and so
+%   gains the literal URL, set \small because the l column does not wrap and the
+%   50-character address is borderline against the 140mm text width.
 \newcommand{\cvpersonal}[6]{%
   \par\noindent
   \begin{tabular}{@{}ll@{}}
     Name           & #1 \\
     Location       & #2 \\
-    Email          & \href{mailto:#3}{#3} \\
-    Website        & \href{https://#4}{#4} \\
-    Google Scholar & \href{#5}{Profile} \\
-    GitHub         & \href{https://github.com/#6}{#6} \\
+    Email          & \pc@printalt{#3}{\href{mailto:#3}{#3}} \\
+    Website        & \pc@printalt{#4}{\href{https://#4}{#4}} \\
+    Google Scholar & \pc@printalt{{\small\url{#5}}}{\href{#5}{Profile}} \\
+    GitHub         & \pc@printalt{github.com/#6}{\href{https://github.com/#6}{#6}} \\
   \end{tabular}\par}
 
 \endinput

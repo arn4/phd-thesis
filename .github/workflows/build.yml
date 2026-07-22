@@ -129,11 +129,24 @@ jobs:
               - 'papers-macros.tex'
               - 'latexmkrc'
               - '.github/workflows/build.yml'
+            # Printable variant: same sources as 'thesis' plus its own root.
+            'thesis-print':
+              - 'thesis.tex'
+              - 'thesis-print.tex'
+              - 'thesis-style.sty'
+              - 'chapters/**'
+              - 'front-matter/**'
+              - 'papers/**'
+              - 'papers-bibliography.bib'
+              - 'papers-dependencies.tex'
+              - 'papers-macros.tex'
+              - 'latexmkrc'
+              - '.github/workflows/build.yml'
 
       - id: compute
         run: |
           if [ "${{ startsWith(github.ref, 'refs/tags/') }}" = "true" ]; then
-            TARGETS='["2302","2305","2402","2405","2406","2506","2602","2605","thesis"]'
+            TARGETS='["2302","2305","2402","2405","2406","2506","2602","2605","thesis","thesis-print"]'
             echo "targets=$TARGETS" >> "$GITHUB_OUTPUT"
             echo "any=true" >> "$GITHUB_OUTPUT"
           else
@@ -164,6 +177,13 @@ jobs:
             echo "root=thesis.tex" >> "$GITHUB_OUTPUT"
             echo "args=-pdf" >> "$GITHUB_OUTPUT"
             echo "pdf=build/thesis.pdf" >> "$GITHUB_OUTPUT"
+          elif [ "${{ matrix.target }}" = "thesis-print" ]; then
+            # Its own -outdir: \include writes chapters/foo.aux, named after the
+            # included file rather than the jobname, so a shared build/ would let
+            # the two thesis builds clobber each other's aux files.
+            echo "root=thesis-print.tex" >> "$GITHUB_OUTPUT"
+            echo "args=-pdflua -outdir=build/print" >> "$GITHUB_OUTPUT"
+            echo "pdf=build/print/thesis-print.pdf" >> "$GITHUB_OUTPUT"
           else
             echo "root=papers/stand-alone-paper.tex" >> "$GITHUB_OUTPUT"
             echo "args=-pdf -jobname=${{ matrix.target }} -outdir=build/${{ matrix.target }}" >> "$GITHUB_OUTPUT"
@@ -220,7 +240,7 @@ jobs:
           REPO_NAME="${GITHUB_REPOSITORY#*/}"
           SITE_URL="https://${{ github.repository_owner }}.github.io/$REPO_NAME"
           missing=()
-          for paper in 2302 2305 2402 2405 2406 2506 2602 2605 thesis; do
+          for paper in 2302 2305 2402 2405 2406 2506 2602 2605 thesis thesis-print; do
             if [ -f "site/$paper.pdf" ]; then
               echo "$paper.pdf: built this run"
             else
@@ -250,10 +270,12 @@ jobs:
             ul { padding-left: 1.2em; }
             li { margin: .4em 0; }
             .meta { color: #666; font-size: .9em; }
+            .alt { color: #666; font-size: .85em; }
           </style>
           <h1>Luca Arnaboldi — PhD Thesis Drafts</h1>
           <ul>
-            <li><a href="thesis.pdf">Full thesis (draft)</a></li>
+            <li><a href="thesis.pdf">Full thesis (draft)</a><br>
+                <span class="alt"><a href="thesis-print.pdf">printable version</a> — black links, URLs spelled out</span></li>
             <li><a href="2302.pdf">Paper 2302</a></li>
             <li><a href="2305.pdf">Paper 2305</a></li>
             <li><a href="2402.pdf">Paper 2402</a></li>
