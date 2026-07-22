@@ -58,7 +58,7 @@ In practice, we can take \(\eta\) small enough that Equation~\eqref{eq:intro:m-o
 \end{equation}
 We can better understand the meaning of this by looking at some examples.
 \begin{example}[Linear regression]
-    For the linear regression target \(h^\star(x) = x\) and the linear activation \(\sigma(x) = x\), the correlation potential is \(C(m) = m\), so \(C'(m) = 1\) and
+    For the linear regression target \(h^\star(\lambda^\star) = \lambda^\star\) and the linear activation \(\sigma(\lambda) = \lambda\), the correlation potential is \(C(m) = m\), so \(C'(m) = 1\) and
     \begin{equation}
         \dod{m}{t} = 1 - m^2 \overset{m\ll 1}{\approx} 1\quad \text{with i.c. } m^0 \approx 1/\sqrt{d}.
     \end{equation}
@@ -66,12 +66,12 @@ We can better understand the meaning of this by looking at some examples.
     % TODO: cite result for linear regression.
 \end{example}
 \begin{example}[Phase retrieval]
-    For the phase retrieval target \(h^\star(x) = x^2\) and the quadratic activation \(\sigma(x) = x^2\), the correlation potential is \(C(m) = 1 + 2m^2\), so \(C'(m) = 4m\) and
+    For the phase retrieval target \(h^\star(\lambda^\star) = (\lambda^\star)^2\) and the quadratic activation \(\sigma(\lambda) = (\lambda)^2\), the correlation potential is \(C(m) = 1 + 2m^2\), so \(C'(m) = 4m\) and
     \begin{equation}
         \dod{m}{t} = 4\,m\,(1 - m^2) \overset{m\ll 1}{\approx} 4\,m\quad \text{with i.c. } m^0 \approx 1/\sqrt{d}.
     \end{equation}
     The solution is \(m(t) = m^0\,e^{4t}\), so the weak recovery time is \(t_\text{weak}(\eta) \approx \frac{1}{4}\log(\eta\sqrt{d})\), giving a total sample complexity of \(n = \mathcal{O}_d(d\log d)\).
-    \addnote{\eqref{eq:intro:ss-odes} do not concentrate for infinitesimally small \(m\), so to be rigorous one should take into account stochastic correction; we do this in Chapter~\ref{chap:paper-2305} and show that the scaling is unchanged.}
+    \addnote{The predited \(t_\text{weak}(\eta) = \mathcal{O}(\log d)\) that is exactly the time scale of the validity window of Theorem~\ref{thm:intro:ss-convergence}; this passage requires a more careful analysis, see later.}
     In Chapter~\ref{chap:paper-2305} we carry out a finer analysis of the equation, studying the precise constants and how they scale with the learning rate \(\gamma\) and the label noise \(\Delta\).
 \end{example}
 \begin{figure}[t]
@@ -108,7 +108,7 @@ The integer \(\ell\) in Equation~\eqref{eq:intro:approx-m-ode} is the \emph{info
 \end{equation}
 so that near the saddle \(\mathcal{R}(m) - \mathcal{R}(0) = -\sum_{k\geq1} k!\,a_k b_k\, m^k\).
 \begin{assumption}[$\sigma$ excites the $\ell$-th mode]
-    The student activation \(\sigma\) is such that \[b_\ell = \frac{1}{\ell!}\,\mathbb{E}[\sigma\,\mathrm{He}_\ell] \neq 0\].
+    The student activation \(\sigma\) is such that \[b_\ell = \frac{1}{\ell!}\,\mathbb{E}[\sigma\,\mathrm{He}_\ell] \neq 0.\]
     In other words, the student is expressive enough to excite the mode of any teacher.
 \end{assumption}
 The first term that bends the landscape is the lowest \(k\) with \(a_k \neq 0\)---which is exactly \(\ell\). In words, the information exponent is the order to which the population risk is flat at the mediocrity saddle: \(\mathcal{R}(m) - \mathcal{R}(0) \approx -\,\ell!\,a_\ell b_\ell\,m^\ell\). Near the saddle the geometric factor in~\eqref{eq:intro:m-ode-sphere-compact} is \(1 - m^2 \approx 1\), so the escape drift inherits the same order,
@@ -139,7 +139,7 @@ The obstruction is that Theorem~\ref{thm:intro:ss-convergence} certifies the ODE
 The theorem itself remains \emph{true} for every \(\ell\), but for \(\ell \geq 3\) the escape occurs at \(t_\text{escape} \gg \log d\), far outside this window: there the deterministic ODE is simply no longer close to the SGD trajectory, so the exit time it predicts carries no meaning. The deterministic drift captured by the ODE is only the mean of the stochastic dynamics, and the potential is so flat that the fluctuations of the order parameter around the mean trajectory cannot be neglected.
 Effectively, the dynamics can be divided in two parts:
 \begin{itemize}
-    \item \emph{search phase}: the student is stuck in the flat region around \(m = 0\), and the dynamics is dominated by the stochastic fluctuations of the order parameter; the escape time is therefore longer than predicted by the deterministic ODE~\eqref{eq:intro:m-ode-sphere-compact};
+    \item \emph{search phase}: the student is stuck in the flat region around \(m = 0\), and the dynamics is dominated by the stochastic fluctuations of the order parameter; the escape time is therefore longer than predicted by the deterministic ODE~\eqref{eq:intro:m-ode-sphere-compact} for \(\ell \geq 3\);
     \item \emph{descent phase}: once the student has escaped the flat region, the drift dominates and the dynamics is well approximated by the ODE~\eqref{eq:intro:m-ode-sphere-compact}; the escape time is therefore well captured by Saad \& Solla's equations~\eqref{eq:intro:ss-odes}.
 \end{itemize}
 The \emph{search phase} is the bottleneck that determines the scaling of the sample complexity with \(d\), while the \emph{descent phase} always happens linearly in \(d\) and contributes to the sample complexity only through sub-leading terms, for \(\ell \geq 2\). 
@@ -279,7 +279,7 @@ It is the leap, not the first-escape exponent \(\ell\), that fixes the total sam
     The rung \(\lambda^\star_1\) has directional exponent \(1\), while the block \(\lambda^\star_2\lambda^\star_3\lambda^\star_4\), sharing no coordinate with it, has exponent \(3\). The leap is the maximum, \(\mathrm{Leap} = 3\), so the cost is \(\mathcal{O}(d^2)\) even though \(\min_{\vec{v}}\ell_{\vec{v}} = 1\).
 \end{example}
 \begin{example}[A nested leap: \(\lambda^\star_1 + \lambda^\star_1\lambda^\star_2\lambda^\star_3\lambda^\star_4\)]
-    The first rung again has exponent \(1\), but conditioned on recovering \(\vec{w}^\star_1\) the block reduces to \(m_1\,\lambda^\star_2\lambda^\star_3\lambda^\star_4\), still three new directions at once, effective exponent \(3\). So again \(\mathrm{Leap} = 3\) and the cost is \(\mathcal{O}(d^2)\).
+    The first rung again has exponent \(1\), but conditioned on recovering \(\vec{w}^\star_1\) the block reduces to \(m_1\,\lambda^\star_2\lambda^\star_3\lambda^\star_4\), still three new directions at once, effective exponent \(3\). So again \(\mathrm{Leap} = 3\) and the cost is \(\mathcal{O}(d^2)\), despite the monomial \(\lambda^\star_1\lambda^\star_2\lambda^\star_3\lambda^\star_4\) having \(\text{Leap} = 4\) in isolation.
 \end{example}
 
 
@@ -360,8 +360,17 @@ This is the same sample-complexity table as~\eqref{eq:intro:sgd-sample-complexit
 
 In the multi-index setting, data reuse extends the staircase hierarchy. One-pass SGD follows the \emph{CSQ staircase} of \citet{abbe2023sgd}: each phase aligns with the direction of smallest \emph{directional information exponent} and the cost of each step scales as \(d^{\ell_{\vec{v}}-1}\). With the displaced gradient, the staircase is governed by the generative exponent instead, enabling an \emph{SQ staircase} over a strictly larger class of functions.\addnote{The same object is called the \emph{grand staircase} by \citet{troiani2024fundamental}, in the setting of approximate message passing; we keep \emph{SQ staircase} to stress that the climbable hierarchy is the one set by the generative (SQ) exponent.}
 \begin{example}[SQ staircase]
-A canonical example is \[h^\star(\vec{z}) = \mathrm{He}_4(z_1) + \mathrm{sign}(z_1 z_2 z_3).\]
+A canonical example is \[h^\star(\vec{\lambda}^\star) = \mathrm{He}_4(\lambda^\star_1) + \mathrm{sign}(\lambda^\star_1 \lambda^\star_2 \lambda^\star_3).\]
 The \(\mathrm{He}_4\) component has \(\ell = 4\), \(\ell^\star = 2\), and the displaced gradient weakly recovers the first direction in \(\mathcal{O}(d\log d)\) steps; once \(m_1 = \mathcal{O}(1)\), the \(\mathrm{sign}\) component, which has \(\ell=\ell^\star = 3\), becomes learnable and is recovered in a second \(\mathcal{O}(d\log d)\) phase. The same function is invisible to the CSQ staircase because its first direction has \(\ell_{\vec{v}} = 4\). A numerical illustration is shown in Figure~\ref{fig:intro:gen-exp-staircase}.
 \end{example}
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\textwidth]{papers/2405/figs/figs_SQStairH4_long}
+    \caption{\textbf{An SQ staircase that SGD cannot climb} (from Chapter~\ref{chap:paper-2405}).
+    Maximum cosine similarity between the student neurons and each teacher direction---\(\vec{w}^\star_1\) (blue), \(\vec{w}^\star_2\) (orange), \(\vec{w}^\star_3\) (green)---as a function of the normalized iteration time, for the displaced gradient on the target \(h^\star(\vec{\lambda}^\star) = \mathrm{He}_4(\lambda^\star_1) + \mathrm{sign}(\lambda^\star_1 \lambda^\star_2 \lambda^\star_3)\).
+    Using repeated data gradient descent (EgD), the first direction is weakly recovered in \(\mathcal{O}(d\log d)\) steps through its generative exponent \(\ell^\star = 2\); that overlap then unlocks the remaining two in a further \(\mathcal{O}(d\log d)\).
+    One-pass SGD cannot start the climb at all: the two components have information exponents \(\ell = 4\) and \(\ell = 3\), so no rung is CSQ-accessible.}
+    \label{fig:intro:gen-exp-staircase}
+\end{figure}
 
 Together, the three exponents trace the arc of this thesis: the information exponent fixes the cost of one-pass SGD on a single-index target, the leap exponent lifts it to the multi-index staircase, and the generative exponent marks the lower limit that becomes reachable once we step beyond a single pass.
