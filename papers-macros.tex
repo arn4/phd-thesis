@@ -37,7 +37,8 @@
 \DeclareMathOperator{\Span}{Span}
 % picked from arXiv-2402, arXiv-2405, arXiv-2406, arXiv-2506 — conflicts: \newcommand{\Span}{\mathrm{span}} in arXiv-2605
 
-% [skip:macro] Trace
+\DeclareMathOperator{\Trace}{Tr}
+% un-skipped for F073: backs the bracketed \Tr{X} form below
 
 % [skip:macro] Unif
 
@@ -149,8 +150,8 @@
 
 % [skip:macro] TODO
 
-\DeclareMathOperator{\Tr}{Tr}
-% picked from arXiv-2506 — conflicts: \def\Tr#1{\Trace{\left[#1\right]}} in arXiv-2302, arXiv-2305; \newcommand{\Tr}{\mathrm{Tr}} in arXiv-2605
+\NewDocumentCommand{\Tr}{g}{\IfNoValueTF{#1}{\Trace}{\Trace\left[#1\right]}}
+% fix F073: bare \Tr (as in arXiv-2506) prints the operator name, \Tr{X} (as in arXiv-2302, arXiv-2305) prints Tr[X] — the two forms were merged into a single argument-less \DeclareMathOperator, which silently dropped the brackets and made \Tr{\P}^2 and \Tr{\P^2} typeset identically; \newcommand{\Tr}{\mathrm{Tr}} in arXiv-2605
 
 \def\UrlBreaks{\do\/\do-}
 % auto: identical in arXiv-2402, arXiv-2406
