@@ -71,7 +71,7 @@ We can better understand the meaning of this by looking at some examples.
         \dod{m}{t} = 4\,m\,(1 - m^2) \overset{m\ll 1}{\approx} 4\,m\quad \text{with i.c. } m^0 \approx 1/\sqrt{d}.
     \end{equation}
     The solution is \(m(t) = m^0\,e^{4t}\), so the weak recovery time is \(t_\text{weak}(\eta) \approx \frac{1}{4}\log(\eta\sqrt{d})\), giving a total sample complexity of \(n = \mathcal{O}_d(d\log d)\).
-    \addnote{The predited \(t_\text{weak}(\eta) = \mathcal{O}(\log d)\) that is exactly the time scale of the validity window of Theorem~\ref{thm:intro:ss-convergence}; this passage requires a more careful analysis, see later.}
+    \addnote{The predicted \(t_\text{weak}(\eta) = \mathcal{O}(\log d)\) is exactly the time scale of the validity window of Theorem~\ref{thm:intro:ss-convergence}; this passage requires a more careful analysis, see Appendix~\ref{app:intro:validity-window}.}
     In Chapter~\ref{chap:paper-2305} we carry out a finer analysis of the equation, studying the precise constants and how they scale with the learning rate \(\gamma\) and the label noise \(\Delta\).
 \end{example}
 \begin{figure}[t]
