@@ -62,7 +62,7 @@ Finally, for simplicity of the discussion we will make the following assumption 
 \begin{equation}\label{2506:eq:ode_approx}
     \frac{d\vw}{dt} = -\E\left[{\nabla_{\vw}^\bot \ell(X, y, f_{\vw})}\right] - \frac{\gamma}2  \E\left[{\norm{\nabla_{\vw}^\bot \ell(X, y, f_{\vw})}^2}\right] \vw,
 \end{equation}
-where $\nabla_{\vw}^\bot = (I - \vw\vw^\top)\nabla_{\vw}$ is the spherical gradient. The time scaling corresponds to $t = \nu/\gamma$.
+where $\nabla_{\vw}^\bot = (I - \vw\vw^\top)\nabla_{\vw}$ is the spherical gradient. The time scaling corresponds to $\nu = t/\gamma$, that is, a continuous time $t$ is reached after $t/\gamma$ gradient steps.
 \end{assumption}
  As shown in 
 \cite{arous2021online,arnaboldi2024repetita}, such an ODE captures both the right weak recovery time for a fixed $\gamma$, and the maximal value of $\gamma$ for which the dynamics do not stay trapped in the uninformative region.

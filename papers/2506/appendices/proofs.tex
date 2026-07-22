@@ -10,21 +10,21 @@ We consider the following approximation of the SGD dynamics:
 
 The results of \cite{arous2021online} (when $m$ is a scalar) and \cite{arnaboldi2024repetita} (when $\vec{m}$ is a vector) imply the following:
 \begin{theorem}\label{2506:thm:app:ben_arous_meta}
-    Let $\nu_\eta$ be the weak recovery time of the ODE \eqref{2506:eq:app:ode_approx}, with the same initial conditions as the process \eqref{2506:eq:normalized-SGD-w}. Then for small enough $\eta$ and any $\delta > 0$, there exist constants $c(\delta), C(\delta)$ such that if
+    Let $t_\eta$ be the weak recovery time of the ODE \eqref{2506:eq:app:ode_approx}, with the same initial conditions as the process \eqref{2506:eq:normalized-SGD-w}, and let $\nu^\mathrm{weak}_\eta$ be the number of gradient steps of Definition~\ref{2506:def:weak-recovery}. Then for small enough $\eta$ and any $\delta > 0$, there exist constants $c(\delta), C(\delta)$ such that if
     \begin{equation}\label{2506:eq:app:gamma_optimal_value}
-        \gamma = c(\delta)(d\nu_\eta)^{-1},
+        \gamma = c(\delta)(dt_\eta)^{-1},
     \end{equation}
     then with probability at least $1 - \delta$
-    \[ t_\eta^+ \leq C(\delta) d \nu_\eta^2. \]
-    On the other hand, for any $t \leq C(\delta) d\nu_\eta^2$, if $\gamma \leq c(\delta)(dt)^{-1/2}$, then with probability $1 - \delta$
-    \[ t_\eta^+ \geq c(\delta)t \]
+    \[ \nu^\mathrm{weak}_\eta \leq C(\delta) d t_\eta^2. \]
+    On the other hand, for any number of steps $\nu \leq C(\delta) dt_\eta^2$, if $\gamma \leq c(\delta)(d\nu)^{-1/2}$, then with probability $1 - \delta$
+    \[ \nu^\mathrm{weak}_\eta \geq c(\delta)\nu \]
 \end{theorem}
 
 When $\gamma$ does not satisfy the bound~\eqref{2506:eq:app:gamma_optimal_value}, we cannot show a strong enough concentration around the deterministic ODE dynamics, and hence directly showing non-convergence of \eqref{2506:eq:normalized-SGD-w} is difficult. However, as we shall see in the proof, above this value of $\gamma$ the inhibitive term in \eqref{2506:eq:app:ode_approx} dominates at initialization, and hence the ODE dynamics stay trapped around zero overlap with the target subspace. For this reason, we shall consider (in line with \cite{arous2021online}) that the sample complexity cannot be improved by increasing $\gamma$ above the bound~\eqref{2506:eq:app:gamma_optimal_value}.
 
 \begin{remark}
     When $\gamma$ is instead fixed below the value \eqref{2506:eq:app:gamma_optimal_value}, the hitting time of the dynamics~\ref{2506:eq:normalized-SGD-w} is instead given by
-    \[ t_\eta^+(\gamma) \asymp \gamma^{-1}\nu_\eta. \]
+    \[ \nu^\mathrm{weak}_\eta(\gamma) \asymp \gamma^{-1}t_\eta. \]
 \end{remark}
 
 We shall also assume that $m_0 > 0$, and that the coefficients appearing in the gain expression in Theorem~\ref{2506:thm:sequencelength-gain} are all non-negative. As mentioned in \cite{arous2021online,arnaboldi2024online,arnaboldi2024repetita}, this condition can be ensured with probability $1/2$ by randomly setting the learning rate to $\pm \gamma$ with equal probability.
@@ -113,46 +113,46 @@ which ends the proof.
 
 \subsection{Hitting time for the tied dynamics}
 
-We are now ready to prove Theorem~\ref{2506:thm:sie} (as well as part of Theorem~\ref{2506:thm:sequencelength-gain}). In light of Theorem~\ref{2506:thm:app:ben_arous_meta}, it suffices to compute the hitting time $\nu_\eta$ of the tied dynamics \eqref{2506:eq:app:tied_dynamics}.
+We are now ready to prove Theorem~\ref{2506:thm:sie} (as well as part of Theorem~\ref{2506:thm:sequencelength-gain}). In light of Theorem~\ref{2506:thm:app:ben_arous_meta}, it suffices to compute the hitting time $t_\eta$ of the tied dynamics \eqref{2506:eq:app:tied_dynamics}.
 Since $\phi_{\text{tied}}(m) = 2 C_{\sie} \times (\ind_L, \dots, \ind_L) m^{\sie-1} + O(m^{\sie})$, there exists an $\eta_{\text{tied}} > 0$ such that if $m < \eta_{\text{tied}}$,
 \[ c_\sie(\sigma) C_{\sie} \times (\ind_L, \dots, \ind_L) m^{\sie-1} < \phi_{\text{tied}}(m) < 3c_\sie(\sigma) C_{\sie} \times (\ind_L, \dots, \ind_L) m^{\sie-1} \]
 Combining this with the bound of Lemma~\ref{2506:lem:app:grad_norm}, we find that whenever $m(t) \leq \eta$ for some constant $c > 0$,
 \[ \frac{dm}{dt} \geq c \cdot C_{\sie} \times (\ind_L, \dots, \ind_L) m^{\sie-1} - C\gamma dm \]
 For any $\delta > 0$, there exists a constant $\kappa(\delta)$ such that with  probability at least $1 - \delta$,
 \[ m(0) \geq \frac{\kappa(\delta)}{\sqrt{d}}. \]
-As a result, when $\gamma \leq \kappa(\delta)^{\sie-1} C^{-1}d^{-\frac{\sie}{2}+1}$, then for $0 \leq t \leq \nu_\eta$
+As a result, when $\gamma \leq \kappa(\delta)^{\sie-1} C^{-1}d^{-\frac{\sie}{2}+1}$, then for $0 \leq t \leq t_\eta$
 \[ \frac{dm}{dt} \geq c' \cdot C_{\sie} \times (\ind_L, \dots, \ind_L) m^{\sie-1} \]
 This implies:
 \begin{itemize}
     \item when $\sie = 1$,
-    \[ m(t) \geq m_0 + \frac{C_{\sie} \times (\ind_L, \dots, \ind_L)}{2}t, \quad \text{hence} \quad \nu_\eta \leq \frac{C'\eta}{C_{\sie} \times (\ind_L, \dots, \ind_L)}; \]
+    \[ m(t) \geq m_0 + \frac{C_{\sie} \times (\ind_L, \dots, \ind_L)}{2}t, \quad \text{hence} \quad t_\eta \leq \frac{C'\eta}{C_{\sie} \times (\ind_L, \dots, \ind_L)}; \]
     \item when $\sie = 2$,
-    \[ m(t) \geq m_0\exp\left(\frac{C_{\sie} \times (\ind_L, \dots, \ind_L)}{2}t\right), \quad \text{hence} \quad \nu_\eta \leq \frac{C'\ln(d)}{C_{\sie} \times (\ind_L, \dots, \ind_L)}; \]
+    \[ m(t) \geq m_0\exp\left(\frac{C_{\sie} \times (\ind_L, \dots, \ind_L)}{2}t\right), \quad \text{hence} \quad t_\eta \leq \frac{C'\ln(d)}{C_{\sie} \times (\ind_L, \dots, \ind_L)}; \]
     \item when $\sie \geq 3$,
-    \[ m(t) \geq \left(m(0)^{2-\sie} - \frac{C_{\sie} \times (\ind_L, \dots, \ind_L)}{2}(\sie-2)t\right)^{-\frac1{\sie-2}},\] hence\[\nu_\eta \leq \frac{C'd^{\frac\sie2-1}}{C_{\sie} \times (\ind_L, \dots, \ind_L)}. \]
+    \[ m(t) \geq \left(m(0)^{2-\sie} - \frac{C_{\sie} \times (\ind_L, \dots, \ind_L)}{2}(\sie-2)t\right)^{-\frac1{\sie-2}},\] hence\[t_\eta \leq \frac{C'd^{\frac\sie2-1}}{C_{\sie} \times (\ind_L, \dots, \ind_L)}. \]
 \end{itemize}
-The bound on $\gamma$ above is always weaker (up to constant factors) than the bound $\gamma \leq C(d\nu_d)^{-1}$ of Theorem~\ref{2506:thm:app:ben_arous_meta}, and hence we always have
-\[ t_\eta^+ \leq Cd\nu_\eta^2,\]
+The bound on $\gamma$ above is always weaker (up to constant factors) than the bound $\gamma \leq C(dt_\eta)^{-1}$ of Theorem~\ref{2506:thm:app:ben_arous_meta}, and hence we always have
+\[ \nu^\mathrm{weak}_\eta \leq Cdt_\eta^2,\]
 which corresponds to the statement of Theorem~\ref{2506:thm:sie}.
 
 On the other hand, for any $t \geq 0$ we have
 \[ \frac{dm}{dt} \leq  3C_{\sie} \times (\ind_L, \dots, \ind_L) m^{\sie-1}, \]
-which by the same reasoning implies that the bounds on $\nu_\eta$ that we obtained are sharp up to constants.
+which by the same reasoning implies that the bounds on $t_\eta$ that we obtained are sharp up to constants.
 
 \subsection{Hitting time for untied dynamics}
 
 We are now ready to finish the proof of Theorem~\ref{2506:thm:sequencelength-gain}. Since
 \[ \phi_{\text{untied}}(\vec{m}) = 2 c_\sie(\sigma) C_{\sie} \times (I_L, \vec{m}, \dots, \vec{m}) + O(\norm{\vec{m}}^\sie), \]
-for small enough $\eta > 0$ we have for $t \leq \nu_\eta$
+for small enough $\eta > 0$ we have for $t \leq t_\eta$
 \[ \frac{d\norm{\vec{m}}}{dt} \leq C \cdot C_\sie \times (\vec{m}, \dots, \vec{m}) + \norm{C_\sie} \norm{m}^{\sie-1} \leq (C+1)\norm{C_\sie}\cdot \norm{\vec{m}}^{\sie-1}.\]
-Recall that the hitting time $\nu_{\eta, \text{untied}}$ corresponds to $\norm{m}$ hitting the threshold $\eta\sqrt{L}$. As a result, since the dependency in $\eta$ is of leading order only for $\sie=1$, we find
-\[ \nu_{\eta, \text{untied}} \geq \frac{c}{\norm{C_\sie}} \begin{cases}
+Recall that the hitting time $t_{\eta, \text{untied}}$ corresponds to $\norm{m}$ hitting the threshold $\eta\sqrt{L}$. As a result, since the dependency in $\eta$ is of leading order only for $\sie=1$, we find
+\[ t_{\eta, \text{untied}} \geq \frac{c}{\norm{C_\sie}} \begin{cases}
     \eta\sqrt{L} & \text{ if } \sie=1 \\
     \log(d) & \text{ if } \sie=2\\
     d^{\frac\sie2-1} & \text{ if } \sie \geq 3
 \end{cases} \]
 Since the gain satisfies 
-\[ \mathrm{gain} \asymp  \left(\frac{\nu_{\eta, \text{untied}}}{\nu_\eta}\right)^2, \]
+\[ \mathrm{gain} \asymp  \left(\frac{t_{\eta, \text{untied}}}{t_\eta}\right)^2, \]
 this proves the first part of Theorem~\ref{2506:thm:sequencelength-gain}.
 
 For the second part, assume that $C_\sie$ is \emph{odeco}, hence there exists $\lambda_1, \dots, \lambda_L$ and orthogonal vectors $\vec{v}_1, \dots, \vec{v}_L$ such that
@@ -162,8 +162,8 @@ Letting $m^{(1)} = \langle \vec{m}, \vec{v_1} \rangle$, we have
 \[  \langle \vec{v}_1, C_{\sie} \times (I_L, \vec{m}, \dots, \vec{m}) \rangle = C_{\sie} \times (\vec{v}_1, \vec{m}, \dots, \vec{m}) = \lambda_1 (m^{(1)})^{\sie-1} \]
 For small enough $\eta$, this implies that
 \[ \frac{dm^{(1)}}{dt} \geq c \norm{C_\sie} (m^{(1)})^{\sie-1} \]
-Since $\norm{m} \geq m^{(1)}$ by the Cauchy-Schwarz inequality, the hitting time $\nu_{\eta, \text{untied}}$ is at most that of $m^{(1)}$, and hence
-\[ \nu_{\eta, \text{untied}} \leq \frac{C}{\norm{C_\sie}} \begin{cases}
+Since $\norm{m} \geq m^{(1)}$ by the Cauchy-Schwarz inequality, the hitting time $t_{\eta, \text{untied}}$ is at most that of $m^{(1)}$, and hence
+\[ t_{\eta, \text{untied}} \leq \frac{C}{\norm{C_\sie}} \begin{cases}
     \eta\sqrt{L} & \text{if} \sie=1 \\
     \log(d) & \text{if} \sie=2\\
     d^{\frac\sie2-1} & \text{if} \sie \geq 3
