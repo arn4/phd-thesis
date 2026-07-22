@@ -179,12 +179,12 @@ Chapter~\ref{chap:paper-2506} extends the exponent to a model that proxies the a
 \[f(X) = \vec{a}_L^\top \SoftMax\left(\left(X+\frac{P}{\sqrt{d}}\right) \vec{w}\vec{w}^\top \left(X+\frac{P}{\sqrt{d}}\right)^\top\right)\vec{a}_R,\]
 where \(P\) is a fixed positional encoding, and \(\vec{a}_L, \vec{a}_R \in \mathbb{R}^L\) are the read-out vectors.
 The information exponent is then defined as the smallest degree of the Hermite multivariate expansion of the target function, now called the \emph{Sequence Information Exponent} (SIE), and the sample complexity obeys the same \(d\)-scaling hierarchy as~\eqref{eq:intro:sgd-sample-complexity} with \(\ell\) replaced by the SIE.
-The order-parameter space expands from the scalar \(m\) to the pair \((m, \vec{e})\), where \(m = \vec{w}^\star\cdot\vec{w}/d\) is the teacher overlap and \(\vec{e} = P\vec{w}/\sqrt{d}\) encodes the alignment of the student weights with the positional encoding \(P\); the dynamics is described by a coupled ODE in \((m,\vec{e})\), illustrated in Figure~\ref{fig:intro:2506-trajectories}.
+The order-parameter space expands from the scalar \(m\) to the pair \((\vec{e}, m)\), where \(m = \vec{w}^\star\cdot\vec{w}/d\) is the teacher overlap and \(\vec{e} = P\vec{w}/\sqrt{d}\) encodes the alignment of the student weights with the positional encoding \(P\); the dynamics is described by a coupled ODE in \((\vec{e},m)\), illustrated in Figure~\ref{fig:intro:2506-trajectories}.
 \begin{figure}[t]
     \centering
     \includegraphics[height=0.38\textwidth]{papers/2506/figs/positional-semantic/loss_surface_omega0.67_a1}
-    \caption{\textbf{Population loss of the Sequence Single Index Model in the \((m,e)\) plane} (from Chapter~\ref{chap:paper-2506}).
-    Working with two order parameters instead of one can produce richer loss landscapes, including multiple local minima. Here the semantic minimum at \((m,e)=(1,0)\) is the global one, yet SGD trajectories (yellow) are attracted to the local positional minimum at \((m,e)=(0,1)\).}
+    \caption{\textbf{Population loss of the Sequence Single Index Model in the \((e,m)\) plane} (from Chapter~\ref{chap:paper-2506}).
+    Working with two order parameters instead of one can produce richer loss landscapes, including multiple local minima. Here the semantic minimum at \((e,m)=(0,1)\) is the global one, yet SGD trajectories (yellow) are attracted to the local positional minimum at \((e,m)=(1,0)\).}
     \label{fig:intro:2506-trajectories}
 \end{figure}
 

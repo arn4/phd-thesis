@@ -15,7 +15,7 @@ and reduction map \(\Pi\) the identity function. We focus on the \emph{gradient 
 
 The sequential information exponent of this setting is \(\mathrm{SIE}=2\) (see Appendix~\ref{2506:app:further-positional-semantic} for the explicit derivation), thus by Theorem~\ref{2506:thm:sie} the sample complexity for escaping the initialization is \(\mathcal{O}(d \log d)\).
 After the initial phase, SGD fast converges to the minimum of the population loss that is fully aligned with either the semantic or the positional sufficient statistic, i.e. \(\norm{(\vec{e},m)} = 1\), but is not guaranteed to be the global minimum. 
-Figure~\ref{2506:fig:positional-semantic-trajectories-a1} shows an example where the population loss has two minima, one semantic with \((e,m)=(1,0)\) and one positional with \((e,m)=(0,1)\), and the steepest direction at initialization, namely the eigenvector associated with the lowest eigenvalue of the Hessian, points towards the local one; in this case, the gradient flow will converge to the wrong minimum.
+Figure~\ref{2506:fig:positional-semantic-trajectories-a1} shows an example where the population loss has two minima, one semantic with \((e,m)=(0,1)\) and one positional with \((e,m)=(1,0)\), and the steepest direction at initialization, namely the eigenvector associated with the lowest eigenvalue of the Hessian, points towards the local one; in this case, the gradient flow will converge to the wrong minimum.
 
 Varying the parameters, \(\omega\) and \(a\) the high-dimensional SGD dynamics from random initialization exhibits a rich phenomenology. In Figure~\ref{2506:fig:phase-diagram-positional-semantic} we show the phase diagram with all the possible behaviors:
 \begin{itemize}
@@ -43,7 +43,7 @@ The theoretical value of \(\omega\) where we have a transition from  sematic to 
     \includegraphics[height=0.49\textwidth]{figs/positional-semantic/trajectories-probability}
     \caption{
         (left) surface of the population loss for \(\omega = 0.67\) and \(a=1\). The steepest direction at initialization (green vector) points towards the \emph{positional} local minimum, while the global minima is semantic.
-        Some examples of SGD trajectories are shown in yellow: most of them fall into the semantic local minimum, while some others manage to fully-recover the global minimum due to finite size effects (\(d=1000\)).
+        Some examples of SGD trajectories are shown in yellow: most of them fall into the positional local minimum, while some others manage to fully-recover the global (semantic) minimum due to finite size effects (\(d=1000\)).
         %
         (right) empirical probability of convergence to the semantic minima as a function of \(\omega\) for \(a=1\). The probability is computed over 64 SGD runs with different initializations and data samples. The theoretical prediction of the transition from semantic to positional minima is at \(\omega_\mathrm{trans}\approx0.64\). 
     }
