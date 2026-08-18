@@ -168,7 +168,7 @@ Similarly, given the parameters $\Theta$, the risk is computed as
 \end{equation}
 The consistency of this approximation is given by the following theorem:
 \begin{theorem}\label{2302:thm:mf_approx_lowd_bound}
- Under Assumptions~\ref{2302:assump:activation}~and~\ref{2302:assump:init}, let $\mat{\Omega}(t)$ and $\tilde{\mat{\Theta}}(t)$ denote the solutions of the ODES \eqref{2302:eq:def:gf_ode} and \eqref{2302:eq:def:mf_ode}, respectively. Then with probability at least $1 - e^{-z^2}$ on the initialization:
+ Under Assumptions~\ref{2302:assump:activation}~and~\ref{2302:assump:init}, let ${\Omega}(t)$ and $\tilde{{\Theta}}(t)$ denote the solutions of the ODES \eqref{2302:eq:def:gf_ode} and \eqref{2302:eq:def:mf_ode}, respectively. Then with probability at least $1 - e^{-z^2}$ on the initialization:
     \[ \sup_{t \in [0, T]} \left| \mathcal R(\mat{\Omega}(t)) - \mathcal R(\tilde{\mat{\Theta}}(t)) \right| \leq {Ce^{CT} \left(\sqrt{\log(pT)} + z \right)}/{\sqrt{p}} .\]
 \end{theorem}
 The proof is given in Appendix~\ref{2302:sec:app:mf}. It uses key elements from the mean-field study of \cite{mei2019mean}. Indeed, both the solutions of \eqref{2302:eq:def:gf_ode} \& \eqref{2302:eq:def:mf_ode} can be viewed as the ``particle dynamics'' approximations (see e.g. \cite{chertock2017practical}) of two mean-field PDEs $\mu_t, \tilde\mu_t$ on the space of network weights $\vec{w} \in \mathbb{R}^{d}$ and the space of reduced parameters $(\vec{m}, q) \in \mathbb{R}^{k+1}$, respectively. In turn, the invariance property of $\mu_0$ extends to $\hat\mu_t$ for every $t \geq 0$, which implies that $\mathcal R(\mu_t) = \mathcal R(\tilde\mu_t)$. 
