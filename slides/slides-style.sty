@@ -1,0 +1,244 @@
+% ---------------------------------------------------------------------------
+% slides-style.sty -- style package for the PhD defence deck (slides.tex).
+%
+% The deck is a re-typeset of slides/draft.key.  Everything that is a design
+% decision lives here, so slides.tex stays a plain transcription of the talk.
+%
+% Theme: Boadilla has a footline but no sidebar and no headline, which leaves
+% the full text width for the wide two- and three-panel figures this deck is
+% built from; beaver supplies the red structure colour that matches the EPFL
+% logo on the title slide.  Both are one-line swaps.
+% ---------------------------------------------------------------------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{slides-style}[2026/08/20 PhD defence slides style]
+
+% --- theme ------------------------------------------------------------------
+\usetheme{Boadilla}
+\usecolortheme{beaver}
+% beaver recolours titles and palettes but leaves `structure' at beamer's
+% default blue, which would clash with the red frame titles; make \structure
+% (and therefore \role and \punchline) match.
+\setbeamercolor{structure}{fg=darkred}
+\setbeamertemplate{navigation symbols}{}
+% Future \pause commands should grey out what is still hidden, not blank it.
+\setbeamercovered{transparent}
+
+% Keynote centres its slide titles and sets them noticeably larger than the
+% body; Boadilla left-aligns at \large.  Match the original.
+\setbeamertemplate{frametitle}[default][center]
+\setbeamerfont{frametitle}{size=\Large,series=\bfseries}
+
+% --- fonts ------------------------------------------------------------------
+% Every equation in draft.key is a crop out of the thesis PDF, i.e. Computer
+% Modern.  Serif math keeps the re-typeset deck looking like the original,
+% while the body text stays sans, as in Keynote.
+\RequirePackage[T1]{fontenc}
+\RequirePackage{lmodern}
+\usefonttheme[onlymath]{serif}
+
+% --- maths ------------------------------------------------------------------
+\RequirePackage{amsmath}
+\RequirePackage{amssymb}
+\RequirePackage{mathtools}   % \coloneqq, \eqqcolon
+\RequirePackage{xfrac}       % \sfrac, as in the thesis
+\RequirePackage{bm}
+% Same convention as papers-macros.tex:776, so maths copied over from the
+% thesis (and the two thesis TikZ figures below) reads identically.
+\renewcommand{\vec}[1]{{\boldsymbol{#1}}}
+\providecommand{\erf}{\operatorname{erf}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\SoftMax}{\operatorname{softmax}}
+
+% --- display maths that must fit its column ---------------------------------
+% Several equations copied over from the thesis are wider than the column they
+% land in on a 16:9 frame.  \fiteq typesets one centred and scales it down --
+% only if it overflows -- so no equation ever runs off the slide.
+\RequirePackage{adjustbox}
+\newcommand{\fiteq}[2][\linewidth]{%
+  \par\vspace{0.35em}%
+  \noindent\makebox[\linewidth][c]{\adjustbox{max width=#1}{$\displaystyle #2$}}%
+  \par\vspace{0.35em}}
+
+% --- figures reused from the thesis tree -----------------------------------
+% chapters/figs/{multi-index,two-layer-net}.tex are \input directly; they need
+% the arrows.meta library and the five net* colours from thesis-style.sty.
+\RequirePackage{tikz}
+\usetikzlibrary{arrows.meta}
+\RequirePackage{trimclip}
+% Both figures carry a W/W^star label above the diagram and a row of small
+% captions below it (nodes at y = 2.55 and y = -3.0 in their own tikz units);
+% draft.key screenshotted them cropped to the diagram alone.  Reproduce that
+% crop rather than forking the files, so they stay the thesis's copy.
+\newcommand{\thesisnet}[2][\linewidth]{%
+  \resizebox{#1}{!}{\clipbox{0pt 20pt 0pt 13pt}{\input{#2}}}}
+\definecolor{netin}{HTML}{5B6B7B}   % input layer      -- slate
+\definecolor{nethid}{HTML}{4F86C6}  % hidden neuron 1  -- blue
+\definecolor{nethidb}{HTML}{2E9E8F} % hidden neuron 2  -- teal
+\definecolor{nethidc}{HTML}{8E6FC6} % hidden neuron p  -- violet
+\definecolor{netout}{HTML}{E0922F}  % output layer     -- amber
+
+% --- motivation pictures (frames 2 and 3) -----------------------------------
+% Both are drawn here rather than included as images, so the motivation frames
+% add no assets to the deck and follow the theme colours.  Each is wrapped in
+% \adjustbox so it shrinks to its column only if it would overflow.
+%
+% A timeline of the engineering milestones behind the current models: the
+% "seventy years of cumulative work" of chapters/motivation.tex, ending at the
+% moment the public noticed.
+\newcommand{\aitimeline}{%
+  \begin{center}
+  \adjustbox{max width=\linewidth}{%
+  \begin{tikzpicture}[x=1cm, y=1cm, font=\footnotesize]
+    \draw[-{Stealth[length=3mm]}, line width=0.9pt, black!45]
+      (-0.6,0) -- (12.6,0);
+    \foreach \x/\yr/\lab in {%
+      0.4/1958/{Perceptron},
+      3.0/1986/{Backpropagation},
+      5.6/2012/{GPUs \& ImageNet},
+      8.2/2017/{Transformers},
+      10.8/2022/{ChatGPT}}{%
+      \fill[darkred] (\x,0) circle (2.6pt);
+      \node[above=4pt, font=\footnotesize\bfseries, text=darkred] at (\x,0) {\yr};
+      \node[below=5pt, align=center, text width=2.5cm] at (\x,0) {\lab};
+    }
+  \end{tikzpicture}}
+  \end{center}}
+%
+% Thomson -> Bohr -> quantum mechanics, the analogy the motivation section is
+% built on: a first crude model is what makes a real theory possible later.
+% The "we are here" marker sits under Thomson on purpose.
+\newcommand{\atomprogression}{%
+  \adjustbox{max width=\linewidth, max height=0.46\textheight}{%
+  \begin{tikzpicture}[x=1cm, y=1cm, font=\footnotesize]
+    % Thomson (1904): electrons embedded in a positive sphere.
+    \begin{scope}[shift={(0,0)}]
+      \fill[nethid!18] (0,0) circle (0.72);
+      \draw[nethid!65, line width=0.7pt] (0,0) circle (0.72);
+      \foreach \a/\r in {25/0.42, 95/0.55, 165/0.28, 215/0.6, 300/0.38, 345/0.62}
+        \fill[darkred] (\a:\r) circle (1.5pt);
+      \node[align=center] at (0,-1.15) {\textbf{Thomson}\\1904};
+    \end{scope}
+    \draw[-{Stealth[length=2.2mm]}, black!45, line width=0.7pt] (0.95,0) -- (1.55,0);
+    % Bohr (1913): nucleus plus quantised orbits.
+    \begin{scope}[shift={(2.5,0)}]
+      \draw[nethid!65, line width=0.7pt] (0,0) circle (0.45);
+      \draw[nethid!65, line width=0.7pt] (0,0) circle (0.72);
+      \fill[netout] (0,0) circle (2.6pt);
+      \fill[darkred] (60:0.45) circle (1.5pt);
+      \fill[darkred] (200:0.72) circle (1.5pt);
+      \fill[darkred] (325:0.72) circle (1.5pt);
+      \node[align=center] at (0,-1.15) {\textbf{Bohr}\\1913};
+    \end{scope}
+    \draw[-{Stealth[length=2.2mm]}, black!45, line width=0.7pt] (3.45,0) -- (4.05,0);
+    % Quantum mechanics: a probability cloud rather than an orbit.
+    \begin{scope}[shift={(5.0,0)}]
+      \shade[inner color=nethidc!55, outer color=nethidc!2]
+        (0,0) circle (0.78);
+      \fill[netout] (0,0) circle (2.2pt);
+      \node[align=center] at (0,-1.15) {\textbf{Quantum}\\\textbf{mechanics}};
+    \end{scope}
+    % "we are here", pointing back at the crude first model.
+    \draw[-{Stealth[length=2mm]}, darkred, line width=0.7pt]
+      (0,-2.05) -- (0,-1.55);
+    \node[text=darkred, font=\scriptsize\bfseries] at (0,-2.25) {we are here};
+  \end{tikzpicture}}}
+
+% --- the three pillars of the setting (frame 4) -----------------------------
+% One small icon per ingredient, deliberately generic: the frame poses the
+% three questions and the frames after it give the answers, so nothing here
+% should hint at Gaussian data, a two-layer net or one-pass SGD.
+% All three share a 1.4 x 1.0 bounding box so the column headings line up.
+\newcommand{\pillar@box}{\useasboundingbox (0,0) rectangle (1.4,1.0);}
+% Laid out on a 1cm grid but drawn at 0.85 of it: frame 4 is the fullest of
+% the deck and this is where its bottom margin comes from.
+\newcommand{\icondata}{%
+  \begin{tikzpicture}[x=0.85cm, y=0.85cm]
+    \pillar@box
+    \draw[black!35, line width=0.6pt] (0.1,0.95) -- (0.1,0.08) -- (1.35,0.08);
+    \foreach \x/\y in {0.32/0.60, 0.48/0.32, 0.66/0.74, 0.86/0.46,
+                       1.08/0.78, 0.40/0.20, 0.98/0.24, 1.20/0.55}
+      \fill[nethid] (\x,\y) circle (1.6pt);
+  \end{tikzpicture}}
+\newcommand{\iconmodel}{%
+  \begin{tikzpicture}[x=0.85cm, y=0.85cm]
+    \pillar@box
+    \foreach \y in {0.15,0.5,0.85}
+      \foreach \yy in {0.32,0.68}
+        \draw[black!28, line width=0.5pt] (0.15,\y) -- (0.7,\yy);
+    \foreach \yy in {0.32,0.68}
+      \draw[black!28, line width=0.5pt] (0.7,\yy) -- (1.25,0.5);
+    \foreach \y in {0.15,0.5,0.85} \fill[netin] (0.15,\y) circle (2.1pt);
+    \foreach \yy in {0.32,0.68}    \fill[nethid] (0.7,\yy) circle (2.1pt);
+    \fill[netout] (1.25,0.5) circle (2.1pt);
+  \end{tikzpicture}}
+\newcommand{\iconalgo}{%
+  \begin{tikzpicture}[x=0.85cm, y=0.85cm]
+    \pillar@box
+    \draw[black!45, line width=0.8pt]
+      (0.05,0.92) .. controls (0.35,0.34) and (0.48,0.78) .. (0.72,0.46)
+                  .. controls (0.98,0.10) and (1.12,0.52) .. (1.35,0.12);
+    \fill[darkred] (0.72,0.46) circle (2.3pt);
+    \draw[-{Stealth[length=1.8mm]}, darkred, line width=0.7pt]
+      (0.88,0.46) -- (1.06,0.28);
+  \end{tikzpicture}}
+
+% --- palette ----------------------------------------------------------------
+% Sampled straight out of the Keynote deck, so the boxes keep their meaning:
+% green = definitions, orange = theorems, pink = the one Ansatz.
+\definecolor{slidegreen}{HTML}{BAE7B2}
+\definecolor{slideorange}{HTML}{FFCE8D}
+\definecolor{slidepink}{HTML}{FBE0EE}
+% Region colours of papers/2406/figs/exact_asymptotic_diagram_no_legend, used
+% for the colour-keyed legend words under that figure (frame 14).
+\definecolor{ssline}{HTML}{138888}
+\definecolor{noiseregion}{HTML}{FF1312}
+\definecolor{undefregion}{HTML}{C39AC3}
+
+% --- semantic boxes ---------------------------------------------------------
+\RequirePackage{tcolorbox}
+\tcbuselibrary{skins}
+
+\tcbset{
+  slidebox/.style={
+    enhanced, rounded corners, arc=4pt,
+    boxrule=0pt, titlerule=0pt, toptitle=2pt, bottomtitle=2pt,
+    left=6pt, right=6pt, top=4pt, bottom=4pt,
+    coltitle=black, fonttitle=\bfseries,
+  },
+}
+
+% Definitions: Information Exponent, Weak recovery time, Generative Exponent,
+% Sequence Information Exponent, Displaced gradient (EGD).
+\newtcolorbox{defbox}[2][]{slidebox,
+  colback=slidegreen, colbacktitle=slidegreen, colframe=slidegreen,
+  title={#2}, #1}
+
+% Theorems: Theorem, Theorem (Repetita Iuvant).
+\newtcolorbox{thmbox}[2][]{slidebox,
+  colback=slideorange, colbacktitle=slideorange, colframe=slideorange,
+  title={#2}, #1}
+
+% The single Ansatz on the mean-field frame.
+\newtcolorbox{ansatzbox}[2][]{slidebox,
+  colback=slidepink, colbacktitle=slidepink, colframe=slidepink,
+  title={#2}, #1}
+
+% --- text roles -------------------------------------------------------------
+% The take-away line of a frame.  In Keynote these are set in a blue-to-magenta
+% gradient; a flat structure colour is the closest faithful equivalent.
+\newcommand{\punchline}[1]{%
+  {\centering\usebeamercolor[fg]{structure}\large\bfseries #1\par}}
+
+% The small grey annotations Keynote sets at ~60% of body size.
+\newcommand{\aside}[1]{{\footnotesize\color{black!62}#1}}
+
+% Left-hand role labels ("Update", "Initialization", "Loss function", ...).
+\newcommand{\role}[1]{\structure{#1}}
+
+% --- presenter notes --------------------------------------------------------
+% Every note in draft.key is carried over verbatim as a \note.  Uncomment to
+% drive a second screen during the defence.
+\RequirePackage{pgfpages}
+% \setbeameroption{show notes on second screen=right}
+
+\endinput

@@ -1,0 +1,1135 @@
+% ---------------------------------------------------------------------------
+% PhD defence slides -- Luca Arnaboldi, 26 August 2026.
+%
+% A re-typeset of slides/draft.key: same 25 slides, same content, same order.
+% Every equation that was a screenshot in Keynote is real LaTeX here, and every
+% figure is the actual thesis PDF rather than a crop of it.  Presenter notes are
+% carried over verbatim as \note.
+%
+% Build from the REPO ROOT (figure paths are repo-root-relative); the root
+% latexmkrc supplies lualatex, -synctex=1 and out_dir=build, so the deck lands
+% at build/slides.pdf next to build/thesis.pdf:
+%     latexmk -pdflua slides/slides.tex
+% ---------------------------------------------------------------------------
+\documentclass[aspectratio=169,11pt]{beamer}
+% Built from the repo root, so slides-style.sty is not in the CWD; point the
+% file search at slides/ rather than duplicating the package at the root.
+\makeatletter\def\input@path{{slides/}}\makeatother
+\usepackage{slides-style}
+
+\title[Effective Dynamics of SGD]{Effective Dynamics of SGD}
+\subtitle{in High-Dimensional Neural Networks}
+\author{Luca Arnaboldi}
+\institute{EPFL --- IdePHIX}
+\date{26 August 2026}
+
+\begin{document}
+
+% === 1. Title ==============================================================
+\begin{frame}[plain]
+  \begin{columns}[T]
+    \begin{column}{0.5\textwidth}
+      \begin{center}
+        \includegraphics[height=1.2cm]{slides/figs/logo-epfl}
+      \end{center}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{center}
+        \includegraphics[height=1.5cm]{slides/figs/logo-idephix}
+      \end{center}
+    \end{column}
+  \end{columns}
+  \vfill
+  \begin{center}
+    {\usebeamercolor[fg]{structure}\Huge\bfseries Effective Dynamics of SGD}\par
+    \vspace{0.5em}
+    {\LARGE in High-Dimensional Neural Networks}
+  \end{center}
+  \vfill
+  \begin{center}
+    \large Luca Arnaboldi \textbar{} PhD Defence \textbar{} 26 August 2026
+  \end{center}
+  \vspace{1.5em}
+\end{frame}
+
+% === 2. Why are we doing this? ==============================================
+% draft.key had this as a bare section slide; the two frames here fill it with
+% chapters/motivation.tex.  Both pictures are TikZ, so the deck stays
+% asset-free (see \aitimeline / \atomprogression in slides-style.sty).
+\begin{frame}{Why are we doing this?}
+  \begin{center}
+    {\Large\bfseries An engineering triumph, seventy years in the making}
+  \end{center}
+  \vspace{0.4em}
+  \aitimeline
+  \vspace{0.4em}
+  \punchline{We can train these models. We still cannot say \emph{why} they work.}
+  \vspace{0.8em}
+  \begin{columns}[t]
+    \begin{column}{0.31\textwidth}\centering
+      \role{\large Practical}\par\vspace{0.35em}
+      \small better algorithms, more efficient models, less compute and energy
+      burnt
+    \end{column}
+    \begin{column}{0.31\textwidth}\centering
+      \role{\large Social}\par\vspace{0.35em}
+      \small interpretability, fairness, robustness --- the prerequisites for
+      high-stakes deployment
+    \end{column}
+    \begin{column}{0.31\textwidth}\centering
+      \role{\large Scientific}\par\vspace{0.35em}
+      \small this thesis goes to the \emph{\'Ecole Doctorale de Physique}:
+      understanding a complex system is a goal in itself
+    \end{column}
+  \end{columns}
+  \note{The release of ChatGPT made public something that had been building in
+    the labs for years, and it was above all an engineering achievement: a
+    pipeline able to digest essentially all of human digital knowledge.
+    Decades of cumulative work -- artificial neurons in the 50s,
+    backpropagation in the 80s, GPUs and large datasets in the 2000s and 2010s.
+    But the theory did not keep up.
+    Three reasons to close the gap: practical, social, and -- since we are
+    physicists -- plain curiosity, which historically pays off in unexpected
+    ways.}
+\end{frame}
+
+% === 3. What does a physicist do about it? ==================================
+\begin{frame}{What does a physicist do about it?}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      \role{\large Why the classical theory does not apply}
+      \begin{itemize}
+        \setlength{\itemsep}{0.35em}
+        \item fitting data with a huge number of parameters breaks the
+          bias--variance trade-off
+        \item non-convex landscape, no closed-form solution
+        \item \dots\ yet plain SGD finds solutions that generalize
+      \end{itemize}
+      \vspace{0.9em}
+      \role{\large So we build a caricature}\par\vspace{0.25em}
+      \small Simplified and certainly incomplete, but \emph{concrete enough} to be
+      tested, refuted and improved.
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \atomprogression
+    \end{column}
+  \end{columns}
+  \vspace{0.4em}
+  \punchline{We want to be Thomson, so that someone can be Bohr after us.}
+  \vspace{0.6em}
+  \begin{columns}[t]
+    \begin{column}{0.5\textwidth}\centering\small
+      \role{Worst case} \aside{(PAC, VC, Rademacher)}\par
+      $\longrightarrow$ pessimistic bounds
+    \end{column}
+    \begin{column}{0.5\textwidth}\centering\small
+      \role{Typical case} \aside{(statistical physics)}\par
+      $\longrightarrow$ sharp predictions
+    \end{column}
+  \end{columns}
+  \note{Chemistry at the end of the nineteenth century could synthesize
+    complex molecules without knowing why atoms bond: Thomson's model was crude
+    and wrong in important ways, but concrete enough to be improved into Bohr,
+    and eventually into quantum mechanics.  That is roughly where deep learning
+    stands, and the role we aspire to play.
+    Two advantages we have: the experiments run on a laptop rather than a
+    collider, and the process itself -- training -- is mathematically well
+    defined, so we only need to explain \emph{why} it works and \emph{how} the
+    dynamics unfold.
+    Last line: this is why we use statistical physics rather than classical
+    learning theory, and the thread of the thesis is the typical dynamics of
+    SGD in high dimension.}
+\end{frame}
+
+% === 4. Our setting =========================================================
+\begin{frame}{Our setting}
+  \begin{center}
+    {\Large\bfseries Supervised Learning with scalar labels}
+  \end{center}
+  \vspace{0.3em}
+  \begin{center}
+    \small
+    $\mathcal{D} = \{(\vec{x}^\nu,\, y^\nu)\}_{\nu \in [n]}$ i.i.d.,\quad
+    $\vec{x} \in \mathbb{R}^d$ ($d \gg 1$),\quad $y \in \mathbb{R}$
+    \quad$\longrightarrow$\quad
+    find $f$ with $f(\vec{x}) \approx y$ on \emph{unseen} data
+  \end{center}
+  % \vspace{0.1em}
+  \begin{center}
+    \aside{The most controlled paradigm there is --- and a scalar label carries
+      more signal than a class label.}
+  \end{center}
+  % \vspace{0.25em}
+  \begin{center}
+    \large We need to make some assumptions for our theory on 
+  \end{center}
+  \vspace{0.4em}
+  \begin{columns}[t]
+    \begin{column}{0.33\textwidth}\centering
+      \icondata\par\vspace{0.25em}
+      \role{\large The data}\par\vspace{0.2em}
+      % \small Where do the inputs come from, and how is the label built?
+    \end{column}
+    \begin{column}{0.33\textwidth}\centering
+      \iconmodel\par\vspace{0.25em}
+      \role{\large The model}\par\vspace{0.2em}
+      % \small Which family of functions do we fit, and how do we score it?
+    \end{column}
+    \begin{column}{0.33\textwidth}\centering
+      \iconalgo\par\vspace{0.25em}
+      \role{\large The algorithm}\par\vspace{0.2em}
+      % \small How are the parameters updated, and with how much data?
+    \end{column}
+  \end{columns}
+  \vspace{1.2em}
+  \punchline{Keep only what the phenomenon needs, strip everything else.}
+  \note{This is not of course our idea. It has been build on ton of literature.
+    We are based on 3 pillars.
+    Supervised regression with a scalar label is the most controlled paradigm
+    there is: we need not lean on the complex internal structure of the data,
+    and that control is exactly what a physicist needs to build and test a
+    theory.
+    Any supervised learning problem is three choices: a data distribution, a
+    model class, and a learning algorithm.  Each one is a whole universe, and
+    the single criterion for picking inside it is: keep the features that are
+    essential for the phenomenon we want to study, and strip everything else.
+    The next three slides answer the three questions in order.}
+\end{frame}
+
+% === 5. The multi-index models =============================================
+\begin{frame}{The multi-index models}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \role{Gaussian data}\qquad $\vec{x} \sim \mathcal{N}(0, I_d)$
+      \vspace{1.4em}
+
+      \role{A proxy for feature learning}
+      \[
+        h^\star : \mathbb{R}^k \to \mathbb{R}
+        \qquad
+        f^\star(\vec{x}) = h^\star\!\left(\frac{W^\star \vec{x}}{\sqrt{d}}\right)
+      \]
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \centering
+      $W^\star = \{\vec{w}^\star_r\}_{r \in [k]} \in \mathbb{R}^{k \times d}$
+      \par\vspace{0.5em}
+      \thesisnet[0.95\linewidth]{chapters/figs/multi-index.tex}
+    \end{column}
+  \end{columns}
+  \vspace{0.5em}
+  \begin{center}
+    \role{(Possible) Label Noise}\qquad
+    $y = f^\star(\vec{x}) + \sqrt{\Delta}\,\xi, \qquad \xi \sim \mathcal{N}(0,1)$
+  \end{center}
+  \note{$d$ is going to be be big, while $k$ is small and fixed: discovering the
+    subspace $W^\star$ is actually a proxy of feature learning.}
+\end{frame}
+
+% === 6. The learned model: 2-layer network =================================
+\begin{frame}{The learned model: 2-layer network}
+  \begin{columns}[c]
+    \begin{column}{0.52\textwidth}
+      \[
+        f(\vec{x};\, W, \vec{a})
+        = \frac{1}{p} \sum_{j=1}^p a_j\,
+          \sigma\!\left(\frac{\langle \vec{w}_j, \vec{x}\rangle}{\sqrt{d}}\right)
+      \]
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \centering
+      \thesisnet[0.95\linewidth]{chapters/figs/two-layer-net.tex}
+    \end{column}
+  \end{columns}
+  \vspace{0.5em}
+  \begin{columns}[t]
+    \begin{column}{0.42\textwidth}
+      \centering
+      \role{\large Loss function}
+      \[ \ell(\hat{y}, y) = \tfrac{1}{2}(\hat{y} - y)^2 \]
+    \end{column}
+    \begin{column}{0.58\textwidth}
+      \centering
+      \role{\large Population risk}
+      \[
+        \mathcal{R}(W, \vec{a}) = \mathbb{E}_{(\vec{x},\, y)}\!\left[
+          \tfrac{1}{2}\bigl(f(\vec{x};\, W, \vec{a}) - y\bigr)^2\right]
+      \]
+    \end{column}
+  \end{columns}
+  \note{$W$, $\vec{a}$ are the weights. $\sigma$ is the activation function.
+    This is the natural loss for regression.
+    The population risk then is the best measure of the performance, but of
+    course it can't be used for training (otherwise we have an equivalent of
+    data leakage).}
+\end{frame}
+
+% === 7. The algorithm: one-pass SGD ========================================
+\begin{frame}{The algorithm: one-pass SGD}
+  \begin{columns}[c]
+    \begin{column}{0.26\textwidth}\raggedleft\role{\large Update}\end{column}
+    \begin{column}{0.74\textwidth}
+      \[
+        \vec{w}_j^{\,\nu+1} = \vec{w}_j^{\,\nu}
+          - \gamma\,\nabla_{\vec{w}_j}\,
+            \ell\!\left(f(\vec{x}^\nu;\, W^\nu, \vec{a}),\, y^\nu\right),
+        \qquad j \in [p],
+      \]
+    \end{column}
+  \end{columns}
+  \vspace{0.8em}
+  \begin{columns}[c]
+    \begin{column}{0.26\textwidth}\raggedleft\role{\large Initialization}\end{column}
+    \begin{column}{0.74\textwidth}
+      \[ \vec{w}_j^0 \sim \mathcal{N}(0, I_d) \]
+    \end{column}
+  \end{columns}
+  \vspace{0.8em}
+  \begin{columns}[c]
+    \begin{column}{0.26\textwidth}\raggedleft\role{\large The key property}\end{column}
+    \begin{column}{0.74\textwidth}
+      \punchline{Independence of the steps}
+    \end{column}
+  \end{columns}
+  \vfill
+  \begin{center}
+    \aside{We actually often consider a spherical constrained dynamics for
+      simplicity:}\quad
+    $\displaystyle \vec{w}^{\nu+1} = \sqrt{d}\,
+      \frac{\vec{w}^\nu - \gamma\nabla_{\vec{w}}\ell(f(\vec{x}^\nu), y^\nu)}
+           {\bigl\lVert \vec{w}^\nu
+             - \gamma\nabla_{\vec{w}}\ell(f(\vec{x}^\nu), y^\nu)\bigr\rVert}$
+  \end{center}
+  \note{$W$, $\vec{a}$ are the weights. $\sigma$ is the activation function.
+    It is one pass because every sample is used once then discarded forever.}
+\end{frame}
+
+% === 8. The reduced dynamic ================================================
+\begin{frame}{The reduced dynamic}
+  \begin{columns}[c]
+    \begin{column}{0.34\textwidth}
+      \role{\large Pre-activations are Gaussian}
+    \end{column}
+    \begin{column}{0.66\textwidth}
+      \[
+        \vec{\lambda} = \frac{W \vec{x}}{\sqrt{d}} \in \mathbb{R}^p,
+        \qquad
+        \vec{\lambda}^\star = \frac{W^\star \vec{x}}{\sqrt{d}} \in \mathbb{R}^k
+      \]
+      \[
+        f(\vec{x};\, W, \vec{a}) = h(\vec{\lambda}, \vec{a}),
+        \qquad
+        h(\vec{\lambda}, \vec{a}) = \frac{1}{p}\sum_{j=1}^p a_j\,\sigma(\lambda_j)
+      \]
+    \end{column}
+  \end{columns}
+  \vspace{0.3em}
+  \punchline{Sufficient low-dimensional statistics}
+  \fiteq{
+    Q_{jl} = \frac{\langle \vec{w}_j, \vec{w}_l\rangle}{d}, \quad
+    M_{jr} = \frac{\langle \vec{w}_j, \vec{w}^\star_r\rangle}{d}, \quad
+    P_{rs} = \frac{\langle \vec{w}^\star_r, \vec{w}^\star_s\rangle}{d}
+    \qquad
+    (\vec{\lambda}, \vec{\lambda}^\star) \sim \mathcal{N}(0, \Omega), \quad
+    \Omega = \begin{pmatrix} Q & M \\ M^\top & P \end{pmatrix}
+      \in \mathbb{R}^{(p+k) \times (p+k)}}
+  \begin{columns}[c]
+    \begin{column}{0.38\textwidth}
+      \role{\large Population risk is $d$-independent}
+    \end{column}
+    \begin{column}{0.62\textwidth}
+      \[
+        \mathcal{R}(\Omega, \vec{a})
+        = \mathbb{E}_{(\vec{\lambda}, \vec{\lambda}^\star) \sim \mathcal{N}(0, \Omega)}
+          \!\left[\tfrac{1}{2}
+            \bigl(h(\vec{\lambda}, \vec{a}) - h^\star(\vec{\lambda}^\star)\bigr)^2\right]
+      \]
+    \end{column}
+  \end{columns}
+  \note{Low dimensional aka independent of $d$.}
+\end{frame}
+
+% === 9. The reduced dynamic: update rule ===================================
+\begin{frame}{The reduced dynamic: update rule}
+  \begin{center}\large Update rule is self-closed too!*\end{center}
+  \vspace{0.3em}
+  \begin{columns}[c]
+    \begin{column}{0.40\textwidth}
+      \fiteq{
+        \begin{aligned}
+          \vec{w}_j^{\nu+1} &= \vec{w}_j^{\nu}
+            + \frac{\gamma}{p\sqrt{d}}
+              \left( y^\nu(\vec{\lambda}^{\star,\nu}) - h(\vec{\lambda}^{\nu}) \right)
+              a_j \sigma'(\lambda^\nu_j) \vec{x}^\nu, \\
+          a_j^{\nu+1} &= a_j^{\nu}
+            + \frac{\gamma}{pd}
+              \left( y^\nu(\vec{\lambda}^{\star,\nu}) - h(\vec{\lambda}^{\nu}) \right)
+              \sigma(\lambda^\nu_j)
+        \end{aligned}}
+    \end{column}
+    \begin{column}{0.06\textwidth}
+      \centering$\Longrightarrow$
+    \end{column}
+    \begin{column}{0.54\textwidth}
+      \fiteq{
+        \begin{aligned}
+          Q^{\nu+1}_{jl} =\;& Q^{\nu}_{jl}
+            + \frac{\gamma}{pd}
+              \left( y^\nu(\vec{\lambda}^{\star,\nu}) - h(\vec{\lambda}^{\nu}) \right)
+              \left( a_l \sigma'(\lambda^\nu_l) \lambda^\nu_j
+                   + a_j \sigma'(\lambda^\nu_j) \lambda^\nu_l \right) + \\
+            &+ \frac{\gamma}{pd}\frac{\gamma}{p}
+              \left( y^\nu(\vec{\lambda}^{\star,\nu}) - h(\vec{\lambda}^{\nu}) \right)^2
+              a_j a_l \sigma'(\lambda^\nu_j) \sigma'(\lambda^\nu_l)
+              \frac{\lVert\vec{x}^\nu\rVert^2}{d}, \\
+          M^{\nu+1}_{jr} =\;& M^{\nu}_{jr}
+            + \frac{\gamma}{pd}
+              \left( y^\nu(\vec{\lambda}^{\star,\nu}) - h(\vec{\lambda}^{\nu}) \right)
+              a_j \sigma'(\lambda^\nu_j) \lambda^{\star,\nu}_r, \\
+          a_j^{\nu+1} =\;& a_j^{\nu}
+            + \frac{\gamma}{pd}
+              \left( y^\nu(\vec{\lambda}^{\star,\nu}) - h(\vec{\lambda}^{\nu}) \right)
+              \sigma(\lambda^\nu_j).
+        \end{aligned}}
+    \end{column}
+  \end{columns}
+  \vspace{0.2em}
+  \[
+    \small
+    \begin{aligned}
+      \text{update rule for } W \quad &\leftrightarrow \quad
+        \text{update rule for } (Q, M, \vec{a}) \\
+      \text{sample } \vec{x}^\nu \sim \mathcal{N}(0, I_d) \quad &\leftrightarrow \quad
+        \text{sample } (\vec{\lambda}^\nu, \vec{\lambda}^{\star,\nu}) \sim \mathcal{N}(0, \Omega) \\
+      \text{population risk } \mathcal{R}(W) \quad &\leftrightarrow \quad
+        \text{population risk } \mathcal{R}(Q, M, \vec{a}).
+    \end{aligned}
+  \]
+  \punchline{There is no need to work with $W$, let's look at $Q,M,P$}
+  \note{Low dimensional aka independent of $d$.}
+\end{frame}
+
+% === 10. The magic of high-dimensional data =================================
+\begin{frame}{The magic of high-dimensional data}
+  \begin{center}
+    \large The stochastic process concentrates into a set of ODEs!
+  \end{center}
+  \begin{columns}[c]
+    \begin{column}{0.25\textwidth}
+      \includegraphics[width=\linewidth]{chapters/figs/saad-solla-plateau/plateau-noiseless}
+    \end{column}
+    \begin{column}{0.25\textwidth}
+      \includegraphics[width=\linewidth]{chapters/figs/saad-solla-plateau/plateau-noisy}
+    \end{column}
+    \begin{column}{0.50\textwidth}
+      \fiteq{
+        \begin{aligned}
+          \frac{\dd Q_{jl}}{\dd t} =\;&
+            \overbrace{\mathbb{E}_{(\vec{\lambda}, \vec{\lambda}^\star) \sim \mathcal{N}(0, \Omega)}
+              \left[ \left( h^\star(\vec{\lambda}^{\star}) - h(\vec{\lambda}) \right)
+                \left( a_l \sigma'(\lambda_l) \lambda_j
+                     + a_j \sigma'(\lambda_j) \lambda_l \right)\right]}
+              ^{\textstyle \eqqcolon \Phi^{Q}_{jl}(\Omega, a)} \\
+            &+ \frac{\gamma}{p}
+              \underbrace{\mathbb{E}_{(\vec{\lambda}, \vec{\lambda}^\star) \sim \mathcal{N}(0, \Omega)}
+                \left[ \left(\left( h^\star(\vec{\lambda}^{\star}) - h(\vec{\lambda}) \right)^2
+                  + \Delta\right) a_j a_l \sigma'(\lambda_j) \sigma'(\lambda_l) \right]}
+                _{\textstyle \eqqcolon \Psi^{Q}_{jl}(\Omega, a)}, \\[0.6em]
+          \frac{\dd M_{jr}}{\dd t} =\;&
+            \underbrace{\mathbb{E}_{(\vec{\lambda}, \vec{\lambda}^\star) \sim \mathcal{N}(0, \Omega)}
+              \left[ \left( h^\star(\vec{\lambda}^{\star}) - h(\vec{\lambda}) \right)
+                a_j \sigma'(\lambda_j) \lambda^{\star}_r \right]}
+              _{\textstyle \eqqcolon \Phi^{M}_{jr}(\Omega, a)}, \\[0.6em]
+          \frac{\dd a_j}{\dd t} =\;&
+            \underbrace{\mathbb{E}_{(\vec{\lambda}, \vec{\lambda}^\star) \sim \mathcal{N}(0, \Omega)}
+              \left[ \left( h^\star(\vec{\lambda}^{\star}) - h(\vec{\lambda}) \right)
+                \sigma(\lambda_j) \right]}
+              _{\textstyle \eqqcolon \Phi^{a}_{j}(\Omega, a)}.
+        \end{aligned}}
+    \end{column}
+  \end{columns}
+  \vfill
+  \begin{columns}[c]
+    \begin{column}{0.42\textwidth}
+      \centering
+      \role{The time-step}\quad
+      $\displaystyle \delta t = \frac{\gamma}{pd}$
+      \par\vspace{0.2em}
+      \aside{Infinitesimal for high dimension}
+    \end{column}
+    \begin{column}{0.58\textwidth}
+      \centering
+      \role{The actual bound}
+      \fiteq{
+        \max_{0 \le \nu \le Td} \mathbb{E}\left[
+          \left\lVert (\Omega^\nu, a^\nu)
+            - \left(\tilde{\Omega}\!\left(\frac{\nu\gamma}{pd}\right),
+                    \tilde{a}\!\left(\frac{\nu\gamma}{pd}\right)\right)\right\rVert
+        \right] \le \frac{C(T)}{\sqrt{d}}}
+    \end{column}
+  \end{columns}
+  \note{Those are erf--erf plots, the classic of committee machines.
+    This is an intuition: LHT gets closer and closer to a derivative, while the
+    RHS s some sort of thermodynamic limit (this is the closest I can get to
+    physics in this presentation).
+    A bit of taxonomy of the SS equations: one term is the drift (gradient flow
+    for the population risk), while the other is an high-dimensional noise term
+    that survive the limit: it is distinguishing characteristics of SS dynamic!}
+\end{frame}
+
+% === 11. Other limits, same equations ======================================
+% No frame title in draft.key: the delta-t line doubles as the heading.
+\begin{frame}
+  \begin{center}
+    $\displaystyle \delta t = \frac{\gamma}{pd}$\quad
+    {\large d to infinity is only a third of the story though\ldots}
+  \end{center}
+  \punchline{When can have other limits leading to the same equations!}
+  \begin{columns}[b]
+    \begin{column}{0.66\textwidth}
+      \centering
+      \includegraphics[height=0.52\textheight]{papers/2302/figs/TriangleV3}
+    \end{column}
+    \begin{column}{0.34\textwidth}
+      \centering
+      \aside{Only the drift survives in other limits}\\[-0.4em]
+      \[ \frac{\dd Q}{\dd t} = \Phi^Q + \frac{\gamma}{p}\Psi^Q \]
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% === 12. Classical limit: gradient flow ====================================
+\begin{frame}{Classical limit: gradient flow}
+  \begin{columns}[c]
+    \begin{column}{0.48\textwidth}
+      \centering
+      \includegraphics[height=0.62\textheight]%
+        {papers/2302/figs/classic/classic_limit_d_plot_-k5_p10_noise0.001_gamma0.0500}
+    \end{column}
+    \begin{column}{0.52\textwidth}
+      \centering
+      \[ \frac{\dd \Theta(t)}{\dd t} = -\nabla_{\Theta}\mathcal{R}(\Theta(t)) \]
+      $\Big\downarrow$
+      \[
+        \small
+        \frac{\dd \langle \vec{w}_i, \vec{w}_j \rangle}{\dd t}
+          = \left\langle \vec{w}_i, \frac{\dd\vec{w}_j}{\dd t} \right\rangle
+          + \left\langle \frac{\dd\vec{w}_i}{\dd t}, \vec{w}_j \right\rangle
+      \]
+      $\Big\downarrow$
+      % TODO "remake the equations because they are wrong/ugly" -- done by
+      % Claude, check manually later.  This frame is the classical limit
+      % gamma -> 0+, where only the drift survives (papers/2302 eq:def:gf_ode);
+      % draft.key pasted the full Saad & Solla equation, noise term included.
+      \[ \frac{\dd Q}{\dd t} = \Phi^Q \]
+    \end{column}
+  \end{columns}
+  \note{Remake the equations beacuse they are wrong/ugly.}
+\end{frame}
+
+% === 13. Mean field limit ==================================================
+\begin{frame}{Mean field limit}
+  \begin{columns}[T]
+    \begin{column}{0.46\textwidth}
+      \centering
+      The weights ``flow'' through a field
+      \fiteq{\hat{f}_\mu(\vec{x}) = \int \sigma(\vec{w}^\top\vec{x})\,\dd\mu(\vec{w})}
+      \fiteq{
+        \varphi(\vec{w}, \mu)
+          = \mathbb{E}_{\vec{x} \sim \mathcal{N}(\vec{0}, \sfrac{1}{d}I_d)}
+            \left[\sigma'(\vec{w}^\top\vec{x})\,\vec{x}
+              \left(f_{\Theta^\star}(\vec{x}) - \hat{f}_\mu(\vec{x})\right)\right]}
+      \vspace{0.5em}
+      \fiteq{\partial_t \mu_t
+        = \nabla_{\vec{w}} \cdot \bigl(\mu_t \varphi(\cdot, \mu_t)\bigr)}
+      \vspace{1em}
+
+      $\mu$ is a density over $\mathbb{R}^d$
+    \end{column}
+    \begin{column}{0.02\textwidth}
+      \rule{0.4pt}{0.68\textheight}
+    \end{column}
+    \begin{column}{0.50\textwidth}
+      \centering
+      $Q,M$ are $\mathbb{R}^{p \times (p+k)}$\ldots{} untraceable
+      \fiteq{
+        \begin{aligned}
+          W &= M P^{-1} W^\star + W^\bot \\
+          Q^\bot &= \sfrac{1}{d}\,W^\bot (W^\bot)^\top = Q - M P^{-1} M^\top
+        \end{aligned}}
+      We can trace $M$ and $Q^\bot$
+      \vspace{0.3em}
+
+      \begin{ansatzbox}{Ansatz}
+        \centering
+        \emph{We just need the diagonal of}
+        \fiteq{\tilde{Q} = M P^{-1} M^\top + D_{\sqrt{q}}\,\Xi\,D_{\sqrt{q}}}
+      \end{ansatzbox}
+      \fiteq{
+        \Xi_{ii} = 1, \quad \Xi_{ij} = \langle \vec{g}, \vec{g}' \rangle
+        \quad\text{with}\quad
+        \vec{g}, \vec{g}' \sim \mathrm{Unif}\!\left(\mathbb{S}^{d-k-1}\right)}
+      \adjustbox{max width=\linewidth}{%
+        $\displaystyle \tilde{\mu}_p(t) = \frac{1}{p}\sum_{i=1}^p
+          \delta_{\vec{m}_i(t),\, q_i(t)}$\; Flows following Saad\&Solla}
+    \end{column}
+  \end{columns}
+  \note{The weights are following a field (given by the gradient of the risk).
+    If I write the network as a functional of the weight distribution, then
+    every particle is following the same field (this is the key of meanfield
+    assumption), so I can simply write mass conservation on that field and I get
+    the motion of the full measure.
+    I would like to do the same with Saad\&Solla, but I can't directly.
+    This ansatz turned out to be useful for other description we see in a
+    moment.}
+\end{frame}
+
+% === 14. High-dimensional Mean field limit =================================
+\begin{frame}{High-dimensional Mean field limit}
+  \begin{center}
+    \large $\Xi$ converge to $I_d$ when $d \to \infty$:
+    off diagonal orthogonal terms are $0$!
+  \end{center}
+  \vfill
+  \begin{columns}[c]
+    \begin{column}{0.5\textwidth}
+      \centering
+      \includegraphics[height=0.62\textheight]%
+        {papers/2302/figs/mean-field/mf_limit_lowdim,offdiag_-k2_d5_activationsquare_gamma1.0000_noise0.0}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \centering
+      \includegraphics[height=0.62\textheight]%
+        {papers/2302/figs/mean-field/mf_limit_highdim_-k5_activationsquare_gamma10.0000_noise0.0}
+    \end{column}
+  \end{columns}
+  \note{What this connection give us as a new piece of theory is the
+    high-dimensional infinite width limit. This is $\sigma =$ square function.
+    This is simple because we can compute the low-dimensional correction
+    analytically, and they are just additive.}
+\end{frame}
+
+% === 15. Scaling rate and batch size: the equations ========================
+\begin{frame}{What if we scale the rate and the batch size?}
+  \begin{center}
+    $\gamma = \gamma_0 d^{-\delta} \quad\text{and}\quad n_b = n_0 d^\mu$
+  \end{center}
+  \vspace{0.2em}
+  \begin{center}
+    \large Equation coincides with the original ones, but factors activates differently
+  \end{center}
+  \vspace{0.3em}
+  \begin{columns}[c]
+    \begin{column}{0.33\textwidth}
+      \centering
+      \includegraphics[height=0.46\textheight]%
+        {papers/2406/figs/exact_asymptotic_diagram_no_legend}
+    \end{column}
+    \begin{column}{0.37\textwidth}
+      \centering
+      \includegraphics[height=0.46\textheight]{papers/2406/figs/dynamicsH3_multindex}
+    \end{column}
+    \begin{column}{0.30\textwidth}
+      \centering
+      \[ \frac{\dd Q}{\dd t} = \Phi^Q + \frac{\gamma}{pn}\Psi^Q \]
+    \end{column}
+  \end{columns}
+  \vspace{0.3em}
+  \begin{center}
+    {\bfseries
+      \textcolor{ssline}{Saad \& Solla line}\qquad
+      \textcolor{noiseregion}{Noise learning region}\qquad
+      \textcolor{undefregion}{Dynamics not defined}}
+  \end{center}
+  \note{It is kind of underwhelming that the equations for higher batch-size are
+    the same. The intra-batch correlation go down as $d$, so they cancel in the
+    pure asymptotic\ldots}
+\end{frame}
+
+% === 16. Scaling rate and batch size: non-asymptotic =======================
+\begin{frame}{What if we scale the rate and the batch size?}
+  \begin{center}
+    \large Non-asymptotic corrections use the same decomposition trick
+  \end{center}
+  \vspace{0.3em}
+  \[
+    \footnotesize
+    \begin{aligned}
+      \sum_{\nu=1}^{n_b}\sum_{\nu'=1}^{n_b}
+        \sigma'(\lambda^\nu_{j,t})\sigma'(\lambda^{\nu'}_{l,t})
+        \mathcal{E}^\nu_t \mathcal{E}^{\nu'}_t
+        \vec{z}^{\nu\top}_t \vec{z}^{\nu'}_t
+      &= \sum_{\nu=1}^{n_b}
+        \sigma'(\lambda^\nu_{j,t})\sigma'(\lambda^{\nu}_{l,t})
+        \mathcal{E}^{\nu2}_t \vec{z}^{\nu\top}_t \vec{z}^{\nu}_t + \\
+      &+ \sum_{\nu=1}^{n_b}\sum_{\nu'=1,\,\nu'\neq\nu}^{n_b}
+        \sigma'(\lambda^\nu_{j,t})\sigma'(\lambda^{\nu'}_{l,t})
+        \mathcal{E}^\nu_t \mathcal{E}^{\nu'}_t
+        \vec{z}^{\nu\top}_t \vec{z}^{\nu'}_t
+    \end{aligned}
+  \]
+  \vspace{0.2em}
+  \begin{columns}[c]
+    \begin{column}{0.5\textwidth}
+      \centering
+      \includegraphics[height=0.45\textheight]%
+        {papers/2406/figs/finitesize_asymptotic_test_error}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \centering
+      \includegraphics[height=0.45\textheight]%
+        {papers/2406/figs/finitesize_asymptotic_differnce}
+    \end{column}
+  \end{columns}
+  \note{The core idea is that everything that is not in the target signal, nor
+    in the initial sampled weights than it is pire noise in the equation and
+    simply cancel out at an higher order. We can track the projections on both
+    and not look at the rest, and we obtain viable corrections. The cool idea is
+    that $Q^\bot$ are all the initial weights that has not fallen yet.}
+\end{frame}
+
+% === 17. Can we use SS for sample complexity? ==============================
+\begin{frame}{Can we use SS for sample complexity?}
+  \begin{center}
+    \aside{Let's consider the simple case where $p=k=1$:}\\
+    \large there one single statistics of this dynamic
+  \end{center}
+  \vspace{-0.6em}
+  \[
+    \frac{\dd m}{\dd t} = (1 - m^2)\,C'(m)
+    \quad\text{with}\quad C(m) = \mathbb{E}[h^\star(\lambda^\star)\,\sigma(\lambda)]
+  \]
+  \vspace{-1.6em}
+  \[ \mathcal{R}(m) = \mathrm{const} - C(m) \]
+  \vspace{-0.4em}
+  \begin{columns}[c]
+    \begin{column}{0.44\textwidth}
+      \centering
+      \large In high dimension search\\ is the only hard part
+    \end{column}
+    \begin{column}{0.56\textwidth}
+      \begin{defbox}{Weak recovery time}
+        \centering
+        $\displaystyle m = \frac{\langle \vec{w}, \vec{w}^\star\rangle}{d} \geq \eta$
+        \qquad
+        $m(t_{weak}) = \eta$
+      \end{defbox}
+    \end{column}
+  \end{columns}
+  \vspace{0.3em}
+  \begin{columns}[c]
+    \begin{column}{0.58\textwidth}
+      \centering
+      \aside{Leading order}\quad
+      $\displaystyle \frac{\dd m}{\dd t} \propto m^{\ell-1}
+        \quad\text{and}\quad m(0) \sim \frac{1}{\sqrt{d}} \implies$
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \centering
+      \large We can measure sample\\ complexity using SS
+    \end{column}
+  \end{columns}
+  \vspace{0.3em}
+  \begin{columns}[c]
+    \begin{column}{0.38\textwidth}
+      \punchline{We can't! Finite time horizon:}
+    \end{column}
+    \begin{column}{0.62\textwidth}
+      \fiteq{
+        \max_{0 \le \nu \le Td} \mathbb{E}\left[
+          \left\lVert (\Omega^\nu, a^\nu)
+            - \left(\tilde{\Omega}\!\left(\frac{\nu\gamma}{pd}\right),
+                    \tilde{a}\!\left(\frac{\nu\gamma}{pd}\right)\right)\right\rVert
+        \right] \le \frac{C(T)}{\sqrt{d}}}
+    \end{column}
+  \end{columns}
+  \note{I have a bit scammed you: a thing I never discussed in detail is that
+    the SS description is valid for a finite time horizon, that is actually
+    $C(T) = \exp(CT)\sqrt{\gamma/(pd)}$.}
+\end{frame}
+
+% === 18. Phase retrieval ===================================================
+\begin{frame}{It's not all lost though: \emph{phase retrieval}}
+  \begin{columns}[c]
+    \begin{column}{0.46\textwidth}
+      ODE tells us some information:
+      \begin{itemize}
+        \item[$\circ$] Limit in risk and learning rate
+        \item[$\circ$] Pre-factors
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.54\textwidth}
+      % TODO "T is actually our eta -- fix notation" -- done by Claude, check
+      % manually later.  T is 2305's relative risk threshold; the deck already
+      % calls that threshold eta on the previous frame, so it is renamed here.
+      \[
+        \lim_{t\to\infty} \mathcal{R}(\bar{m}(t)) - \sfrac{\Delta}{2}
+          = \frac{\gamma\Delta}{1-6\gamma}.
+      \]
+      \vspace{-0.8em}
+      \[
+        t_{\mathrm{ext}}^{(\mathrm{anl})}
+          = \frac{\log\left[\eta d + (1-\eta)\right]}{8(1-6\gamma) - 4\gamma\Delta}
+      \]
+    \end{column}
+  \end{columns}
+  \vspace{0.2em}
+  \begin{columns}[c]
+    \begin{column}{0.28\textwidth}
+      \centering
+      \includegraphics[height=0.44\textheight]{papers/2305/figs/sde_example}
+    \end{column}
+    \begin{column}{0.28\textwidth}
+      \centering
+      \includegraphics[height=0.44\textheight]{papers/2305/figs/sde_example-zoom}
+    \end{column}
+    \begin{column}{0.44\textwidth}
+      \punchline{Stochasticity does not matter}
+      \vspace{0.2em}
+
+      {\footnotesize\bfseries ODE}
+      \fiteq{
+        \frac{\dd\bar{m}(t)}{\dd t}
+          = \bar{m}(t)\left[4(1-6\gamma)(1-\bar{m}^2(t)) - 2\gamma\Delta\right]
+        \quad\text{with}\quad \bar{m}(t) \in [-1,1]}
+      {\footnotesize\bfseries SDE}
+      \fiteq{
+        \frac{\dd \mathrm{M}_1}{\dd t}
+          = \left(\Psi_1(\Omega) - \frac{\mathrm{M}_1}{2}\Phi_{11}(\Omega)\right)\dd t
+          + \sqrt{\frac{\gamma}{d}}
+            \left(\vec{\sigma}_{\mathrm{M}} - \frac{m_1}{2}\vec{\sigma}_{\mathrm{Q}}\right)
+            \cdot \dd B_t}
+    \end{column}
+  \end{columns}
+  \note{We can go to $t\to\infty$ because convergence is fast enough to happen
+    with the bound.
+    T is actually our eta. TODO: fix notation.}
+\end{frame}
+
+% === 19. The information exponent ==========================================
+\begin{frame}{The information exponent}
+  \begin{columns}[T]
+    \begin{column}{0.46\textwidth}
+      \vspace{1em}
+      \begin{center}\large Guiding quantity for all our analysis\end{center}
+      \vspace{1em}
+      \begin{thmbox}{Theorem}
+        The sample complexity is given by:
+        \[
+          n = \begin{cases}
+            \mathcal{O}(d) & \ell = 1, \\
+            \mathcal{O}(d\log d) & \ell = 2, \\
+            \mathcal{O}(d^{\ell-1}) & \ell \geq 3.
+          \end{cases}
+        \]
+      \end{thmbox}
+    \end{column}
+    \begin{column}{0.54\textwidth}
+      \begin{defbox}{Information Exponent}
+        \fiteq{
+          \ell = \min\Bigl\{ j \geq 1 : a_j = \frac{1}{j!}\,
+            \mathbb{E}_{z\sim\mathcal{N}(0,1)}[h^\star(z)\,\mathrm{He}_j(z)] \neq 0 \Bigr\}}
+      \end{defbox}
+      \vspace{1.5em}
+
+      Examples:
+      \begin{itemize}
+        \item $h^\star = z^2$ has IE $= 2$
+        \item $h^\star = \mathrm{He}_\ell(z)$ has IE $= \ell$
+      \end{itemize}
+      \vspace{1em}
+      \begin{center}
+        \aside{This is not theoretical minimum, you could use a partial trace
+          algorithm to push it down to $d^{\ell/2}$}
+      \end{center}
+    \end{column}
+  \end{columns}
+  \note{We are implicitly assuming that the activation functions ``excites
+    enough Hermite modes''.
+    We study phase retrieval extensively in the previous slides.}
+\end{frame}
+
+% === 20. Scaling rate and batch size: sample complexity ====================
+\begin{frame}{What if we scale the rate and the batch size?}
+  \begin{center}
+    $\gamma = \gamma_0 d^{-\delta} \quad\text{and}\quad n_b = n_0 d^\mu$
+  \end{center}
+  \vspace{0.2em}
+  \begin{center}
+    \large We can't change the sample complexity\ldots{} but we use less time steps
+  \end{center}
+  \vspace{0.3em}
+  \begin{columns}[c]
+    \begin{column}{0.64\textwidth}
+      \centering
+      \includegraphics[height=0.58\textheight]{papers/2406/figs/logT_lognb}
+    \end{column}
+    \begin{column}{0.36\textwidth}
+      \centering
+      {\footnotesize\bfseries Square Loss}
+      \[
+        \hat{\mathcal{R}}_t = \frac{1}{2n_b}\sum_{\nu=1}^{n_b}
+          \bigl(y^\nu - f(\vec{z}^\nu)\bigr)^2
+      \]
+      \vspace{0.5em}
+
+      {\footnotesize\bfseries Correlation Loss}
+      \[
+        \tilde{\ell} = \frac{1}{n_b}\sum_{\nu \in [n_b]} 1 - y^\nu f(\vec{z}^\nu)
+      \]
+    \end{column}
+  \end{columns}
+  \note{Let me remind you that so far we have used squared loss, but here we can
+    use the correlation loss.
+    The plot is for $\ell \ge 3$. If $\ell = 1,2$ it looks a little different.}
+\end{frame}
+
+% === 21. Is the IE the actual lower bound? =================================
+\begin{frame}{Is the IE the actual lower bound in complexity?}
+  \begin{center}
+    \large Real data is not i.i.d. and it is repeated, and our current model has not
+  \end{center}
+  \vspace{0.3em}
+  \begin{columns}[c]
+    \begin{column}{0.38\textwidth}
+      \begin{defbox}{Displaced gradient (EGD)}
+        \centering
+        \aside{Gradient computed in a neighborhood of the current weight}
+        \vspace{-0.6em}
+        \[
+          \small
+          \begin{aligned}
+            w_{\tau+1} &= w_\tau
+              - \gamma\,\nabla_w\mathcal{L}(z_\tau, y_\tau; \tilde{w}_\tau) \\
+            \tilde{w}_{\tau} &= w_\tau
+              - \rho\,\nabla_w\mathcal{L}(z_\tau, y_\tau; w_\tau)
+          \end{aligned}
+        \]
+      \end{defbox}
+      \vspace{0.5em}
+      \begin{center}
+        \aside{$\gamma$ and $\rho$ are 2 different learning rates}
+      \end{center}
+    \end{column}
+    \begin{column}{0.31\textwidth}
+      \centering
+      \includegraphics[height=0.42\textheight]{papers/2405/figs/fig1_H3Relu}\\[0.2em]
+      $h^\star(z) = \mathrm{He}_3(z)$
+    \end{column}
+    \begin{column}{0.31\textwidth}
+      \centering
+      \includegraphics[height=0.42\textheight]{papers/2405/figs/fig1_H4Relu}\\[0.2em]
+      % TODO draft.key labelled this panel He_3 as well -- done by Claude, check
+      % manually later.  The x-axis is T/(d log d) and the panel is fig1_H4Relu
+      % (l = 4, l* = 2); cf. chapters/exponents.tex:344-351.
+      $h^\star(z) = \mathrm{He}_4(z)$
+    \end{column}
+  \end{columns}
+  \vspace{0.4em}
+  \punchline{The tick break the curse of information exponent}
+  \note{We saw that is the key quantity both for plain SGD, and other algorithm
+    like ``partial trace'' or smoothed loss.
+    We have also seen that batch size and learning rate do not change the
+    picture. What if we break the core hypothesis of data independence? We
+    started with a paper ``The benefits of reusing batches'' that showed how
+    large batch repetitions can break the curse of information exponent.}
+\end{frame}
+
+% === 22. How this work? ====================================================
+\begin{frame}{How this work?}
+  \begin{center}
+    {\large One-pass SGD is linear in the label}\quad
+    $\displaystyle \nabla_{\vec{w}}\mathcal{R}
+      = -\,\mathbb{E}\left[y\,\sigma'(\lambda)\,\frac{\vec{x}}{\sqrt{d}}\right]$
+  \end{center}
+  \begin{columns}[T]
+    \begin{column}{0.44\textwidth}
+      What if we apply a generic transformation
+      $\mathbb{E}\bigl[g(y)\,\varphi(\vec{x})\bigr]$?
+      \begin{defbox}{Generative Exponent}
+        \fiteq{
+          \ell^\star = \min\Bigl\{ j \geq 1 :
+            \mathbb{E}_{z\sim\mathcal{N}(0,1)}\bigl[g(h^\star(z))\,\mathrm{He}_j(z)\bigr]
+            \neq 0 \textit{ for some } g : \mathbb{R} \to \mathbb{R} \Bigr\}}
+      \end{defbox}
+      \vspace{0.2em}
+
+      \emph{Examples}:
+      \begin{itemize}
+        \footnotesize
+        \item $\mathrm{He}_{2k+1}$ has IE $= 2k+1$, while GE $= 1$
+        \item $\mathrm{He}_{2k}$ has IE $= 2$, while GE $= 2$
+        \item $\mathrm{sign}(z_1 z_2 z_3)$ has IE $=$ GE $= 3$
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.56\textwidth}
+      \centering The double gradient induces a transformation
+      \fiteq{
+        \nabla_{\vec{w}}\ell\bigl(f(\vec{x};\tilde{\vec{w}}), y\bigr)
+          = -\,y\,\sigma'(\tilde{\lambda})\,\frac{\vec{x}}{\sqrt{d}},
+        \qquad
+        \tilde{\lambda} = \frac{\langle\tilde{\vec{w}}, \vec{x}\rangle}{\sqrt{d}}}
+      \fiteq{
+        \nabla_{\vec{w}}\ell\bigl(f(\vec{x};\tilde{\vec{w}}), y\bigr)
+          \approx -\,\frac{\vec{x}}{\sqrt{d}}
+            \left(y\,\sigma'(\lambda) + \rho\,y^2\,\sigma'(\lambda)\sigma''(\lambda)
+              + \frac{\rho^2}{2}\,y^3\,\sigma'(\lambda)^2\sigma'''(\lambda) + \cdots\right)}
+      \vspace{-0.6em}
+      \begin{thmbox}{Theorem (Repetita Iuvant)}
+        \centering
+        Sample complexity of EGD
+        \vspace{-0.9em}
+        \[
+          \footnotesize
+          n = \begin{cases}
+            \mathcal{O}(d) & \ell^\star = 1, \\
+            \mathcal{O}(d\log d) & \ell^\star = 2.
+          \end{cases}
+        \]
+        \vspace{-0.4em}
+
+        {\scriptsize\color{black!62} We do not have results for
+          $\ell^\star > 2$, because we worked on polynomials}
+      \end{thmbox}
+    \end{column}
+  \end{columns}
+  \note{TODO rewrite the transformed gradient without $\varphi$.
+    Clarify how we work only on polynomial in our current proof.
+    (Not applied: the thesis writes the query as
+    $\mathbb{E}[g(y)\varphi(\vec{x})]$ too, and both displayed gradients here
+    already carry no $\varphi$ -- your call.)}
+\end{frame}
+
+% === 23. IE & Attention model ==============================================
+\begin{frame}{IE \& Attention model}
+  \adjustbox{max width=\linewidth}{%
+    {\large Our proxy for attention:}\;
+    $\displaystyle
+      f(X) = \vec{a}_L^\top \SoftMax\!\left(\left(X + \frac{P}{\sqrt{d}}\right)
+        \vec{w}\vec{w}^\top \left(X + \frac{P}{\sqrt{d}}\right)^\top\right)\vec{a}_R$
+    \; $X \in \mathbb{R}^{L \times d}$}
+  \vspace{0.2em}
+  \begin{center}
+    {\large Sufficient statistics:}\quad
+    $\displaystyle m = \frac{\vec{w}_\star^\top\vec{w}}{d}
+      \quad\text{and}\quad \vec{e} = \frac{P\vec{w}}{\sqrt{d}}$
+  \end{center}
+  \begin{columns}[T]
+    \begin{column}{0.56\textwidth}
+      \begin{defbox}{Sequence Information Exponent (SIE)}
+        \fiteq{
+          \mathit{SIE}(\vec{f}^{\,\mathrm{SSI}}_{\vec{w}_\star}) \coloneqq
+            \min\left\{\sum_{l=1}^L k_l > 0 : \vec{k} \in \mathbb{N}^L,\;
+              \mathbb{E}_{\vec{z}\sim\mathcal{N}(0,I_L)}\left[
+                \left(\prod_{l=1}^L \mathrm{He}_{k_l}(z_l)\right) g(\vec{z})
+              \right] \neq 0 \right\}}
+      \end{defbox}
+      \vspace{0.2em}
+
+      \emph{Examples}:
+      \begin{itemize}
+        \scriptsize
+        \item $g(\vec{z}_\star) = z_{\star,1}z_{\star,2}
+          = \mathrm{He}_1(z_{\star,1})\mathrm{He}_1(z_{\star,2})$ has SIE $= 2$;
+        \item $g(\vec{z}_\star) = \mathrm{He}_1(z_{\star,1})\mathrm{He}_4(z_{\star,2})
+          + \mathrm{He}_2(z_{\star,3})\mathrm{He}_2(z_{\star,4})$ has SIE $= 4$;
+        \item $g(\vec{z}_\star) = \prod_{l=1}^L \mathrm{He}_{k_l}(z_{\star,l})$
+          has SIE $= \sum_{l=1}^L k_l$.
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.44\textwidth}
+      \begin{thmbox}{Theorem (Repetita Iuvant)}
+        \centering
+        Sample complexity of EGD
+        \vspace{-0.8em}
+        \[
+          \small
+          \begin{cases}
+            \mathcal{O}_L(d) & \textit{if } \mathit{SIE} = 1 \\
+            \mathcal{O}_L(d\log d) & \textit{if } \mathit{SIE} = 2 \\
+            \mathcal{O}_L(d^{\mathit{SIE}-1}) & \textit{if } \mathit{SIE} \geq 3
+          \end{cases}
+        \]
+      \end{thmbox}
+    \end{column}
+  \end{columns}
+  \note{Now the data is a set of $L$ tokens of dimension $d$. Our attantion
+    model is very simplified: tied QK, V is identity, no heads.
+    Who is using neural networks this days? We are all into transformers!
+    This is our proxy.}
+\end{frame}
+
+% === 24. A nice extra: positional-semantic transition ======================
+\begin{frame}{A nice extra: positional-semantic transition}
+  \begin{columns}[T]
+    \begin{column}{0.58\textwidth}
+      \role{Target}
+      \fiteq{
+        \vec{f}^{\,\mathrm{SSI}}_{\vec{w}_\star}(X)
+          = (1-\omega)\,\SoftMax\!\left(X\vec{w}_\star \vec{w}_\star^\top X^\top\right)
+          + \omega\,\SoftMax\!\left[\begin{pmatrix}
+              a^2 & -a^2 \\ -a^2 & a^2
+            \end{pmatrix}\right]}
+      \vspace{0.3em}
+      \begin{columns}[c]
+        \begin{column}{0.48\textwidth}
+          \centering
+          \includegraphics[height=0.36\textheight]%
+            {papers/2506/figs/positional-semantic/loss_surface_omega0.67_a1}
+        \end{column}
+        \begin{column}{0.52\textwidth}
+          \centering
+          \includegraphics[height=0.36\textheight]%
+            {papers/2506/figs/positional-semantic/trajectories-probability}
+        \end{column}
+      \end{columns}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \centering
+      \includegraphics[height=0.68\textheight]%
+        {papers/2506/figs/positional-semantic/phase_diagram}
+    \end{column}
+  \end{columns}
+  \note{$\Omega$ regulates how much positional vs semantic we are.
+    $a$ regulates the positional difference.}
+\end{frame}
+
+% === 25. Recap =============================================================
+\begin{frame}{Recap}
+  \begin{itemize}
+    \item Saad \& Solla equations gave us the control of the full dynamic*
+    \item Information (Generative) Exponent gave us the control of the sample
+      complexity
+    \item This setting is solved (?)
+  \end{itemize}
+  \vspace{0.8em}
+  \begin{center}{\Large\bfseries What is next?}\end{center}
+  \vspace{0.4em}
+  \begin{itemize}
+    \item Structured data
+    \item Deeper networks
+  \end{itemize}
+  \vspace{0.8em}
+  \punchline{Low-degree filtering is a promising direction (LoFi)}
+  \note{I think we squeezed enough gaussian data + two layer networks.}
+\end{frame}
+
+% === 26. Thanks ============================================================
+\begin{frame}{Thanks to you and my amazing collaborators!}
+  \vfill
+  \begin{center}
+    \includegraphics[height=0.27\textheight]{slides/figs/people/collab-1}\hspace{1.2em}
+    \includegraphics[height=0.27\textheight]{slides/figs/people/collab-2}\hspace{1.2em}
+    \includegraphics[height=0.27\textheight]{slides/figs/people/collab-3}\hspace{1.2em}
+    \includegraphics[height=0.27\textheight]{slides/figs/people/collab-4}
+
+    \vspace{1em}
+    \includegraphics[height=0.27\textheight]{slides/figs/people/collab-5}\hspace{1.2em}
+    \includegraphics[height=0.27\textheight]{slides/figs/people/collab-6}\hspace{1.2em}
+    \includegraphics[height=0.27\textheight]{slides/figs/people/collab-7}
+  \end{center}
+  \vfill
+\end{frame}
+
+\end{document}
