@@ -183,11 +183,13 @@
   \end{tikzpicture}}
 
 % --- palette ----------------------------------------------------------------
-% Sampled straight out of the Keynote deck, so the boxes keep their meaning:
-% green = definitions, orange = theorems, pink = the one Ansatz.
-\definecolor{slidegreen}{HTML}{BAE7B2}
-\definecolor{slideorange}{HTML}{FFCE8D}
-\definecolor{slidepink}{HTML}{FBE0EE}
+% The semantic coding of the Keynote deck is kept -- green = definitions,
+% orange = theorems, red = the one Ansatz -- but at the saturation a block
+% title bar needs: the accent carries white bold text, so the pastels the
+% original used are far too light.  Each box body is the same hue at 8%.
+\definecolor{slidegreen}{HTML}{4C7A55}
+\definecolor{slideorange}{HTML}{C3821F}
+\definecolor{slidered}{HTML}{A6392E}
 % Region colours of papers/2406/figs/exact_asymptotic_diagram_no_legend, used
 % for the colour-keyed legend words under that figure (frame 14).
 \definecolor{ssline}{HTML}{138888}
@@ -198,30 +200,33 @@
 \RequirePackage{tcolorbox}
 \tcbuselibrary{skins}
 
+% The classic beamer block: rounded corners, a solid accent-coloured title bar
+% carrying white bold text, a body in the same hue at 8%, and the soft drop
+% shadow of beamer's `rounded' block theme.  Built on tcolorbox rather than
+% \setbeamertemplate{blocks}[rounded][shadow] so the three semantic colours can
+% be picked per box instead of being tied to block/exampleblock/alertblock.
 \tcbset{
-  slidebox/.style={
-    enhanced, rounded corners, arc=4pt,
-    boxrule=0pt, titlerule=0pt, toptitle=2pt, bottomtitle=2pt,
-    left=6pt, right=6pt, top=4pt, bottom=4pt,
-    coltitle=black, fonttitle=\bfseries,
+  slidebox/.style n args={2}{
+    enhanced, rounded corners, arc=2.5pt,
+    boxrule=0pt, titlerule=0pt,
+    colback=#1!8, colframe=#1, colbacktitle=#1,
+    coltitle=white, fonttitle=\bfseries,
+    left=7pt, right=7pt, top=5pt, bottom=4pt,
+    toptitle=2pt, bottomtitle=2pt,
+    drop fuzzy shadow={black!45!white},
+    title={#2},
   },
 }
 
 % Definitions: Information Exponent, Weak recovery time, Generative Exponent,
 % Sequence Information Exponent, Displaced gradient (EGD).
-\newtcolorbox{defbox}[2][]{slidebox,
-  colback=slidegreen, colbacktitle=slidegreen, colframe=slidegreen,
-  title={#2}, #1}
+\newtcolorbox{defbox}[2][]{slidebox={slidegreen}{#2}, #1}
 
 % Theorems: Theorem, Theorem (Repetita Iuvant).
-\newtcolorbox{thmbox}[2][]{slidebox,
-  colback=slideorange, colbacktitle=slideorange, colframe=slideorange,
-  title={#2}, #1}
+\newtcolorbox{thmbox}[2][]{slidebox={slideorange}{#2}, #1}
 
 % The single Ansatz on the mean-field frame.
-\newtcolorbox{ansatzbox}[2][]{slidebox,
-  colback=slidepink, colbacktitle=slidepink, colframe=slidepink,
-  title={#2}, #1}
+\newtcolorbox{ansatzbox}[2][]{slidebox={slidered}{#2}, #1}
 
 % --- text roles -------------------------------------------------------------
 % The take-away line of a frame.  In Keynote these are set in a blue-to-magenta
@@ -232,13 +237,50 @@
 % The small grey annotations Keynote sets at ~60% of body size.
 \newcommand{\aside}[1]{{\footnotesize\color{black!62}#1}}
 
+% Source credits.  The deck carries no bibliography -- a defence audience wants
+% the name and the year, not a volume number -- so citations are hand-set in the
+% same grey as \aside.
+\newcommand{\cit}[1]{\aside{[#1]}}
+
+% Annotations that sit inside a coloured box title bar: the \aside grey is
+% illegible on the accent, so they take a light tint of the white title text.
+\newcommand{\titleaside}[1]{{\normalfont\small\color{white!72}#1}}
+\newcommand{\titlecit}[1]{\titleaside{[#1]}}
+
 % Left-hand role labels ("Update", "Initialization", "Loss function", ...).
 \newcommand{\role}[1]{\structure{#1}}
 
+% --- chapter tag ------------------------------------------------------------
+% A small badge in the top-right corner naming the thesis chapter a frame's
+% content comes from.  Its real job is to tell the committee, without a word
+% being said, that we have crossed from background into the author's own work.
+% Drawn as a tikz overlay so it does not disturb a frame that has no title.
+% An overlay picture still opens a paragraph where it sits, which costs a line
+% on the frames that are already full; the trailing negative skip gives that
+% line back, leaving the tag with a genuinely zero vertical footprint.
+\newcommand{\chaptertag}[1]{%
+  \begin{tikzpicture}[remember picture, overlay]
+    \node[anchor=north east, fill=darkred, text=white,
+          font=\bfseries\scriptsize, rounded corners=2pt,
+          inner xsep=6pt, inner ysep=3pt,
+          xshift=-0.45cm, yshift=-0.22cm] at (current page.north east) {#1};
+  \end{tikzpicture}%
+  \par\vspace*{-\baselineskip}\vspace*{-\parskip}}
+
 % --- presenter notes --------------------------------------------------------
-% Every note in draft.key is carried over verbatim as a \note.  Uncomment to
-% drive a second screen during the defence.
+% Every note in draft.key is carried over verbatim as a \note.  The plain deck
+% (slides.tex) drops them; slides-notes.tex defines \SlidesNotesVariant before
+% \input-ing the same source, which switches on a double-wide page carrying the
+% slide on the left and its note on the right -- what drives the second screen
+% during the defence.  This is the only place in the build that branches on the
+% flag, so the two decks stay identical in content.
 \RequirePackage{pgfpages}
-% \setbeameroption{show notes on second screen=right}
+\@ifundefined{SlidesNotesVariant}{}{%
+  \setbeameroption{show notes on second screen=right}%
+  % pgfpages hands the note page the same font size as the slide, which is far
+  % too large for a paragraph of prose in half the width; the notes template is
+  % the one thing that has no Keynote original to match.
+  \setbeamerfont{note page}{size=\small}%
+}
 
 \endinput

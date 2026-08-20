@@ -186,45 +186,58 @@
   \punchline{Keep only what the phenomenon needs, strip everything else.}
   \note{This is not of course our idea. It has been build on ton of literature.
     We are based on 3 pillars.
-    Supervised regression with a scalar label is the most controlled paradigm
-    there is: we need not lean on the complex internal structure of the data,
-    and that control is exactly what a physicist needs to build and test a
-    theory.
-    Any supervised learning problem is three choices: a data distribution, a
-    model class, and a learning algorithm.  Each one is a whole universe, and
-    the single criterion for picking inside it is: keep the features that are
-    essential for the phenomenon we want to study, and strip everything else.
-    The next three slides answer the three questions in order.}
+  }
 \end{frame}
 
 % === 5. The multi-index models =============================================
 \begin{frame}{The multi-index models}
   \begin{columns}[T]
-    \begin{column}{0.52\textwidth}
-      \role{Gaussian data}\qquad $\vec{x} \sim \mathcal{N}(0, I_d)$
-      \vspace{1.4em}
+    \begin{column}{0.50\textwidth}
+      \role{\large Gaussian data}
+      \vspace{-0.4em}
+      \[ \vec{x} \sim \mathcal{N}(0, I_d) \]
 
-      \role{A proxy for feature learning}
+      \role{\large The target function}
+      \vspace{-0.4em}
+      \[ f^\star(\vec{x}) = h^\star\!\left(\frac{W^\star \vec{x}}{\sqrt{d}}\right) \]
+      \vspace{-1.0em}
+      \begin{center}
+        \small
+        $h^\star : \mathbb{R}^k \to \mathbb{R}$,\qquad
+        $W^\star = \{\vec{w}^\star_r\}_{r \in [k]} \in \mathbb{R}^{k \times d}$
+        % \par\vspace{0.25em}
+        % \aside{we call $f^\star$ the \emph{teacher}}\par
+        % \aside{$k = \mathcal{O}(1) \ll d$;\;
+        %   $k = 1$ is the \emph{single-index} model}
+      \end{center}
+      \vspace{0.2em}
+
+      \role{\large (Possible) label noise}
+      % \vspace{-0.4em}
       \[
-        h^\star : \mathbb{R}^k \to \mathbb{R}
-        \qquad
-        f^\star(\vec{x}) = h^\star\!\left(\frac{W^\star \vec{x}}{\sqrt{d}}\right)
+        y = f^\star(\vec{x}) + \sqrt{\Delta}\,\xi,
+        \qquad \xi \sim \mathcal{N}(0,1)
       \]
     \end{column}
-    \begin{column}{0.48\textwidth}
+    \begin{column}{0.50\textwidth}
       \centering
-      $W^\star = \{\vec{w}^\star_r\}_{r \in [k]} \in \mathbb{R}^{k \times d}$
-      \par\vspace{0.5em}
-      \thesisnet[0.95\linewidth]{chapters/figs/multi-index.tex}
+      \thesisnet[0.82\linewidth]{chapters/figs/multi-index.tex}
+      \vspace{-1.0em}
+      \begin{defbox}{Teacher subspace}
+        \centering
+        $V^\star = \operatorname{span}(\vec{w}^\star_1, \ldots, \vec{w}^\star_k)$,
+        \qquad $\dim V^\star = k \ll d$
+        \vspace{0.15em}
+
+        \emph{Learning $\equiv$ discovering $V^\star$}
+      \end{defbox}
     \end{column}
   \end{columns}
-  \vspace{0.5em}
-  \begin{center}
-    \role{(Possible) Label Noise}\qquad
-    $y = f^\star(\vec{x}) + \sqrt{\Delta}\,\xi, \qquad \xi \sim \mathcal{N}(0,1)$
-  \end{center}
+  \vspace{1.2em}
+  \punchline{These $k$ directions \emph{are} the features of the problem.}
   \note{$d$ is going to be be big, while $k$ is small and fixed: discovering the
-    subspace $W^\star$ is actually a proxy of feature learning.}
+    subspace $W^\star$ is actually a proxy of feature learning.\\
+    We call this teacher.}
 \end{frame}
 
 % === 6. The learned model: 2-layer network =================================
@@ -242,6 +255,8 @@
       \thesisnet[0.95\linewidth]{chapters/figs/two-layer-net.tex}
     \end{column}
   \end{columns}
+  \vspace{0.3em}
+  \punchline{The student is a \emph{special case} of the teacher, and it is a \emph{two-layer NN}.}
   \vspace{0.5em}
   \begin{columns}[t]
     \begin{column}{0.42\textwidth}
@@ -259,6 +274,7 @@
     \end{column}
   \end{columns}
   \note{$W$, $\vec{a}$ are the weights. $\sigma$ is the activation function.
+    We need to align the student subspace with the teacher one to get good learning.
     This is the natural loss for regression.
     The population risk then is the best measure of the performance, but of
     course it can't be used for training (otherwise we have an equivalent of
@@ -278,11 +294,24 @@
       \]
     \end{column}
   \end{columns}
+  \vspace{-0.3em}
+  \begin{center}
+    \aside{$\gamma > 0$ is the \emph{learning rate}; each step draws a
+      \emph{fresh} sample, uses it once, and never reuses it}
+  \end{center}
   \vspace{0.8em}
   \begin{columns}[c]
     \begin{column}{0.26\textwidth}\raggedleft\role{\large Initialization}\end{column}
     \begin{column}{0.74\textwidth}
       \[ \vec{w}_j^0 \sim \mathcal{N}(0, I_d) \]
+    \end{column}
+  \end{columns}
+  \vspace{0.8em}
+  \begin{columns}[c]
+    \begin{column}{0.26\textwidth}\raggedleft\role{\large Steps $=$ samples}\end{column}
+    \begin{column}{0.74\textwidth}
+      After $n$ steps the algorithm has consumed exactly $n$ samples: counting
+      steps \emph{is} counting samples.
     \end{column}
   \end{columns}
   \vspace{0.8em}
@@ -296,27 +325,40 @@
   \begin{center}
     \aside{We actually often consider a spherical constrained dynamics for
       simplicity:}\quad
+      
+      \vspace{0.7em }
     $\displaystyle \vec{w}^{\nu+1} = \sqrt{d}\,
       \frac{\vec{w}^\nu - \gamma\nabla_{\vec{w}}\ell(f(\vec{x}^\nu), y^\nu)}
            {\bigl\lVert \vec{w}^\nu
              - \gamma\nabla_{\vec{w}}\ell(f(\vec{x}^\nu), y^\nu)\bigr\rVert}$
   \end{center}
   \note{$W$, $\vec{a}$ are the weights. $\sigma$ is the activation function.
-    It is one pass because every sample is used once then discarded forever.}
+    It is one pass because every sample is used once then discarded forever.
+    That also means the number of steps and the number of samples are the same
+    number, so from here on the sample complexity of a problem is just how long
+    the dynamics has to run -- which is what the second half of the talk
+    counts.}
 \end{frame}
 
 % === 8. The reduced dynamic ================================================
+% Three bands, top to bottom: the projections both networks see, the order
+% parameters that fix their joint law, the risk that follows.  The order
+% parameters get the green definition box -- they are the object the rest of
+% the talk is written in -- rather than being squeezed onto one \fiteq line
+% with the covariance.
 \begin{frame}{The reduced dynamic}
   \begin{columns}[c]
-    \begin{column}{0.34\textwidth}
+    \begin{column}{0.27\textwidth}
+      \raggedleft
       \role{\large Pre-activations are Gaussian}
     \end{column}
-    \begin{column}{0.66\textwidth}
+    \begin{column}{0.73\textwidth}
       \[
         \vec{\lambda} = \frac{W \vec{x}}{\sqrt{d}} \in \mathbb{R}^p,
         \qquad
         \vec{\lambda}^\star = \frac{W^\star \vec{x}}{\sqrt{d}} \in \mathbb{R}^k
       \]
+      \vspace{-0.7em}
       \[
         f(\vec{x};\, W, \vec{a}) = h(\vec{\lambda}, \vec{a}),
         \qquad
@@ -324,21 +366,25 @@
       \]
     \end{column}
   \end{columns}
-  \vspace{0.3em}
-  \punchline{Sufficient low-dimensional statistics}
-  \fiteq{
-    Q_{jl} = \frac{\langle \vec{w}_j, \vec{w}_l\rangle}{d}, \quad
-    M_{jr} = \frac{\langle \vec{w}_j, \vec{w}^\star_r\rangle}{d}, \quad
-    P_{rs} = \frac{\langle \vec{w}^\star_r, \vec{w}^\star_s\rangle}{d}
-    \qquad
-    (\vec{\lambda}, \vec{\lambda}^\star) \sim \mathcal{N}(0, \Omega), \quad
-    \Omega = \begin{pmatrix} Q & M \\ M^\top & P \end{pmatrix}
-      \in \mathbb{R}^{(p+k) \times (p+k)}}
+  \vspace{0.2em}
+  \begin{defbox}[top=3pt, bottom=2pt]{Sufficient low-dimensional statistics}
+    \fiteq{
+      Q_{jl} = \frac{\langle \vec{w}_j, \vec{w}_l\rangle}{d}, \qquad
+      M_{jr} = \frac{\langle \vec{w}_j, \vec{w}^\star_r\rangle}{d}, \qquad
+      P_{rs} = \frac{\langle \vec{w}^\star_r, \vec{w}^\star_s\rangle}{d}}
+    \fiteq{
+      (\vec{\lambda}, \vec{\lambda}^\star) \sim \mathcal{N}(0, \Omega),
+      \qquad
+      \Omega = \begin{pmatrix} Q & M \\ M^\top & P \end{pmatrix}
+        \in \mathbb{R}^{(p+k) \times (p+k)}}
+  \end{defbox}
+  \vspace{0.2em}
   \begin{columns}[c]
-    \begin{column}{0.38\textwidth}
+    \begin{column}{0.27\textwidth}
+      \raggedleft
       \role{\large Population risk is $d$-independent}
     \end{column}
-    \begin{column}{0.62\textwidth}
+    \begin{column}{0.73\textwidth}
       \[
         \mathcal{R}(\Omega, \vec{a})
         = \mathbb{E}_{(\vec{\lambda}, \vec{\lambda}^\star) \sim \mathcal{N}(0, \Omega)}
@@ -351,9 +397,29 @@
 \end{frame}
 
 % === 9. The reduced dynamic: update rule ===================================
+% Laid out as a four-row grid with a fixed arrow gutter at 0.40/0.06/0.54: the
+% left column is everything in weight space, the right column the same object
+% in statistics space.  The old prose correspondence block ("update rule for
+% $W$ $\leftrightarrow$ update rule for $(Q,M,\vec a)$") is gone -- the grid
+% says it -- and its two remaining lines became rows 3 and 4.
+% The $\lVert\vec x^\nu\rVert^2/d$ term is tinted to match the asterisk in the
+% headline: it is the one thing that is not exactly self-closed, and it
+% concentrates to 1 in high dimension.  Spoken, not written.
 \begin{frame}{The reduced dynamic: update rule}
-  \begin{center}\large Update rule is self-closed too!*\end{center}
-  \vspace{0.3em}
+  \begin{center}\large
+    Update rule is self-closed too!{\color{slideorange}*}
+  \end{center}
+  \vspace{0.2em}
+  \begin{columns}[c]
+    \begin{column}{0.40\textwidth}
+      \centering\role{\large In the weights}
+    \end{column}
+    \begin{column}{0.06\textwidth}\end{column}
+    \begin{column}{0.54\textwidth}
+      \centering\role{\large In the sufficient statistics}
+    \end{column}
+  \end{columns}
+  \vspace{0.2em}
   \begin{columns}[c]
     \begin{column}{0.40\textwidth}
       \fiteq{
@@ -382,7 +448,7 @@
             &+ \frac{\gamma}{pd}\frac{\gamma}{p}
               \left( y^\nu(\vec{\lambda}^{\star,\nu}) - h(\vec{\lambda}^{\nu}) \right)^2
               a_j a_l \sigma'(\lambda^\nu_j) \sigma'(\lambda^\nu_l)
-              \frac{\lVert\vec{x}^\nu\rVert^2}{d}, \\
+              {\color{slideorange}\frac{\lVert\vec{x}^\nu\rVert^2}{d}}, \\
           M^{\nu+1}_{jr} =\;& M^{\nu}_{jr}
             + \frac{\gamma}{pd}
               \left( y^\nu(\vec{\lambda}^{\star,\nu}) - h(\vec{\lambda}^{\nu}) \right)
@@ -394,142 +460,224 @@
         \end{aligned}}
     \end{column}
   \end{columns}
-  \vspace{0.2em}
-  \[
-    \small
-    \begin{aligned}
-      \text{update rule for } W \quad &\leftrightarrow \quad
-        \text{update rule for } (Q, M, \vec{a}) \\
-      \text{sample } \vec{x}^\nu \sim \mathcal{N}(0, I_d) \quad &\leftrightarrow \quad
-        \text{sample } (\vec{\lambda}^\nu, \vec{\lambda}^{\star,\nu}) \sim \mathcal{N}(0, \Omega) \\
-      \text{population risk } \mathcal{R}(W) \quad &\leftrightarrow \quad
-        \text{population risk } \mathcal{R}(Q, M, \vec{a}).
-    \end{aligned}
-  \]
+  \vspace{0.4em}
+  \begin{columns}[c]
+    \begin{column}{0.40\textwidth}
+      \centering
+      sample $\vec{x}^\nu \sim \mathcal{N}(0, I_d)$
+    \end{column}
+    \begin{column}{0.06\textwidth}
+      \centering$\Longrightarrow$
+    \end{column}
+    \begin{column}{0.54\textwidth}
+      \centering
+      sample $(\vec{\lambda}^\nu, \vec{\lambda}^{\star,\nu}) \sim \mathcal{N}(0, \Omega)$
+    \end{column}
+  \end{columns}
+  \vspace{0.3em}
+  \begin{columns}[c]
+    \begin{column}{0.40\textwidth}
+      \centering
+      population risk $\mathcal{R}(W)$
+    \end{column}
+    \begin{column}{0.06\textwidth}
+      \centering$\Longrightarrow$
+    \end{column}
+    \begin{column}{0.54\textwidth}
+      \centering
+      population risk $\mathcal{R}(Q, M, \vec{a})$
+    \end{column}
+  \end{columns}
+  \vspace{2em}
   \punchline{There is no need to work with $W$, let's look at $Q,M,P$}
   \note{Low dimensional aka independent of $d$.}
 \end{frame}
 
 % === 10. The magic of high-dimensional data =================================
+% Split out of the old single frame, which crushed the plateau figures to a
+% quarter width and the ODEs to a six-line \fiteq.  This half carries the
+% equations only, written in the compact form frame 16 already uses
+% (dQ/dt = Phi + gamma/p Psi) with the four expectations demoted to a
+% definition box, rather than the thesis's inline over/underbrace form.
 \begin{frame}{The magic of high-dimensional data}
   \begin{center}
     \large The stochastic process concentrates into a set of ODEs!
+    \quad\cit{Saad \& Solla, 1995}
   \end{center}
+  \vspace{0.1em}
   \begin{columns}[c]
-    \begin{column}{0.25\textwidth}
-      \includegraphics[width=\linewidth]{chapters/figs/saad-solla-plateau/plateau-noiseless}
-    \end{column}
-    \begin{column}{0.25\textwidth}
-      \includegraphics[width=\linewidth]{chapters/figs/saad-solla-plateau/plateau-noisy}
-    \end{column}
-    \begin{column}{0.50\textwidth}
-      \fiteq{
+    \begin{column}{0.56\textwidth}
+      \[
         \begin{aligned}
-          \frac{\dd Q_{jl}}{\dd t} =\;&
-            \overbrace{\mathbb{E}_{(\vec{\lambda}, \vec{\lambda}^\star) \sim \mathcal{N}(0, \Omega)}
-              \left[ \left( h^\star(\vec{\lambda}^{\star}) - h(\vec{\lambda}) \right)
-                \left( a_l \sigma'(\lambda_l) \lambda_j
-                     + a_j \sigma'(\lambda_j) \lambda_l \right)\right]}
-              ^{\textstyle \eqqcolon \Phi^{Q}_{jl}(\Omega, a)} \\
-            &+ \frac{\gamma}{p}
-              \underbrace{\mathbb{E}_{(\vec{\lambda}, \vec{\lambda}^\star) \sim \mathcal{N}(0, \Omega)}
-                \left[ \left(\left( h^\star(\vec{\lambda}^{\star}) - h(\vec{\lambda}) \right)^2
-                  + \Delta\right) a_j a_l \sigma'(\lambda_j) \sigma'(\lambda_l) \right]}
-                _{\textstyle \eqqcolon \Psi^{Q}_{jl}(\Omega, a)}, \\[0.6em]
-          \frac{\dd M_{jr}}{\dd t} =\;&
-            \underbrace{\mathbb{E}_{(\vec{\lambda}, \vec{\lambda}^\star) \sim \mathcal{N}(0, \Omega)}
-              \left[ \left( h^\star(\vec{\lambda}^{\star}) - h(\vec{\lambda}) \right)
-                a_j \sigma'(\lambda_j) \lambda^{\star}_r \right]}
-              _{\textstyle \eqqcolon \Phi^{M}_{jr}(\Omega, a)}, \\[0.6em]
-          \frac{\dd a_j}{\dd t} =\;&
-            \underbrace{\mathbb{E}_{(\vec{\lambda}, \vec{\lambda}^\star) \sim \mathcal{N}(0, \Omega)}
-              \left[ \left( h^\star(\vec{\lambda}^{\star}) - h(\vec{\lambda}) \right)
-                \sigma(\lambda_j) \right]}
-              _{\textstyle \eqqcolon \Phi^{a}_{j}(\Omega, a)}.
-        \end{aligned}}
+          \frac{\dd Q_{jl}}{\dd t} &= \Phi^{Q}_{jl}(\Omega, \vec{a})
+            + \frac{\gamma}{p}\,\Psi^{Q}_{jl}(\Omega, \vec{a}), \\[0.2em]
+          \frac{\dd M_{jr}}{\dd t} &= \Phi^{M}_{jr}(\Omega, \vec{a}), \\[0.2em]
+          \frac{\dd a_{j}}{\dd t} &= \Phi^{a}_{j}(\Omega, \vec{a}).
+        \end{aligned}
+      \]
+    \end{column}
+    \begin{column}{0.44\textwidth}
+      \centering
+      \role{\large The time-step}
+      \[ \delta t = \frac{\gamma}{pd} \]
+      \vspace{-0.6em}
+      \par
+      \aside{infinitesimal in high dimension:
+        $\nu \longmapsto t = \nu\,\dfrac{\gamma}{pd}$}
     \end{column}
   \end{columns}
-  \vfill
-  \begin{columns}[c]
-    \begin{column}{0.42\textwidth}
-      \centering
-      \role{The time-step}\quad
-      $\displaystyle \delta t = \frac{\gamma}{pd}$
-      \par\vspace{0.2em}
-      \aside{Infinitesimal for high dimension}
-    \end{column}
-    \begin{column}{0.58\textwidth}
-      \centering
-      \role{The actual bound}
-      \fiteq{
-        \max_{0 \le \nu \le Td} \mathbb{E}\left[
-          \left\lVert (\Omega^\nu, a^\nu)
-            - \left(\tilde{\Omega}\!\left(\frac{\nu\gamma}{pd}\right),
-                    \tilde{a}\!\left(\frac{\nu\gamma}{pd}\right)\right)\right\rVert
-        \right] \le \frac{C(T)}{\sqrt{d}}}
-    \end{column}
-  \end{columns}
-  \note{Those are erf--erf plots, the classic of committee machines.
-    This is an intuition: LHT gets closer and closer to a derivative, while the
-    RHS s some sort of thermodynamic limit (this is the closest I can get to
+  \vspace{0.15em}
+  \begin{defbox}[top=3pt, bottom=2pt]{Drift $\Phi$ and noise $\Psi$
+      \titleaside{expectation over
+        $(\vec{\lambda}, \vec{\lambda}^\star) \sim \mathcal{N}(0, \Omega)$}}
+    \fiteq{
+      \begin{aligned}
+        \Phi^{Q}_{jl} &= \mathbb{E}\left[
+          \left( h^\star(\vec{\lambda}^{\star}) - h(\vec{\lambda}) \right)
+          \left( a_l \sigma'(\lambda_l) \lambda_j
+               + a_j \sigma'(\lambda_j) \lambda_l \right)\right],
+        &\qquad
+        \Phi^{M}_{jr} &= \mathbb{E}\left[
+          \left( h^\star(\vec{\lambda}^{\star}) - h(\vec{\lambda}) \right)
+          a_j \sigma'(\lambda_j) \lambda^{\star}_r \right], \\[0.3em]
+        \Psi^{Q}_{jl} &= \mathbb{E}\left[
+          \left(\left( h^\star(\vec{\lambda}^{\star}) - h(\vec{\lambda}) \right)^2
+            + \Delta\right) a_j a_l \sigma'(\lambda_j) \sigma'(\lambda_l) \right],
+        &\qquad
+        \Phi^{a}_{j} &= \mathbb{E}\left[
+          \left( h^\star(\vec{\lambda}^{\star}) - h(\vec{\lambda}) \right)
+          \sigma(\lambda_j) \right].
+      \end{aligned}}
+  \end{defbox}
+  \note{This is an intuition: LHT gets closer and closer to a derivative, while
+    the RHS s some sort of thermodynamic limit (this is the closest I can get to
     physics in this presentation).
     A bit of taxonomy of the SS equations: one term is the drift (gradient flow
     for the population risk), while the other is an high-dimensional noise term
     that survive the limit: it is distinguishing characteristics of SS dynamic!}
 \end{frame}
 
-% === 11. Other limits, same equations ======================================
-% No frame title in draft.key: the delta-t line doubles as the heading.
+% === 11. The ODEs are exact in high dimension ==============================
+% Second half of the old frame 10: the plateau figures at a size one can
+% actually read from the back of the room, and the concentration bound as a
+% theorem box (orange, the deck's theorem colour) with its source.
+\begin{frame}{The ODEs are exact in high dimension}
+  \begin{columns}[T]
+    \begin{column}{0.5\textwidth}
+      \centering
+      \includegraphics[height=0.43\textheight]%
+        {chapters/figs/saad-solla-plateau/plateau-noiseless}
+      \par\vspace{0.15em}
+      \aside{$\Delta = 0$: the excess risk falls to zero}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \centering
+      \includegraphics[height=0.43\textheight]%
+        {chapters/figs/saad-solla-plateau/plateau-noisy}
+      \par\vspace{0.15em}
+      \aside{$\Delta = 10^{-3}$: the noise term $\Psi$ pins a plateau}
+    \end{column}
+  \end{columns}
+  \vspace{0.4em}
+  \begin{thmbox}[top=3pt, bottom=2pt]{The actual bound
+      \titlecit{Goldt, Advani, Saxe, Krzakala \& Zdeborov\'a, 2019}}
+    \fiteq{
+      \max_{0 \le \nu \le Td} \mathbb{E}\left[
+        \left\lVert (\Omega^\nu, \vec{a}^\nu)
+          - \left(\tilde{\Omega}\!\left(\frac{\nu\gamma}{pd}\right),
+                  \tilde{\vec{a}}\!\left(\frac{\nu\gamma}{pd}\right)\right)
+        \right\rVert \right] \le \frac{C(T)}{\sqrt{d}}}
+  \end{thmbox}
+  \note{Those are erf--erf plots, the classic of committee machines.}
+\end{frame}
+
+% === 12. Other limits, same equations ======================================
+% No frame title in draft.key: the delta-t line doubles as the heading -- which
+% also frees the whole text height for the triangle, the one thing this frame
+% is about.  Everything else is a caption to it: the transition line above, the
+% surviving-drift note below.  First frame of the author's own work, hence the
+% chapter tag.
 \begin{frame}
+  \chaptertag{Chapter 2}
+  % No frame title here, so the first line would run straight under the tag.
+  \vspace*{1.1em}
   \begin{center}
     $\displaystyle \delta t = \frac{\gamma}{pd}$\quad
     {\large d to infinity is only a third of the story though\ldots}
+    \quad\cit{Veiga et al., 2022}
   \end{center}
-  \punchline{When can have other limits leading to the same equations!}
-  \begin{columns}[b]
-    \begin{column}{0.66\textwidth}
-      \centering
-      \includegraphics[height=0.52\textheight]{papers/2302/figs/TriangleV3}
-    \end{column}
-    \begin{column}{0.34\textwidth}
-      \centering
-      \aside{Only the drift survives in other limits}\\[-0.4em]
-      \[ \frac{\dd Q}{\dd t} = \Phi^Q + \frac{\gamma}{p}\Psi^Q \]
-    \end{column}
-  \end{columns}
+  \punchline{We can have other limits leading to the same equations!}
+  \begin{center}
+    \includegraphics[height=0.60\textheight]{papers/2302/figs/TriangleV3}
+  \end{center}
+  \begin{center}
+    \aside{Only the drift survives in other limits:}\quad
+    {\small $\dd Q/\dd t = \Phi^Q
+      + {\color{black!35}(\gamma/p)\,\Psi^Q}$}
+  \end{center}
 \end{frame}
 
-% === 12. Classical limit: gradient flow ====================================
+% === 13. Classical limit: gradient flow ====================================
+% The chain now starts from gradient flow on the weights, not on Theta: the
+% frame is about turning a p x d flow into a p(p+k) one, so the Theta-level
+% statement was a step that led nowhere.  Middle line is the linear
+% combination that produces Q; the same manipulation gives M.
+% The parameter counts ride on the equations themselves via \tag*, so the
+% payoff of the arrow chain costs no extra line.
 \begin{frame}{Classical limit: gradient flow}
+  \chaptertag{Chapter 2}
+  \begin{center}
+    \aside{$\gamma \to 0^+$ at fixed $d,\, p = \mathcal{O}(1)$}
+  \end{center}
+  \vspace{0.2em}
   \begin{columns}[c]
-    \begin{column}{0.48\textwidth}
+    \begin{column}{0.44\textwidth}
       \centering
-      \includegraphics[height=0.62\textheight]%
+      \includegraphics[height=0.54\textheight]%
         {papers/2302/figs/classic/classic_limit_d_plot_-k5_p10_noise0.001_gamma0.0500}
+      \par\vspace{0.1em}
+      \aside{same initial condition, $d = 5,\,10,\,50$}
     \end{column}
-    \begin{column}{0.52\textwidth}
+    \begin{column}{0.56\textwidth}
       \centering
-      \[ \frac{\dd \Theta(t)}{\dd t} = -\nabla_{\Theta}\mathcal{R}(\Theta(t)) \]
-      $\Big\downarrow$
+      \role{Gradient flow on the weights}\;
+      \cit{Robbins \& Monro, 1951}
+      \begin{equation*}
+        \frac{\dd \vec{w}_j(t)}{\dd t}
+          = -\nabla_{\vec{w}_j}\mathcal{R}\bigl(W(t)\bigr)
+        \tag*{\aside{$p(d+1)$ parameters}}
+      \end{equation*}
+      \vspace{-0.7em}
+      $\Big\downarrow$\; \aside{chain rule}
       \[
-        \small
-        \frac{\dd \langle \vec{w}_i, \vec{w}_j \rangle}{\dd t}
-          = \left\langle \vec{w}_i, \frac{\dd\vec{w}_j}{\dd t} \right\rangle
-          + \left\langle \frac{\dd\vec{w}_i}{\dd t}, \vec{w}_j \right\rangle
+        \frac{\dd Q_{jl}}{\dd t}
+          = \frac{1}{d}\left(
+              \left\langle \vec{w}_j, \frac{\dd\vec{w}_l}{\dd t} \right\rangle
+            + \left\langle \frac{\dd\vec{w}_j}{\dd t}, \vec{w}_l \right\rangle
+            \right)
       \]
+      \vspace{-0.7em}
       $\Big\downarrow$
-      % TODO "remake the equations because they are wrong/ugly" -- done by
-      % Claude, check manually later.  This frame is the classical limit
-      % gamma -> 0+, where only the drift survives (papers/2302 eq:def:gf_ode);
-      % draft.key pasted the full Saad & Solla equation, noise term included.
-      \[ \frac{\dd Q}{\dd t} = \Phi^Q \]
+      \begin{equation*}
+        \frac{\dd Q}{\dd t} = \Phi^Q,
+        \qquad
+        \frac{\dd M}{\dd t} = \Phi^M
+        \tag*{\aside{$p(p+k)$ parameters}}
+      \end{equation*}
     \end{column}
   \end{columns}
-  \note{Remake the equations beacuse they are wrong/ugly.}
+  \vspace{0.2em}
+  \punchline{No $d$ in the equations: same initial overlaps, same trajectory.}
+  \note{$d$ has left the equations, not the problem: it comes back through the
+    initialization.  With $\vec{w}_j^0 \sim \mathcal{N}(0, I_d)$ the initial
+    overlap is $M^0 \sim 1/\sqrt{d}$, and $M = 0$ is often a fixed point --- so
+    $d = \mathcal{O}(1)$ and $d \gg 1$ still behave very differently.  That gap
+    is the rest of the talk.}
 \end{frame}
 
-% === 13. Mean field limit ==================================================
+% === 14. Mean field limit ==================================================
 \begin{frame}{Mean field limit}
+  \chaptertag{Chapter 2}
   \begin{columns}[T]
     \begin{column}{0.46\textwidth}
       \centering
@@ -585,8 +733,9 @@
     moment.}
 \end{frame}
 
-% === 14. High-dimensional Mean field limit =================================
+% === 15. High-dimensional Mean field limit =================================
 \begin{frame}{High-dimensional Mean field limit}
+  \chaptertag{Chapter 2}
   \begin{center}
     \large $\Xi$ converge to $I_d$ when $d \to \infty$:
     off diagonal orthogonal terms are $0$!
@@ -610,8 +759,9 @@
     analytically, and they are just additive.}
 \end{frame}
 
-% === 15. Scaling rate and batch size: the equations ========================
+% === 16. Scaling rate and batch size: the equations ========================
 \begin{frame}{What if we scale the rate and the batch size?}
+  \chaptertag{Chapter 4}
   \begin{center}
     $\gamma = \gamma_0 d^{-\delta} \quad\text{and}\quad n_b = n_0 d^\mu$
   \end{center}
@@ -647,8 +797,9 @@
     pure asymptotic\ldots}
 \end{frame}
 
-% === 16. Scaling rate and batch size: non-asymptotic =======================
+% === 17. Scaling rate and batch size: non-asymptotic =======================
 \begin{frame}{What if we scale the rate and the batch size?}
+  \chaptertag{Chapter 4}
   \begin{center}
     \large Non-asymptotic corrections use the same decomposition trick
   \end{center}
@@ -689,7 +840,7 @@
     that $Q^\bot$ are all the initial weights that has not fallen yet.}
 \end{frame}
 
-% === 17. Can we use SS for sample complexity? ==============================
+% === 18. Can we use SS for sample complexity? ==============================
 \begin{frame}{Can we use SS for sample complexity?}
   \begin{center}
     \aside{Let's consider the simple case where $p=k=1$:}\\
@@ -749,8 +900,9 @@
     $C(T) = \exp(CT)\sqrt{\gamma/(pd)}$.}
 \end{frame}
 
-% === 18. Phase retrieval ===================================================
+% === 19. Phase retrieval ===================================================
 \begin{frame}{It's not all lost though: \emph{phase retrieval}}
+  \chaptertag{Chapter 3}
   \begin{columns}[c]
     \begin{column}{0.46\textwidth}
       ODE tells us some information:
@@ -807,7 +959,7 @@
     T is actually our eta. TODO: fix notation.}
 \end{frame}
 
-% === 19. The information exponent ==========================================
+% === 20. The information exponent ==========================================
 \begin{frame}{The information exponent}
   \begin{columns}[T]
     \begin{column}{0.46\textwidth}
@@ -850,8 +1002,9 @@
     We study phase retrieval extensively in the previous slides.}
 \end{frame}
 
-% === 20. Scaling rate and batch size: sample complexity ====================
+% === 21. Scaling rate and batch size: sample complexity ====================
 \begin{frame}{What if we scale the rate and the batch size?}
+  \chaptertag{Chapter 4}
   \begin{center}
     $\gamma = \gamma_0 d^{-\delta} \quad\text{and}\quad n_b = n_0 d^\mu$
   \end{center}
@@ -885,8 +1038,9 @@
     The plot is for $\ell \ge 3$. If $\ell = 1,2$ it looks a little different.}
 \end{frame}
 
-% === 21. Is the IE the actual lower bound? =================================
+% === 22. Is the IE the actual lower bound? =================================
 \begin{frame}{Is the IE the actual lower bound in complexity?}
+  \chaptertag{Chapter 5}
   \begin{center}
     \large Real data is not i.i.d. and it is repeated, and our current model has not
   \end{center}
@@ -936,8 +1090,9 @@
     large batch repetitions can break the curse of information exponent.}
 \end{frame}
 
-% === 22. How this work? ====================================================
+% === 23. How this work? ====================================================
 \begin{frame}{How this work?}
+  \chaptertag{Chapter 5}
   \begin{center}
     {\large One-pass SGD is linear in the label}\quad
     $\displaystyle \nabla_{\vec{w}}\mathcal{R}
@@ -1001,8 +1156,9 @@
     already carry no $\varphi$ -- your call.)}
 \end{frame}
 
-% === 23. IE & Attention model ==============================================
+% === 24. IE & Attention model ==============================================
 \begin{frame}{IE \& Attention model}
+  \chaptertag{Chapter 6}
   \adjustbox{max width=\linewidth}{%
     {\large Our proxy for attention:}\;
     $\displaystyle
@@ -1060,8 +1216,9 @@
     This is our proxy.}
 \end{frame}
 
-% === 24. A nice extra: positional-semantic transition ======================
+% === 25. A nice extra: positional-semantic transition ======================
 \begin{frame}{A nice extra: positional-semantic transition}
+  \chaptertag{Chapter 6}
   \begin{columns}[T]
     \begin{column}{0.58\textwidth}
       \role{Target}
@@ -1095,7 +1252,7 @@
     $a$ regulates the positional difference.}
 \end{frame}
 
-% === 25. Recap =============================================================
+% === 26. Recap =============================================================
 \begin{frame}{Recap}
   \begin{itemize}
     \item Saad \& Solla equations gave us the control of the full dynamic*
@@ -1115,7 +1272,7 @@
   \note{I think we squeezed enough gaussian data + two layer networks.}
 \end{frame}
 
-% === 26. Thanks ============================================================
+% === 27. Thanks ============================================================
 \begin{frame}{Thanks to you and my amazing collaborators!}
   \vfill
   \begin{center}
