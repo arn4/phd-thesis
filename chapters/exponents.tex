@@ -352,7 +352,7 @@ This is the same sample-complexity table as~\eqref{eq:intro:sgd-sample-complexit
         \label{fig:intro:gen-exp-H4}
     }
     \caption{\textbf{Information exponent vs.\ generative exponent: separation in sample complexity} (from Chapter~\ref{chap:paper-2405}).
-    Both panels plot the teacher--student overlap \(m\) as a function of the number of gradient steps \(T\), for one-pass SGD (circles) and the displaced gradient algorithm (crosses) at several values of \(d\).
+    Both panels plot the teacher--student overlap \(m\) as a function of the number of gradient steps \(T\), for one-pass SGD (crosses) and the displaced gradient algorithm (circles) at several values of \(d\).
     \emph{(a)}~Target \(\mathrm{He}_3\) has \(\ell = 3\) but \(\ell^\star = 1\) (the label can be sign-transformed to produce a linear-exponent query): one-pass SGD requires \(\mathcal{O}(d^2)\) steps, while the displaced gradient recovers the teacher in \(\mathcal{O}(d)\).
     \emph{(b)}~Target \(\mathrm{He}_4\) has \(\ell = 4\) but \(\ell^\star = 2\) (it is even, so \(\ell^\star \geq 2\)): one-pass SGD needs \(\mathcal{O}(d^3)\) steps, while the displaced gradient achieves recovery in \(\mathcal{O}(d\log d)\).}
     \label{fig:intro:gen-exp}
