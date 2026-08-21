@@ -1,0 +1,15 @@
+% ---------------------------------------------------------------------------
+% slides-notes.tex -- presenter-notes variant of the defence deck.
+%
+% Same pattern as thesis-print.tex: define a flag, then \input the real source
+% verbatim, so the two decks can never diverge in content.  slides-style.sty is
+% the only file that branches on \SlidesNotesVariant; it turns the flag into
+% `show notes on second screen=right', i.e. every page is double-wide with the
+% slide on the left and its \note on the right.
+%
+% Build from the REPO ROOT, with an explicit -outdir so the aux files do not
+% collide with the plain deck's:
+%     latexmk -pdflua -outdir=build/notes slides/slides-notes.tex
+% ---------------------------------------------------------------------------
+\def\SlidesNotesVariant{}
+\input{slides/slides.tex}

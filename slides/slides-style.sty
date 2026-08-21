@@ -143,6 +143,29 @@
     \node[text=darkred, font=\scriptsize\bfseries] at (0,-2.25) {we are here};
   \end{tikzpicture}}}
 
+% Standalone, unlabelled versions of the first two stages of
+% \atomprogression, for the recap frame: there the atoms are used as marks
+% beside a claim, not as a captioned timeline, so redrawing the whole
+% progression would just repeat frame 3.
+\newcommand{\thomsonatom}[1][1.1cm]{%
+  \raisebox{-0.36\height}{\adjustbox{height=#1}{%
+    \begin{tikzpicture}[x=1cm, y=1cm]
+      \fill[nethid!18] (0,0) circle (0.72);
+      \draw[nethid!65, line width=0.7pt] (0,0) circle (0.72);
+      \foreach \a/\r in {25/0.42, 95/0.55, 165/0.28, 215/0.6, 300/0.38, 345/0.62}
+        \fill[darkred] (\a:\r) circle (1.5pt);
+    \end{tikzpicture}}}}
+\newcommand{\bohratom}[1][1.1cm]{%
+  \raisebox{-0.36\height}{\adjustbox{height=#1}{%
+    \begin{tikzpicture}[x=1cm, y=1cm]
+      \draw[nethid!65, line width=0.7pt] (0,0) circle (0.45);
+      \draw[nethid!65, line width=0.7pt] (0,0) circle (0.72);
+      \fill[netout] (0,0) circle (2.6pt);
+      \fill[darkred] (60:0.45) circle (1.5pt);
+      \fill[darkred] (200:0.72) circle (1.5pt);
+      \fill[darkred] (325:0.72) circle (1.5pt);
+    \end{tikzpicture}}}}
+
 % --- the three pillars of the setting (frame 4) -----------------------------
 % One small icon per ingredient, deliberately generic: the frame poses the
 % three questions and the frames after it give the answers, so nothing here
@@ -191,7 +214,10 @@
 \definecolor{slideorange}{HTML}{C3821F}
 \definecolor{slidered}{HTML}{A6392E}
 % Region colours of papers/2406/figs/exact_asymptotic_diagram_no_legend, used
-% for the colour-keyed legend words under that figure (frame 14).
+% for the colour-keyed legend words under that figure (frame 17).  They are the
+% paper's own allowedcolor / notallowedcolor / nodynamicscolor / teal, so the
+% words match the regions they name.
+\definecolor{flowregion}{HTML}{157311}
 \definecolor{ssline}{HTML}{138888}
 \definecolor{noiseregion}{HTML}{FF1312}
 \definecolor{undefregion}{HTML}{C39AC3}
@@ -266,6 +292,20 @@
           xshift=-0.45cm, yshift=-0.22cm] at (current page.north east) {#1};
   \end{tikzpicture}%
   \par\vspace*{-\baselineskip}\vspace*{-\parskip}}
+
+% --- collaborators (last frame) ---------------------------------------------
+% The seven portraits have different aspect ratios, which reads as a ragged
+% row.  Each is square-cropped through a viewport instead -- landscape shots
+% centred horizontally, portrait shots keeping their top so no heads are cut --
+% so every tile is the same size and the names share a baseline.
+% #2 is the file, #3 its square viewport in native units, #4 the name.
+\newcommand{\collab}[4][0.32\textheight]{%
+  \begin{minipage}[t]{0.22\textwidth}
+    \centering
+    \includegraphics[height=#1, viewport=#3, clip]{slides/figs/people/#2}\par
+    \vspace{0.4em}
+    {\small\structure{#4}}
+  \end{minipage}}
 
 % --- presenter notes --------------------------------------------------------
 % Every note in draft.key is carried over verbatim as a \note.  The plain deck
