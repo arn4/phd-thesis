@@ -1,6 +1,8 @@
 {
     // --- LaTeX Workshop: thesis build pipeline ---
     // Use the repo's latexmkrc (lualatex + biber + out_dir=build) as the single source of truth.
+    // One recipe for both roots: the rc file decides engine and out_dir, and the
+    // root file is passed through as %DOC%.
     "latex-workshop.latex.recipe.default": "latexmk (thesis)",
     "latex-workshop.latex.recipes": [
         {
@@ -24,15 +26,25 @@
         }
     ],
 
-    // Pin the root file so building from a chapter/section file still targets thesis.tex.
+    // Pin the root files so building from a chapter/section file still targets
+    // thesis.tex, and building from anything under slides/ targets the deck.
     "latex-workshop.latex.rootFile.doNotPrompt": true,
     "latex-workshop.latex.rootFile.useSubFile": false,
     "latex-workshop.latex.root.detect.fromMagicComment.enabled": false,
     "latex-workshop.latex.rootFile.indicator": "\\begin{document}",
-    "latex-workshop.latex.search.rootFiles.include": ["thesis.tex"],
+    "latex-workshop.latex.search.rootFiles.include": ["thesis.tex", "slides/slides.tex"],
 
-    // PDF lives in build/ (per latexmkrc $out_dir).
-    "latex-workshop.latex.outDir": "build",
+    // Every input path in this repo (figures, \include, \subimport) is resolved
+    // relative to the repo root, so builds must run from there. Without this,
+    // LaTeX Workshop uses the root file's own directory, which breaks the deck:
+    // slides/slides.tex pulls figures from chapters/ and papers/.
+    "latex-workshop.latex.build.fromFolder": ".",
+
+    // PDFs live in build/ (per latexmkrc $out_dir): build/thesis.pdf and
+    // build/slides.pdf. Absolute, because LaTeX Workshop resolves a relative
+    // outDir against the root file's directory -- a bare "build" would send it
+    // looking for slides/build/slides.pdf, and SyncTeX would find nothing.
+    "latex-workshop.latex.outDir": "%WORKSPACE_FOLDER%/build",
 
     // Build on save; debounce a bit so rapid saves don't queue multiple runs.
     "latex-workshop.latex.autoBuild.run": "onSave",

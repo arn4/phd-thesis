@@ -108,6 +108,7 @@ Both operate on `claude-review/`, the git-ignored local working set: `findings/m
 
 - Per-paper standalone: `latexmk -jobname=YYMM -outdir=build/YYMM papers/stand-alone-paper.tex`. (Also invoked by `extract-paper`'s verification step.)
 - Full thesis: `latexmk thesis.tex`.
+- Defence slides: `latexmk -pdflua slides/slides.tex` → `build/slides.pdf`. Presenter-notes variant: `latexmk -pdflua -outdir=build/notes slides/slides-notes.tex` (own `-outdir` for the same aux-collision reason as `thesis-print`). Both must run from the repo root — the deck's figure paths point at `slides/figs/`, `chapters/figs/` and `papers/YYMM/figs/`.
 - Printable thesis: `latexmk -outdir=build/print thesis-print.tex`. The `-outdir` is **required** — `\include{chapters/foo}` writes `chapters/foo.aux`, named after the included file rather than the jobname, so a shared `build/` would let the two thesis builds clobber each other's aux. `latexmkrc` pre-creates both aux trees.
 - All input paths are resolved **relative to the repo root** (the CWD you run `latexmk` from), never relative to the including file or to `$out_dir`.
 - Do **not** pass `-pdf`. It forces pdflatex, which overrides the `latexmkrc` and fails immediately because `thesis-style.sty` requires `fontspec` (lualatex-only). The `latexmkrc` already selects `lualatex`, `biber`, and `out_dir=build/`; let it. Use `-pdflua` if you want to be explicit.

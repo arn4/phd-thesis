@@ -29,3 +29,6 @@ claude-review/
 
 # Transient per-finding worktrees created by /solve-issue
 .claude/worktrees/
+
+#Keynote slides
+slides/*.key

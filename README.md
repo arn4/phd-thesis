@@ -14,6 +14,7 @@ The skills that do this live in [`.claude/skills/`](.claude/skills/).
 
 - **[Thesis PDF](https://arn4.github.io/phd-thesis/thesis.pdf)** — the full manuscript
   - [printable version](https://arn4.github.io/phd-thesis/thesis-print.pdf) — same manuscript with black links and external URLs spelled out as footnotes
+- **[Defence slides](https://arn4.github.io/phd-thesis/slides.pdf)** — the deck for the public defence
 
 ## Papers included
 - **From high-dimensional & mean-field dynamics to dimensionless ODEs: A unifying approach to SGD in two-layers networks** — Arnaboldi, Stephan, Krzakala, Loureiro ([arXiv:2302.05882](https://arxiv.org/abs/2302.05882))
