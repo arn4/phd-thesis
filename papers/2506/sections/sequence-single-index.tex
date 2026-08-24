@@ -55,10 +55,10 @@ Intuitively, a higher value of \(\kappa\) implies that the landscape of \(R\) is
     %
     \includegraphics[width=0.49\textwidth]{figs/plot_surface/loss_surface_SIE4_peTrue}
     \caption{The landscape of the population risk, together with the Hessian at initialization, for different values of the SIE and positional encoding.
-    (left) \(g(\vec{z}_\star) = \mathrm{He}_2(\vec{z}_{\star,1}) + \mathrm{He}_2(\vec{z}_{\star,2})\): SIE=2, no positional encoding: null gradient, but non-null Hessian;
-    (center-left) SIE=4, no positional encoding: the first non-null term at initialization is at the 4th order;
-    (center-right) \(g(\vec{z}_\star) = \mathrm{He}_2(z_{\star,1}) + \mathrm{He}_2(z_{\star,2})\): SIE=2, with positional encoding: again dynamic dominated by the Hessian, but we have a positive curvature in the direction of \(e\);
-    (right) SIE=4, with positional encoding: Hessian is positive semidefinite, and the dynamic is again at 4th order in direction of \(e\).
+    (top-left) \(g(\vec{z}_\star) = \mathrm{He}_2(\vec{z}_{\star,1}) + \mathrm{He}_2(\vec{z}_{\star,2})\): SIE=2, no positional encoding: null gradient, but non-null Hessian;
+    (top-right) SIE=4, no positional encoding: the first non-null term at initialization is at the 4th order;
+    (bottom-left) \(g(\vec{z}_\star) = \mathrm{He}_2(z_{\star,1}) + \mathrm{He}_2(z_{\star,2})\): SIE=2, with positional encoding: again dynamic dominated by the Hessian, but we have a positive curvature in the direction of \(e\);
+    (bottom-right) SIE=4, with positional encoding: Hessian is positive semidefinite, and the dynamic is again at 4th order in direction of \(e\).
     In all the examples \(L=2, P_1=-P_2, \Pi = \Tr\).
     }
     \label{2506:fig:loss_surface}
@@ -89,4 +89,4 @@ In other words, the positional encoding can only decrease the flatness of the lo
 \end{figure}
 In the right part of Figure~\ref{2506:fig:loss_surface_pe}, we present an example  where adding the positional encoding can improve the sample complexity of the SGD algorithm. The left part of Figure~\ref{2506:fig:loss_surface_pe} shows that the population loss landscape at initialization is flat, and the hessian is null: the first non-null term in the Taylor expansion is at order 4, hence the SIE is 4. The right part of Figure~\ref{2506:fig:loss_surface_pe} shows instead that when we add the positional encoding, a non-null term appears at order 2, and \(\mathrm{SIE}_\mathrm{positional} = 2\). 
 Note that while the positions of the global minima are not affected by the positional encoding, SGD can converge to the new local minima instead; more discussion on this point is given in Section~\ref{2506:sec:positional_encoding}.
-In contrast, the right part of Figure~\ref{2506:fig:loss_surface} shows that the positional encoding is not necessarily beneficial: there are cases for which the loss landscape changes, but not the sample complexity.
+In contrast, the bottom row of Figure~\ref{2506:fig:loss_surface} shows that the positional encoding is not necessarily beneficial: there are cases for which the loss landscape changes, but not the sample complexity.
