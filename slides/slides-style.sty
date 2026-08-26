@@ -293,12 +293,37 @@
   \end{tikzpicture}%
   \par\vspace*{-\baselineskip}\vspace*{-\parskip}}
 
+% --- frame counter with backup slides ---------------------------------------
+% Backup slides live behind \appendix, and the footline must not count them in
+% the total: the audience should see the talk end at N/N and the backups run on
+% past it.  \appendix writes \insertmainframenumber -- the frame count at the
+% point it was issued -- into the .nav file, so it needs two passes; latexmk
+% already does that, and it falls back to \inserttotalframenumber when there is
+% no \appendix at all, so the deck is never wrong mid-edit.
+%
+% Boadilla inherits infolines, whose `totalframenumber' template prints
+% \insertframenumber/\inserttotalframenumber -- and \inserttotalframenumber is
+% the *grand* total, backups included.  Only the denominator is swapped here;
+% the box is still sized with the grand total so the field does not jitter when
+% the numerator gains a digit on the far side of \appendix.
+\setbeamertemplate{page number in head/foot}{%
+  \setbox\beamer@tempbox=\hbox{\inserttotalframenumber\,/\,\insertmainframenumber}%
+  \beamer@tempdim=\wd\beamer@tempbox%
+  \makebox[\beamer@tempdim][r]{\insertframenumber\,/\,\insertmainframenumber}%
+}
+
 % --- collaborators (last frame) ---------------------------------------------
-% The seven portraits have different aspect ratios, which reads as a ragged
+% The six portraits have different aspect ratios, which reads as a ragged
 % row.  Each is square-cropped through a viewport instead -- landscape shots
 % centred horizontally, portrait shots keeping their top so no heads are cut --
-% so every tile is the same size and the names share a baseline.
-% #2 is the file, #3 its square viewport in native units, #4 the name.
+% so every tile is the same size and the names share a baseline.  The square is
+% also placed so the heads come out at a similar scale -- a wide shot is cropped
+% well inside its own frame rather than square-cropped whole, or the face reads
+% as far away next to the studio portraits.
+% #2 is the file, #3 its square viewport, #4 the name.  The viewport is in bp of
+% the image's *natural* size, which equals its pixels only at 72 dpi: collab-2 is
+% a 449x600 file tagged 96 dpi, hence its 336.75x449.  Re-derive #3 after any
+% photo swap -- `\includegraphics' with no viewport prints the natural size.
 \newcommand{\collab}[4][0.32\textheight]{%
   \begin{minipage}[t]{0.22\textwidth}
     \centering
@@ -322,5 +347,39 @@
   % the one thing that has no Keynote original to match.
   \setbeamerfont{note page}{size=\small}%
 }
+
+% A note is a delivery checklist, not a script: one cue per line, scannable at a
+% glance from the presenter screen while talking.  \textbf marks whatever is NOT
+% written on the slide -- the facts that live only in the speaker's head, and the
+% bridge into the next frame -- since that is exactly what the slide cannot
+% remind him of.
+%
+% \itemsep and \parsep are set *inside* the list: \@listI assigns them on entry,
+% so a \setlength before \begin{itemize} would just be overwritten.  \leftmargini
+% is the opposite -- \@listI reads it -- so it has to be set before.  Defined
+% unconditionally, not inside the \SlidesNotesVariant guard: slides.tex carries
+% the same \note bodies in both decks and only the notes deck typesets them.
+\newenvironment{notelist}
+  {\setlength{\leftmargini}{1.1em}%
+   \begin{itemize}%
+     \setlength{\itemsep}{0.25em}%
+     \setlength{\parsep}{0pt}%
+     \setlength{\parskip}{0pt}}
+  {\end{itemize}}
+
+% Where the talk should be on the clock once this frame is done, at the pace that
+% lands the whole deck in 35:00 -- the slot, not the current script, which runs
+% about a third longer.  Numbers come from the "35-min pace" column of
+% slides/pitch-review.md and have to be regenerated whenever the script is cut.
+\newcommand{\notetime}[1]{%
+  {\raggedleft\footnotesize\color{black!55}by now~\textbf{#1}\par}%
+  \vspace{-0.4em}}
+
+% The backup slides behind \appendix are off the clock, so a "by now" cue on one
+% would be a lie.  They say which thesis chapter they belong to instead -- the
+% same thing their \chaptertag badge says on the slide itself.
+\newcommand{\notebackup}[1]{%
+  {\raggedleft\footnotesize\color{black!55}backup~$\cdot$~\textbf{#1}\par}%
+  \vspace{-0.4em}}
 
 \endinput

@@ -229,12 +229,13 @@ jobs:
             echo "args=-pdflua" >> "$GITHUB_OUTPUT"
             echo "pdf=build/slides.pdf" >> "$GITHUB_OUTPUT"
           elif [ "${{ matrix.target }}" = "slides-notes" ]; then
-            # Its own -outdir, for the same reason as thesis-print: the notes
-            # variant \inputs slides.tex verbatim, so both roots would write
-            # the same aux basenames into a shared build/.
+            # Shares build/ with the plain deck, unlike thesis-print: the deck
+            # has no \include, so every aux file is jobname-named and the two
+            # roots cannot clobber each other. Locally that shared out_dir is
+            # required -- LaTeX Workshop's latex.outDir is one global setting.
             echo "root=slides/slides-notes.tex" >> "$GITHUB_OUTPUT"
-            echo "args=-pdflua -outdir=build/notes" >> "$GITHUB_OUTPUT"
-            echo "pdf=build/notes/slides-notes.pdf" >> "$GITHUB_OUTPUT"
+            echo "args=-pdflua" >> "$GITHUB_OUTPUT"
+            echo "pdf=build/slides-notes.pdf" >> "$GITHUB_OUTPUT"
           else
             echo "root=papers/stand-alone-paper.tex" >> "$GITHUB_OUTPUT"
             echo "args=-pdf -jobname=${{ matrix.target }} -outdir=build/${{ matrix.target }}" >> "$GITHUB_OUTPUT"

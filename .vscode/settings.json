@@ -3,6 +3,11 @@
     // Use the repo's latexmkrc (lualatex + biber + out_dir=build) as the single source of truth.
     // One recipe for both roots: the rc file decides engine and out_dir, and the
     // root file is passed through as %DOC%.
+    //
+    // The command is .vscode/build.sh rather than latexmk itself: it runs the
+    // same latexmk call, then rebuilds slides-notes.tex whenever the root was
+    // the deck. slides-notes.tex \inputs slides.tex, so it is a second root that
+    // root detection can never reach -- see the comment at the top of build.sh.
     "latex-workshop.latex.recipe.default": "latexmk (thesis)",
     "latex-workshop.latex.recipes": [
         {
@@ -13,13 +18,12 @@
     "latex-workshop.latex.tools": [
         {
             "name": "latexmk-thesis",
-            "command": "latexmk",
+            // Run through `sh` on purpose: LaTeX Workshop expands %WORKSPACE_FOLDER%
+            // in `args` but NOT in `command`, so naming the script directly there
+            // spawns the literal placeholder and fails with ENOENT.
+            "command": "sh",
             "args": [
-                "-r", "%WORKSPACE_FOLDER%/latexmkrc",
-                "-pdflua",
-                "-synctex=1",
-                "-interaction=nonstopmode",
-                "-file-line-error",
+                "%WORKSPACE_FOLDER%/.vscode/build.sh",
                 "%DOC%"
             ],
             "env": {}
@@ -30,9 +34,18 @@
     // thesis.tex, and building from anything under slides/ targets the deck.
     "latex-workshop.latex.rootFile.doNotPrompt": true,
     "latex-workshop.latex.rootFile.useSubFile": false,
-    "latex-workshop.latex.root.detect.fromMagicComment.enabled": false,
     "latex-workshop.latex.rootFile.indicator": "\\begin{document}",
     "latex-workshop.latex.search.rootFiles.include": ["thesis.tex", "slides/slides.tex"],
+
+    // Magic comments must stay on: slides/slides-notes.tex has no
+    // \begin{document} of its own (it only \inputs the deck), so the indicator
+    // scan above can never see it as a root. It pins itself with a
+    // self-referential `% !TeX root', which findFromMagic() honours before any
+    // content scan -- that is what makes build/view/SyncTeX from that tab
+    // target the notes deck instead of falling through to slides.tex.
+    // Deliberately NOT added to rootFiles.include: root detection would then
+    // also match it by .fls children and could hijack slides.tex's own root.
+    "latex-workshop.latex.build.enableMagicComments": true,
 
     // Every input path in this repo (figures, \include, \subimport) is resolved
     // relative to the repo root, so builds must run from there. Without this,
@@ -40,10 +53,14 @@
     // slides/slides.tex pulls figures from chapters/ and papers/.
     "latex-workshop.latex.build.fromFolder": ".",
 
-    // PDFs live in build/ (per latexmkrc $out_dir): build/thesis.pdf and
-    // build/slides.pdf. Absolute, because LaTeX Workshop resolves a relative
-    // outDir against the root file's directory -- a bare "build" would send it
-    // looking for slides/build/slides.pdf, and SyncTeX would find nothing.
+    // PDFs live in build/ (per latexmkrc $out_dir): build/thesis.pdf,
+    // build/slides.pdf, build/slides-notes.pdf. Absolute, because LaTeX
+    // Workshop resolves a relative outDir against the root file's directory --
+    // a bare "build" would send it looking for slides/build/slides.pdf, and
+    // SyncTeX would find nothing.
+    // This is a single global setting with no per-root override, which is why
+    // the notes deck is built into build/ rather than build/notes: anywhere
+    // else and the viewer could not find its PDF.
     "latex-workshop.latex.outDir": "%WORKSPACE_FOLDER%/build",
 
     // Build on save; debounce a bit so rapid saves don't queue multiple runs.
@@ -63,7 +80,9 @@
     "latex-workshop.latex.autoClean.run": "never",
     "latex-workshop.message.update.show": false,
 
-    // Don't auto-build on every chapter file open; only when the user actually saves.
+    // Always compile through the recipe above, even though magic comments are
+    // enabled: `% !TeX root' should steer root detection, but a stray
+    // `% !TeX program' must never bypass .vscode/build.sh.
     "latex-workshop.latex.build.forceRecipeUsage": true,
 
     // --- Grammar / spell check: strict American English everywhere ---

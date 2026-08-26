@@ -1,5 +1,13 @@
+% !TeX root = slides-notes.tex
 % ---------------------------------------------------------------------------
 % slides-notes.tex -- presenter-notes variant of the defence deck.
+%
+% The magic comment above is load-bearing, and points at this very file on
+% purpose.  LaTeX Workshop finds the root by looking for \begin{document};
+% this file only \inputs the deck, so it can never be detected as a root and
+% every build/view fired from this tab would silently target slides.tex
+% instead.  A self-referential `% !TeX root' short-circuits that search --
+% findFromMagic() runs before the content scan -- and pins the root here.
 %
 % Same pattern as thesis-print.tex: define a flag, then \input the real source
 % verbatim, so the two decks can never diverge in content.  slides-style.sty is
@@ -7,9 +15,11 @@
 % `show notes on second screen=right', i.e. every page is double-wide with the
 % slide on the left and its \note on the right.
 %
-% Build from the REPO ROOT, with an explicit -outdir so the aux files do not
-% collide with the plain deck's:
-%     latexmk -pdflua -outdir=build/notes slides/slides-notes.tex
+% Build from the REPO ROOT (the deck's figure paths are repo-root-relative):
+%     latexmk -pdflua slides/slides-notes.tex
+% No separate -outdir is needed, unlike thesis-print.tex: the deck has no
+% \include, so every aux file is named after the jobname and build/slides.*
+% and build/slides-notes.* never collide.
 % ---------------------------------------------------------------------------
 \def\SlidesNotesVariant{}
 \input{slides/slides.tex}
