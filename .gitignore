@@ -32,3 +32,6 @@ claude-review/
 
 #Keynote slides
 slides/*.key
+
+# Defence pitch transcript + review notes — local only
+slides/pitch*.md
